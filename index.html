@@ -756,6 +756,68 @@ img,svg{max-width:100%}
 .qz-favico svg{width:26px;height:26px;fill:currentColor}
 .qz-favpad p{max-width:440px;margin:0}
 .qz-favempty{padding:6px 4px;margin:0}
+
+/* интервальное повторение */
+.qz-modes .m-s{display:none}
+.nl-badge{margin-left:auto;background:var(--marge);color:#fff;font-size:11px;font-weight:700;line-height:18px;border-radius:999px;padding:0 6px;min-width:18px;text-align:center;font-variant-numeric:tabular-nums}
+.srs-cnt{display:inline-flex;gap:12px;font-size:13px;color:var(--ink-3);background:var(--paper);border-radius:999px;padding:5px 13px;font-variant-numeric:tabular-nums}
+.srs-cnt b{font-weight:700;font-size:14px;margin-right:2px}
+.c-new{color:var(--encre)}.c-lrn{color:var(--marge)}.c-rev{color:var(--ok)}
+.srs-card{cursor:default}
+.srs-card:not(.flipped){cursor:pointer}
+.srs-card .qz-text.is-m{font-family:var(--font-b);font-weight:500;font-size:clamp(22px,4vw,30px)}
+.srs-card.flipped .qz-text{font-family:var(--font-d);font-weight:700;font-size:clamp(24px,4vw,34px)}
+.srs-card.flipped .qz-text.is-m{font-family:var(--font-b);font-weight:500;font-size:clamp(20px,3.6vw,26px)}
+.srs-sep{width:64px;height:2px;border-radius:2px;background:color-mix(in srgb,var(--encre) 30%,transparent);margin:6px 0}
+.srs-back{font-size:clamp(21px,3.8vw,28px);font-weight:600;line-height:1.25;color:var(--encre-2);max-width:26ch}
+.srs-back.is-fr{font-family:var(--font-d);font-weight:700;font-size:clamp(26px,4.5vw,36px)}
+.srs-tag.t0{background:var(--encre-soft);color:var(--encre-2)}
+.srs-tag.t1,.srs-tag.t3{background:var(--marge-soft);color:var(--marge)}
+.srs-tag.t2{background:var(--ok-soft);color:var(--ok)}
+.srs-show{display:flex;justify-content:center;margin-top:16px}
+.srs-show .btn{min-width:min(100%,300px);justify-content:center;padding:13px 22px}
+.srs-grade{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
+.srs-g{border:0;border-radius:16px;padding:10px 6px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;font:inherit;font-weight:600;font-size:15px;line-height:1.25;transition:transform .1s,filter .15s,box-shadow .15s}
+.srs-g small{font-size:12px;font-weight:500;opacity:.85;font-variant-numeric:tabular-nums}
+.srs-g:hover{filter:saturate(1.3) brightness(.97)}
+.srs-g:active{transform:scale(.97)}
+.srs-g:focus-visible{outline:none;box-shadow:0 0 0 2px var(--sheet),0 0 0 4px currentColor}
+.srs-g[data-g="1"]{background:var(--marge-soft);color:var(--marge)}
+.srs-g[data-g="2"]{background:var(--warn-soft);color:var(--warn)}
+.srs-g[data-g="3"]{background:var(--ok-soft);color:var(--ok)}
+.srs-g[data-g="4"]{background:var(--encre-soft);color:var(--encre-2)}
+.srs-foot{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-start;justify-content:space-between;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+.srs-per{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap}
+.srs-per .seg button{padding:4px 10px;font-variant-numeric:tabular-nums}
+.srs-how{max-width:100%;flex:1 1 220px;text-align:right}
+.srs-how summary{cursor:pointer;color:var(--encre-2);font-weight:600;list-style:none;padding:4px 0}
+.srs-how summary::-webkit-details-marker{display:none}
+.srs-how summary::after{content:" ▾";font-size:11px}
+.srs-how[open] summary::after{content:" ▴"}
+.srs-how[open]{flex-basis:100%;text-align:left}
+.srs-how p{margin:6px 0 0;line-height:1.55;color:var(--ink-2);font-size:14px}
+.srs-done{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:8px 0 4px}
+.srs-done p{margin:0}
+.srs-ok{width:52px;height:52px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:flex;align-items:center;justify-content:center}
+.srs-ok svg{width:26px;height:26px}
+.srs-fch{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-3)!important;margin-top:12px!important}
+.srs-fc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;width:100%;max-width:400px;align-items:end;margin-bottom:8px}
+.srs-fc div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;font-size:11.5px;color:var(--ink-3);height:104px}
+.srs-fc b{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-height:15px}
+.srs-fc i{display:block;width:100%;max-width:30px;border-radius:6px 6px 3px 3px;background:var(--encre)}
+.srs-fc i.z{background:var(--tint-2)}
+.srs-fc div:first-child span{color:var(--encre-2);font-weight:700}
+@media (max-width:600px){
+  .qz-modes{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .qz-modes button{padding:8px 2px;font-size:12.5px}
+  .qz-modes .m-l{display:none}.qz-modes .m-s{display:inline}
+  .srs-grade{gap:6px}
+  .srs-g{font-size:13.5px;padding:10px 2px 8px;border-radius:14px}
+  .srs-cnt{gap:9px;padding:5px 11px}
+  .srs-how{text-align:left}
+}
+@media (pointer:coarse){.qz-stage .qz-keys{display:none}}
+.qz-card.flipped .srs-tag.t0{background:var(--sheet)}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -4028,6 +4090,7 @@ const CHEAT_EN = `
 const $ = (s,r=document)=>r.querySelector(s), $$ = (s,r=document)=>[...r.querySelectorAll(s)];
 const main = $("#main"), nav = $("#nav"), app = $(".app");
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const plural = (n, f) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? f[2] : b > 1 && b < 5 ? f[1] : b === 1 ? f[0] : f[2]; };
 const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 const ls = { get(k){ try { return localStorage.getItem(k); } catch(e) { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e) {} } };
 const ICON_PLAY = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><path d="M10.5 5.2a3.8 3.8 0 0 1 0 5.6M12.4 3.4a6.3 6.3 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
@@ -4108,7 +4171,11 @@ ru:{
   /* quizlet */
   qzSub:"Карточки со словами из юнитов 0–2. Прогресс по каждому слову сохраняется.",
   qzAll:"Все слова", qzWords:"слов", qzLearned:"выучено", qzStarred:"со звёздочкой",
-  qzModes:{cards:"Карточки", learn:"Заучивание", write:"Письмо", match:"Подбор"},
+  qzModes:{review:"Повторение", cards:"Карточки", learn:"Заучивание", write:"Письмо", match:"Подбор"}, qzModesS:{review:"Повтор", cards:"Карточки", learn:"Учить", write:"Письмо", match:"Подбор"},
+  srsNew:"новые", srsLrn:"учу", srsRev:"повтор", srsShow:"Показать ответ", srsG:["Снова","Трудно","Хорошо","Легко"], srsKeys:"Пробел — показать ответ · 1–4 — оценка", srsUndo:"Отменить", srsTag:["новое","учу","повтор","учу"],
+  srsDoneH:"На сегодня всё!", srsNext:s=>`Следующее повторение — ${s}.`, srsToday:(a,n)=>`Сегодня: ${a} ${plural(a,["ответ","ответа","ответов"])}, новых слов — ${n}.`, srsMore:n=>`Ещё ${n} новых слов`, srsFc:"Повторения на неделю вперёд", srsDay:["Сегодня","Завтра"],
+  srsPerDay:"Новых слов в день", srsHowS:"Как работает повторение", srsHow:"Посмотри на слово, вспомни перевод и открой ответ. Потом честно оцени себя: «Снова» — не вспомнил, «Трудно» — вспомнил с трудом, «Хорошо» — вспомнил, «Легко» — сразу. На кнопках видно, когда слово вернётся. Новое слово сначала повторяется через минуту и через 10 минут, потом через день, а дальше паузы растут: примерно 3 дня, неделя, две недели… Забытое слово снова начинает с коротких интервалов. Заходи каждый день — это занимает несколько минут.",
+  srsDue:n=>`${n} к повтору`, srsWhen:s=>`Следующее повторение: ${s}`, srsU:{lt:"<1 мин", m:"мин", h:"ч", d:"д", mo:"мес", y:"г"}, srsIn:s=>`через ${s}`, srsTmrw:"завтра", srsNow:"сейчас", srsDays:n=>`${n} ${plural(n,["день","дня","дней"])}`, srsBadge:"карточек к повторению",
   qzShuffle:"Перемешать", qzStarOnly:"Только ★", qzStill:"Ещё учу", qzKnow:"Знаю", qzPrev:"Назад", qzNext:"Далее", qzKeys:"Пробел — перевернуть · ← → — листать", qzEmpty:"Нет карточек со звёздочкой в этом наборе.",
   qzLearnDone:"Все слова набора выучены!", qzLearnDoneSub:"Можно сбросить прогресс набора и пройти заново — или выбрать другой набор.", qzResetSet:"Сбросить прогресс набора",
   qzChoose:"Выбери перевод", qzType:"Напиши по-французски", qzLv:["Новые","Учу","Почти","Выучено"], qzCorrect:"Juste !", qzWrongIs:"Правильно:", qzContinue:"Дальше", qzCheck:"Проверить", qzDontKnow:"Не знаю",
@@ -4177,7 +4244,11 @@ en:{
   cloudSummary:(a,b,c,d)=>`results for ${a} exercises · answers in ${b} topics · ${c} Quizlet words · ${d} mock tests`, cloudEmpty:"Nothing in the cloud yet.", cloudUnreach:"Couldn’t read the cloud.", updatedAt:x=>`updated ${x}`,
   qzSub:"Flashcards with the words from units 0–2. Progress for each word is saved.",
   qzAll:"All words", qzWords:"words", qzLearned:"learned", qzStarred:"starred",
-  qzModes:{cards:"Flashcards", learn:"Learn", write:"Write", match:"Match"},
+  qzModes:{review:"Review", cards:"Flashcards", learn:"Learn", write:"Write", match:"Match"}, qzModesS:{review:"Review", cards:"Cards", learn:"Learn", write:"Write", match:"Match"},
+  srsNew:"new", srsLrn:"learning", srsRev:"review", srsShow:"Show answer", srsG:["Again","Hard","Good","Easy"], srsKeys:"Space — show answer · 1–4 — rate", srsUndo:"Undo", srsTag:["new","learning","review","learning"],
+  srsDoneH:"You’re done for today!", srsNext:s=>`Next review: ${s}.`, srsToday:(a,n)=>`Today: ${a} ${a===1?"answer":"answers"}, ${n} new ${n===1?"word":"words"}.`, srsMore:n=>`${n} more new words`, srsFc:"Reviews for the week ahead", srsDay:["Today","Tmrw"],
+  srsPerDay:"New words per day", srsHowS:"How review works", srsHow:"Look at the word, recall the translation and reveal the answer. Then rate yourself honestly: Again — you forgot, Hard — you got it with effort, Good — you remembered, Easy — instantly. Each button shows when the word will come back. A new word is repeated after a minute and after 10 minutes, then the next day, and after that the gaps grow: about 3 days, a week, two weeks… A forgotten word starts again with short intervals. Come back every day — it only takes a few minutes.",
+  srsDue:n=>`${n} due`, srsWhen:s=>`Next review: ${s}`, srsU:{lt:"<1m", m:"m", h:"h", d:"d", mo:"mo", y:"y"}, srsIn:s=>`in ${s}`, srsTmrw:"tomorrow", srsNow:"now", srsDays:n=>`${n} ${n===1?"day":"days"}`, srsBadge:"cards due for review",
   qzShuffle:"Shuffle", qzStarOnly:"Starred only", qzStill:"Still learning", qzKnow:"I know it", qzPrev:"Back", qzNext:"Next", qzKeys:"Space — flip · ← → — browse", qzEmpty:"No starred cards in this set.",
   qzLearnDone:"You’ve learned every word in this set!", qzLearnDoneSub:"Reset the set to go through it again — or pick another set.", qzResetSet:"Reset this set",
   qzChoose:"Choose the translation", qzType:"Write it in French", qzLv:["New","Learning","Almost","Learned"], qzCorrect:"Juste !", qzWrongIs:"Correct answer:", qzContinue:"Continue", qzCheck:"Check", qzDontKnow:"I don’t know",
@@ -4202,11 +4273,11 @@ setData();
    STORE: local cache + cloud (db) under data/users/<id>/
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
-let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[]}, ts:{}};
+let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, ts:{}};
 (function loadLocal(){
   try {
     const raw = ls.get(LKEY);
-    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[]}, ts:o.ts||{}}; }
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, ts:o.ts||{}}; }
     else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
   } catch(e) {}
 })();
@@ -4247,7 +4318,7 @@ async function supaBackend(){
 function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
   if (key === "settings") return {lang:LANG, ts:S.ts.settings||0};
-  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], ts:S.ts.quiz||0};
+  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
   return null;
 }
@@ -4294,7 +4365,7 @@ function hasData(k){
   if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
   return false;
 }
-function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[]}, ts:{}}; persistLocal(); }
+function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, ts:{}}; persistLocal(); }
 function initCloud(){
   if (Cloud.initing) return Cloud.initing;
   Cloud.initing = initCloudRun().finally(()=>{ Cloud.initing = null; });
@@ -4331,7 +4402,7 @@ async function initCloudRun(){
         S.ts.progress = Math.max(lt, ct);
       } else if (ct > lt) {
         if (k === "settings" && (v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; }
-        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : []};
+        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
         S.ts[k] = ct; changed = true;
       } else if (lt > ct) Cloud.dirty.add(k);
@@ -4966,7 +5037,7 @@ function buildNav(){
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
-      <a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span></a>
+      <a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
@@ -5158,7 +5229,7 @@ function renderAccount(){
     const b = e.currentTarget;
     if (!armed) { armed = true; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed) { armed = false; b.textContent = t("reset"); b.classList.remove("armed"); } }, 5000); return; }
     const ansKeys = Object.keys(S.ans);
-    S.p = {}; S.tests = []; S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[]}; S.ans = {};
+    S.p = {}; S.tests = []; S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; S.ans = {};
     touch("progress"); touch("quiz"); ansKeys.forEach(id=>touch("ans-" + id));
     paintNavProgress(); renderAccount(); toast(t("resetDone"));
   });
@@ -5273,7 +5344,7 @@ function gradeTest(box, now, res){
 /* =========================================================
    QUIZLET
    ========================================================= */
-let QZ = {set:"all", mode:"cards", dir:"fr", shuf:false, star:false};
+let QZ = {set:"all", mode:"review", perDay:15, dir:"fr", shuf:false, star:false};
 try { const q = JSON.parse(ls.get("edito-qz") || "null"); if (q) QZ = Object.assign(QZ, q); } catch(e) {}
 const saveQZ = () => ls.set("edito-qz", JSON.stringify(QZ));
 let qzKeyHandler = null, qzTimer = null;
@@ -5287,7 +5358,60 @@ function qWords(setId){
 const qLv = fr => (S.quiz.c[qKey(fr)] || {}).lv || 0;
 const qStar = fr => !!(S.quiz.c[qKey(fr)] || {}).s;
 function qSet(fr, patch){ const k = qKey(fr); S.quiz.c[k] = Object.assign({lv:0, s:0}, S.quiz.c[k], patch); touch("quiz"); }
+function qMeta(setId){ const st = qSetStats(setId), d = srsDueCount(setId); return `${st.learned}/${st.n}` + (d ? ` · ${t("srsDue", d)}` : ""); }
 function qSetStats(setId){ const ws = qWords(setId); const learned = ws.filter(w=>qLv(w.fr)>=3).length; return {n:ws.length, learned, starred: ws.filter(w=>qStar(w.fr)).length, pct: ws.length ? learned/ws.length : 0}; }
+
+/* ---------- интервальное повторение (SM-2, как в Anki) ----------
+   r = {st:0 новое|1 учу|2 повтор|3 переучиваю, step, due(ms), ivl(дни), ef, reps, lap} хранится в S.quiz.c[k].r */
+const MIN = 60000, DAY = 864e5;
+const SRS = {learn:[1, 10], relearn:[10], grad:1, easy:4};
+const dayStart = (ms = Date.now()) => { const d = new Date(ms - 4*3600e3); d.setHours(4, 0, 0, 0); return d.getTime(); };
+const dayKey = () => String(dayStart());
+const qR = fr => (S.quiz.c[qKey(fr)] || {}).r || null;
+function srsNext(r0, g, now = Date.now()){
+  const r = r0 ? Object.assign({}, r0) : {st:0, step:0, ivl:0, ef:2.5, reps:0, lap:0, due:now};
+  const grad = d => { r.st = 2; r.step = 0; r.ivl = d; r.due = dayStart(now) + d*DAY; };
+  const fuzz = d => d < 3 ? d : Math.round(d * (0.95 + Math.random()*0.1));
+  if (r.st === 2) {
+    const late = Math.max(0, Math.round((dayStart(now) - dayStart(r.due)) / DAY));
+    if (g === 1) { r.lap++; r.ef = Math.max(1.3, r.ef - .2); r.ivl = Math.max(1, Math.round(r.ivl * .5)); r.st = 3; r.step = 0; r.due = now + SRS.relearn[0]*MIN; }
+    else {
+      const hard = Math.max(r.ivl + 1, Math.round(r.ivl * 1.2));
+      const good = Math.max(hard + 1, Math.round((r.ivl + late/2) * r.ef));
+      const easy = Math.max(good + 1, Math.round((r.ivl + late) * r.ef * 1.3));
+      if (g === 2) r.ef = Math.max(1.3, r.ef - .15); else if (g === 4) r.ef += .15;
+      grad(fuzz(g === 2 ? hard : g === 3 ? good : easy));
+    }
+  } else {
+    const steps = r.st === 3 ? SRS.relearn : SRS.learn;
+    if (r.st === 0) r.st = 1;
+    if (g === 1) { r.step = 0; r.due = now + steps[0]*MIN; }
+    else if (g === 2) { const m = steps.length > 1 && r.step === 0 ? (steps[0] + steps[1]) / 2 : steps[r.step] * (steps.length === 1 ? 1.5 : 1); r.due = now + Math.round(m)*MIN; }
+    else if (g === 3) { if (r.step + 1 < steps.length) { r.step++; r.due = now + steps[r.step]*MIN; } else grad(r.st === 3 ? r.ivl : SRS.grad); }
+    else grad(r.st === 3 ? r.ivl + 1 : SRS.easy);
+  }
+  r.reps++; r.last = now;
+  return r;
+}
+function srsIvlTxt(r, now){
+  const u = t("srsU"), dec = x => (Math.round(x*10)/10).toString().replace(".", LANG === "ru" ? "," : ".");
+  const sp = LANG === "ru" ? " " : "";
+  if (r.st === 2) { const d = r.ivl; return d < 30 ? `${d}${sp}${u.d}` : d < 365 ? `${dec(d/30)}${sp}${u.mo}` : `${dec(d/365)}${sp}${u.y}`; }
+  const m = Math.round((r.due - now) / MIN);
+  return m < 1 ? u.lt : m < 60 ? `${m}${sp}${u.m}` : `${dec(m/60)}${sp}${u.h}`;
+}
+function srsWhenTxt(due, now = Date.now()){
+  if (due <= now) return t("srsNow");
+  const dd = Math.round((dayStart(due) - dayStart(now)) / DAY);
+  if (dd <= 0) { const m = Math.round((due - now) / MIN), u = t("srsU"), sp = LANG === "ru" ? " " : ""; return t("srsIn", m < 1 ? u.lt : m < 60 ? `${m}${sp}${u.m}` : `${Math.round(m/60)}${sp}${u.h}`); }
+  return dd === 1 ? t("srsTmrw") : t("srsIn", t("srsDays", dd));
+}
+const srsDueCount = (setId, now = Date.now()) => qWords(setId).filter(w=>{ const r = qR(w.fr); return r && r.due <= now; }).length;
+function sdToday(){ const k = dayKey(), sd = S.quiz.sd || {}; return sd.d === k ? Object.assign({n:0, a:0, x:0}, sd) : {d:k, n:0, a:0, x:0}; }
+function updSrsBadge(){
+  const b = document.getElementById("srsBadge"); if (!b) return;
+  const n = srsDueCount("all"); b.hidden = !n; b.textContent = n > 99 ? "99+" : String(n); b.title = `${n} ${t("srsBadge")}`;
+}
 
 function renderQuizlet(){
   if (!QSETS.some(s=>s.id===QZ.set) && QZ.set !== "all" && QZ.set !== "fav") QZ.set = "all";
@@ -5295,8 +5419,8 @@ function renderQuizlet(){
   main.innerHTML = `<div class="col" style="max-width:980px">
   <header class="t-head seyes"><p class="eyebrow">Quizlet · Unités 0–2</p><h1>Quizlet</h1><p class="t-ru">${t("qzSub")}</p>
     <div class="stats"><span><b>${all.n}</b>${t("qzWords")}</span><span><b>${all.learned}</b>${t("qzLearned")}</span><span><b>${all.starred}</b>${t("qzStarred")}</span></div></header>
-  <div class="qz-sets">${[{id:"all", t:t("qzAll"), sub:""}, {id:"fav", t:t("qzFav"), sub:t("qzFavSub"), fav:true}].concat(QSETS.map(s=>({id:s.id, t:s.t, sub: LANG==="en" ? s.en : s.ru}))).map(s=>{ const st = qSetStats(s.id); return `<button type="button" class="qz-set${QZ.set===s.id?" on":""}${s.fav?" is-fav":""}" data-set="${s.id}"><b>${s.fav ? ICO_HEART : ""}${s.t}</b>${s.sub?`<small>${s.sub}</small>`:""}<span class="qz-meta">${st.learned}/${st.n}</span><span class="bar"><i style="width:${(st.pct*100).toFixed(0)}%"></i></span></button>`; }).join("")}</div>
-  <div class="qz-modes" role="tablist">${["cards","learn","write","match"].map(m=>`<button type="button" role="tab" class="${QZ.mode===m?"on":""}" data-mode="${m}">${t("qzModes")[m]}</button>`).join("")}</div>
+  <div class="qz-sets">${[{id:"all", t:t("qzAll"), sub:""}, {id:"fav", t:t("qzFav"), sub:t("qzFavSub"), fav:true}].concat(QSETS.map(s=>({id:s.id, t:s.t, sub: LANG==="en" ? s.en : s.ru}))).map(s=>{ const st = qSetStats(s.id); return `<button type="button" class="qz-set${QZ.set===s.id?" on":""}${s.fav?" is-fav":""}" data-set="${s.id}"><b>${s.fav ? ICO_HEART : ""}${s.t}</b>${s.sub?`<small>${s.sub}</small>`:""}<span class="qz-meta">${qMeta(s.id)}</span><span class="bar"><i style="width:${(st.pct*100).toFixed(0)}%"></i></span></button>`; }).join("")}</div>
+  <div class="qz-modes" role="tablist">${["review","cards","learn","write","match"].map(m=>`<button type="button" role="tab" class="${QZ.mode===m?"on":""}" data-mode="${m}"><span class="m-l">${t("qzModes")[m]}</span><span class="m-s">${t("qzModesS")[m]}</span></button>`).join("")}</div>
   <section class="qz-stage exb"></section>
   <div class="sec-h"><h2>${t("qzList")}</h2><p class="qz-count"></p></div>
   <div class="qz-list"></div>
@@ -5309,7 +5433,7 @@ function qzList(){
   const box = $(".qz-list", main); if (!box) return;
   const ws = qWords(QZ.set);
   $(".qz-count", main).textContent = `${ws.length} ${t("qzWords")}`;
-  box.innerHTML = ws.map(w=>{ const lv = qLv(w.fr); return `<div class="qz-row"><button type="button" class="star${qStar(w.fr)?" on":""}" data-star="${esc(w.fr)}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button><span class="fr qz-fr">${esc(w.fr)}</span><span class="qz-m">${esc(w.m)}</span><span class="lv lv${Math.min(lv,3)}">${t("qzLvShort")[Math.min(lv,3)]}</span><button type="button" class="qz-heart${isFav(w.fr)?" on":""}" data-fav="${esc(w.fr)}" aria-label="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}" title="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}">${ICO_HEART}</button></div>`; }).join("") || (QZ.set === "fav" ? `<p class="muted qz-favempty">${t("qzFavEmpty")}</p>` : "");
+  box.innerHTML = ws.map(w=>{ const lv = qLv(w.fr); return `<div class="qz-row"><button type="button" class="star${qStar(w.fr)?" on":""}" data-star="${esc(w.fr)}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button><span class="fr qz-fr">${esc(w.fr)}</span><span class="qz-m">${esc(w.m)}</span><span class="lv lv${Math.min(lv,3)}"${qR(w.fr) ? ` title="${esc(t("srsWhen", srsWhenTxt(qR(w.fr).due)))}"` : ""}>${t("qzLvShort")[Math.min(lv,3)]}</span><button type="button" class="qz-heart${isFav(w.fr)?" on":""}" data-fav="${esc(w.fr)}" aria-label="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}" title="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}">${ICO_HEART}</button></div>`; }).join("") || (QZ.set === "fav" ? `<p class="muted qz-favempty">${t("qzFavEmpty")}</p>` : "");
   $$("[data-fav]", box).forEach(b=>b.addEventListener("click", ()=>{ const fr = b.dataset.fav; const w = ws.find(x=>x.fr === fr) || {fr}; let e = {fr}; if (!isFav(fr)) { if (!DICT) buildDict(); const d = DICT.get(dk(fr)); e = d ? {fr, ru:d.ru, en:d.en} : {fr, ru: LANG==="en" ? "" : w.m, en: LANG==="en" ? w.m : ""}; } toggleFav(e); if (QZ.set === "fav") { qzRefreshList(); qzStage(); } else { b.classList.toggle("on", isFav(fr)); qzRefreshFav(); } }));
   $$("[data-star]", box).forEach(b=>b.addEventListener("click", ()=>{ const fr = b.dataset.star; qSet(fr, {s: qStar(fr) ? 0 : 1}); b.classList.toggle("on", qStar(fr)); }));
 }
@@ -5319,10 +5443,113 @@ function qzStage(){
   clearInterval(qzTimer);
   stage.dataset.tok = String(Math.random());
   if (!qWords(QZ.set).length) { stage.innerHTML = `<div class="qz-pad center qz-favpad"><span class="qz-favico">${ICO_HEART}</span><h3 class="qz-done">${t("qzFavEmptyH")}</h3><p class="muted">${t("qzFavEmpty")}</p></div>`; return; }
-  ({cards:qzCards, learn:qzLearn, write:qzWrite, match:qzMatch})[QZ.mode](stage);
+  (({review:qzReview, cards:qzCards, learn:qzLearn, write:qzWrite, match:qzMatch})[QZ.mode] || qzReview)(stage);
 }
-function qzRefreshFav(){ const b = $('.qz-set[data-set="fav"]', main); if (!b) return; const st = qSetStats("fav"); $(".qz-meta", b).textContent = `${st.learned}/${st.n}`; $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }
-const qzRefreshList = () => { qzList(); $$(".qz-set", main).forEach(b=>{ const st = qSetStats(b.dataset.set); $(".qz-meta", b).textContent = `${st.learned}/${st.n}`; $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }); };
+function qzRefreshFav(){ const b = $('.qz-set[data-set="fav"]', main); if (!b) return; const st = qSetStats("fav"); $(".qz-meta", b).textContent = qMeta(b.dataset.set); $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }
+const qzRefreshList = () => { qzList(); $$(".qz-set", main).forEach(b=>{ const st = qSetStats(b.dataset.set); $(".qz-meta", b).textContent = qMeta(b.dataset.set); $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }); };
+
+/* mode 0: spaced repetition */
+function qzReview(stage){
+  const tok = stage.dataset.tok, alive = () => stage.dataset.tok === tok && document.body.contains(stage);
+  const rk = new Map(), hist = [];
+  let cur = null, flipped = false, last = null, served = 0;
+  const rnd = fr => { if (!rk.has(fr)) rk.set(fr, Math.random()); return rk.get(fr); };
+  const queue = (now = Date.now()) => {
+    const lrn = [], rev = [], fresh = [], all = qWords(QZ.set);
+    all.forEach(w=>{ const r = qR(w.fr); if (!r) fresh.push(w); else if (r.st === 2) { if (r.due <= now) rev.push(w); } else lrn.push(w); });
+    const sd = sdToday(), left = Math.max(0, (QZ.perDay || 15) + sd.x - sd.n);
+    lrn.sort((a,b)=>qR(a.fr).due - qR(b.fr).due);
+    rev.sort((a,b)=>dayStart(qR(a.fr).due) - dayStart(qR(b.fr).due) || rnd(a.fr) - rnd(b.fr));
+    return {all, lrnNow: lrn.filter(w=>qR(w.fr).due <= now), lrnLater: lrn.filter(w=>qR(w.fr).due > now), lrn, rev, fresh: fresh.slice(0, left), freshAll: fresh, sd};
+  };
+  const pick = () => {
+    const q = queue(), useNew = q.fresh.length && (!q.rev.length || served % 4 === 3);
+    const cand = [...q.lrnNow, ...(useNew ? [q.fresh[0], ...q.rev] : [...q.rev, ...q.fresh.slice(0, 1)]), ...q.lrnLater];
+    return cand.find(w=>w.fr !== last) || cand[0] || null;
+  };
+  const counts = q => `<span class="srs-cnt"><span><b class="c-new">${q.fresh.length}</b> ${t("srsNew")}</span><span><b class="c-lrn">${q.lrn.length}</b> ${t("srsLrn")}</span><span><b class="c-rev">${q.rev.length}</b> ${t("srsRev")}</span></span>`;
+  const dirSeg = () => `<span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
+  const undoBtn = () => hist.length ? `<button type="button" class="chip-t" data-undo>↶ ${t("srsUndo")}</button>` : "";
+  const foot = () => `<div class="srs-foot"><label class="srs-per"><span>${t("srsPerDay")}</span><span class="seg">${[5,10,15,20,30].map(n=>`<button type="button" data-per="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</span></label>
+    <details class="srs-how"><summary>${t("srsHowS")}</summary><p>${t("srsHow")}</p></details></div>`;
+  const bind = () => {
+    $$("[data-dir]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.dir = b.dataset.dir; saveQZ(); flipped = false; draw(true); }));
+    $$("[data-per]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.per; saveQZ(); if (!cur) next(); else draw(false); qzRefreshList(); }));
+    const u = $("[data-undo]", stage); if (u) u.addEventListener("click", undo);
+  };
+  const forecast = q => {
+    const now = Date.now(), d0 = dayStart(now), c = [0,0,0,0,0,0,0];
+    q.all.forEach(w=>{ const r = qR(w.fr); if (!r) return; const i = Math.max(0, Math.round((dayStart(r.due) - d0) / DAY)); if (i < 7) c[i]++; });
+    const mx = Math.max(1, ...c), fmt = new Intl.DateTimeFormat(LANG === "en" ? "en-GB" : "ru-RU", {weekday:"short"});
+    return `<p class="srs-fch">${t("srsFc")}</p><div class="srs-fc">${c.map((n,i)=>`<div><b>${n || ""}</b><i class="${n?"":"z"}" style="height:${n ? Math.max(6, Math.round(n/mx*64)) : 3}px"></i><span>${i < 2 ? t("srsDay")[i] : fmt.format(new Date(d0 + i*DAY + 12*3600e3))}</span></div>`).join("")}</div>`;
+  };
+  const doneView = q => {
+    const nexts = q.all.map(w=>qR(w.fr)).filter(Boolean).map(r=>r.due).sort((a,b)=>a-b);
+    stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar">${counts(q)}${undoBtn()}</div><div class="center srs-done">
+      <span class="srs-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+      <h3 class="qz-done">${t("srsDoneH")}</h3>
+      ${q.sd.a ? `<p class="muted">${t("srsToday", q.sd.a, q.sd.n)}</p>` : ""}
+      ${nexts.length ? `<p class="muted">${t("srsNext", srsWhenTxt(nexts[0]))}</p>${forecast(q)}` : ""}
+      ${q.freshAll.length ? `<button type="button" class="btn ${nexts.length ? "sec" : "pri"}" id="srsMore">${t("srsMore", Math.min(10, q.freshAll.length))}</button>` : ""}
+    </div>${foot()}</div>`;
+    bind();
+    const m = $("#srsMore", stage); if (m) m.addEventListener("click", ()=>{ const sd = sdToday(); sd.x += Math.max(0, sd.n - (QZ.perDay||15) - sd.x) + 10; S.quiz.sd = sd; touch("quiz"); next(); });
+  };
+  const draw = speakIt => {
+    if (!alive()) return;
+    const q = queue();
+    if (!cur) return doneView(q);
+    const w = cur, r = qR(w.fr), now = Date.now();
+    const front = QZ.dir === "fr" ? w.fr : w.m, back = QZ.dir === "fr" ? w.m : w.fr;
+    const sideF = QZ.dir === "fr" ? "FR" : (LANG === "en" ? "EN" : "RU"), sideB = QZ.dir === "fr" ? (LANG === "en" ? "EN" : "RU") : "FR";
+    const tag = r ? r.st : 0;
+    stage.innerHTML = `<div class="qz-pad">
+      <div class="qz-toolbar">${counts(q)}${dirSeg()}${undoBtn()}</div>
+      <div class="qz-card srs-card${flipped ? " flipped" : ""}" role="button" tabindex="0" aria-label="${esc(t("srsShow"))}">
+        <div class="qz-face"><span class="qz-side">${sideF}</span><span class="qz-text${QZ.dir === "fr" ? "" : " is-m"}">${esc(front)}</span>
+        ${flipped ? `<span class="srs-sep"></span><span class="qz-side">${sideB}</span><span class="srs-back${QZ.dir === "fr" ? "" : " is-fr"}">${esc(back)}</span>` : ""}</div>
+        <button type="button" class="star qz-cstar${qStar(w.fr)?" on":""}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button>
+        <button type="button" class="qz-say" aria-label="${esc(t("qzSay"))}">${ICON_PLAY}</button>
+        <span class="lv srs-tag t${tag} qz-clv">${t("srsTag")[tag]}</span>
+      </div>
+      ${flipped ? `<div class="srs-grade">${[1,2,3,4].map(g=>`<button type="button" class="srs-g" data-g="${g}">${t("srsG")[g-1]}<small>${srsIvlTxt(srsNext(r, g, now), now)}</small></button>`).join("")}</div>`
+                : `<div class="srs-show"><button type="button" class="btn pri" id="srsShow">${t("srsShow")}</button></div>`}
+      <p class="qz-keys">${t("srsKeys")}</p>
+      ${foot()}</div>`;
+    bind();
+    $(".qz-card", stage).addEventListener("click", e=>{ if (e.target.closest("button")) return; if (!flipped) show(); });
+    $(".qz-cstar", stage).addEventListener("click", ()=>{ qSet(w.fr, {s: qStar(w.fr) ? 0 : 1}); draw(false); qzRefreshList(); });
+    $(".qz-say", stage).addEventListener("click", ()=>speak(w.fr));
+    const sb = $("#srsShow", stage); if (sb) sb.addEventListener("click", show);
+    $$(".srs-g", stage).forEach(b=>b.addEventListener("click", ()=>grade(+b.dataset.g)));
+    if (speakIt && QZ.dir === "fr" && !flipped) speak(w.fr);
+  };
+  const show = () => { if (!cur || flipped) return; flipped = true; draw(false); if (QZ.dir !== "fr") speak(cur.fr); const g = $('.srs-g[data-g="3"]', stage); if (g) g.focus({preventScroll:true}); };
+  const next = () => { cur = pick(); flipped = false; draw(true); };
+  const grade = g => {
+    if (!cur || !flipped) return;
+    const w = cur, k = qKey(w.fr), r0 = qR(w.fr);
+    hist.push({w, k, prevC: S.quiz.c[k] ? JSON.parse(JSON.stringify(S.quiz.c[k])) : null, prevSd: JSON.parse(JSON.stringify(S.quiz.sd || {}))});
+    if (hist.length > 30) hist.shift();
+    const r = srsNext(r0, g), sd = sdToday(); sd.a++; if (!r0) sd.n++; S.quiz.sd = sd;
+    const lv = qLv(w.fr);
+    qSet(w.fr, {r, lv: g === 1 ? 1 : Math.max(lv, r.st === 2 ? (r.ivl >= 4 ? 3 : 2) : 1)});
+    served++; last = w.fr; qzRefreshList(); updSrsBadge(); next();
+  };
+  const undo = () => {
+    const h = hist.pop(); if (!h) return;
+    if (h.prevC) S.quiz.c[h.k] = h.prevC; else delete S.quiz.c[h.k];
+    S.quiz.sd = h.prevSd; touch("quiz");
+    served = Math.max(0, served - 1); cur = h.w; last = null; flipped = false; draw(false); qzRefreshList(); updSrsBadge();
+  };
+  qzKeyHandler = e => {
+    if (location.hash.slice(1) !== "quizlet" || QZ.mode !== "review" || !alive() || e.metaKey || e.ctrlKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||"")) return;
+    if (e.key === " " || e.key === "Enter") { if ((e.target||{}).tagName === "BUTTON" && e.key === "Enter") return; e.preventDefault(); if (!flipped) show(); else grade(3); }
+    else if (flipped && /^[1-4]$/.test(e.key)) { e.preventDefault(); grade(+e.key); }
+  };
+  document.addEventListener("keydown", qzKeyHandler);
+  next();
+}
 
 /* mode 1: flashcards */
 function qzCards(stage){
@@ -5510,13 +5737,13 @@ function route(keepScroll){
   else if (h === "quizlet") renderQuizlet();
   else if (h === "account") renderAccount();
   else renderHome();
-  markActive(); closeNav();
+  markActive(); closeNav(); updSrsBadge();
   window.scrollTo(0, keepScroll ? y : 0);
 }
 function rerender(){ route(true); }
 window.addEventListener("hashchange", ()=>route(false));
 $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav");
-buildNav(); route(false);
+buildNav(); route(false); updSrsBadge(); setInterval(updSrsBadge, 60000);
 if (Cloud.kind !== "supabase") initCloud();
 })();
 
