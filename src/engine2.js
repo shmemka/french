@@ -466,7 +466,7 @@ function lookup(raw){
 const TRC = "edito-tr-cache";
 let trCache = {}; try { trCache = JSON.parse(ls.get(TRC) || "{}") || {}; } catch(e) {}
 async function remoteTr(text, to, from = "fr"){
-  const key = (from === "fr" ? "" : from + ">") + to + "|" + dk(text);
+  const key = (from === "fr" ? "" : from + ">") + to + "|" + text.trim().toLowerCase().replace(/\s+/g, " ");
   if (trCache[key]) return trCache[key];
   const url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text.trim()) + "&langpair=" + from + "|" + to;
   const ctl = ("AbortController" in window) ? new AbortController() : null;
@@ -477,6 +477,7 @@ async function remoteTr(text, to, from = "fr"){
     if (!out || +j.responseStatus !== 200 || /MYMEMORY WARNING|QUERY LENGTH LIMIT|INVALID/i.test(out)) return null;
     out = out.replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,"&").trim();
     if (dk(out) === dk(text)) return null;
+    out = withTail(out, endPunct(text), to === "fr");
     if (text.trim() === text.trim().toLowerCase() && out[0]) out = out[0].toLowerCase() + out.slice(1);
     trCache[key] = out; const ks = Object.keys(trCache); if (ks.length > 400) delete trCache[ks[0]];
     ls.set(TRC, JSON.stringify(trCache));
@@ -486,6 +487,9 @@ async function remoteTr(text, to, from = "fr"){
 
 /* --- обратный словарь: русский / английский → французский --- */
 let RDICT = null;
+/* знаки конца фразы (? ! …) сохраняются в переводе */
+const endPunct = s => { const m = String(s).trim().match(/(\?!|!\?|[?!]+|…|\.{3})$/); return m ? m[1].replace("...", "…") : ""; };
+const withTail = (s, tail, fr) => !tail || !s || /[?!…]\s*$/.test(s) ? s : s.replace(/[\s.]+$/, "") + (fr && tail !== "…" ? "\u00a0" : "") + tail;
 const rk = s => dk(s).replace(/ё/g, "е");
 const RU_END = ["ившись","ались","ились","алась","илась","ался","ился","ила","ило","или","ала","али","ало","яла","яли","ил","ал","ял","иться","аться","яться","еться","ться","тся","ить","ать","ять","еть","уть","ешься","ется","ются","ются","ишься","ится","ятся","атся","ешь","ете","ает","ают","яет","яют","аешь","аете","аем","аю","яю","ишь","ите","ят","ат","ет","ут","ют","ит","им","ем","ями","ами","ого","его","ому","ему","ыми","ими","ых","их","ой","ей","ий","ый","ая","яя","ое","ее","ую","юю","ом","ам","ям","ах","ях","ов","ев","ью","ся","сь","а","я","ы","и","у","ю","е","о","ь","й"];
 function ruStem(w){ for (const e of RU_END) if (w.length - e.length >= 2 && w.endsWith(e)) return w.slice(0, -e.length); return w; }
@@ -601,15 +605,17 @@ function spCheck(){
   if (!sel || sel.isCollapsed || !sel.rangeCount) { spHide(); return; }
   const raw = sel.getRangeAt(0).toString().replace(/\s+/g, " ").trim();
   const txt = raw.replace(/^[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+|[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+$/g, "");
+  const q = raw.replace(/^[\s«»"“”„.,;:!?()\[\]…—–-]+/, "").replace(/[\s«»"“”„,;:()\[\]—–-]+$/, "").replace(/([^.])\.$/, "$1").trim();
+  const tail = endPunct(q);
   const cyr = /[А-Яа-яЁё]/.test(txt), lat = /[a-zà-ÿœæç]/i.test(txt);
   if (!txt || txt.length > 80 || txt.split(" ").length > 8 || (cyr && lat) || (!cyr && !lat) || !spAllowed(sel)) { spHide(); return; }
   if (!SP.el) spBuild();
   const range = sel.getRangeAt(0).cloneRange();
-  if (SP.entry && SP.entry.sel === txt && !SP.el.hidden) { SP.range = range; spPlace(); return; }
+  if (SP.entry && SP.entry.sel === q && !SP.el.hidden) { SP.range = range; spPlace(); return; }
   SP.range = range;
   const req = ++SP.req, to = LANG === "en" ? "en" : "ru";
   const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
-  $(".sp-fr", el).textContent = txt;
+  $(".sp-fr", el).textContent = q;
   const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
@@ -618,13 +624,13 @@ function spCheck(){
     el.dataset.dir = "fr";
     if (hit) {
       const fr = hit.form || hit.fr;
-      SP.entry = {sel:txt, say:txt, fr, ru:hit.ru, en:hit.en};
-      mEl.textContent = (to === "en" ? (hit.en || hit.ru) : (hit.ru || hit.en)) || "—";
+      SP.entry = {sel:q, say:q, fr, ru:hit.ru, en:hit.en};
+      mEl.textContent = withTail((to === "en" ? (hit.en || hit.ru) : (hit.ru || hit.en)) || "—", tail, false);
       nEl.textContent = hit.form ? t("spForm", hit.form) : (dk(fr) !== dk(txt) ? fr : "");
       el.dataset.st = "ok"; return show();
     }
-    SP.entry = {sel:txt, say:txt, fr:txt, ru:"", en:""}; loading(); show();
-    remoteTr(txt, to).then(out=>{
+    SP.entry = {sel:q, say:q, fr:q, ru:"", en:""}; loading(); show();
+    remoteTr(q, to).then(out=>{
       if (req !== SP.req) return;
       if (out) { SP.entry[to] = out; mEl.textContent = out; nEl.textContent = t("spAuto"); el.dataset.st = "ok"; spPlace(); }
       else if (!FR_MARK.test(txt)) remoteRev("en");
@@ -634,8 +640,8 @@ function spCheck(){
   /* --- ru/en → французский --- */
   const paintRev = (src, list, i, base) => {
     const e = list[i];
-    SP.entry = {sel:txt, say:e.fr, fr:e.fr, ru:e.ru, en:e.en, rev:true};
-    mEl.textContent = e.fr; el.dataset.st = "ok"; el.dataset.dir = "rev";
+    SP.entry = {sel:q, say:withTail(e.fr, tail, true), fr:e.fr, ru:e.ru, en:e.en, rev:true};
+    mEl.textContent = withTail(e.fr, tail, true); el.dataset.st = "ok"; el.dataset.dir = "rev";
     const gloss = src === "en" ? e.en : e.ru;
     const g = gloss && rk(gloss) !== rk(txt) ? gloss : (base && base !== rk(txt) ? base : "");
     const alts = list.map((x, j)=>({x, j})).filter(o=>o.j !== i).slice(0, 3);
@@ -644,10 +650,10 @@ function spCheck(){
   };
   const remoteRev = src => {
     el.dataset.dir = "rev";
-    SP.entry = {sel:txt, say:"", fr:"", ru:"", en:"", rev:true}; loading(); show();
-    remoteTr(txt, "fr", src).then(out=>{
+    SP.entry = {sel:q, say:"", fr:"", ru:"", en:"", rev:true}; loading(); show();
+    remoteTr(q, "fr", src).then(out=>{
       if (req !== SP.req) return;
-      if (out) { SP.entry = {sel:txt, say:out, fr:out, ru: src === "ru" ? txt : "", en: src === "en" ? txt : "", rev:true}; mEl.textContent = out; nEl.textContent = t("spAuto"); el.dataset.st = "ok"; spPaintFav(); }
+      if (out) { SP.entry = {sel:q, say:out, fr:out, ru: src === "ru" ? q : "", en: src === "en" ? q : "", rev:true}; mEl.textContent = out; nEl.textContent = t("spAuto"); el.dataset.st = "ok"; spPaintFav(); }
       else fail();
       spPlace();
     });
