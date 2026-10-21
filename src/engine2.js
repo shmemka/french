@@ -1,0 +1,1320 @@
+(function(){
+"use strict";
+const $ = (s,r=document)=>r.querySelector(s), $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const main = $("#main"), nav = $("#nav"), app = $(".app");
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const ls = { get(k){ try { return localStorage.getItem(k); } catch(e) { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e) {} } };
+const ICON_PLAY = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><path d="M10.5 5.2a3.8 3.8 0 0 1 0 5.6M12.4 3.4a6.3 6.3 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+const ICO = {
+  home:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9.5 10 4l7 5.5V16a1 1 0 0 1-1 1h-3.5v-4.5h-5V17H4a1 1 0 0 1-1-1z"/></svg>',
+  test:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="12" height="15" rx="2"/><path d="M7 7.5h6M7 11h6M7 14.5h3.5"/></svg>',
+  quiz:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5.5" y="2.5" width="11" height="13" rx="2"/><path d="M3.5 5.5v10a2 2 0 0 0 2 2h8"/></svg>',
+  cheat:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M10 4v12M3 8.5h14M3 12h14"/></svg>',
+  side:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3.5" width="14" height="13" rx="2.5"/><path d="M8 3.5v13"/></svg>',
+  star:'<svg viewBox="0 0 20 20"><path d="m10 2.8 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></svg>',
+  cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>'
+};
+
+/* =========================================================
+   i18n
+   ========================================================= */
+const I18N = {
+ru:{
+  units:{"0":"Bienvenue ! (база)","1":"Je suis…","2":"Près de moi"},
+  topics:"Темы", home:"Главная", test:"Пробная контрольная", quizlet:"Quizlet", cheat:"Шпаргалка", account:"Личный кабинет",
+  fromBook:"Из учебника", ref:"Для справки", hideNav:"Скрыть меню", showNav:"Меню", lang:"Язык",
+  you:"Ты", guest:"Гость",
+  cloud:{local:"Сохраняется только в этом браузере", loading:"Подключаюсь к облаку…", saved:"Сохранено в облаке", saving:"Сохраняю…", error:"Облако недоступно — сохраняю локально", readonly:"Облако только для чтения — сохраняю локально", signedout:"Без входа — только в этом браузере"},
+  tipCloudS:"Ответы и прогресс сохраняются в облаке под твоим аккаунтом и видны с любого устройства, где ты вошёл на сайт.", tipSignIn:"Сейчас прогресс хранится только в этом браузере. Войди в личном кабинете, чтобы он сохранялся в облаке.",
+  accCloudOnS:"Твои ответы, прогресс, история контрольных и карточки Quizlet хранятся в облаке под твоим аккаунтом. Их видишь только ты — с любого устройства, где ты вошёл.", accCloudErrS:"Ты вошёл, но облако сейчас не отвечает. Прогресс сохраняется в этом браузере и отправится в облако, как только связь появится.", accNoCloud:"Облако для этой копии сайта не настроено: прогресс сохраняется только в этом браузере.", noTable:"похоже, в Supabase не создана таблица — выполни schema.sql",
+  authIn:"Вход", authUp:"Регистрация", authInH:"Войти в аккаунт", authUpH:"Создать аккаунт", authMagicH:"Вход по ссылке", authResetH:"Восстановить пароль",
+  authInSub:"Чтобы прогресс сохранялся в облаке и был виден на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль (от 6 символов).", authMagicSub:"Пришлём на почту ссылку — нажми её, и ты войдёшь без пароля.", authResetSub:"Пришлём на почту ссылку, по которой можно задать новый пароль.",
+  email:"Почта", password:"Пароль", authInBtn:"Войти", authUpBtn:"Зарегистрироваться", authMagicBtn:"Прислать ссылку", authResetBtn:"Прислать ссылку", authMagicLink:"Войти по ссылке на почту", authForgot:"Забыл пароль", authBackPw:"← Вход по паролю",
+  authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
+  authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту — после этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет — проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
+  aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена — открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть — войди на вкладке «Вход».", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
+  signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
+  heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 1 et 2",
+  heroLead:n=>`Вся грамматика и лексика первых двух юнитов: объяснения на русском с параллелями из английского, ${n} упражнений с мгновенной проверкой, карточки Quizlet и пробная контрольная с оценкой по 20-балльной шкале.`,
+  startFirst:"Начать с первой темы", solved:"из {n} заданий решено", bookTopics:"тем из учебника", refTopics:"тем для справки", lastTest:"последняя пробная",
+  how:[["Темы из учебника","Иди по порядку: сначала теория, потом задания под ней."],["Quizlet","Учи слова карточками, режимами «Заучивание», «Письмо» и «Подбор»."],["Шпаргалка","Все таблицы на одной странице. Повтори вечером и утром."],["Пробная контрольная","Реши 2–3 варианта, пока не будет стабильно 16/20 и выше."]],
+  tipTts:"Нажимай на французский текст с синим пунктиром — компьютер его прочитает. Лучше всего звучит в Safari или Chrome на Mac.",
+  tipNoTts:"Твой браузер не умеет озвучивать текст, поэтому аудио-кнопки скрыты.",
+  tipCloud:"Ответы и прогресс сохраняются в облаке и видны с любого устройства, где ты вошёл в Claude.",
+  tipLocal:"Ответы и прогресс сохраняются в этом браузере.",
+  bookSub:"Unités 0–2, с. 11–44", refSub:"Объяснения с нуля и то, что просто полезно знать", unit0note:" — основа, на которую опираются юниты 1–2",
+  refEyebrow:"Для справки", toPractice:n=>`К заданиям ↓ (${n})`, practiceSub:"Практика по теме. Ответы проверяются сразу и сохраняются — можно вернуться позже.",
+  back:"← назад", next:"дальше →",
+  doneOf:(d,n,p)=>`${d} / ${n} заданий · ${p}%`,
+  label:{mc:"Выбор ответа", tf:"Vrai ou faux", fill:"Впиши ответ", conj:"Спряжение", match:"Соедини пары", sort:"Распредели", order:"Собери фразу", listen:"Аудирование", cards:"Карточки", drill:"Читаем вслух"},
+  best:p=>`лучший: ${p}%`, again:"Заново", showAnswers:"Показать ответы", shuffleAgain:"Перемешать заново",
+  vrai:"Vrai — верно", faux:"Faux — неверно",
+  answerN:n=>`Ответь на ${n} вопр.`, mcProg:(a,n,c)=>`${a} / ${n} · верно: ${c}`,
+  instantHint:"Ответ проверяется сразу: Enter, Tab или клик в другое поле. Засчитывается первая попытка.",
+  conjHint:"Каждая форма проверяется сразу — правильная подсветится зелёным, и курсор перейдёт дальше.",
+  reporter:(g,d,n)=>`<b>${g}</b> верно · проверено ${d} из ${n}`,
+  almost:"Почти! Проверь акценты:", answerIs:"Ответ:", insert:"вставить букву", insertA:c=>`вставить ${c}`,
+  matchHint:"Нажми слева, потом справа", matchProg:(m,n,e)=>`Пар: ${m} / ${n} · ошибок: ${e}`, matchDone:e=>`<b>Готово!</b> Ошибок: ${e}`,
+  sortHint:"Выбери карточку и нажми на колонку (или перетащи) — проверка сразу", sortProg:(p,n,e)=>`<b>${p}</b> из ${n} на месте · ошибок: ${e}`, sortDone:"Всё распределено!",
+  orderHint:"Нажимай на слова по порядку — неверное слово сразу подсветится", orderProg:(d,n,g)=>`собрано ${d} из ${n} · без ошибок: ${g}`, collected:"Собрано!", errorsOnWay:n=>`ошибок по пути: ${n}`, wrongWord:"не это слово", errorsN:n=>`ошибок: ${n}`, yourSentence:"твоя фраза",
+  listenNoTts:"Синтез речи в этом браузере недоступен — прочитай число и напиши его цифрами.", listen:"Слушать", slow:"медленно", listenHint:"Пиши цифры — ответ проверяется сразу", numberN:n=>`число ${n}`,
+  cardsLeft:(q,k)=>`Осталось: <b>${q}</b> · знаю: ${k}`, flip:"нажми, чтобы перевернуть", flipA:"перевернуть карточку", knowIt:"Знаю", againCard:"Ещё раз", cardsHint:"«Знаю» убирает карточку, «Ещё раз» — отправляет в конец", deckDone:"Колода пройдена", deckDoneN:n=>`Все ${n} карточек пройдены.`, dirFr:"FR → RU", dirRu:"RU → FR",
+  check:"Проверить", readN:(s,n)=>`Прочитано: ${s} / ${n}`, allRead:"<b>Все слова прочитаны</b>",
+  cheatEyebrow:"Unités 1–2 · всё самое важное", cheatSub:"Все таблицы на одном экране. Перечитай перед контрольной.",
+  testEyebrow:"Contrôle blanc · unités 1 et 2", testSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–2. Каждый раз — новый вариант. В конце — оценка из 20 и разбор по темам.`,
+  modeNow:"Проверять сразу", modeEnd:"Как на экзамене — в конце", modeGroup:"Режим проверки", qN:n=>`${n} вопросов`, myTries:"Мои попытки",
+  testRunEyebrow:(n,now)=>`Contrôle blanc · ${n} questions · ${now?"проверка сразу":"проверка в конце"}`,
+  testRunSub:now=>now?"Каждый ответ проверяется сразу. Засчитывается первая попытка. В конце нажми «Узнать оценку».":"Отвечай на всё, потом нажми «Сдать работу» внизу.",
+  getGrade:"Узнать оценку", submit:"Сдать работу", answered:(d,n)=>`Отвечено: ${d} / ${n}`, answeredOk:(d,n,g)=>`Отвечено: ${d} / ${n} · верно: <b>${g}</b>`,
+  noAnswer:"(нет ответа)", total:(g,n)=>`Итог: ${g} / ${n}`,
+  verdicts:[["Très bien !","Ты готов(а) к контрольной."],["Bien !","Хорошо, но есть темы, которые стоит повторить — они внизу."],["Passable","Проходной балл, но повтори темы с красными полосками."],["À revoir","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
+  gotOf:(g,n)=>`${g} из ${n} правильно.`, newVariant:"Новый вариант", byTopic:"По темам", byTopicSub:"Сверху — самые слабые. Нажми на тему, чтобы повторить.", review:"Разбор ответов",
+  /* account */
+  accEyebrow:"Личный кабинет", accCloudOn:"Твои ответы, прогресс, история контрольных и карточки Quizlet хранятся в облаке Claude под твоим аккаунтом. Их видишь только ты — с любого устройства.",
+  accCloudOff:"Облако сейчас недоступно (например, страница открыта без входа в Claude). Прогресс сохраняется в этом браузере и выгрузится в облако, когда ты откроешь сайт под своим аккаунтом.",
+  stSolved:"заданий решено", stTopics:"тем пройдено полностью", stAvg:"средний результат", stTests:"пробных контрольных", stBest:"лучшая оценка", stWords:"слов выучено",
+  history:"История контрольных", noTests:"Пробных контрольных пока не было.", settings:"Настройки", reset:"Сбросить весь прогресс", resetConfirm:"Точно стереть всё? Нажми ещё раз", resetDone:"Прогресс сброшен",
+  progressByTopic:"Прогресс по темам",
+  lastSync:x=>`последняя синхронизация: ${x}`, pending:n=>`ждут отправки: ${n}`, lastErr:x=>`ошибка: ${x}`, syncNow:"Синхронизировать сейчас", inCloud:"Что лежит в облаке", checking:"Проверяю облако…",
+  cloudSummary:(a,b,c,d)=>`результаты ${a} заданий · ответы в ${b} темах · ${c} слов в Quizlet · ${d} пробных контрольных`, cloudEmpty:"В облаке пока ничего нет.", cloudUnreach:"Не удалось прочитать облако.", updatedAt:x=>`обновлено ${x}`,
+  /* quizlet */
+  qzSub:"Карточки со словами из юнитов 0–2. Прогресс по каждому слову сохраняется.",
+  qzAll:"Все слова", qzWords:"слов", qzLearned:"выучено", qzStarred:"со звёздочкой",
+  qzModes:{cards:"Карточки", learn:"Заучивание", write:"Письмо", match:"Подбор"},
+  qzShuffle:"Перемешать", qzStarOnly:"Только ★", qzStill:"Ещё учу", qzKnow:"Знаю", qzPrev:"Назад", qzNext:"Далее", qzKeys:"Пробел — перевернуть · ← → — листать", qzEmpty:"Нет карточек со звёздочкой в этом наборе.",
+  qzLearnDone:"Все слова набора выучены!", qzLearnDoneSub:"Можно сбросить прогресс набора и пройти заново — или выбрать другой набор.", qzResetSet:"Сбросить прогресс набора",
+  qzChoose:"Выбери перевод", qzType:"Напиши по-французски", qzLv:["Новые","Учу","Почти","Выучено"], qzCorrect:"Juste !", qzWrongIs:"Правильно:", qzContinue:"Дальше", qzCheck:"Проверить", qzDontKnow:"Не знаю",
+  qzWriteDone:(g,n)=>`Готово: ${g} из ${n}`, qzRetryWrong:"Повторить ошибки", qzRoundAgain:"Новый раунд",
+  qzMatchHint:"Найди пары: французское слово и перевод. Время пошло с первого клика.", qzMatchDone:s=>`Готово за ${s} с`, qzBest:s=>`рекорд: ${s} с`, qzPlayAgain:"Играть снова",
+  qzList:"Слова набора", qzStar:"отметить звёздочкой", qzSay:"произнести", qzLvShort:["новое","учу","почти","знаю"]
+},
+en:{
+  units:{"0":"Bienvenue ! (basics)","1":"Je suis…","2":"Près de moi"},
+  topics:"Topics", home:"Home", test:"Mock test", quizlet:"Quizlet", cheat:"Cheat sheet", account:"My account",
+  fromBook:"From the textbook", ref:"Reference", hideNav:"Hide menu", showNav:"Menu", lang:"Language",
+  you:"You", guest:"Guest",
+  cloud:{local:"Saved in this browser only", loading:"Connecting to the cloud…", saved:"Saved to the cloud", saving:"Saving…", error:"Cloud unavailable — saving locally", readonly:"Cloud is read-only — saving locally", signedout:"Not signed in — this browser only"},
+  tipCloudS:"Your answers and progress are saved in the cloud under your account and available on any device where you’re signed in.", tipSignIn:"Right now your progress is stored in this browser only. Sign in on the account page to save it to the cloud.",
+  accCloudOnS:"Your answers, progress, test history and Quizlet cards are stored in the cloud under your account. Only you can see them — on any device where you’re signed in.", accCloudErrS:"You’re signed in, but the cloud isn’t responding right now. Progress is saved in this browser and will be uploaded once the connection is back.", accNoCloud:"The cloud isn’t set up for this copy of the site: progress is saved in this browser only.", noTable:"looks like the table hasn’t been created in Supabase — run schema.sql",
+  authIn:"Sign in", authUp:"Sign up", authInH:"Sign in to your account", authUpH:"Create an account", authMagicH:"Sign in with a link", authResetH:"Reset your password",
+  authInSub:"So your progress is saved to the cloud and shows up on your phone and computer.", authUpSub:"All you need is an e-mail and a password (6+ characters).", authMagicSub:"We’ll e-mail you a link — click it and you’re in, no password needed.", authResetSub:"We’ll e-mail you a link to set a new password.",
+  email:"E-mail", password:"Password", authInBtn:"Sign in", authUpBtn:"Sign up", authMagicBtn:"Send link", authResetBtn:"Send link", authMagicLink:"Sign in with an e-mail link", authForgot:"Forgot password", authBackPw:"← Sign in with password",
+  authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
+  authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address — then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
+  aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet — open the e-mail and click the link.", aeExists:"This account already exists — sign in on the “Sign in” tab.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
+  signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
+  heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 1 et 2",
+  heroLead:n=>`All the grammar and vocabulary of the first two units: explanations in English with parallels from Russian, ${n} exercises with instant checking, Quizlet flashcards and a mock test graded out of 20.`,
+  startFirst:"Start with the first topic", solved:"of {n} exercises done", bookTopics:"textbook topics", refTopics:"reference topics", lastTest:"last mock test",
+  how:[["Textbook topics","Go in order: first the explanation, then the exercises below it."],["Quizlet","Learn words with flashcards, Learn, Write and Match modes."],["Cheat sheet","All the tables on one page. Review in the evening and in the morning."],["Mock test","Do 2–3 versions until you consistently get 16/20 or more."]],
+  tipTts:"Click French text with a dotted blue underline and the computer will read it aloud. It sounds best in Safari or Chrome on a Mac.",
+  tipNoTts:"Your browser can’t read text aloud, so the audio buttons are hidden.",
+  tipCloud:"Your answers and progress are saved in the cloud and available on any device where you’re signed in to Claude.",
+  tipLocal:"Your answers and progress are saved in this browser.",
+  bookSub:"Unités 0–2, p. 11–44", refSub:"Explanations from scratch and things that are good to know", unit0note:" — the basics units 1–2 build on",
+  refEyebrow:"Reference", toPractice:n=>`Go to exercises ↓ (${n})`, practiceSub:"Practice for this topic. Answers are checked instantly and saved — you can come back later.",
+  back:"← back", next:"next →",
+  doneOf:(d,n,p)=>`${d} / ${n} exercises · ${p}%`,
+  label:{mc:"Multiple choice", tf:"Vrai ou faux", fill:"Type the answer", conj:"Conjugation", match:"Match the pairs", sort:"Sort", order:"Build the sentence", listen:"Listening", cards:"Flashcards", drill:"Read aloud"},
+  best:p=>`best: ${p}%`, again:"Start over", showAnswers:"Show answers", shuffleAgain:"Shuffle again",
+  vrai:"Vrai — true", faux:"Faux — false",
+  answerN:n=>`Answer ${n} questions`, mcProg:(a,n,c)=>`${a} / ${n} · correct: ${c}`,
+  instantHint:"Answers are checked instantly: Enter, Tab or click another field. Your first attempt counts.",
+  conjHint:"Each form is checked instantly — a correct one turns green and the cursor moves on.",
+  reporter:(g,d,n)=>`<b>${g}</b> correct · checked ${d} of ${n}`,
+  almost:"Almost! Check the accents:", answerIs:"Answer:", insert:"insert a letter", insertA:c=>`insert ${c}`,
+  matchHint:"Click on the left, then on the right", matchProg:(m,n,e)=>`Pairs: ${m} / ${n} · mistakes: ${e}`, matchDone:e=>`<b>Done!</b> Mistakes: ${e}`,
+  sortHint:"Pick a card and click a column (or drag it) — checked instantly", sortProg:(p,n,e)=>`<b>${p}</b> of ${n} placed · mistakes: ${e}`, sortDone:"All sorted!",
+  orderHint:"Click the words in order — a wrong word is highlighted right away", orderProg:(d,n,g)=>`built ${d} of ${n} · without mistakes: ${g}`, collected:"Done!", errorsOnWay:n=>`mistakes along the way: ${n}`, wrongWord:"not that word", errorsN:n=>`mistakes: ${n}`, yourSentence:"your sentence",
+  listenNoTts:"Speech isn’t available in this browser — read the number and write it in digits.", listen:"Listen", slow:"slowly", listenHint:"Type the digits — checked instantly", numberN:n=>`number ${n}`,
+  cardsLeft:(q,k)=>`Left: <b>${q}</b> · known: ${k}`, flip:"click to flip", flipA:"flip the card", knowIt:"I know it", againCard:"Again", cardsHint:"«I know it» removes the card, «Again» sends it to the end", deckDone:"Deck finished", deckDoneN:n=>`All ${n} cards done.`, dirFr:"FR → EN", dirRu:"EN → FR",
+  check:"Check", readN:(s,n)=>`Read: ${s} / ${n}`, allRead:"<b>All words read</b>",
+  cheatEyebrow:"Unités 1–2 · the essentials", cheatSub:"All the tables on one screen. Review before the test.",
+  testEyebrow:"Contrôle blanc · unités 1 et 2", testSub:n=>`Questions are drawn at random from a bank of ${n} covering every topic of units 1–2. A new version every time. At the end you get a grade out of 20 and a breakdown by topic.`,
+  modeNow:"Check instantly", modeEnd:"Exam mode — check at the end", modeGroup:"Checking mode", qN:n=>`${n} questions`, myTries:"My attempts",
+  testRunEyebrow:(n,now)=>`Contrôle blanc · ${n} questions · ${now?"instant checking":"checked at the end"}`,
+  testRunSub:now=>now?"Each answer is checked instantly. Your first attempt counts. At the end click «Get my grade».":"Answer everything, then click «Hand in» at the bottom.",
+  getGrade:"Get my grade", submit:"Hand in", answered:(d,n)=>`Answered: ${d} / ${n}`, answeredOk:(d,n,g)=>`Answered: ${d} / ${n} · correct: <b>${g}</b>`,
+  noAnswer:"(no answer)", total:(g,n)=>`Total: ${g} / ${n}`,
+  verdicts:[["Très bien !","You’re ready for the test."],["Bien !","Good, but some topics are worth reviewing — see below."],["Passable","A pass, but review the topics with red bars."],["À revoir","Go through the topics with red bars again, then try a new version."]],
+  gotOf:(g,n)=>`${g} of ${n} correct.`, newVariant:"New version", byTopic:"By topic", byTopicSub:"The weakest are at the top. Click a topic to review it.", review:"Answer review",
+  accEyebrow:"My account", accCloudOn:"Your answers, progress, test history and Quizlet cards are stored in the Claude cloud under your account. Only you can see them — from any device.",
+  accCloudOff:"The cloud isn’t available right now (for example, the page is open without signing in to Claude). Progress is saved in this browser and will be uploaded when you open the site with your account.",
+  stSolved:"exercises done", stTopics:"topics fully done", stAvg:"average score", stTests:"mock tests", stBest:"best grade", stWords:"words learned",
+  history:"Test history", noTests:"No mock tests yet.", settings:"Settings", reset:"Reset all progress", resetConfirm:"Erase everything? Click again", resetDone:"Progress reset",
+  progressByTopic:"Progress by topic",
+  lastSync:x=>`last sync: ${x}`, pending:n=>`waiting to upload: ${n}`, lastErr:x=>`error: ${x}`, syncNow:"Sync now", inCloud:"What’s in the cloud", checking:"Checking the cloud…",
+  cloudSummary:(a,b,c,d)=>`results for ${a} exercises · answers in ${b} topics · ${c} Quizlet words · ${d} mock tests`, cloudEmpty:"Nothing in the cloud yet.", cloudUnreach:"Couldn’t read the cloud.", updatedAt:x=>`updated ${x}`,
+  qzSub:"Flashcards with the words from units 0–2. Progress for each word is saved.",
+  qzAll:"All words", qzWords:"words", qzLearned:"learned", qzStarred:"starred",
+  qzModes:{cards:"Flashcards", learn:"Learn", write:"Write", match:"Match"},
+  qzShuffle:"Shuffle", qzStarOnly:"Starred only", qzStill:"Still learning", qzKnow:"I know it", qzPrev:"Back", qzNext:"Next", qzKeys:"Space — flip · ← → — browse", qzEmpty:"No starred cards in this set.",
+  qzLearnDone:"You’ve learned every word in this set!", qzLearnDoneSub:"Reset the set to go through it again — or pick another set.", qzResetSet:"Reset this set",
+  qzChoose:"Choose the translation", qzType:"Write it in French", qzLv:["New","Learning","Almost","Learned"], qzCorrect:"Juste !", qzWrongIs:"Correct answer:", qzContinue:"Continue", qzCheck:"Check", qzDontKnow:"I don’t know",
+  qzWriteDone:(g,n)=>`Done: ${g} of ${n}`, qzRetryWrong:"Retry mistakes", qzRoundAgain:"New round",
+  qzMatchHint:"Find the pairs: the French word and its translation. The timer starts on your first click.", qzMatchDone:s=>`Done in ${s} s`, qzBest:s=>`best: ${s} s`, qzPlayAgain:"Play again",
+  qzList:"Words in this set", qzStar:"star this word", qzSay:"pronounce", qzLvShort:["new","learning","almost","known"]
+}};
+let LANG = ls.get("edito-lang") === "en" ? "en" : "ru";
+const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
+
+let TOP, BOOK, REF, ORDER, byId, POOLX, CHEATX;
+function setData(){
+  TOP = LANG === "en" ? TOPICS_EN : TOPICS;
+  BOOK = TOP.filter(x=>x.sec==="book"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...REF];
+  byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
+  POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT;
+  document.documentElement.lang = LANG;
+}
+setData();
+
+/* =========================================================
+   STORE: local cache + cloud (db) under data/users/<id>/
+   ========================================================= */
+const LKEY = "edito-a1-revisions-v2";
+let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}}, ts:{}};
+(function loadLocal(){
+  try {
+    const raw = ls.get(LKEY);
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}}, ts:o.ts||{}}; }
+    else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
+  } catch(e) {}
+})();
+const qKey = fr => { let h = 5381; for (const ch of String(fr)) h = (Math.imul(h, 33) ^ ch.codePointAt(0)) >>> 0; return "k" + h.toString(36); };
+function normQuiz(c){ const out = {}; for (const k in (c||{})) { const nk = /^k[0-9a-z]+$/.test(k) ? k : qKey(k); out[nk] = Object.assign({}, out[nk]||{}, c[k]); } return out; }
+S.quiz.c = normQuiz(S.quiz.c);
+const persistLocal = () => ls.set(LKEY, JSON.stringify(S));
+const Cloud = {be:null, kind:"none", uid:null, state:"local", dirty:new Set(), timer:null, busy:false, lastOk:0, lastErr:null, fails:0, inits:0, initing:null};
+let ME = null;
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej({code:"timeout", message:"no answer in " + Math.round(ms/1000) + " s"}), ms))]);
+/* --- backends: { uid, list() -> [{id,data}], set(key, body) } --- */
+const SUPA_CFG = window.SUPA_CONFIG || null;
+let sb = null;
+if (SUPA_CFG && SUPA_CFG.url && SUPA_CFG.anonKey && window.supabase && typeof window.supabase.createClient === "function") {
+  try { sb = window.supabase.createClient(SUPA_CFG.url, SUPA_CFG.anonKey, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}}); } catch(e) { try { console.warn("[cloud] supabase init failed", e); } catch(_) {} }
+}
+Cloud.kind = sb ? "supabase" : (window.claude && typeof window.claude.use === "function" ? "claude" : "none");
+const sbErr = e => ({code: (e && (e.code || (e.status ? "http_" + e.status : ""))) || "db", message: (e && e.message) || String(e)});
+async function claudeBackend(){
+  const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+  if (user) { try { ME = await withTimeout(user.me(), 10000); } catch(e) {} }
+  const uid = ME && ME.id ? ME.id : (user ? await withTimeout(user.id(), 10000).catch(()=>null) : null);
+  if (!db || !uid) return null;
+  const col = () => db.collection("data/users/" + uid);
+  return {uid,
+    async list(){ const snap = await col().get(); return snap.docs.filter(d=>d.exists).map(d=>({id:d.id, data:d.data() || {}})); },
+    set:(k, body) => col().doc(k).set(body)};
+}
+async function supaBackend(){
+  const {data, error} = await sb.auth.getSession();
+  if (error) throw sbErr(error);
+  const s = data && data.session; if (!s || !s.user) return null;
+  const u = s.user; ME = {id:u.id, name:u.email || t("you"), email:u.email || ""};
+  return {uid:u.id,
+    async list(){ const r = await sb.from("user_docs").select("key,body").eq("user_id", u.id); if (r.error) throw sbErr(r.error); return (r.data || []).map(x=>({id:x.key, data:x.body || {}})); },
+    async set(k, body){ const r = await sb.from("user_docs").upsert({user_id:u.id, key:k, body, ts:body.ts || 0}, {onConflict:"user_id,key"}); if (r.error) throw sbErr(r.error); }};
+}
+function docFor(key){
+  if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
+  if (key === "settings") return {lang:LANG, ts:S.ts.settings||0};
+  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, ts:S.ts.quiz||0};
+  if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
+  return null;
+}
+const hhmm = ms => new Date(ms).toLocaleTimeString(LANG==="en"?"en-GB":"ru-RU",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+function setCloud(st){
+  Cloud.state = st;
+  $$("[data-cloud]").forEach(el=>{ el.textContent = t("cloud")[st] + (st === "saved" && Cloud.lastOk ? " · " + hhmm(Cloud.lastOk).slice(0,5) : ""); el.dataset.st = st; el.title = Cloud.lastErr || ""; });
+  const d = $("#cloudDiag"); if (d) d.innerHTML = cloudDiag();
+}
+function schedule(ms){ clearTimeout(Cloud.timer); Cloud.timer = setTimeout(flush, ms); }
+function touch(key){
+  S.ts[key] = Date.now(); persistLocal();
+  if (Cloud.be) { Cloud.dirty.add(key); setCloud("saving"); schedule(700); }
+}
+async function flush(){
+  const be = Cloud.be; if (!be) return;
+  if (!Cloud.dirty.size) { if (!Cloud.busy) setCloud("saved"); return; }
+  if (Cloud.busy) { schedule(600); return; }
+  Cloud.busy = true;
+  const keys = [...Cloud.dirty]; Cloud.dirty.clear();
+  let failed = null;
+  for (const k of keys) {
+    const body = docFor(k); if (!body) continue;
+    try { await withTimeout(be.set(k, body), 15000); }
+    catch(e) { failed = e; Cloud.dirty.add(k); try { console.warn("[cloud] save failed:", k, e && e.code, e && e.message); } catch(_) {} }
+  }
+  Cloud.busy = false;
+  if (Cloud.be !== be) return;
+  if (!failed) { Cloud.fails = 0; Cloud.lastOk = Date.now(); Cloud.lastErr = null; setCloud(Cloud.dirty.size ? "saving" : "saved"); if (Cloud.dirty.size) schedule(300); return; }
+  const code = failed && failed.code;
+  Cloud.lastErr = (code || "error") + (failed && failed.message ? " — " + failed.message : "");
+  Cloud.fails++;
+  if (["not_granted","revoked","capability_disabled","capability_removed"].includes(code)) { Cloud.be = null; setCloud("error"); return; }
+  if (["invalid_argument","42501","42P01","PGRST205"].includes(code) && Cloud.fails >= 3) { Cloud.be = null; setCloud("readonly"); return; }
+  setCloud("error");
+  schedule(Math.min(30000, 2500 * Cloud.fails) + Math.random()*1500);
+}
+document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState === "hidden" && Cloud.dirty.size) flush(); });
+window.addEventListener("pagehide", ()=>{ if (Cloud.dirty.size) flush(); });
+function hasData(k){
+  if (k === "progress") return Object.keys(S.p).length || S.tests.length;
+  if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length;
+  if (k === "settings") return LANG !== "ru";
+  if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
+  return false;
+}
+function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}}, ts:{}}; persistLocal(); }
+function initCloud(){
+  if (Cloud.initing) return Cloud.initing;
+  Cloud.initing = initCloudRun().finally(()=>{ Cloud.initing = null; });
+  return Cloud.initing;
+}
+async function initCloudRun(){
+  if (Cloud.kind === "none") { setCloud("local"); return; }
+  Cloud.inits++;
+  setCloud("loading");
+  let changed = false, langChanged = false;
+  try {
+    const be = await withTimeout(Cloud.kind === "supabase" ? supaBackend() : claudeBackend(), 25000);
+    paintAccount();
+    if (!be) { Cloud.be = null; Cloud.uid = null; setCloud(Cloud.kind === "supabase" ? "signedout" : "local"); if (location.hash === "#account") rerender(); return; }
+    /* другой аккаунт на этом же устройстве — не смешиваем чужой прогресс */
+    const owner = ls.get("edito-owner");
+    if (owner && owner !== be.uid) { resetLocal(); changed = true; }
+    ls.set("edito-owner", be.uid);
+    const docs = await withTimeout(be.list(), 20000);
+    const cloudKeys = new Set();
+    docs.forEach(({id:k, data:v})=>{
+      v = v || {}; cloudKeys.add(k);
+      const lt = S.ts[k] || 0, ct = v.ts || 0;
+      if (k === "progress") {
+        let up = false;
+        const cp = v.p || {};
+        for (const tid in cp) { S.p[tid] = S.p[tid] || {}; for (const ei in cp[tid]) { const a = S.p[tid][ei], b = cp[tid][ei]; if (!b) continue; if (!a || b.b > a.b) { S.p[tid][ei] = {b:b.b, l:b.l}; changed = true; } else if (a.b > b.b) up = true; } }
+        for (const tid in S.p) for (const ei in S.p[tid]) if (!cp[tid] || !cp[tid][ei]) up = true;
+        const seen = new Set(S.tests.map(x=>x.d + "|" + x.got + "|" + x.total));
+        (v.tests || []).forEach(x=>{ const key = x.d + "|" + x.got + "|" + x.total; if (!seen.has(key)) { S.tests.push(x); seen.add(key); changed = true; } });
+        if (S.tests.length > (v.tests || []).length) up = true;
+        S.tests.sort((a,b)=>(a.at||0)-(b.at||0)); S.tests = S.tests.slice(-30);
+        if (up) Cloud.dirty.add("progress");
+        S.ts.progress = Math.max(lt, ct);
+      } else if (ct > lt) {
+        if (k === "settings" && (v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; }
+        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}};
+        else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
+        S.ts[k] = ct; changed = true;
+      } else if (lt > ct) Cloud.dirty.add(k);
+    });
+    ["progress","quiz","settings", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
+    persistLocal();
+    Cloud.be = be; Cloud.uid = be.uid; Cloud.fails = 0; Cloud.lastOk = Date.now(); Cloud.lastErr = null;
+    setCloud(Cloud.dirty.size ? "saving" : "saved");
+    if (Cloud.dirty.size) flush();
+  } catch(e) {
+    Cloud.be = null; Cloud.lastErr = (e && e.code || "error") + (e && e.message ? " — " + e.message : "");
+    setCloud("error");
+    try { console.warn("[cloud] init failed:", e && e.code, e && e.message); } catch(_) {}
+    if (Cloud.inits < 4) setTimeout(initCloud, 4000 * Cloud.inits);
+    if (location.hash === "#account") try { rerender(); } catch(_) {}
+    return;
+  }
+  try { paintNavProgress(); if (langChanged) { setData(); buildNav(); } if (changed || langChanged || location.hash === "#account") rerender(); } catch(e) {}
+}
+function cloudDiag(){
+  const lines = [];
+  if (Cloud.lastOk) lines.push(t("lastSync", hhmm(Cloud.lastOk)));
+  if (Cloud.dirty.size) lines.push(t("pending", Cloud.dirty.size));
+  if (Cloud.lastErr) { lines.push(t("lastErr", esc(Cloud.lastErr))); if (/user_docs|PGRST205|42P01/.test(Cloud.lastErr)) lines.push(t("noTable")); }
+  return lines.join(" · ");
+}
+async function syncNow(){
+  if (Cloud.kind === "none") return;
+  ["progress","quiz","settings", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
+  if (!Cloud.be) { Cloud.inits = 0; await initCloud(); }
+  if (Cloud.be) { Cloud.fails = 0; await flush(); }
+}
+/* --- Supabase auth --- */
+const Auth = {mode:"in", msg:"", msgKind:"", recovery:false, redirect:false};
+(function(){
+  const h = location.hash || "";
+  if (/access_token=|error_description=|type=recovery|type=signup|type=magiclink/.test(h)) {
+    Auth.redirect = true;
+    const m = h.match(/error_description=([^&]+)/);
+    if (m) { Auth.msg = authErrText({message:decodeURIComponent(m[1].replace(/\+/g, " "))}); Auth.msgKind = "err"; try { history.replaceState(null, "", location.pathname + location.search + "#account"); } catch(e) {} }
+  }
+})();
+const authRedirectTo = () => location.origin + location.pathname;
+function authErrText(e){
+  const m = (e && e.message) || String(e || "");
+  if (/invalid login credentials/i.test(m)) return t("aeCreds");
+  if (/email not confirmed/i.test(m)) return t("aeNotConfirmed");
+  if (/already registered|already been registered|user_already_exists/i.test(m)) return t("aeExists");
+  if (/rate limit|too many|security purposes/i.test(m)) return t("aeRate");
+  if (/password.*(at least|short|characters)/i.test(m)) return t("aeShort");
+  if (/expired|invalid.*(link|token)|otp_expired/i.test(m)) return t("aeLink");
+  if (/failed to fetch|network|load failed/i.test(m)) return t("aeNet");
+  return m;
+}
+function authSay(msg, kind){ Auth.msg = msg; Auth.msgKind = kind || ""; const el = $("#authMsg"); if (el) { el.textContent = msg; el.dataset.k = Auth.msgKind; } }
+if (sb) {
+  sb.auth.onAuthStateChange((ev, session)=>{
+    setTimeout(()=>{
+      if (ev === "INITIAL_SESSION") { initCloud(); if (Auth.redirect && session) { Auth.redirect = false; location.hash = "account"; } return; }
+      if (ev === "PASSWORD_RECOVERY") { Auth.recovery = true; Auth.redirect = false; if (location.hash !== "#account") location.hash = "account"; else rerender(); return; }
+      if (ev === "SIGNED_IN") { if (!session || session.user.id !== Cloud.uid) { Auth.msg = ""; initCloud().then(()=>{ if (Auth.redirect) { Auth.redirect = false; location.hash = "account"; } }); } return; }
+      if (ev === "USER_UPDATED") { if (session && session.user) { ME = {id:session.user.id, name:session.user.email || t("you"), email:session.user.email || ""}; paintAccount(); } return; }
+      if (ev === "SIGNED_OUT") {
+        clearTimeout(Cloud.timer); Cloud.be = null; Cloud.uid = null; ME = null; Cloud.dirty.clear(); Cloud.lastOk = 0; Cloud.lastErr = null;
+        resetLocal(); try { localStorage.removeItem("edito-owner"); } catch(e) {}
+        setCloud("signedout"); paintAccount(); paintNavProgress(); rerender();
+      }
+    }, 0);
+  });
+}
+async function signOut(){
+  try { if (Cloud.dirty.size) await withTimeout(flush(), 8000); } catch(e) {}
+  try { await sb.auth.signOut(); } catch(e) { try { await sb.auth.signOut({scope:"local"}); } catch(_) {} }
+}
+
+/* progress */
+function setScore(tid, ei, got, total){
+  const p = S.p[tid] || (S.p[tid] = {});
+  const r = total ? got/total : 1, prev = p[ei];
+  p[ei] = {b: Math.max(r, prev ? prev.b : 0), l: r};
+  touch("progress"); paintNavProgress();
+}
+function topicPct(tp){ const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEach((_,i)=>{ if (p[i]) { s += p[i].b; d++; } }); return {pct: tp.ex.length ? s/tp.ex.length : 0, done:d, n:tp.ex.length}; }
+
+/* =========================================================
+   speech
+   ========================================================= */
+const synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+let frVoice = null;
+function pickVoice(){ try { const vs = synth.getVoices(); frVoice = vs.find(v=>/^fr[-_]FR/i.test(v.lang) && /Thomas|Amélie|Audrey|Aurélie|Marie|Google/i.test(v.name)) || vs.find(v=>/^fr[-_]FR/i.test(v.lang)) || vs.find(v=>/^fr/i.test(v.lang)) || null; } catch(e) {} }
+if (synth) { pickVoice(); try { synth.addEventListener("voiceschanged", pickVoice); } catch(e) {} }
+const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/\((?:m|f|fam|e|ne|s|es)\.?\)/g,"").replace(/[✗✓→=]/g," ").replace(/\s+\/\s+/g,", ").replace(/\s—\s/g,", ").replace(/\s+/g," ").trim();
+function speak(text, rate){
+  if (!synth) return false;
+  try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); u.lang = "fr-FR"; if (frVoice) u.voice = frVoice; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
+}
+if (!synth) document.documentElement.classList.add("no-tts");
+document.addEventListener("click", e=>{
+  const el = e.target.closest(".fr");
+  if (!el || !synth) return;
+  speak(el.dataset.say || el.textContent);
+  el.classList.add("speaking"); setTimeout(()=>el.classList.remove("speaking"), 900);
+});
+
+/* =========================================================
+   answer checking + accent bar
+   ========================================================= */
+const norm = s => (s||"").normalize("NFC").toLowerCase().replace(/[’`´‘ʼ]/g,"'").replace(/[  ]/g," ").replace(/\s*'\s*/g,"'").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").replace(/\s*([?!,;:.…])/g,"$1").replace(/[.!?…]+$/,"").trim();
+const strip = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/œ/g,"oe");
+function judge(input, answers){
+  const n = norm(input); if (!n) return "empty";
+  if (answers.some(a=>norm(a)===n)) return "ok";
+  if (answers.some(a=>strip(norm(a))===strip(n))) return "acc";
+  return "bad";
+}
+const qhtml = q => q.replace(/___/g,'<span class="blank"></span>');
+const ACC = ["é","è","ê","à","â","ç","ù","û","î","ï","ô","ë","œ","’"];
+let lastInput = null;
+document.addEventListener("focusin", e=>{ if (e.target.classList && e.target.classList.contains("ans")) lastInput = e.target; });
+document.addEventListener("mousedown", e=>{ if (e.target.closest(".acc")) e.preventDefault(); });
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".acc"); if (!b) return;
+  const block = b.closest(".exb, .qz-stage") || document; let inp = lastInput;
+  if (!inp || !block.contains(inp)) inp = $(".ans", block);
+  if (!inp || inp.disabled) return;
+  const s = inp.selectionStart ?? inp.value.length, en = inp.selectionEnd ?? inp.value.length;
+  inp.value = inp.value.slice(0,s) + b.dataset.c + inp.value.slice(en);
+  inp.focus(); try { inp.setSelectionRange(s+1, s+1); } catch(_) {}
+  inp.dispatchEvent(new Event("input", {bubbles:true}));
+});
+const accBar = () => `<div class="accbar" data-label="${esc(t("insert"))}">${ACC.map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
+const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
+
+/* =========================================================
+   exercise blocks (with saved answers)
+   ========================================================= */
+function praise(r){ return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
+function makeBlock(tp, ex, i){
+  const el = document.createElement("section"); el.className = "exb"; el.dataset.i = i;
+  el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${t("label")[ex.t]}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
+  const api = {
+    el, body: $(".exb-b", el), score: $(".exb-score", el), btns: $(".exb-btns", el),
+    saved: (S.ans[tp.id] || {})[i] || null,
+    save(obj){ (S.ans[tp.id] || (S.ans[tp.id] = {}))[i] = obj; api.saved = obj; touch("ans-" + tp.id); },
+    clear(){ if (S.ans[tp.id] && S.ans[tp.id][i] !== undefined) { delete S.ans[tp.id][i]; touch("ans-" + tp.id); } api.saved = null; },
+    showBest(){ const p = (S.p[tp.id]||{})[i]; $(".exb-best", el).textContent = p ? t("best", Math.round(p.b*100)) : ""; },
+    finish(got, total, msg, restoring){ if (!restoring) setScore(tp.id, i, got, total); const r = total ? got/total : 1; api.score.innerHTML = msg || `<b>${got} / ${total}</b> · <span class="pen">${praise(r)}</span>`; api.showBest(); },
+    status(txt){ api.score.innerHTML = txt; },
+    button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; }
+  };
+  api.showBest();
+  return api;
+}
+const fbHtml = (state, answers, e) => {
+  const right = esc(answers[0]);
+  if (state === "ok") return `<span class="ok-t">Juste !</span>${e?` <span class="ex-e">${e}</span>`:""}`;
+  if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>${e?` <span class="ex-e">${e}</span>`:""}`;
+  if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b>${e?" · " + e:""}</span>`;
+  return `<span class="pen">→ ${right}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
+};
+const INIT = {};
+
+/* multiple choice + true/false */
+INIT.mc = (api, ex) => {
+  const items = ex.t === "tf" ? ex.items.map(it=>({q:it.q, o:[t("vrai"), t("faux")], a: it.a?0:1, e:it.e, keep:true})) : ex.items;
+  let answered, correct, sel, rows;
+  const choose = (k, j, restoring) => {
+    const row = rows[k], it = items[k];
+    if (!row || row.dataset.done) return; row.dataset.done = "1";
+    const ok = j === it.a; answered++; if (ok) correct++;
+    $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
+    const fb = $(".fb", row); fb.hidden = false;
+    fb.innerHTML = ok ? `<span class="ok-t">Juste !</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}` : `<span class="pen">→ ${it.o[it.a]}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}`;
+    sel[k] = j; if (!restoring) api.save({sel});
+    if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcProg", answered, items.length, correct));
+  };
+  const build = restore => {
+    answered = 0; correct = 0; sel = {}; rows = []; api.body.innerHTML = ""; api.status(t("answerN", items.length));
+    items.forEach((it,k)=>{
+      const row = document.createElement("div"); row.className = "it";
+      const opts = it.o.map((o,j)=>({o,j})); if (!it.keep) shuffle(opts);
+      row.innerHTML = `<p class="q">${qhtml(it.q)}</p><div class="opts">${opts.map(x=>`<button type="button" class="opt" data-j="${x.j}">${x.o}</button>`).join("")}</div><div class="fb" hidden></div>`;
+      $$(".opt", row).forEach(b=>b.addEventListener("click", ()=>choose(k, +b.dataset.j, false)));
+      api.body.appendChild(row); rows.push(row);
+    });
+    if (restore && restore.sel) Object.keys(restore.sel).forEach(k=>choose(+k, +restore.sel[k], true));
+  };
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+INIT.tf = INIT.mc;
+
+/* instant checking for text inputs */
+function wireInstant(slots, onFirst, init, onSave){
+  const first = slots.map((_,k)=> init && init.f && init.f[k] ? init.f[k] : null);
+  const save = () => { if (onSave) onSave({v: slots.map(s=>s.inp.value), f: first}); };
+  const paint = k => {
+    const s = slots[k], st = judge(s.inp.value, s.a);
+    if (st === "empty") return st;
+    s.inp.classList.remove("r-ok","r-bad","r-acc"); s.inp.classList.add(st==="ok"?"r-ok":st==="acc"?"r-acc":"r-bad");
+    s.show(st); return st;
+  };
+  const mark = k => {
+    const st = paint(k); if (st === "empty") return st;
+    if (!first[k]) { first[k] = st; onFirst(first, false); }
+    save(); return st;
+  };
+  const next = k => { const n = slots[k+1]; if (n) n.inp.focus(); };
+  slots.forEach((s,k)=>{
+    s.inp.addEventListener("input", ()=>{
+      const v = norm(s.inp.value);
+      if (judge(s.inp.value, s.a) === "ok") {
+        paint(k);
+        const longer = s.a.some(a=>{ const na = norm(a); return na !== v && na.startsWith(v); });
+        if (!s.long && !longer && v.length >= (s.minAdv || 3) && document.activeElement === s.inp) next(k);
+      } else { s.inp.classList.remove("r-ok","r-bad","r-acc"); s.hide(); }
+    });
+    s.inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); mark(k); next(k); } });
+    s.inp.addEventListener("blur", ()=>mark(k));
+  });
+  if (init && init.v) slots.forEach((s,k)=>{ if (init.v[k]) { s.inp.value = init.v[k]; paint(k); } });
+  onFirst(first, true);
+  return {
+    first,
+    reveal(){ slots.forEach((s,k)=>{ s.inp.value = s.a[0]; s.inp.classList.remove("r-ok","r-bad","r-acc"); s.inp.classList.add("r-ok"); s.show("shown"); if (!first[k]) first[k] = "gave"; }); onFirst(first, false); save(); }
+  };
+}
+const reporter = (api, n) => (first, restoring) => {
+  const done = first.filter(Boolean).length, got = first.filter(x=>x==="ok").length;
+  if (done === n) api.finish(got, n, null, restoring);
+  else if (done) api.status(t("reporter", got, done, n));
+};
+
+INIT.fill = (api, ex) => {
+  let ctl;
+  const build = restore => {
+    api.body.innerHTML = accBar(); api.status(t("instantHint"));
+    const slots = ex.items.map((it,k)=>{
+      const row = document.createElement("div"); row.className = "it";
+      const inp = `<input class="ans${it.long?" wide":""}" ${inputAttrs} aria-label="${k+1}">`;
+      row.innerHTML = `<p class="fillq">${it.q.includes("___") ? it.q.replace("___", inp).replace(/___/g,"…") : `${it.q} ${inp}`}</p><div class="fb" hidden></div>`;
+      api.body.appendChild(row);
+      const fb = $(".fb", row);
+      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, it.a, it.e); }, hide: () => { fb.hidden = true; }};
+    });
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+  };
+  api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+INIT.conj = (api, ex) => {
+  let ctl;
+  const build = restore => {
+    api.body.innerHTML = accBar() + `<div class="conj-grid">${ex.items.map((it,v)=>`<div class="conj-card"><h5><span class="fr">${it.v}</span></h5>${it.f.map((f,k)=>`<div class="conj-row"><label for="c-${api.el.dataset.i}-${v}-${k}">${it.p[k]}</label><input id="c-${api.el.dataset.i}-${v}-${k}" class="ans" ${inputAttrs} data-v="${v}" data-k="${k}"></div>`).join("")}</div>`).join("")}</div>`;
+    api.status(t("conjHint"));
+    const slots = $$(".ans", api.body).map(inp=>{
+      const f = ex.items[+inp.dataset.v].f[+inp.dataset.k], row = inp.parentNode;
+      const clear = () => $$(".pen,.acc-t", row).forEach(n=>n.remove());
+      return {inp, a:[f], show: st => { clear(); if (st === "bad") row.insertAdjacentHTML("beforeend", `<span class="pen">${esc(f)}</span>`); else if (st === "acc") row.insertAdjacentHTML("beforeend", `<span class="acc-t">${esc(f)}</span>`); }, hide: clear};
+    });
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+  };
+  api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+INIT.listen = (api, ex) => {
+  const items = ex.items; let ctl;
+  const build = restore => {
+    const tts = !!synth;
+    api.body.innerHTML = (tts ? "" : `<p class="q" style="color:var(--ink-3)">${t("listenNoTts")}</p>`) +
+      items.map((it,k)=>`<div class="it"><div class="lis">${tts ? `<button type="button" class="play" data-k="${k}">${ICON_PLAY} ${t("listen")}</button><button type="button" class="play slow" data-k="${k}">${t("slow")}</button>` : `<span class="read">${esc(it.say)}</span>`}<input class="ans" ${inputAttrs} inputmode="numeric" style="width:6em" aria-label="${esc(t("numberN", k+1))}"></div><div class="fb" hidden></div></div>`).join("");
+    $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>speak(items[+b.dataset.k].say, b.classList.contains("slow") ? .55 : .9)));
+    api.status(t("listenHint"));
+    const slots = $$(".it", api.body).map((row,k)=>{ const fb = $(".fb", row), it = items[k];
+      return {inp: $(".ans", row), a: it.a, minAdv: 2,
+        show: st => { fb.hidden = false; fb.innerHTML = st === "ok" ? `<span class="ok-t">Juste !</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`; },
+        hide: () => { fb.hidden = true; }}; });
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+  };
+  api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+/* matching */
+INIT.match = (api, ex) => {
+  let mistakes, matched, selL, selR, done;
+  const n = ex.pairs.length;
+  const lockPair = k => { $$(`.opt[data-k="${k}"]`, api.body).forEach(x=>{ x.classList.remove("sel"); x.classList.add("is-ok"); x.disabled = true; }); };
+  const report = restoring => {
+    if (matched === n) api.finish(Math.max(0, n - mistakes), n, `${t("matchDone", mistakes)} · <span class="pen">${praise((n-mistakes)/n)}</span>`, restoring);
+    else api.status(matched || mistakes ? t("matchProg", matched, n, mistakes) : t("matchHint"));
+  };
+  const build = restore => {
+    mistakes = 0; matched = 0; selL = null; selR = null; done = [];
+    const L = ex.pairs.map((p,k)=>({t:p[0],k})), R = shuffle(ex.pairs.map((p,k)=>({t:p[1],k})));
+    api.body.innerHTML = `<div class="match"><div class="colm">${L.map(x=>`<button type="button" class="opt" data-side="L" data-k="${x.k}">${x.t}</button>`).join("")}</div><div class="colm">${R.map(x=>`<button type="button" class="opt" data-side="R" data-k="${x.k}">${x.t}</button>`).join("")}</div></div>`;
+    $$(".opt", api.body).forEach(b=>b.addEventListener("click", ()=>{
+      if (b.disabled) return;
+      const side = b.dataset.side;
+      $$(`.opt[data-side="${side}"]`, api.body).forEach(x=>x.classList.remove("sel"));
+      b.classList.add("sel");
+      if (side === "L") selL = b; else selR = b;
+      if (side === "L" && synth) speak(b.textContent);
+      if (selL && selR) {
+        if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); }
+        else { mistakes++; const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
+        selL = null; selR = null;
+        api.save({m: done, mis: mistakes}); report(false);
+      }
+    }));
+    if (restore && restore.m) { mistakes = restore.mis || 0; restore.m.forEach(k=>{ lockPair(k); matched++; done.push(k); }); }
+    report(true);
+  };
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+/* sorting */
+INIT.sort = (api, ex) => {
+  let sel = null, wrong, placed, firstWrong, pl;
+  const n = ex.items.length;
+  const report = restoring => { const got = n - firstWrong.size; if (placed === n) api.finish(got, n, null, restoring); else api.status(placed || firstWrong.size ? t("sortProg", placed, n, firstWrong.size) : t("sortHint")); };
+  const lockIn = (chip, binEl) => { $(".bin-l", binEl).appendChild(chip); chip.classList.add("is-ok"); chip.classList.remove("sel"); chip.draggable = false; $$(".pen", chip).forEach(x=>x.remove()); };
+  const persist = () => api.save({pl, fw:[...firstWrong], w:wrong});
+  const tryPlace = (chip, binEl) => {
+    sel = null; if (!chip || chip.classList.contains("is-ok")) return;
+    chip.classList.remove("sel");
+    const b = +binEl.dataset.bin, k = +chip.dataset.k, it = ex.items[k];
+    if (b === it[1]) { lockIn(chip, binEl); placed++; pl.push(k); }
+    else {
+      firstWrong.add(k); wrong[k] = (wrong[k]||0) + 1;
+      chip.classList.add("is-bad","flash"); setTimeout(()=>chip.classList.remove("is-bad","flash"), 650);
+      if (wrong[k] >= 2 && !$(".pen", chip)) chip.insertAdjacentHTML("beforeend", `<span class="pen">→ ${esc(ex.cats[it[1]])}</span>`);
+    }
+    persist(); report(false);
+  };
+  api.body.addEventListener("click", e=>{
+    const chip = e.target.closest(".chip");
+    if (chip) { if (chip.classList.contains("is-ok")) return; if (sel === chip) { chip.classList.remove("sel"); sel = null; return; } if (sel) sel.classList.remove("sel"); sel = chip; chip.classList.add("sel"); return; }
+    const bin = e.target.closest(".bin");
+    if (bin && sel) tryPlace(sel, bin);
+  });
+  const build = restore => {
+    sel = null; wrong = {}; placed = 0; firstWrong = new Set(); pl = [];
+    const chips = shuffle(ex.items.map((it,k)=>({t:it[0],k})));
+    api.body.innerHTML = `<div class="sort-pool" data-done="${esc(t("sortDone"))}">${chips.map(c=>`<button type="button" class="chip" draggable="true" data-k="${c.k}">${c.t}</button>`).join("")}</div><div class="bins">${ex.cats.map((c,j)=>`<div class="bin" data-bin="${j}" role="button" tabindex="0"><h5>${c}</h5><div class="bin-l"></div></div>`).join("")}</div>`;
+    $$(".bin", api.body).forEach(b=>{
+      b.addEventListener("keydown", e=>{ if ((e.key==="Enter"||e.key===" ") && sel) { e.preventDefault(); tryPlace(sel, b); } });
+      b.addEventListener("dragover", e=>{ e.preventDefault(); b.classList.add("over"); });
+      b.addEventListener("dragleave", ()=>b.classList.remove("over"));
+      b.addEventListener("drop", e=>{ e.preventDefault(); b.classList.remove("over"); if (sel) tryPlace(sel, b); });
+    });
+    $$(".chip", api.body).forEach(ch=>ch.addEventListener("dragstart", e=>{ if (ch.classList.contains("is-ok")) { e.preventDefault(); return; } try { e.dataTransfer.setData("text/plain", ch.dataset.k); } catch(_) {} sel = ch; }));
+    if (restore) {
+      (restore.fw || []).forEach(k=>firstWrong.add(k)); wrong = restore.w || {};
+      (restore.pl || []).forEach(k=>{ const chip = $(`.chip[data-k="${k}"]`, api.body), bin = $(`.bin[data-bin="${ex.items[k][1]}"]`, api.body); if (chip && bin) { lockIn(chip, bin); placed++; pl.push(k); } });
+    }
+    report(true);
+  };
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+/* word order */
+INIT.order = (api, ex) => {
+  let res;
+  const n = ex.items.length;
+  const report = restoring => { const done = res.filter(r=>r.done).length, got = res.filter(r=>r.done && r.mis===0).length; if (done === n) api.finish(got, n, null, restoring); else api.status(done || res.some(r=>r.mis) ? t("orderProg", done, n, got) : t("orderHint")); };
+  const build = restore => {
+    api.body.innerHTML = ""; res = ex.items.map((_,k)=> restore && restore.r && restore.r[k] ? {...restore.r[k]} : {pos:0, mis:0, done:false});
+    ex.items.forEach((it,k)=>{
+      const words = it.s.split(" ");
+      let toks = shuffle(words.slice()); let guard = 0;
+      while (words.length > 2 && toks.join(" ") === it.s && guard++ < 10) toks = shuffle(toks);
+      const row = document.createElement("div"); row.className = "it ord";
+      row.innerHTML = `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div><div class="fb" hidden></div>`;
+      const line = $(".ord-line", row), fb = $(".fb", row), bank = $(".ord-bank", row);
+      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">Juste !</span>`; };
+      for (let p = 0; p < res[k].pos; p++) { const tk = $$(".tok", bank).find(x=>x.textContent === words[p]); if (tk) line.appendChild(tk); }
+      if (res[k].done) finishRow();
+      row.addEventListener("click", e=>{
+        const tk = e.target.closest(".ord-bank .tok"); const r = res[k];
+        if (!tk || r.done) return;
+        if (tk.textContent === words[r.pos]) {
+          line.appendChild(tk); r.pos++;
+          if (r.pos === words.length) { r.done = true; finishRow(); speak(it.s); }
+        } else {
+          r.mis++; tk.classList.add("is-bad","flash"); setTimeout(()=>tk.classList.remove("is-bad","flash"), 550);
+          fb.hidden = false; fb.innerHTML = `<span class="pen">${t("wrongWord")}</span> <span class="ex-e">${t("errorsN", r.mis)}</span>`;
+        }
+        api.save({r: res}); report(false);
+      });
+      api.body.appendChild(row);
+    });
+    report(true);
+  };
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+/* flashcards inside a topic */
+INIT.cards = (api, ex) => {
+  let queue, known, flipped, dir;
+  const persist = () => api.save({known, dir});
+  const build = restore => {
+    known = restore && restore.known ? restore.known.slice() : []; dir = restore && restore.dir || "fr"; flipped = false;
+    queue = shuffle(ex.items.map((_,k)=>k).filter(k=>!known.includes(k)));
+    draw(!!restore);
+  };
+  const draw = restoring => {
+    if (!queue.length) {
+      api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">Bravo !</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
+      api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">Parfait !</span>`, restoring); return;
+    }
+    const [fr, tr] = ex.items[queue[0]];
+    const front = dir === "fr" ? fr : tr, back = dir === "fr" ? tr : fr;
+    api.body.innerHTML = `<div class="cards-x">
+      <div class="cards-meta"><span>${t("cardsLeft", queue.length, known.length)}</span><span class="seg"><button type="button" data-d="fr" class="${dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-d="ru" class="${dir==="ru"?"on":""}">${t("dirRu")}</button></span></div>
+      <div class="fcard" role="button" tabindex="0" aria-label="${esc(t("flipA"))}"><span class="front">${esc(front)}</span><span class="back" ${flipped?"":"hidden"}>${esc(back)}</span><span class="hint">${flipped?"":esc(t("flip"))}</span></div>
+      <div class="btns"><button type="button" class="btn sm sec" data-a="again">${t("againCard")}</button><button type="button" class="btn sm pri" data-a="know">${t("knowIt")}</button></div></div>`;
+    const card = $(".fcard", api.body);
+    const flip = () => { flipped = !flipped; draw(); if (flipped) speak(fr); };
+    card.addEventListener("click", flip);
+    card.addEventListener("keydown", e=>{ if (e.key==="Enter"||e.key===" ") { e.preventDefault(); flip(); } });
+    $$(".seg button", api.body).forEach(b=>b.addEventListener("click", ()=>{ dir = b.dataset.d; flipped = false; persist(); draw(); }));
+    $('[data-a="know"]', api.body).addEventListener("click", ()=>{ known.push(queue.shift()); flipped = false; persist(); draw(); });
+    $('[data-a="again"]', api.body).addEventListener("click", ()=>{ queue.push(queue.shift()); flipped = false; draw(); });
+    api.status(t("cardsHint"));
+  };
+  api.button(t("shuffleAgain"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+/* read-aloud drill */
+INIT.drill = (api, ex) => {
+  let seen;
+  const build = restore => {
+    seen = restore && restore.seen ? restore.seen.slice() : [];
+    api.body.innerHTML = `<div class="drill">${ex.items.map(([w,tx],k)=>`<div class="dr"><b>${esc(w)}</b><span class="tx" ${seen.includes(k)?"":"hidden"}>${esc(tx)}</span><button type="button" class="play" data-k="${k}" ${seen.includes(k)?"data-seen":""}>${ICON_PLAY} ${t("check")}</button></div>`).join("")}</div>`;
+    const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">Bravo !</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
+    $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>{
+      const k = +b.dataset.k; b.previousElementSibling.hidden = false; b.dataset.seen = "1"; speak(ex.items[k][0], .8);
+      if (!seen.includes(k)) { seen.push(k); api.save({seen}); upd(false); }
+    }));
+    upd(true);
+  };
+  api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
+  build(api.saved);
+};
+
+/* =========================================================
+   navigation
+   ========================================================= */
+function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="ring" data-ring="${tp.id}"></span><span class="nl-t">${tp.title}</span></a>`; }
+function buildNav(){
+  nav.innerHTML = `
+  <div class="nav-top"><a class="brand" href="#home"><b>Édito A1</b><span>révisions</span></a><button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button></div>
+  <div class="nav-scroll">
+    <div class="nav-main">
+      <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
+      <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
+      <a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span></a>
+      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
+    </div>
+    <div class="nav-sec">${t("fromBook")}</div>
+    ${["0","1","2"].map(u=>`<div class="nav-unit">Unité ${u} <i>· ${t("units")[u]}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
+    <div class="nav-sec">${t("ref")}</div>
+    ${REF.map(navLink).join("")}
+  </div>
+  <div class="nav-foot">
+    <div class="lang-sw" role="group" aria-label="${esc(t("lang"))}"><button type="button" data-lang="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang="en" class="${LANG==="en"?"on":""}">English</button></div>
+    <a class="acct" href="#account" data-id="account"><span class="acct-av" id="acctAv"></span><span class="acct-tx"><b id="acctName">${t("account")}</b><small data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</small></span></a>
+  </div>`;
+  $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
+  $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
+  paintNavProgress(); paintAccount(); markActive();
+}
+function avatarHTML(){
+  if (ME && ME.avatarUrl) return `<img src="${esc(ME.avatarUrl)}" alt="">`;
+  if (ME && ME.email) return `<span class="av-l">${esc(ME.email.trim().charAt(0).toUpperCase())}</span>`;
+  return ICO.cloud;
+}
+function authHTML(){
+  const m = Auth.mode, up = m === "up", magic = m === "magic", reset = m === "reset";
+  const head = up ? t("authUpH") : magic ? t("authMagicH") : reset ? t("authResetH") : t("authInH");
+  return `<form class="auth" id="authForm" novalidate>
+    <div class="auth-tabs" role="tablist"><button type="button" data-am="in" class="${m==="in"||magic||reset?"on":""}">${t("authIn")}</button><button type="button" data-am="up" class="${up?"on":""}">${t("authUp")}</button></div>
+    <h2>${head}</h2><p class="auth-sub">${up ? t("authUpSub") : magic ? t("authMagicSub") : reset ? t("authResetSub") : t("authInSub")}</p>
+    <label class="fld"><span>${t("email")}</span><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></label>
+    ${magic || reset ? "" : `<label class="fld"><span>${t("password")}</span><input type="password" id="authPw" autocomplete="${up?"new-password":"current-password"}" minlength="6" required></label>`}
+    <p class="auth-msg" id="authMsg" data-k="${Auth.msgKind}" aria-live="polite">${esc(Auth.msg)}</p>
+    <button type="submit" class="btn pri" id="authGo">${up ? t("authUpBtn") : magic ? t("authMagicBtn") : reset ? t("authResetBtn") : t("authInBtn")}</button>
+    <div class="auth-links">${m==="in" ? `<button type="button" data-am="magic">${t("authMagicLink")}</button><button type="button" data-am="reset">${t("authForgot")}</button>` : magic || reset ? `<button type="button" data-am="in">${t("authBackPw")}</button>` : ""}</div>
+    <p class="auth-note">${t("authNote")}</p>
+  </form>`;
+}
+function recoveryHTML(){
+  return `<form class="auth" id="pwForm" novalidate><h2>${t("pwNewH")}</h2>
+    <label class="fld"><span>${t("pwNew")}</span><input type="password" id="newPw" autocomplete="new-password" minlength="6" required></label>
+    <p class="auth-msg" id="pwMsg" aria-live="polite"></p>
+    <div class="cb-btns"><button type="submit" class="btn pri">${t("pwSave")}</button><button type="button" class="btn sec" id="pwCancel">${t("cancel")}</button></div></form>`;
+}
+function wireAuth(){
+  $$("[data-am]", main).forEach(b=>b.addEventListener("click", ()=>{ const keep = ($("#authEmail")||{}).value || ""; Auth.mode = b.dataset.am; Auth.msg = ""; Auth.msgKind = ""; renderAccount(); const e = $("#authEmail"); if (e) { e.value = keep; (keep ? ($("#authPw") || e) : e).focus(); } }));
+  const f = $("#authForm");
+  if (f) f.addEventListener("submit", async ev=>{
+    ev.preventDefault();
+    const email = $("#authEmail").value.trim(), pwEl = $("#authPw"), pw = pwEl ? pwEl.value : "";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { authSay(t("aeEmail"), "err"); $("#authEmail").focus(); return; }
+    if (pwEl && pw.length < 6) { authSay(t("aeShort"), "err"); pwEl.focus(); return; }
+    const go = $("#authGo"); go.disabled = true; authSay(t("authWait"), "");
+    try {
+      let r;
+      if (Auth.mode === "up") {
+        r = await sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}});
+        if (r.error) throw r.error;
+        if (r.data && r.data.user && Array.isArray(r.data.user.identities) && !r.data.user.identities.length) throw {message:"already registered"};
+        if (!r.data.session) { authSay(t("authCheckMail", email), "ok"); go.disabled = false; return; }
+      } else if (Auth.mode === "magic") {
+        r = await sb.auth.signInWithOtp({email, options:{emailRedirectTo:authRedirectTo(), shouldCreateUser:true}});
+        if (r.error) throw r.error; authSay(t("authMagicSent", email), "ok"); go.disabled = false; return;
+      } else if (Auth.mode === "reset") {
+        r = await sb.auth.resetPasswordForEmail(email, {redirectTo:authRedirectTo()});
+        if (r.error) throw r.error; authSay(t("authResetSent", email), "ok"); go.disabled = false; return;
+      } else {
+        r = await sb.auth.signInWithPassword({email, password:pw});
+        if (r.error) throw r.error;
+      }
+      Auth.msg = ""; Auth.mode = "in";
+    } catch(e) { authSay(authErrText(e), "err"); go.disabled = false; }
+  });
+  const pf = $("#pwForm");
+  if (pf) {
+    $("#pwCancel").addEventListener("click", ()=>{ Auth.recovery = false; renderAccount(); });
+    pf.addEventListener("submit", async ev=>{
+      ev.preventDefault();
+      const pw = $("#newPw").value, msg = $("#pwMsg");
+      if (pw.length < 6) { msg.textContent = t("aeShort"); msg.dataset.k = "err"; return; }
+      const r = await sb.auth.updateUser({password:pw});
+      if (r.error) { msg.textContent = authErrText(r.error); msg.dataset.k = "err"; return; }
+      Auth.recovery = false; renderAccount(); toast(t("pwSaved"));
+    });
+  }
+}
+function paintAccount(){
+  const av = $("#acctAv"), nm = $("#acctName");
+  if (av) av.innerHTML = avatarHTML();
+  if (nm) nm.textContent = ME && ME.name ? ME.name : t("account");
+}
+function paintNavProgress(){
+  $$("[data-ring]").forEach(r=>{ const tp = byId[r.dataset.ring]; if (!tp) return; const p = topicPct(tp).pct*100; r.style.setProperty("--p", p.toFixed(0)); r.classList.toggle("full", p>=99.5); });
+}
+function setLang(l){
+  if (l === LANG) return;
+  LANG = l; ls.set("edito-lang", l); setData(); touch("settings");
+  buildNav(); $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav"); rerender();
+}
+function setNavHidden(h){ app.classList.toggle("nav-off", h); document.body.classList.toggle("nav-off", h); ls.set("edito-nav", h ? "off" : "on"); }
+setNavHidden(ls.get("edito-nav") === "off");
+const menuBtn = $("#menuBtn"); let scrim = null;
+function openNav(){ nav.classList.add("open"); document.body.classList.add("nav-open"); menuBtn.setAttribute("aria-expanded","true"); scrim = document.createElement("div"); scrim.className = "scrim"; scrim.addEventListener("click", closeNav); document.body.appendChild(scrim); }
+function closeNav(){ nav.classList.remove("open"); document.body.classList.remove("nav-open"); menuBtn.setAttribute("aria-expanded","false"); if (scrim) { scrim.remove(); scrim = null; } }
+menuBtn.addEventListener("click", ()=> nav.classList.contains("open") ? closeNav() : openNav());
+$("#navShow").addEventListener("click", ()=>setNavHidden(false));
+nav.addEventListener("click", e=>{ if (e.target.closest("a[href]") && nav.classList.contains("open")) closeNav(); });
+document.addEventListener("keydown", e=>{ if (e.key === "Escape" && nav.classList.contains("open")) closeNav(); });
+window.matchMedia("(max-width:979px)").addEventListener("change", ()=>closeNav());
+
+/* =========================================================
+   views
+   ========================================================= */
+function totals(){ let ex = 0, done = 0, full = 0, sum = 0; TOP.forEach(tp=>{ const p = topicPct(tp); ex += p.n; done += p.done; sum += p.pct*p.n; if (p.pct >= .995) full++; }); return {ex, done, full, avg: ex ? sum/ex : 0}; }
+function card(tp){ const p = topicPct(tp); return `<a class="tc" href="#${tp.id}"><span class="k">${tp.kind}</span><h3>${tp.title}</h3><p>${tp.ru}</p><div class="bar"><i style="width:${(p.pct*100).toFixed(0)}%"></i></div><span class="pc">${t("doneOf", p.done, p.n, (p.pct*100).toFixed(0))}</span></a>`; }
+function renderHome(){
+  const tt = totals(); const last = S.tests[S.tests.length-1];
+  main.innerHTML = `<div class="col">
+  <header class="hero seyes">
+    <p class="eyebrow">${t("heroEyebrow")}</p>
+    <h1>Révisions <em>pour le contrôle</em></h1>
+    <p class="lead">${t("heroLead", TOP.reduce((s,x)=>s+x.ex.length,0))}</p>
+    <p class="annot">Bon courage, tu vas réussir !</p>
+    <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${t("startFirst")}</a><a class="btn sec" href="#quizlet">${t("quizlet")}</a><a class="btn sec" href="#test">${t("test")}</a></div>
+    <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span><span><b>${REF.length}</b>${t("refTopics")}</span>${last ? `<span><b>${last.n20}/20</b>${t("lastTest")}</span>` : ""}</div>
+  </header>
+  <ol class="how">${t("how").map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
+  <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? t("tipTts") : t("tipNoTts")} ${Cloud.be ? t(Cloud.kind === "supabase" ? "tipCloudS" : "tipCloud") : t(Cloud.kind === "supabase" ? "tipSignIn" : "tipLocal")}</span></p>
+  <div class="sec-h"><h2>${t("fromBook")}</h2><p>${t("bookSub")}</p></div>
+  ${["0","1","2"].map(u=>`<h3 class="unit-h">Unité ${u} <small>${t("units")[u]}${u==="0" ? t("unit0note") : ""}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
+  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>
+  </div>`;
+}
+function renderTopic(tp){
+  const idx = ORDER.indexOf(tp), prev = ORDER[idx-1], next = ORDER[idx+1];
+  main.innerHTML = `<div class="col"><article>
+  <header class="t-head seyes">
+    <p class="eyebrow">${tp.sec==="book" ? `Unité ${tp.unit} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
+    <h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
+    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
+  </header>
+  <section class="theory">${tp.theory}</section>
+  <section class="practice" id="practice"><h2>Entraînement</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
+  <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${t("back")}</small>${prev.title}</a>` : ""}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}</small>${next.title}</a>` : `<a class="next" href="#test"><small>${t("next")}</small>${t("test")}</a>`}</nav>
+  </article></div>`;
+  const exs = $(".exs", main);
+  tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
+  $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
+}
+function renderCheat(){
+  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
+}
+
+/* ---------- account ---------- */
+function renderAccount(){
+  const tt = totals();
+  const words = QSETS.flatMap(s=>s.w.map(w=>w[0])); const uniq = [...new Set(words)];
+  const learned = uniq.filter(w=>qLv(w) >= 3).length;
+  const best = S.tests.reduce((m,x)=>Math.max(m, x.n20||0), 0);
+  const name = ME && ME.name ? ME.name : (Cloud.be ? t("you") : t("guest"));
+  const isSupa = Cloud.kind === "supabase", signedIn = !!(isSupa && ME);
+  let armed = false;
+  main.innerHTML = `<div class="col">
+  <header class="t-head seyes acc-head"><div class="acc-big">${avatarHTML()}</div><div><p class="eyebrow">${t("accEyebrow")}</p><h1 id="accName"></h1><p class="t-ru"><span class="cloud-pill" data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</span></p></div></header>
+  ${Auth.recovery && signedIn ? recoveryHTML() : ""}
+  ${isSupa && !signedIn && Cloud.state === "loading" ? `<div class="cloud-box"><div class="cb-top">${ICO.cloud.replace("<svg","<svg width=22 height=22")}<div><p>${t("cloud").loading}</p></div></div></div>` : isSupa && !signedIn ? authHTML() : Cloud.kind === "none" ? `<div class="cloud-box"><div class="cb-top">${ICO.cloud.replace("<svg","<svg width=22 height=22")}<div><p>${t("accNoCloud")}</p></div></div></div>` : `<div class="cloud-box"><div class="cb-top">${ICO.cloud.replace("<svg","<svg width=22 height=22")}<div><p>${Cloud.be ? t(isSupa ? "accCloudOnS" : "accCloudOn") : t(isSupa ? "accCloudErrS" : "accCloudOff")}</p><p class="cb-diag" id="cloudDiag">${cloudDiag()}</p></div></div>
+  <div class="cb-check"><b>${t("inCloud")}</b><span id="cloudCheck">${Cloud.be ? t("checking") : "—"}</span></div>
+  <div class="cb-btns"><button type="button" class="btn sm sec" id="syncNow">${t("syncNow")}</button>${isSupa ? `<button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button>` : ""}</div></div>`}
+  <div class="kpis">
+    <div class="kpi"><b>${tt.done}<small>/${tt.ex}</small></b><span>${t("stSolved")}</span></div>
+    <div class="kpi"><b>${tt.full}<small>/${TOP.length}</small></b><span>${t("stTopics")}</span></div>
+    <div class="kpi"><b>${Math.round(tt.avg*100)}%</b><span>${t("stAvg")}</span></div>
+    <div class="kpi"><b>${S.tests.length}</b><span>${t("stTests")}</span></div>
+    <div class="kpi"><b>${best ? String(best).replace(".",",") + "<small>/20</small>" : "—"}</b><span>${t("stBest")}</span></div>
+    <div class="kpi"><b>${learned}<small>/${uniq.length}</small></b><span>${t("stWords")}</span></div>
+  </div>
+  <div class="sec-h"><h2>${t("progressByTopic")}</h2></div>
+  <div class="brk">${ORDER.map(tp=>{ const p = topicPct(tp), r = p.pct; return `<div class="brk-r"><a href="#${tp.id}">${tp.title}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(r?4:0, r*100)}%"></i></div><span>${Math.round(r*100)}%</span></div>`; }).join("")}</div>
+  <div class="sec-h"><h2>${t("history")}</h2></div>
+  ${S.tests.length ? `<ul class="hist">${S.tests.slice().reverse().map(h=>`<li>${esc(h.d)} — <b>${String(h.n20).replace(".",",")}/20</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : `<p class="muted">${t("noTests")}</p>`}
+  <div class="sec-h"><h2>${t("settings")}</h2></div>
+  <div class="settings-row"><span>${t("lang")}</span><div class="lang-sw big"><button type="button" data-lang2="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang2="en" class="${LANG==="en"?"on":""}">English</button></div></div>
+  <div class="settings-row"><span></span><button type="button" class="btn sec danger" id="resetAll">${t("reset")}</button></div>
+  </div>`;
+  $("#accName").textContent = name;
+  const sn = $("#syncNow"); if (sn) sn.addEventListener("click", async e=>{ const b = e.currentTarget; b.disabled = true; await syncNow(); b.disabled = false; checkCloud(); });
+  const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
+  const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
+  wireAuth();
+  checkCloud();
+  $$("[data-lang2]", main).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
+  $("#resetAll").addEventListener("click", e=>{
+    const b = e.currentTarget;
+    if (!armed) { armed = true; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed) { armed = false; b.textContent = t("reset"); b.classList.remove("armed"); } }, 5000); return; }
+    const ansKeys = Object.keys(S.ans);
+    S.p = {}; S.tests = []; S.quiz = {c:{}, best:{}}; S.ans = {};
+    touch("progress"); touch("quiz"); ansKeys.forEach(id=>touch("ans-" + id));
+    paintNavProgress(); renderAccount(); toast(t("resetDone"));
+  });
+}
+async function checkCloud(){
+  const el = $("#cloudCheck"); if (!el || !Cloud.be) return;
+  try {
+    const docs = await withTimeout(Cloud.be.list(), 15000);
+    if (!$("#cloudCheck")) return;
+    if (!docs.length) { el.textContent = t("cloudEmpty"); return; }
+    let ex = 0, topics = 0, words = 0, tests = 0, last = 0;
+    docs.forEach(d=>{ const v = d.data || {}; last = Math.max(last, v.ts || 0);
+      if (d.id === "progress") { for (const tid in (v.p||{})) ex += Object.keys(v.p[tid]).length; tests = (v.tests||[]).length; }
+      else if (d.id === "quiz") words = Object.keys(v.c||{}).length;
+      else if (d.id.startsWith("ans-") && v.ex && Object.keys(v.ex).length) topics++; });
+    el.textContent = t("cloudSummary", ex, topics, words, tests) + (last ? " · " + t("updatedAt", new Date(last).toLocaleString(LANG==="en"?"en-GB":"ru-RU",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})) : "");
+  } catch(e) { if ($("#cloudCheck")) el.textContent = t("cloudUnreach") + " " + ((e && e.code) || ""); }
+}
+function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.classList.add("out"), 1800); setTimeout(()=>el.remove(), 2300); }
+
+/* ---------- mock test ---------- */
+let TEST = null, TMODE = "now";
+function genTest(n){
+  const groups = {}; POOLX.forEach((q,k)=>{ (groups[q.tp] = groups[q.tp] || []).push(k); });
+  Object.values(groups).forEach(shuffle);
+  const keys = shuffle(Object.keys(groups)); const pick = [];
+  while (pick.length < Math.min(n, POOLX.length)) { let added = false; for (const k of keys) { if (groups[k].length && pick.length < n) { pick.push(groups[k].pop()); added = true; } } if (!added) break; }
+  const ord = id => ORDER.findIndex(x=>x.id===id);
+  pick.sort((a,b)=>ord(POOLX[a].tp)-ord(POOLX[b].tp));
+  return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q}; });
+}
+function renderTest(){
+  const hist = S.tests.slice(-5).reverse();
+  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${t("testSub", POOLX.length)}</p>
+  <div class="mode" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div>
+  <div class="len-pick"><button type="button" class="btn pri" data-n="20">${t("qN", 20)}</button><button type="button" class="btn sec" data-n="30">${t("qN", 30)}</button><button type="button" class="btn sec" data-n="45">${t("qN", 45)}</button></div></header>
+  ${hist.length ? `<div class="sec-h"><h2>${t("myTries")}</h2></div><ul class="hist">${hist.map(h=>`<li>${esc(h.d)} — <b>${String(h.n20).replace(".",",")}/20</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : ""}</div>`;
+  $$("[data-m]", main).forEach(b=>b.addEventListener("click", ()=>{ TMODE = b.dataset.m; $$("[data-m]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
+  $$("[data-n]", main).forEach(b=>b.addEventListener("click", ()=>startTest(+b.dataset.n)));
+}
+function startTest(n){
+  TEST = genTest(n);
+  const now = TMODE === "now", res = TEST.map(()=>null);
+  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${t("testRunEyebrow", TEST.length, now)}</p><h1>${t("test")}</h1><p class="t-ru">${t("testRunSub", now)}</p></header>
+  <section class="exb"><div class="exb-b">${accBar()}<div id="tq"></div></div><footer class="exb-f"><span class="exb-score" id="tstat"></span><div class="exb-btns"><button type="button" class="btn pri" id="submit">${now ? t("getGrade") : t("submit")}</button></div></footer></section></div>`;
+  const box = $("#tq");
+  function stat(){
+    if (now) { const done = res.filter(r=>r!==null).length, got = res.filter(r=>r===true).length; $("#tstat").innerHTML = t("answeredOk", done, TEST.length, got); return; }
+    const answered = TEST.filter((q,k)=> q.o ? q.sel !== undefined : norm($$(".test-q", box)[k].querySelector(".ans").value)).length; $("#tstat").textContent = t("answered", answered, TEST.length);
+  }
+  TEST.forEach((q,k)=>{
+    const tp = byId[q.tp];
+    const row = document.createElement("div"); row.className = "test-q";
+    const body = q.o ? `<div class="opts">${q.oo.map(x=>`<button type="button" class="opt" data-j="${x.j}">${x.o}</button>`).join("")}</div>` : (q.q.includes("___") ? "" : `<input class="ans wide" ${inputAttrs} aria-label="${k+1}">`);
+    const qq = q.o ? `<p class="q">${qhtml(q.q)}</p>` : `<p class="fillq">${q.q.includes("___") ? q.q.replace("___", `<input class="ans" ${inputAttrs} aria-label="${k+1}">`) : q.q}</p>`;
+    row.innerHTML = `<span class="n">${k+1}</span><div class="tq">${qq}${body}<div class="fb" hidden></div><span class="tp">${tp ? tp.title : ""}</span></div>`;
+    const fb = $(".fb", row);
+    $$(".opt", row).forEach(b=>b.addEventListener("click", ()=>{
+      if (row.dataset.locked) return;
+      if (now) {
+        row.dataset.locked = "1"; const j = +b.dataset.j, ok = j === q.a; q.sel = j; res[k] = ok;
+        $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === q.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
+        fb.hidden = false; fb.innerHTML = ok ? `<span class="ok-t">Juste !</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+      } else { $$(".opt", row).forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); q.sel = +b.dataset.j; }
+      stat();
+    }));
+    box.appendChild(row);
+    if (!q.o) {
+      const inp = $(".ans", row);
+      if (now) wireInstant([{inp, a:q.a, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, q.a, q.e); }, hide: () => { fb.hidden = true; }}], (first, restoring) => { if (!restoring) { res[k] = first[0] === "ok"; stat(); } });
+      else inp.addEventListener("input", stat);
+    }
+  });
+  stat();
+  $("#submit").addEventListener("click", ()=>gradeTest(box, now, res));
+  window.scrollTo(0,0);
+}
+function gradeTest(box, now, res){
+  let got = 0; const per = {};
+  $$(".test-q", box).forEach((row,k)=>{
+    const q = TEST[k]; row.dataset.locked = "1"; let ok;
+    const fb = $(".fb", row); fb.hidden = false;
+    if (q.o) {
+      ok = q.sel === q.a;
+      $$(".opt", row).forEach(b=>{ b.disabled = true; const j = +b.dataset.j; if (j === q.a) b.classList.add("is-ok"); else if (j === q.sel) b.classList.add("is-bad"); b.classList.remove("sel"); });
+      fb.innerHTML = ok ? `<span class="ok-t">Juste !</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+    } else {
+      const inp = $(".ans", row), st = judge(inp.value, q.a);
+      ok = now ? res[k] === true : st === "ok"; inp.disabled = true;
+      inp.classList.remove("r-ok","r-bad","r-acc"); inp.classList.add(st==="ok"?"r-ok":st==="acc"?"r-acc":"r-bad");
+      fb.innerHTML = fbHtml(st === "empty" ? "bad" : st, q.a, q.e);
+    }
+    if (ok) got++;
+    const p = per[q.tp] || (per[q.tp] = {g:0, n:0}); p.n++; if (ok) p.g++;
+  });
+  const n20 = Math.round(got / TEST.length * 20 * 2) / 2;
+  const V = t("verdicts"), verdict = n20 >= 16 ? V[0] : n20 >= 12 ? V[1] : n20 >= 10 ? V[2] : V[3];
+  const d = new Date();
+  S.tests.push({d: d.toLocaleDateString(LANG==="en"?"en-GB":"ru-RU") + " " + d.toLocaleTimeString(LANG==="en"?"en-GB":"ru-RU",{hour:"2-digit",minute:"2-digit"}), at: d.getTime(), got, total: TEST.length, n20});
+  S.tests = S.tests.slice(-30); touch("progress");
+  const rows = Object.entries(per).sort((a,b)=>a[1].g/a[1].n - b[1].g/b[1].n).map(([tp,p])=>{ const r = p.g/p.n, x = byId[tp]; return `<div class="brk-r"><a href="#${tp}">${x ? x.title : tp}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(4, r*100)}%"></i></div><span>${p.g}/${p.n}</span></div>`; }).join("");
+  const resEl = document.createElement("div");
+  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${String(n20).replace(".",",")}<small>/20</small></div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button><a class="btn sec" href="#shpargalka">${t("cheat")}</a></div></div></header>
+  <div class="sec-h"><h2>${t("byTopic")}</h2><p>${t("byTopicSub")}</p></div><div class="brk">${rows}</div><div class="sec-h"><h2>${t("review")}</h2></div>`;
+  const col = $(".col", main); col.insertBefore(resEl, col.children[1]);
+  $(".t-head", main).remove();
+  $("#submit").remove(); $("#tstat").textContent = t("total", got, TEST.length);
+  $("#again").addEventListener("click", ()=>startTest(TEST.length));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* =========================================================
+   QUIZLET
+   ========================================================= */
+let QZ = {set:"all", mode:"cards", dir:"fr", shuf:false, star:false};
+try { const q = JSON.parse(ls.get("edito-qz") || "null"); if (q) QZ = Object.assign(QZ, q); } catch(e) {}
+const saveQZ = () => ls.set("edito-qz", JSON.stringify(QZ));
+let qzKeyHandler = null, qzTimer = null;
+function qWords(setId){
+  const sets = setId === "all" ? QSETS : QSETS.filter(s=>s.id===setId);
+  const seen = new Set(), out = [];
+  sets.forEach(s=>s.w.forEach(w=>{ if (seen.has(w[0])) return; seen.add(w[0]); out.push({fr:w[0], m: LANG==="en" ? w[2] : w[1], set:s.id}); }));
+  return out;
+}
+const qLv = fr => (S.quiz.c[qKey(fr)] || {}).lv || 0;
+const qStar = fr => !!(S.quiz.c[qKey(fr)] || {}).s;
+function qSet(fr, patch){ const k = qKey(fr); S.quiz.c[k] = Object.assign({lv:0, s:0}, S.quiz.c[k], patch); touch("quiz"); }
+function qSetStats(setId){ const ws = qWords(setId); const learned = ws.filter(w=>qLv(w.fr)>=3).length; return {n:ws.length, learned, starred: ws.filter(w=>qStar(w.fr)).length, pct: ws.length ? learned/ws.length : 0}; }
+
+function renderQuizlet(){
+  if (!QSETS.some(s=>s.id===QZ.set) && QZ.set !== "all") QZ.set = "all";
+  const all = qSetStats("all");
+  main.innerHTML = `<div class="col" style="max-width:980px">
+  <header class="t-head seyes"><p class="eyebrow">Quizlet · Unités 0–2</p><h1>Quizlet</h1><p class="t-ru">${t("qzSub")}</p>
+    <div class="stats"><span><b>${all.n}</b>${t("qzWords")}</span><span><b>${all.learned}</b>${t("qzLearned")}</span><span><b>${all.starred}</b>${t("qzStarred")}</span></div></header>
+  <div class="qz-sets">${[{id:"all", t:t("qzAll"), sub:""}].concat(QSETS.map(s=>({id:s.id, t:s.t, sub: LANG==="en" ? s.en : s.ru}))).map(s=>{ const st = qSetStats(s.id); return `<button type="button" class="qz-set${QZ.set===s.id?" on":""}" data-set="${s.id}"><b>${s.t}</b>${s.sub?`<small>${s.sub}</small>`:""}<span class="qz-meta">${st.learned}/${st.n}</span><span class="bar"><i style="width:${(st.pct*100).toFixed(0)}%"></i></span></button>`; }).join("")}</div>
+  <div class="qz-modes" role="tablist">${["cards","learn","write","match"].map(m=>`<button type="button" role="tab" class="${QZ.mode===m?"on":""}" data-mode="${m}">${t("qzModes")[m]}</button>`).join("")}</div>
+  <section class="qz-stage exb"></section>
+  <div class="sec-h"><h2>${t("qzList")}</h2><p class="qz-count"></p></div>
+  <div class="qz-list"></div>
+  </div>`;
+  $$("[data-set]", main).forEach(b=>b.addEventListener("click", ()=>{ QZ.set = b.dataset.set; saveQZ(); renderQuizlet(); }));
+  $$("[data-mode]", main).forEach(b=>b.addEventListener("click", ()=>{ QZ.mode = b.dataset.mode; saveQZ(); $$("[data-mode]", main).forEach(x=>x.classList.toggle("on", x===b)); qzStage(); }));
+  qzStage(); qzList();
+}
+function qzList(){
+  const box = $(".qz-list", main); if (!box) return;
+  const ws = qWords(QZ.set);
+  $(".qz-count", main).textContent = `${ws.length} ${t("qzWords")}`;
+  box.innerHTML = ws.map(w=>{ const lv = qLv(w.fr); return `<div class="qz-row"><button type="button" class="star${qStar(w.fr)?" on":""}" data-star="${esc(w.fr)}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button><span class="fr qz-fr">${esc(w.fr)}</span><span class="qz-m">${esc(w.m)}</span><span class="lv lv${Math.min(lv,3)}">${t("qzLvShort")[Math.min(lv,3)]}</span></div>`; }).join("");
+  $$("[data-star]", box).forEach(b=>b.addEventListener("click", ()=>{ const fr = b.dataset.star; qSet(fr, {s: qStar(fr) ? 0 : 1}); b.classList.toggle("on", qStar(fr)); }));
+}
+function qzStage(){
+  const stage = $(".qz-stage", main); if (!stage) return;
+  if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
+  clearInterval(qzTimer);
+  stage.dataset.tok = String(Math.random());
+  ({cards:qzCards, learn:qzLearn, write:qzWrite, match:qzMatch})[QZ.mode](stage);
+}
+const qzRefreshList = () => { qzList(); $$(".qz-set", main).forEach(b=>{ const st = qSetStats(b.dataset.set); $(".qz-meta", b).textContent = `${st.learned}/${st.n}`; $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }); };
+
+/* mode 1: flashcards */
+function qzCards(stage){
+  let deck = qWords(QZ.set); if (QZ.star) deck = deck.filter(w=>qStar(w.fr)); if (QZ.shuf) deck = shuffle(deck.slice());
+  let i = 0, flipped = false;
+  const draw = () => {
+    if (!deck.length) { stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar">${tools()}</div><p class="muted qz-empty">${t("qzEmpty")}</p></div>`; bindTools(); return; }
+    const w = deck[i], front = QZ.dir === "fr" ? w.fr : w.m, back = QZ.dir === "fr" ? w.m : w.fr;
+    stage.innerHTML = `<div class="qz-pad">
+      <div class="qz-toolbar">${tools()}<span class="qz-ctr">${i+1} / ${deck.length}</span></div>
+      <div class="qz-card${flipped?" flipped":""}" role="button" tabindex="0" aria-label="${esc(t("flipA"))}">
+        <div class="qz-face"><span class="qz-side">${flipped ? (QZ.dir==="fr" ? (LANG==="en"?"EN":"RU") : "FR") : (QZ.dir==="fr" ? "FR" : (LANG==="en"?"EN":"RU"))}</span><span class="qz-text">${esc(flipped ? back : front)}</span>${flipped?"":`<span class="hint">${esc(t("flip"))}</span>`}</div>
+        <button type="button" class="star qz-cstar${qStar(w.fr)?" on":""}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button>
+        <button type="button" class="qz-say" aria-label="${esc(t("qzSay"))}">${ICON_PLAY}</button>
+        <span class="lv lv${Math.min(qLv(w.fr),3)} qz-clv">${t("qzLvShort")[Math.min(qLv(w.fr),3)]}</span>
+      </div>
+      <div class="qz-nav"><button type="button" class="btn sec" data-q="prev">← ${t("qzPrev")}</button><button type="button" class="btn sec still" data-q="still">${t("qzStill")}</button><button type="button" class="btn pri" data-q="know">${t("qzKnow")}</button><button type="button" class="btn sec" data-q="next">${t("qzNext")} →</button></div>
+      <p class="qz-keys">${t("qzKeys")}</p></div>`;
+    bindTools();
+    const cardEl = $(".qz-card", stage);
+    cardEl.addEventListener("click", e=>{ if (e.target.closest("button")) return; flip(); });
+    $(".qz-cstar", stage).addEventListener("click", ()=>{ qSet(w.fr, {s: qStar(w.fr) ? 0 : 1}); draw(); qzRefreshList(); });
+    $(".qz-say", stage).addEventListener("click", ()=>speak(w.fr));
+    $('[data-q="prev"]', stage).addEventListener("click", ()=>go(-1));
+    $('[data-q="next"]', stage).addEventListener("click", ()=>go(1));
+    $('[data-q="still"]', stage).addEventListener("click", ()=>{ qSet(w.fr, {lv:1}); qzRefreshList(); go(1); });
+    $('[data-q="know"]', stage).addEventListener("click", ()=>{ qSet(w.fr, {lv:3}); qzRefreshList(); go(1); });
+  };
+  const flip = () => { flipped = !flipped; draw(); if (flipped || QZ.dir === "fr") speak(deck[i].fr); };
+  const go = d => { if (!deck.length) return; i = (i + d + deck.length) % deck.length; flipped = false; draw(); };
+  const tools = () => `<button type="button" class="chip-t${QZ.shuf?" on":""}" data-t="shuf">${t("qzShuffle")}</button><button type="button" class="chip-t${QZ.star?" on":""}" data-t="star">★ ${t("qzStarOnly")}</button><span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
+  const bindTools = () => {
+    $$("[data-t]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ[b.dataset.t] = !QZ[b.dataset.t]; saveQZ(); qzCards(stage); }));
+    $$("[data-dir]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.dir = b.dataset.dir; saveQZ(); flipped = false; draw(); }));
+  };
+  qzKeyHandler = e => {
+    if (location.hash.slice(1) !== "quizlet" || QZ.mode !== "cards" || /INPUT|TEXTAREA/.test((e.target||{}).tagName||"")) return;
+    if (e.key === " ") { e.preventDefault(); flip(); } else if (e.key === "ArrowRight") go(1); else if (e.key === "ArrowLeft") go(-1);
+  };
+  document.addEventListener("keydown", qzKeyHandler);
+  draw();
+}
+
+/* mode 2: learn (adaptive: choice → typing) */
+function qzLearn(stage){
+  const tok = stage.dataset.tok, alive = () => stage.dataset.tok === tok && document.body.contains(stage);
+  const all = qWords(QZ.set);
+  let last = null;
+  const counts = () => { const c = [0,0,0,0]; all.forEach(w=>c[Math.min(qLv(w.fr),3)]++); return c; };
+  const head = () => { const c = counts(); return `<div class="qz-prog"><div class="qz-progbar">${c.map((n,k)=>`<i class="lv${k}" style="flex:${n}"></i>`).join("")}</div><div class="qz-legend">${c.map((n,k)=>`<span><i class="dot lv${k}"></i>${t("qzLv")[k]}: <b>${n}</b></span>`).join("")}</div></div>`; };
+  const nextQ = () => {
+    if (!alive()) return;
+    const pool = all.filter(w=>qLv(w.fr) < 3);
+    if (!pool.length) {
+      stage.innerHTML = `<div class="qz-pad center">${head()}<h3 class="qz-done">${t("qzLearnDone")}</h3><p class="muted">${t("qzLearnDoneSub")}</p><button type="button" class="btn sec" id="qzReset">${t("qzResetSet")}</button></div>`;
+      $("#qzReset", stage).addEventListener("click", ()=>{ all.forEach(w=>qSet(w.fr, {lv:0})); qzRefreshList(); nextQ(); });
+      return;
+    }
+    pool.sort((a,b)=>qLv(a.fr)-qLv(b.fr) || Math.random()-.5);
+    let cand = pool.slice(0, Math.min(7, pool.length)); let w = cand[Math.floor(Math.random()*cand.length)];
+    if (last && w.fr === last && pool.length > 1) w = cand.find(x=>x.fr !== last) || pool.find(x=>x.fr !== last) || w;
+    last = w.fr;
+    const lv = qLv(w.fr);
+    if (lv < 2) {
+      const others = shuffle(all.filter(x=>x.fr !== w.fr && x.m !== w.m)).slice(0, 3);
+      const opts = shuffle([w, ...others]);
+      stage.innerHTML = `<div class="qz-pad">${head()}<div class="qz-q"><span class="qz-kind">${t("qzChoose")}</span><span class="qz-term fr">${esc(w.fr)}</span></div><div class="qz-opts">${opts.map(o=>`<button type="button" class="qz-opt" data-fr="${esc(o.fr)}">${esc(o.m)}</button>`).join("")}</div><div class="qz-fb"></div></div>`;
+      speak(w.fr);
+      $$(".qz-opt", stage).forEach(b=>b.addEventListener("click", ()=>{
+        if (stage.dataset.lock === "1") return; stage.dataset.lock = "1";
+        const ok = b.dataset.fr === w.fr;
+        $$(".qz-opt", stage).forEach(x=>{ x.disabled = true; if (x.dataset.fr === w.fr) x.classList.add("is-ok"); });
+        if (!ok) b.classList.add("is-bad");
+        result(w, ok, w.m);
+      }));
+    } else {
+      stage.innerHTML = `<div class="qz-pad">${head()}<div class="qz-q"><span class="qz-kind">${t("qzType")}</span><span class="qz-term">${esc(w.m)}</span></div>${accBar()}<div class="qz-write"><input class="ans wide" id="qzIn" ${inputAttrs} aria-label="${esc(t("qzType"))}"><button type="button" class="btn pri" id="qzChk">${t("qzCheck")}</button><button type="button" class="btn sec" id="qzIdk">${t("qzDontKnow")}</button></div><div class="qz-fb"></div></div>`;
+      const inp = $("#qzIn", stage); inp.focus();
+      const check = giveUp => {
+        if (stage.dataset.lock === "1") return;
+        const st = giveUp ? "bad" : judge(inp.value, [w.fr]); if (st === "empty") return;
+        stage.dataset.lock = "1"; inp.disabled = true;
+        inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
+        result(w, st !== "bad", w.fr, st === "acc");
+      };
+      inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); check(false); } });
+      $("#qzChk", stage).addEventListener("click", ()=>check(false));
+      $("#qzIdk", stage).addEventListener("click", ()=>check(true));
+    }
+    stage.dataset.lock = "";
+  };
+  const result = (w, ok, right, accWarn) => {
+    const lv = qLv(w.fr);
+    qSet(w.fr, {lv: ok ? Math.min(3, lv+1) : Math.max(0, lv-1)}); qzRefreshList();
+    const fb = $(".qz-fb", stage);
+    if (ok) { fb.innerHTML = `<span class="ok-t">${t("qzCorrect")}</span>${accWarn ? ` <span class="acc-t">${t("almost")}</span> <b>${esc(w.fr)}</b>` : ""}`; speak(w.fr); setTimeout(nextQ, accWarn ? 1600 : 850); }
+    else { fb.innerHTML = `<span class="pen">${t("qzWrongIs")} ${esc(right)}</span> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; speak(w.fr); const go = $("#qzGo", stage); go.focus(); go.addEventListener("click", nextQ); }
+  };
+  nextQ();
+}
+
+/* mode 3: write */
+function qzWrite(stage){
+  const tok = stage.dataset.tok, alive = () => stage.dataset.tok === tok && document.body.contains(stage);
+  let round, i, got, wrong;
+  const start = list => { round = shuffle(list.slice()).slice(0, 20); i = 0; got = 0; wrong = []; step(); };
+  const step = () => {
+    if (!alive()) return;
+    if (i >= round.length) {
+      stage.innerHTML = `<div class="qz-pad center"><h3 class="qz-done">${t("qzWriteDone", got, round.length)}</h3><p class="pen big">${praise(round.length ? got/round.length : 1)}</p><div class="btns center">${wrong.length ? `<button type="button" class="btn pri" id="qzRetry">${t("qzRetryWrong")} (${wrong.length})</button>` : ""}<button type="button" class="btn sec" id="qzNew">${t("qzRoundAgain")}</button></div></div>`;
+      const r = $("#qzRetry", stage); if (r) r.addEventListener("click", ()=>start(wrong));
+      $("#qzNew", stage).addEventListener("click", ()=>start(qWords(QZ.set)));
+      return;
+    }
+    const w = round[i];
+    stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar"><span class="qz-ctr">${i+1} / ${round.length}</span><span class="qz-ctr ok">✓ ${got}</span></div><div class="qz-q"><span class="qz-kind">${t("qzType")}</span><span class="qz-term">${esc(w.m)}</span></div>${accBar()}<div class="qz-write"><input class="ans wide" id="qzIn" ${inputAttrs} aria-label="${esc(t("qzType"))}"><button type="button" class="btn pri" id="qzChk">${t("qzCheck")}</button><button type="button" class="btn sec" id="qzIdk">${t("qzDontKnow")}</button></div><div class="qz-fb"></div></div>`;
+    const inp = $("#qzIn", stage); inp.focus();
+    let done = false;
+    const check = giveUp => {
+      if (done) { i++; step(); return; }
+      const st = giveUp ? "bad" : judge(inp.value, [w.fr]); if (st === "empty") return;
+      done = true; inp.disabled = true;
+      inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
+      const fb = $(".qz-fb", stage), lv = qLv(w.fr);
+      speak(w.fr);
+      if (st === "ok") { got++; qSet(w.fr, {lv: Math.min(3, lv+1)}); fb.innerHTML = `<span class="ok-t">Juste !</span>`; setTimeout(()=>{ if (done && round[i] === w) { i++; step(); } }, 800); }
+      else { wrong.push(w); qSet(w.fr, {lv: Math.max(0, lv-1)}); fb.innerHTML = `${st === "acc" ? `<span class="acc-t">${t("almost")}</span>` : `<span class="pen">${t("qzWrongIs")}</span>`} <b>${esc(w.fr)}</b> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; $("#qzGo", stage).addEventListener("click", ()=>{ i++; step(); }); $("#qzGo", stage).focus(); }
+      qzRefreshList();
+    };
+    inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); check(false); } });
+    $("#qzChk", stage).addEventListener("click", ()=>check(false));
+    $("#qzIdk", stage).addEventListener("click", ()=>check(true));
+  };
+  start(qWords(QZ.set));
+}
+
+/* mode 4: match game */
+function qzMatch(stage){
+  const ws = shuffle(qWords(QZ.set).slice()).slice(0, 6);
+  const tiles = shuffle(ws.flatMap((w,k)=>[{k, txt:w.fr, fr:true}, {k, txt:w.m, fr:false}]));
+  let first = null, left = ws.length, t0 = 0;
+  const best = S.quiz.best[QZ.set];
+  stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar"><span class="muted">${t("qzMatchHint")}</span><span class="qz-ctr" id="qzClock">0.0 s</span>${best ? `<span class="qz-ctr ok">${t("qzBest", best)}</span>` : ""}</div><div class="qz-grid">${tiles.map((x,i)=>`<button type="button" class="qz-tile${x.fr?" is-fr":""}" data-i="${i}">${esc(x.txt)}</button>`).join("")}</div></div>`;
+  const clock = $("#qzClock", stage);
+  $$(".qz-tile", stage).forEach(b=>b.addEventListener("click", ()=>{
+    if (b.classList.contains("gone")) return;
+    if (!t0) { t0 = performance.now(); qzTimer = setInterval(()=>{ clock.textContent = ((performance.now()-t0)/1000).toFixed(1) + " s"; }, 100); }
+    const x = tiles[+b.dataset.i];
+    if (x.fr) speak(x.txt);
+    if (!first) { first = b; b.classList.add("sel"); return; }
+    if (first === b) { b.classList.remove("sel"); first = null; return; }
+    const y = tiles[+first.dataset.i];
+    if (x.k === y.k && x.fr !== y.fr) {
+      [b, first].forEach(el=>{ el.classList.remove("sel"); el.classList.add("ok"); setTimeout(()=>el.classList.add("gone"), 250); });
+      first = null; left--;
+      if (!left) {
+        clearInterval(qzTimer); const s = +((performance.now()-t0)/1000).toFixed(1);
+        if (!best || s < best) { S.quiz.best[QZ.set] = s; touch("quiz"); }
+        setTimeout(()=>{ stage.innerHTML = `<div class="qz-pad center"><h3 class="qz-done">${t("qzMatchDone", String(s).replace(".", LANG==="ru"?",":"."))}</h3><p class="muted">${t("qzBest", S.quiz.best[QZ.set])}</p><button type="button" class="btn pri" id="qzAgain">${t("qzPlayAgain")}</button></div>`; $("#qzAgain", stage).addEventListener("click", ()=>qzMatch(stage)); }, 350);
+      }
+    } else {
+      const a = first; [b, a].forEach(el=>el.classList.add("bad","flash")); first = null;
+      setTimeout(()=>[b, a].forEach(el=>el.classList.remove("bad","flash","sel")), 450);
+    }
+  }));
+}
+
+/* =========================================================
+   router
+   ========================================================= */
+function markActive(){
+  const h = decodeURIComponent((location.hash||"").slice(1));
+  const id = byId[h] || ["test","shpargalka","quizlet","account"].includes(h) ? h : "home";
+  $$(".nav a.nl, .nav a.acct").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
+}
+function route(keepScroll){
+  const h = decodeURIComponent((location.hash||"").slice(1));
+  if (synth) try { synth.cancel(); } catch(e) {}
+  if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
+  clearInterval(qzTimer);
+  const y = window.scrollY;
+  if (byId[h]) renderTopic(byId[h]);
+  else if (h === "test") renderTest();
+  else if (h === "shpargalka") renderCheat();
+  else if (h === "quizlet") renderQuizlet();
+  else if (h === "account") renderAccount();
+  else renderHome();
+  markActive(); closeNav();
+  window.scrollTo(0, keepScroll ? y : 0);
+}
+function rerender(){ route(true); }
+window.addEventListener("hashchange", ()=>route(false));
+$("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav");
+buildNav(); route(false);
+if (Cloud.kind !== "supabase") initCloud();
+})();
