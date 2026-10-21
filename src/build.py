@@ -2,7 +2,7 @@
 import os, shutil
 HERE=os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 OUT=os.path.dirname(HERE)  # корень репозитория = то, что публикует GitHub Pages
-files=['visuals.js','data-book.js','data-ref.js','data-test.js','vocab.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','engine2.js']
+files=['visuals.js','data-book.js','data-ref.js','data-test.js','vocab.js','gloss.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','engine2.js']
 js=''.join(open(f).read()+'\n' for f in files)
 shell=open('shell.html').read()
 
