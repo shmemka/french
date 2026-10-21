@@ -35,7 +35,7 @@ ru:{
   authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
   authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту — после этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет — проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
   aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена — открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть — войди на вкладке «Вход».", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
-  spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
+  spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
   qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 1 et 2",
@@ -110,7 +110,7 @@ en:{
   authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
   authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address — then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
   aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet — open the e-mail and click the link.", aeExists:"This account already exists — sign in on the “Sign in” tab.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
-  spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
+  spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
   qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 1 et 2",
@@ -465,10 +465,10 @@ function lookup(raw){
 }
 const TRC = "edito-tr-cache";
 let trCache = {}; try { trCache = JSON.parse(ls.get(TRC) || "{}") || {}; } catch(e) {}
-async function remoteTr(text, to){
-  const key = to + "|" + dk(text);
+async function remoteTr(text, to, from = "fr"){
+  const key = (from === "fr" ? "" : from + ">") + to + "|" + dk(text);
   if (trCache[key]) return trCache[key];
-  const url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text.trim()) + "&langpair=fr|" + to;
+  const url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text.trim()) + "&langpair=" + from + "|" + to;
   const ctl = ("AbortController" in window) ? new AbortController() : null;
   const tm = setTimeout(()=>{ if (ctl) ctl.abort(); }, 7000);
   try {
@@ -483,6 +483,54 @@ async function remoteTr(text, to){
     return out;
   } catch(e) { return null; } finally { clearTimeout(tm); }
 }
+
+/* --- обратный словарь: русский / английский → французский --- */
+let RDICT = null;
+const rk = s => dk(s).replace(/ё/g, "е");
+const RU_END = ["ившись","ались","ились","алась","илась","ался","ился","ила","ило","или","ала","али","ало","яла","яли","ил","ал","ял","иться","аться","яться","еться","ться","тся","ить","ать","ять","еть","уть","ешься","ется","ются","ются","ишься","ится","ятся","атся","ешь","ете","ает","ают","яет","яют","аешь","аете","аем","аю","яю","ишь","ите","ят","ат","ет","ут","ют","ит","им","ем","ями","ами","ого","его","ому","ему","ыми","ими","ых","их","ой","ей","ий","ый","ая","яя","ое","ее","ую","юю","ом","ам","ям","ах","ях","ов","ев","ью","ся","сь","а","я","ы","и","у","ю","е","о","ь","й"];
+function ruStem(w){ for (const e of RU_END) if (w.length - e.length >= 2 && w.endsWith(e)) return w.slice(0, -e.length); return w; }
+const EN_IRR = {is:"be", are:"be", am:"be", was:"be", were:"be", been:"be", has:"have", had:"have", does:"do", did:"do", done:"do", goes:"go", went:"go", gone:"go", made:"make", took:"take", said:"say", saw:"see", knew:"know", came:"come", wrote:"write", read:"read", children:"child", men:"man", women:"woman", people:"person", "i'm":"i", "you're":"you"};
+function buildRDict(){
+  if (!DICT) buildDict();
+  RDICT = {ru:new Map(), en:new Map(), rs:new Map()};
+  let ord = 0;
+  const put = (lang, k, e, rank) => { k = rk(k); if (!k || k.length > 48) return; let a = RDICT[lang].get(k); if (!a) RDICT[lang].set(k, a = []); if (!a.some(x=>x.e.fr === e.fr)) a.push({e, rank, ord: ord++}); };
+  const keysOf = (m, lang) => {
+    const out = []; if (!m) return out;
+    const base = m.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
+    out.push([base, 0]);
+    base.split(/\s*[;\/]\s*|,\s+/).forEach(part=>{
+      part = part.replace(/^=.*$/, "").replace(/\s+—.*$/, "").trim(); if (!part || /[a-zà-ÿ].*…|…/.test(part) && lang === "ru") return;
+      out.push([part, 1]);
+      if (lang === "en") { const b = /^to\s+(the|a|an)\b/i.test(part) ? part : part.replace(/^to\s+/i, "").replace(/^(a|an|the)\s+/i, ""); if (b !== part) out.push([b, 1]); }
+    });
+    return out;
+  };
+  const addE = (fr, ru, en, src) => { const e = {fr, ru, en}; keysOf(ru, "ru").forEach(([k, x])=>put("ru", k, e, src*2 + x)); keysOf(en, "en").forEach(([k, x])=>put("en", k, e, src*2 + x)); };
+  QSETS.forEach(st=>st.w.forEach(w=>addE(w[0], w[1], w[2], 0)));
+  GLOSS.forEach(w=>addE(w[0], w[1], w[2], 1));
+  for (const [k, a] of RDICT.ru) if (!/\s/.test(k) && k.length >= 3) { const st = ruStem(k); if (st.length >= 2 && !RDICT.rs.has(st)) RDICT.rs.set(st, {k, a}); }
+}
+function rlookup(raw, lang){
+  if (!RDICT) buildRDict();
+  const M = RDICT[lang], k = rk(raw); if (!k) return null;
+  let a = M.get(k), base = null;
+  if (!a && !/\s/.test(k)) {
+    if (lang === "en") {
+      const tries = [EN_IRR[k], k.replace(/ies$/, "y"), k.replace(/es$/, ""), k.replace(/s$/, ""), k.replace(/'s$/, ""), k.replace(/ing$/, ""), k.replace(/ing$/, "e"), k.replace(/(.)\1ing$/, "$1"), k.replace(/ed$/, ""), k.replace(/d$/, ""), k.replace(/(.)\1ed$/, "$1")];
+      for (const c of tries) if (c && c !== k && M.has(c)) { a = M.get(c); base = c; break; }
+    } else if (k.length >= 4) {
+      const hit = RDICT.rs.get(ruStem(k)); if (hit) { a = hit.a; base = hit.k; }
+    }
+  }
+  if (!a) return null;
+  const list = a.slice().sort((x, y)=>x.rank - y.rank || x.ord - y.ord).map(x=>x.e);
+  const named = list.filter(e=>!/['’]$/.test(e.fr));
+  return {list: named.length ? named : list, base};
+}
+const FR_MARK = /[àâæçéèêëîïôœùûüÿ]|(^|[\s(«"])(l|d|j|qu|n|c|s|m|t)['’][a-zà-ÿh]/i;
+const EN_FN = /\b(the|is|are|am|was|were|and|of|you|your|my|what|which|this|that|it|its|with|for|have|has|do|does|be|can|i|he|she|we|they|their|his|her|how|where|when|why|who|at|in|on|to|a|an)\b/i;
+const FR_FN = /(^|\s)(le|la|les|un|une|des|du|de|est|et|je|tu|il|elle|nous|vous|ils|elles|ce|ne|pas|à|au|aux|en|mon|ma|mes|ton|ta|tes|son|sa|ses|que|qui|où|avec|pour|dans|sur|chez|très|bien|oui|non)(?=\s|$)/i;
 
 /* --- избранное --- */
 const favIdx = fr => (S.quiz.fav || []).findIndex(x=>dk(x.fr) === dk(fr));
@@ -505,9 +553,9 @@ function spBuild(){
   el.innerHTML = `<div class="sp-tx"><span class="sp-fr"></span><span class="sp-m"></span><span class="sp-note"></span></div><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button></div>`;
   el.addEventListener("mousedown", e=>e.preventDefault());
   el.addEventListener("pointerdown", e=>{ if (e.pointerType !== "mouse") e.preventDefault(); });
-  $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry) speak(SP.entry.say); });
+  $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry && SP.entry.say) speak(SP.entry.say); });
   $(".sp-fav", el).addEventListener("click", ()=>{
-    const e = SP.entry; if (!e) return;
+    const e = SP.entry; if (!e || !e.fr) return;
     const on = toggleFav(e); spPaintFav(); toast(on ? t("favAdded") : t("favRemoved"));
     if (location.hash === "#quizlet") qzRefreshList();
   });
@@ -519,6 +567,7 @@ function spPaintFav(){
   b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label");
   const s = $(".sp-say", SP.el); s.setAttribute("aria-label", t("qzSay")); s.title = t("qzSay");
   s.hidden = !synth;
+  const ready = !!(SP.entry && SP.entry.fr); b.disabled = !ready; s.disabled = !ready;
 }
 function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; }
 function spPlace(){
@@ -552,35 +601,70 @@ function spCheck(){
   if (!sel || sel.isCollapsed || !sel.rangeCount) { spHide(); return; }
   const raw = sel.getRangeAt(0).toString().replace(/\s+/g, " ").trim();
   const txt = raw.replace(/^[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+|[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+$/g, "");
-  if (!txt || txt.length > 80 || txt.split(" ").length > 8 || /[А-Яа-яЁё]/.test(txt) || !/[a-zà-ÿœæç]/i.test(txt) || /^[\d\s.,]+$/.test(txt) || !spAllowed(sel)) { spHide(); return; }
+  const cyr = /[А-Яа-яЁё]/.test(txt), lat = /[a-zà-ÿœæç]/i.test(txt);
+  if (!txt || txt.length > 80 || txt.split(" ").length > 8 || (cyr && lat) || (!cyr && !lat) || !spAllowed(sel)) { spHide(); return; }
   if (!SP.el) spBuild();
   const range = sel.getRangeAt(0).cloneRange();
   if (SP.entry && SP.entry.sel === txt && !SP.el.hidden) { SP.range = range; spPlace(); return; }
   SP.range = range;
-  const req = ++SP.req;
-  const hit = lookup(txt), to = LANG === "en" ? "en" : "ru";
-  const el = SP.el;
+  const req = ++SP.req, to = LANG === "en" ? "en" : "ru";
+  const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
   $(".sp-fr", el).textContent = txt;
-  const mEl = $(".sp-m", el), nEl = $(".sp-note", el);
-  if (hit) {
-    const m = to === "en" ? (hit.en || hit.ru) : (hit.ru || hit.en);
-    const fr = hit.form || hit.fr;
-    SP.entry = {sel:txt, say:txt, fr, ru:hit.ru, en:hit.en};
-    mEl.textContent = m || "—";
-    nEl.textContent = hit.form ? t("spForm", hit.form) : (dk(fr) !== dk(txt) ? fr : "");
-    el.dataset.st = "ok";
-  } else {
-    SP.entry = {sel:txt, say:txt, fr:txt, ru:"", en:""};
-    mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load";
+  const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
+  const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
+  const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
+  /* --- французский → ru/en --- */
+  const fromFr = hit => {
+    el.dataset.dir = "fr";
+    if (hit) {
+      const fr = hit.form || hit.fr;
+      SP.entry = {sel:txt, say:txt, fr, ru:hit.ru, en:hit.en};
+      mEl.textContent = (to === "en" ? (hit.en || hit.ru) : (hit.ru || hit.en)) || "—";
+      nEl.textContent = hit.form ? t("spForm", hit.form) : (dk(fr) !== dk(txt) ? fr : "");
+      el.dataset.st = "ok"; return show();
+    }
+    SP.entry = {sel:txt, say:txt, fr:txt, ru:"", en:""}; loading(); show();
     remoteTr(txt, to).then(out=>{
       if (req !== SP.req) return;
-      if (out) { SP.entry[to] = out; mEl.textContent = out; nEl.textContent = t("spAuto"); el.dataset.st = "ok"; }
-      else { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; }
+      if (out) { SP.entry[to] = out; mEl.textContent = out; nEl.textContent = t("spAuto"); el.dataset.st = "ok"; spPlace(); }
+      else if (!FR_MARK.test(txt)) remoteRev("en");
+      else { fail(); spPlace(); }
+    });
+  };
+  /* --- ru/en → французский --- */
+  const paintRev = (src, list, i, base) => {
+    const e = list[i];
+    SP.entry = {sel:txt, say:e.fr, fr:e.fr, ru:e.ru, en:e.en, rev:true};
+    mEl.textContent = e.fr; el.dataset.st = "ok"; el.dataset.dir = "rev";
+    const gloss = src === "en" ? e.en : e.ru;
+    const g = gloss && rk(gloss) !== rk(txt) ? gloss : (base && base !== rk(txt) ? base : "");
+    const alts = list.map((x, j)=>({x, j})).filter(o=>o.j !== i).slice(0, 3);
+    nEl.innerHTML = (g ? `<span class="sp-gl">${esc(g)}</span>` : "") + (alts.length ? `<span class="sp-alts">${t("spAlso")} ${alts.map(o=>`<button type="button" class="sp-alt" data-j="${o.j}" aria-label="${esc(t("spAltA", o.x.fr))}">${esc(o.x.fr)}</button>`).join("")}</span>` : "");
+    $$(".sp-alt", nEl).forEach(b=>b.addEventListener("click", ()=>{ paintRev(src, list, +b.dataset.j, base); spPaintFav(); spPlace(); }));
+  };
+  const remoteRev = src => {
+    el.dataset.dir = "rev";
+    SP.entry = {sel:txt, say:"", fr:"", ru:"", en:"", rev:true}; loading(); show();
+    remoteTr(txt, "fr", src).then(out=>{
+      if (req !== SP.req) return;
+      if (out) { SP.entry = {sel:txt, say:out, fr:out, ru: src === "ru" ? txt : "", en: src === "en" ? txt : "", rev:true}; mEl.textContent = out; nEl.textContent = t("spAuto"); el.dataset.st = "ok"; spPaintFav(); }
+      else fail();
       spPlace();
     });
-  }
-  spPaintFav();
-  el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in"));
+  };
+  const fromRev = (src, r) => { if (r) { paintRev(src, r.list, 0, r.base); return show(); } remoteRev(src); };
+
+  if (cyr) return fromRev("ru", rlookup(txt, "ru"));
+  const node = sel.anchorNode, nodeEl = node && (node.nodeType === 1 ? node : node.parentElement);
+  const inFr = !!(nodeEl && nodeEl.closest('.fr,[lang="fr"],.fl-ex'));
+  const frHit = lookup(txt);
+  if (inFr || FR_MARK.test(txt)) return fromFr(frHit);
+  const enHit = rlookup(txt, "en");
+  if (LANG === "en" && enHit && !enHit.base) return fromRev("en", enHit);
+  if (frHit) return fromFr(frHit);
+  if (enHit) return fromRev("en", enHit);
+  if (EN_FN.test(txt) && !FR_FN.test(txt)) return remoteRev("en");
+  fromFr(null);
 }
 document.addEventListener("selectionchange", ()=>{ clearTimeout(SP.timer); SP.timer = setTimeout(spCheck, 260); });
 window.addEventListener("scroll", ()=>{ if (SP.el && !SP.el.hidden) requestAnimationFrame(spPlace); }, {passive:true, capture:true});
