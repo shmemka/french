@@ -16,6 +16,8 @@ const ICO = {
   star:'<svg viewBox="0 0 20 20"><path d="m10 2.8 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></svg>',
   lex:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H16v12H5.5A1.5 1.5 0 0 0 4 16.5z"/><path d="M4 16.5A1.5 1.5 0 0 0 5.5 18H16v-3M7.5 7h5M7.5 10h3.5"/></svg>',
   check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10.5 3.2 3.2L15 6.8"/></svg>',
+  bank:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><path d="M14 11.5v5M11.5 14h5"/></svg>',
+  shop:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 7.5h13l-1 9a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M7 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
   cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>'
 };
 
@@ -227,7 +229,7 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG)});
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG))});
     TOP = c.top; POOLX = c.pool; CHEATX = "";
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...GRAM, ...REF];
@@ -241,11 +243,13 @@ setData();
    STORE: local cache + cloud (db) under data/users/<id>/
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
-let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, ts:{}};
+const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, at: o.at || 0}; };
+const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}}; };
+let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
   try {
     const raw = ls.get(LKEY);
-    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, ts:o.ts||{}}; }
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
     else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
   } catch(e) {}
 })();
@@ -287,6 +291,8 @@ function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
   if (key === "settings") return {lang:LANG, course:COURSE, ts:S.ts.settings||0};
   if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
+  if (key === "profile") return Object.assign({}, S.prof, {ts:S.ts.profile||0});
+  if (key === "game") return Object.assign({}, S.game, {ts:S.ts.game||0});
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
   return null;
 }
@@ -295,6 +301,7 @@ function setCloud(st){
   Cloud.state = st;
   $$("[data-cloud]").forEach(el=>{ el.textContent = t("cloud")[st] + (st === "saved" && Cloud.lastOk ? " · " + hhmm(Cloud.lastOk).slice(0,5) : ""); el.dataset.st = st; el.title = Cloud.lastErr || ""; });
   const d = $("#cloudDiag"); if (d) d.innerHTML = cloudDiag();
+  try { gateCheck(); } catch(e) {}
 }
 function schedule(ms){ clearTimeout(Cloud.timer); Cloud.timer = setTimeout(flush, ms); }
 function touch(key){
@@ -330,14 +337,18 @@ function hasData(k){
   if (k === "progress") return Object.keys(S.p).length || S.tests.length;
   if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length;
   if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
+  if (k === "profile") return !!S.prof.name;
+  if (k === "game") return S.game.xp > 0 || S.game.day.n > 0 || S.game.coins !== 50;
   if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
   return false;
 }
-function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, ts:{}}; persistLocal(); }
+function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}}; persistLocal(); }
 function initCloud(){
-  if (Cloud.initing) return Cloud.initing;
-  Cloud.initing = initCloudRun().finally(()=>{ Cloud.initing = null; });
-  return Cloud.initing;
+  const prev = Cloud.initing || Promise.resolve();
+  const run = prev.catch(()=>{}).then(()=>initCloudRun());
+  Cloud.initing = run.finally(()=>{ if (Cloud.initing === run2) Cloud.initing = null; });
+  const run2 = Cloud.initing;
+  return run2;
 }
 async function initCloudRun(){
   if (Cloud.kind === "none") { setCloud("local"); return; }
@@ -372,10 +383,12 @@ async function initCloudRun(){
         if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
         else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
+        else if (k === "profile") S.prof = normProf(v);
+        else if (k === "game") S.game = normGame(v);
         S.ts[k] = ct; changed = true;
       } else if (lt > ct) Cloud.dirty.add(k);
     });
-    ["progress","quiz","settings", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
+    ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
     persistLocal();
     Cloud.be = be; Cloud.uid = be.uid; Cloud.fails = 0; Cloud.lastOk = Date.now(); Cloud.lastErr = null;
     setCloud(Cloud.dirty.size ? "saving" : "saved");
@@ -388,7 +401,7 @@ async function initCloudRun(){
     if (location.hash === "#account") try { rerender(); } catch(_) {}
     return;
   }
-  try { paintNavProgress(); if (langChanged) { setData(); buildNav(); } if (changed || langChanged || location.hash === "#account") rerender(); } catch(e) {}
+  try { paintNavProgress(); applyLook(); paintMe(); if (langChanged) { setData(); buildNav(); } if (changed || langChanged || location.hash === "#account") rerender(); } catch(e) {}
 }
 function cloudDiag(){
   const lines = [];
@@ -399,7 +412,7 @@ function cloudDiag(){
 }
 async function syncNow(){
   if (Cloud.kind === "none") return;
-  ["progress","quiz","settings", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
+  ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
   if (!Cloud.be) { Cloud.inits = 0; await initCloud(); }
   if (Cloud.be) { Cloud.fails = 0; await flush(); }
 }
@@ -429,13 +442,14 @@ function authSay(msg, kind){ Auth.msg = msg; Auth.msgKind = kind || ""; const el
 if (sb) {
   sb.auth.onAuthStateChange((ev, session)=>{
     setTimeout(()=>{
-      if (ev === "INITIAL_SESSION") { initCloud(); if (Auth.redirect && session) { Auth.redirect = false; location.hash = "account"; } return; }
+      if (ev === "INITIAL_SESSION") { Gate.ready = true; initCloud(); if (Auth.redirect && session) { Auth.redirect = false; location.hash = "account"; } return; }
       if (ev === "PASSWORD_RECOVERY") { Auth.recovery = true; Auth.redirect = false; if (location.hash !== "#account") location.hash = "account"; else rerender(); return; }
-      if (ev === "SIGNED_IN") { if (!session || session.user.id !== Cloud.uid) { Auth.msg = ""; initCloud().then(()=>{ if (Auth.redirect) { Auth.redirect = false; location.hash = "account"; } }); } return; }
+      if (ev === "SIGNED_IN") { ls.set("edito-seen-auth", "1"); if (!session || session.user.id !== Cloud.uid) { Auth.msg = ""; initCloud().then(()=>{ if (Auth.redirect) { Auth.redirect = false; location.hash = "account"; } }); } return; }
       if (ev === "USER_UPDATED") { if (session && session.user) { ME = {id:session.user.id, name:session.user.email || t("you"), email:session.user.email || ""}; paintAccount(); } return; }
       if (ev === "SIGNED_OUT") {
         clearTimeout(Cloud.timer); Cloud.be = null; Cloud.uid = null; ME = null; Cloud.dirty.clear(); Cloud.lastOk = 0; Cloud.lastErr = null;
         resetLocal(); try { localStorage.removeItem("edito-owner"); } catch(e) {}
+        Auth.mode = "in"; Auth.touched = true; applyLook(); setData(); buildNav();
         setCloud("signedout"); paintAccount(); paintNavProgress(); rerender();
       }
     }, 0);
@@ -654,7 +668,6 @@ function spAllowed(sel){
   if (h === "test" || h === "quizlet") return false;
   const n = sel.anchorNode; const el = n && (n.nodeType === 1 ? n : n.parentElement);
   if (!el || el.closest("input,textarea,.selpop,.nav,.topbar,[contenteditable]")) return false;
-  const a = document.activeElement; if (a && /INPUT|TEXTAREA/.test(a.tagName)) return false;
   return true;
 }
 
@@ -823,7 +836,7 @@ const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" sp
 function praise(r){ if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
 function makeBlock(tp, ex, i){
   const el = document.createElement("section"); el.className = "exb"; el.dataset.i = i;
-  el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${t("label")[ex.t]}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
+  el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${exLabel(ex)}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
   const api = {
     el, body: $(".exb-b", el), score: $(".exb-score", el), btns: $(".exb-btns", el),
     saved: (S.ans[tp.id] || {})[i] || null,
@@ -832,23 +845,37 @@ function makeBlock(tp, ex, i){
     showBest(){ const p = (S.p[tp.id]||{})[i]; $(".exb-best", el).textContent = p ? t("best", Math.round(p.b*100)) : ""; },
     finish(got, total, msg, restoring){ if (!restoring) setScore(tp.id, i, got, total); const r = total ? got/total : 1; api.score.innerHTML = msg || `<b>${got} / ${total}</b> · <span class="pen">${praise(r)}</span>`; api.showBest(); },
     status(txt){ api.score.innerHTML = txt; },
-    button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; }
+    button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; },
+    tid: tp.id, ei: i,
+    ans(k, st, restoring){ if (!restoring) gameAnswer(tp.id + "|" + i, k, st); },
+    whyItem(answer, e){ return whyHTML(answer, e, ruleFor(tp.id, i)); },
+    whyFoot(){ if ($(".why-foot", el)) return; const f = $(".exb-f", el); f.insertAdjacentHTML("beforeend", `<div class="why-foot">${whyHTML("", "", ruleFor(tp.id, i))}</div>`); }
   };
   api.showBest();
   return api;
 }
-const fbHtml = (state, answers, e) => {
+function ruleFor(tid, ei){ const w = WHY[tid] && WHY[tid][ei]; return w ? (LANG === "en" ? w[1] : w[0]) : ""; }
+function whyHTML(answer, e, rule){
+  if (!answer && !e && !rule) return "";
+  return `<button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button><div class="why-p" hidden>${answer !== "" && answer != null ? `<p><b>${t("answerIs")}</b> ${esc(answer)}</p>` : ""}${e ? `<p>${e}</p>` : ""}${rule ? `<p class="why-r"><span>${t("whyRule")}</span>${rule}</p>` : ""}</div>`;
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".why-b"); if (!b) return;
+  const p = b.nextElementSibling; if (!p || !p.classList.contains("why-p")) return;
+  const open = p.hidden; p.hidden = !open; b.setAttribute("aria-expanded", open); b.classList.toggle("on", open);
+});
+const fbHtml = (state, answers) => {
   const right = esc(answers[0]);
-  if (state === "ok") return `<span class="ok-t">${OKW()}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
-  if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>${e?` <span class="ex-e">${e}</span>`:""}`;
-  if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b>${e?" · " + e:""}</span>`;
-  return `<span class="pen">→ ${right}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
+  if (state === "ok") return `<span class="ok-t">${OKW()}</span>`;
+  if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>`;
+  if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b></span>`;
+  return `<span class="pen">→ ${right}</span>`;
 };
 const INIT = {};
 
 /* multiple choice + true/false */
 INIT.mc = (api, ex) => {
-  const items = ex.t === "tf" ? ex.items.map(it=>({q:it.q, o:[t("vrai"), t("faux")], a: it.a?0:1, e:it.e, keep:true})) : ex.items;
+  const items = ex.t === "tf" ? ex.items.map(it=>({q:it.q, o:tfOpts(), a: it.a?0:1, e:it.e, keep:true})) : ex.items;
   let answered, correct, sel, rows;
   const choose = (k, j, restoring) => {
     const row = rows[k], it = items[k];
@@ -856,8 +883,8 @@ INIT.mc = (api, ex) => {
     const ok = j === it.a; answered++; if (ok) correct++;
     $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
     const fb = $(".fb", row); fb.hidden = false;
-    fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}` : `<span class="pen">→ ${it.o[it.a]}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}`;
-    sel[k] = j; if (!restoring) api.save({sel});
+    fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${it.o[it.a]}</span>`) + api.whyItem(it.o[it.a], it.e);
+    sel[k] = j; if (!restoring) { api.save({sel}); api.ans(k, ok ? "ok" : "bad"); }
     if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcProg", answered, items.length, correct));
   };
   const build = restore => {
@@ -877,7 +904,7 @@ INIT.mc = (api, ex) => {
 INIT.tf = INIT.mc;
 
 /* instant checking for text inputs */
-function wireInstant(slots, onFirst, init, onSave){
+function wireInstant(slots, onFirst, init, onSave, onAns){
   const first = slots.map((_,k)=> init && init.f && init.f[k] ? init.f[k] : null);
   const save = () => { if (onSave) onSave({v: slots.map(s=>s.inp.value), f: first}); };
   const paint = k => {
@@ -888,23 +915,17 @@ function wireInstant(slots, onFirst, init, onSave){
   };
   const mark = k => {
     const st = paint(k); if (st === "empty") return st;
-    if (!first[k]) { first[k] = st; onFirst(first, false); }
+    if (!first[k]) { first[k] = st; onFirst(first, false); if (onAns) onAns(k, st); }
     save(); return st;
   };
-  const next = k => { const n = slots[k+1]; if (n) n.inp.focus(); };
+  const next = k => { const n = slots[k+1]; if (n) n.inp.focus(); else s0blur(k); };
+  const s0blur = k => { try { slots[k].inp.blur(); } catch(e) {} };
   slots.forEach((s,k)=>{
-    s.inp.addEventListener("input", ()=>{
-      const v = norm(s.inp.value);
-      if (judge(s.inp.value, s.a) === "ok") {
-        paint(k);
-        const longer = s.a.some(a=>{ const na = norm(a); return na !== v && na.startsWith(v); });
-        if (!s.long && !longer && v.length >= (s.minAdv || 3) && document.activeElement === s.inp) next(k);
-      } else { s.inp.classList.remove("r-ok","r-bad","r-acc"); s.hide(); }
-    });
-    s.inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); mark(k); next(k); } });
-    s.inp.addEventListener("blur", ()=>mark(k));
+    s.inp.setAttribute("enterkeyhint", k < slots.length - 1 ? "next" : "done");
+    s.inp.addEventListener("input", ()=>{ s.inp.classList.remove("r-ok","r-bad","r-acc"); s.hide(); });
+    s.inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); if (mark(k) !== "empty") next(k); } });
   });
-  if (init && init.v) slots.forEach((s,k)=>{ if (init.v[k]) { s.inp.value = init.v[k]; paint(k); } });
+  if (init && init.v) slots.forEach((s,k)=>{ if (init.v[k]) { s.inp.value = init.v[k]; if (first[k]) paint(k); } });
   onFirst(first, true);
   return {
     first,
@@ -927,9 +948,9 @@ INIT.fill = (api, ex) => {
       row.innerHTML = `<p class="fillq">${it.q.includes("___") ? it.q.replace("___", inp).replace(/___/g,"…") : `${it.q} ${inp}`}</p><div class="fb" hidden></div>`;
       api.body.appendChild(row);
       const fb = $(".fb", row);
-      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, it.a, it.e); }, hide: () => { fb.hidden = true; }};
+      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, it.a) + api.whyItem(it.a[0], it.e); }, hide: () => { fb.hidden = true; }};
     });
-    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -944,9 +965,9 @@ INIT.conj = (api, ex) => {
     const slots = $$(".ans", api.body).map(inp=>{
       const f = ex.items[+inp.dataset.v].f[+inp.dataset.k], row = inp.parentNode;
       const clear = () => $$(".pen,.acc-t", row).forEach(n=>n.remove());
-      return {inp, a:[f], show: st => { clear(); if (st === "bad") row.insertAdjacentHTML("beforeend", `<span class="pen">${esc(f)}</span>`); else if (st === "acc") row.insertAdjacentHTML("beforeend", `<span class="acc-t">${esc(f)}</span>`); }, hide: clear};
+      return {inp, a:[f], show: st => { clear(); api.whyFoot(); if (st === "bad") row.insertAdjacentHTML("beforeend", `<span class="pen">${esc(f)}</span>`); else if (st === "acc") row.insertAdjacentHTML("beforeend", `<span class="acc-t">${esc(f)}</span>`); }, hide: clear};
     });
-    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -963,9 +984,9 @@ INIT.listen = (api, ex) => {
     api.status(t("listenHint"));
     const slots = $$(".it", api.body).map((row,k)=>{ const fb = $(".fb", row), it = items[k];
       return {inp: $(".ans", row), a: it.a, minAdv: 2,
-        show: st => { fb.hidden = false; fb.innerHTML = st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`; },
+        show: st => { fb.hidden = false; fb.innerHTML = (st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`) + api.whyItem(it.a[0] + " — " + it.say, ""); },
         hide: () => { fb.hidden = true; }}; });
-    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -993,13 +1014,13 @@ INIT.match = (api, ex) => {
       if (side === "L") selL = b; else selR = b;
       if (side === "L" && synth) speak(b.textContent);
       if (selL && selR) {
-        if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); }
-        else { mistakes++; const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
+        if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); api.ans(+selL.dataset.k, "ok"); }
+        else { mistakes++; api.ans(null, "bad"); const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
         selL = null; selR = null;
-        api.save({m: done, mis: mistakes}); report(false);
+        api.save({m: done, mis: mistakes}); api.whyFoot(); report(false);
       }
     }));
-    if (restore && restore.m) { mistakes = restore.mis || 0; restore.m.forEach(k=>{ lockPair(k); matched++; done.push(k); }); }
+    if (restore && restore.m) { mistakes = restore.mis || 0; restore.m.forEach(k=>{ lockPair(k); matched++; done.push(k); }); if (restore.m.length || mistakes) api.whyFoot(); }
     report(true);
   };
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -1017,13 +1038,14 @@ INIT.sort = (api, ex) => {
     sel = null; if (!chip || chip.classList.contains("is-ok")) return;
     chip.classList.remove("sel");
     const b = +binEl.dataset.bin, k = +chip.dataset.k, it = ex.items[k];
-    if (b === it[1]) { lockIn(chip, binEl); placed++; pl.push(k); }
+    if (b === it[1]) { lockIn(chip, binEl); placed++; pl.push(k); if (!firstWrong.has(k)) api.ans(k, "ok"); }
     else {
+      if (!firstWrong.has(k)) api.ans(null, "bad");
       firstWrong.add(k); wrong[k] = (wrong[k]||0) + 1;
       chip.classList.add("is-bad","flash"); setTimeout(()=>chip.classList.remove("is-bad","flash"), 650);
       if (wrong[k] >= 2 && !$(".pen", chip)) chip.insertAdjacentHTML("beforeend", `<span class="pen">→ ${esc(ex.cats[it[1]])}</span>`);
     }
-    persist(); report(false);
+    persist(); api.whyFoot(); report(false);
   };
   api.body.addEventListener("click", e=>{
     const chip = e.target.closest(".chip");
@@ -1045,6 +1067,7 @@ INIT.sort = (api, ex) => {
     if (restore) {
       (restore.fw || []).forEach(k=>firstWrong.add(k)); wrong = restore.w || {};
       (restore.pl || []).forEach(k=>{ const chip = $(`.chip[data-k="${k}"]`, api.body), bin = $(`.bin[data-bin="${ex.items[k][1]}"]`, api.body); if (chip && bin) { lockIn(chip, bin); placed++; pl.push(k); } });
+      if ((restore.pl || []).length || (restore.fw || []).length) api.whyFoot();
     }
     report(true);
   };
@@ -1066,7 +1089,7 @@ INIT.order = (api, ex) => {
       const row = document.createElement("div"); row.className = "it ord";
       row.innerHTML = `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div><div class="fb" hidden></div>`;
       const line = $(".ord-line", row), fb = $(".fb", row), bank = $(".ord-bank", row);
-      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`; };
+      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = (r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`) + api.whyItem(it.s, it.ru); };
       for (let p = 0; p < res[k].pos; p++) { const tk = $$(".tok", bank).find(x=>x.textContent === words[p]); if (tk) line.appendChild(tk); }
       if (res[k].done) finishRow();
       row.addEventListener("click", e=>{
@@ -1074,7 +1097,7 @@ INIT.order = (api, ex) => {
         if (!tk || r.done) return;
         if (tk.textContent === words[r.pos]) {
           line.appendChild(tk); r.pos++;
-          if (r.pos === words.length) { r.done = true; finishRow(); speak(it.s); }
+          if (r.pos === words.length) { r.done = true; finishRow(); speak(it.s); api.ans(k, r.mis ? "bad" : "ok"); }
         } else {
           r.mis++; tk.classList.add("is-bad","flash"); setTimeout(()=>tk.classList.remove("is-bad","flash"), 550);
           fb.hidden = false; fb.innerHTML = `<span class="pen">${t("wrongWord")}</span> <span class="ex-e">${t("errorsN", r.mis)}</span>`;
@@ -1114,7 +1137,7 @@ INIT.cards = (api, ex) => {
     card.addEventListener("click", flip);
     card.addEventListener("keydown", e=>{ if (e.key==="Enter"||e.key===" ") { e.preventDefault(); flip(); } });
     $$(".seg button", api.body).forEach(b=>b.addEventListener("click", ()=>{ dir = b.dataset.d; flipped = false; persist(); draw(); }));
-    $('[data-a="know"]', api.body).addEventListener("click", ()=>{ known.push(queue.shift()); flipped = false; persist(); draw(); });
+    $('[data-a="know"]', api.body).addEventListener("click", ()=>{ const k = queue.shift(); known.push(k); api.ans(k, "self"); api.whyFoot(); flipped = false; persist(); draw(); });
     $('[data-a="again"]', api.body).addEventListener("click", ()=>{ queue.push(queue.shift()); flipped = false; draw(); });
     api.status(t("cardsHint"));
   };
@@ -1131,9 +1154,9 @@ INIT.drill = (api, ex) => {
     const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">Bravo !</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
     $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>{
       const k = +b.dataset.k; b.previousElementSibling.hidden = false; b.dataset.seen = "1"; speak(ex.items[k][0], .8);
-      if (!seen.includes(k)) { seen.push(k); api.save({seen}); upd(false); }
+      if (!seen.includes(k)) { seen.push(k); api.save({seen}); api.ans(k, "self"); api.whyFoot(); upd(false); }
     }));
-    upd(true);
+    upd(true); if (seen.length) api.whyFoot();
   };
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
   build(api.saved);
@@ -1155,8 +1178,10 @@ function buildNav(){
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
+      <a class="nl big" href="#bank" data-id="bank">${ICO.bank}<span class="nl-t">${t("bank")}</span></a>
       ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>`}
+      <a class="nl big" href="#shop" data-id="shop">${ICO.shop}<span class="nl-t">${t("shop")}</span><span class="nl-coin">🪙 <b data-coins>${S.game.coins}</b></span></a>
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
     ${units.map(u=>`<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
@@ -1165,13 +1190,13 @@ function buildNav(){
     ${REF.map(navLink).join("")}
   </div>
   <div class="nav-foot">
-    <div class="lang-sw" role="group" aria-label="${esc(t("lang"))}"><button type="button" data-lang="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang="en" class="${LANG==="en"?"on":""}">English</button></div>
-    <a class="acct" href="#account" data-id="account"><span class="acct-av" id="acctAv"></span><span class="acct-tx"><b id="acctName">${t("account")}</b><small data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</small></span></a>
+    ${meHTML()}
   </div>`;
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
   $$("[data-course]", nav).forEach(b=>b.addEventListener("click", ()=>setCourse(b.dataset.course)));
   const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
+  const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
 }
 function setCourse(c, silent){
@@ -1188,11 +1213,6 @@ function setCourse(c, silent){
   };
   if (silent) finish(); else setTimeout(finish, 240);
 }
-function avatarHTML(){
-  if (ME && ME.avatarUrl) return `<img src="${esc(ME.avatarUrl)}" alt="">`;
-  if (ME && ME.email) return `<span class="av-l">${esc(ME.email.trim().charAt(0).toUpperCase())}</span>`;
-  return ICO.cloud;
-}
 function authHTML(){
   const m = Auth.mode, up = m === "up", reset = m === "reset";
   return `<form class="auth" id="authForm" novalidate data-mode="${m}">
@@ -1204,7 +1224,6 @@ function authHTML(){
     <p class="auth-msg" id="authMsg" data-k="${Auth.msgKind}" aria-live="polite">${esc(Auth.msg)}</p>
     <button type="submit" class="btn pri auth-go" id="authGo">${up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn")}</button>
     <div class="auth-links" id="authLinks">${authLinks(m)}</div>
-    <p class="auth-note">${t("authNote")}</p>
   </form>`;
 }
 function authLinks(m){
@@ -1214,7 +1233,7 @@ function authLinks(m){
 }
 function setAuthMode(m){
   const f = $("#authForm"); if (!f) return;
-  Auth.mode = m; Auth.msg = ""; Auth.msgKind = "";
+  Auth.mode = m; Auth.touched = true; Auth.msg = ""; Auth.msgKind = "";
   f.classList.add("swap");
   setTimeout(()=>{
     const up = m === "up", reset = m === "reset";
@@ -1236,7 +1255,7 @@ function recoveryHTML(){
 }
 function wireAuth(){
   const f = $("#authForm");
-  if (f) {
+  if (f && !f.dataset.wired) { f.dataset.wired = "1";
     f.addEventListener("click", e=>{ const b = e.target.closest("[data-am]"); if (b) setAuthMode(b.dataset.am); });
     f.addEventListener("submit", async ev=>{
       ev.preventDefault();
@@ -1248,7 +1267,7 @@ function wireAuth(){
       try {
         let r;
         if (Auth.mode === "up") {
-          r = await sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}});
+          r = await withTimeout(sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}}), 20000);
           if (r.error) throw r.error;
           if (r.data && r.data.user && Array.isArray(r.data.user.identities) && !r.data.user.identities.length) throw {message:"already registered"};
           if (!r.data.session) { authSay(t("authCheckMail", email), "ok"); done(); return; }
@@ -1256,15 +1275,21 @@ function wireAuth(){
           r = await sb.auth.resetPasswordForEmail(email, {redirectTo:authRedirectTo()});
           if (r.error) throw r.error; authSay(t("authResetSent", email), "ok"); done(); return;
         } else {
-          r = await sb.auth.signInWithPassword({email, password:pw});
+          r = await withTimeout(sb.auth.signInWithPassword({email, password:pw}), 20000);
           if (r.error) throw r.error;
         }
-        Auth.msg = ""; Auth.mode = "in";
-      } catch(e) { authSay(authErrText(e), "err"); done(); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake"); }
+        Auth.msg = ""; Auth.mode = "in"; ls.set("edito-seen-auth", "1");
+        if (r && r.data && r.data.session && !ME) initCloud();
+      } catch(e) {
+        /* бывает, что ответ пришёл с ошибкой, но сессия уже создана — тогда это успех */
+        let s2 = null; if (Auth.mode !== "reset") { try { const g = await withTimeout(sb.auth.getSession(), 5000); s2 = g && g.data && g.data.session; } catch(_) {} }
+        if (s2) { Auth.msg = ""; Auth.mode = "in"; ls.set("edito-seen-auth", "1"); if (!ME) initCloud(); return; }
+        authSay(authErrText(e), "err"); done(); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake");
+      }
     });
   }
   const pf = $("#pwForm");
-  if (pf) {
+  if (pf && !pf.dataset.wired) { pf.dataset.wired = "1";
     $("#pwCancel").addEventListener("click", ()=>{ Auth.recovery = false; renderAccount(); });
     pf.addEventListener("submit", async ev=>{
       ev.preventDefault();
@@ -1276,11 +1301,7 @@ function wireAuth(){
     });
   }
 }
-function paintAccount(){
-  const av = $("#acctAv"), nm = $("#acctName");
-  if (av) av.innerHTML = avatarHTML();
-  if (nm) nm.textContent = ME && ME.name ? ME.name : t("account");
-}
+function paintAccount(){ paintMe(); }
 function paintNavProgress(){
   $$("[data-ring]").forEach(r=>{ const tp = byId[r.dataset.ring]; if (!tp) return; const p = topicPct(tp).pct*100; r.style.setProperty("--p", p.toFixed(0)); r.classList.toggle("full", p>=99.5); });
 }
@@ -1325,7 +1346,7 @@ function renderHome(){
     <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${es ? t("esStart") : t("startFirst")}</a>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#quizlet">${t("quizlet")}</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
-  ${saveNudge()}
+  ${dailyHTML()}
   <ol class="how">${how.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
   <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
@@ -1340,7 +1361,7 @@ function renderTopic(tp){
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
-    <h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
+    ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
     <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
   </header>
   <section class="theory">${tp.theory}</section>
@@ -1350,6 +1371,7 @@ function renderTopic(tp){
   const exs = $(".exs", main);
   tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
   $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
+  wireDeck(tp);
 }
 function renderCheat(){
   main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
@@ -1365,12 +1387,12 @@ function renderLexico(){
   <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–3</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
     <div class="lex-tools">
       <label class="lex-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg><input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
-      <span class="seg lex-units">${["all","1","2","3"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : "Unidad " + u}</button>`).join("")}</span>
+      <span class="seg lex-units">${["all","1","2","3","+"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : u==="+" ? "📅 " + t("lexCal") : "Unidad " + u}</button>`).join("")}</span>
       <button type="button" class="chip-t${LEX.hide?" on":""}" id="lexHide">${LEX.hide ? t("lexShow") : t("lexHide")}</button>
     </div>
   </header>
   <p class="lex-count" id="lexCount"></p>
-  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">U${c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
+  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
   <p class="muted lex-none" id="lexNone" hidden>${t("lexNone")}</p></div>`;
   const box = $("#lexBox"), save = () => ls.set("edito-lex", JSON.stringify({u:LEX.u, hide:LEX.hide}));
   const apply = () => {
@@ -1390,60 +1412,6 @@ function renderLexico(){
   apply();
 }
 
-/* ---------- account ---------- */
-function renderAccount(){
-  const es = COURSE === "es", tt = totals(), tests = testsOf();
-  const words = QSETS.flatMap(s=>s.w.map(w=>w[0])); const uniq = [...new Set(words)];
-  const learned = uniq.filter(w=>qLv(w) >= 3).length;
-  const best = tests.reduce((m,x)=>Math.max(m, x.got/(x.total||1)), 0);
-  const name = ME && ME.name ? ME.name : (Cloud.be ? t("you") : t("guest"));
-  const isSupa = Cloud.kind === "supabase", signedIn = !!(isSupa && ME);
-  const cname = `${COURSES[COURSE].name} · ${COURSES[COURSE].book}`;
-  let armed = false;
-  const status = () => {
-    if (isSupa && !signedIn) return Cloud.state === "loading" ? `<div class="acc-card soft"><span class="spin"></span><p>${t("cloud").loading}</p></div>` : authHTML();
-    if (Cloud.kind === "none") return `<div class="acc-card soft"><span class="acc-ic">${ICO.cloud}</span><p>${t("accLocal")}</p></div>`;
-    const ok = !!Cloud.be;
-    return `<div class="acc-card ${ok ? "good" : "warn"}"><span class="acc-ic">${ok ? ICO.check : ICO.cloud}</span><div class="acc-tx"><p>${ok ? t("accSaved") : t("accOffline")}</p>${ME && ME.email ? `<small>${esc(ME.email)}</small>` : ""}</div>
-      <div class="cb-btns">${ok ? "" : `<button type="button" class="btn sm pri" id="syncNow">${t("retry")}</button>`}${isSupa ? `<button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button>` : ""}</div></div>`;
-  };
-  main.innerHTML = `<div class="col">
-  <header class="t-head seyes acc-head"><div class="acc-big">${avatarHTML()}</div><div><p class="eyebrow">${t("accEyebrow")}</p><h1 id="accName"></h1><p class="t-ru"><span class="cloud-pill" data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</span></p></div></header>
-  ${Auth.recovery && signedIn ? recoveryHTML() : ""}
-  ${status()}
-  <div class="sec-h"><h2>${t("accFor", cname)}</h2></div>
-  <div class="kpis">
-    <div class="kpi"><b>${tt.done}<small>/${tt.ex}</small></b><span>${t("stSolved")}</span></div>
-    <div class="kpi"><b>${tt.full}<small>/${TOP.length}</small></b><span>${t("stTopics")}</span></div>
-    <div class="kpi"><b>${Math.round(tt.avg*100)}%</b><span>${t("stAvg")}</span></div>
-    <div class="kpi"><b>${tests.length}</b><span>${t("stTests")}</span></div>
-    <div class="kpi"><b>${tests.length ? (es ? Math.round(best*100) + "%" : String(Math.round(best*40)/2).replace(".",",") + "<small>/20</small>") : "—"}</b><span>${t("stBest")}</span></div>
-    ${es ? `<div class="kpi"><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b><span>${t("stLex")}</span></div>` : `<div class="kpi"><b>${learned}<small>/${uniq.length}</small></b><span>${t("stWords")}</span></div>`}
-  </div>
-  <div class="sec-h"><h2>${t("progressByTopic")}</h2></div>
-  <div class="brk">${ORDER.map(tp=>{ const p = topicPct(tp), r = p.pct; return `<div class="brk-r"><a href="#${tp.id}">${tp.title}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(r?4:0, r*100)}%"></i></div><span>${Math.round(r*100)}%</span></div>`; }).join("")}</div>
-  <div class="sec-h"><h2>${t("history")}</h2></div>
-  ${tests.length ? `<ul class="hist">${tests.slice().reverse().map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : `<p class="muted">${t("noTests")}</p>`}
-  <div class="sec-h"><h2>${t("settings")}</h2></div>
-  <div class="settings-row"><span>${t("lang")}</span><div class="lang-sw big"><button type="button" data-lang2="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang2="en" class="${LANG==="en"?"on":""}">English</button></div></div>
-  <div class="settings-row"><span></span><button type="button" class="btn sec danger" id="resetAll">${t("resetCourse", COURSES[COURSE].name)}</button></div>
-  </div>`;
-  $("#accName").textContent = name;
-  const sn = $("#syncNow"); if (sn) sn.addEventListener("click", async e=>{ const b = e.currentTarget; b.disabled = true; await syncNow(); renderAccount(); });
-  const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
-  const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
-  wireAuth();
-  $$("[data-lang2]", main).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
-  $("#resetAll").addEventListener("click", e=>{
-    const b = e.currentTarget;
-    if (!armed) { armed = true; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed) { armed = false; b.textContent = t("resetCourse", COURSES[COURSE].name); b.classList.remove("armed"); } }, 5000); return; }
-    const ids = TOP.map(x=>x.id);
-    ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
-    S.tests = S.tests.filter(x=>(x.c||"fr") !== COURSE);
-    if (!es) { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
-    touch("progress"); paintNavProgress(); renderAccount(); toast(t("resetDone"));
-  });
-}
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.classList.add("out"), 1800); setTimeout(()=>el.remove(), 2300); }
 
 /* ---------- mock test ---------- */
@@ -1455,7 +1423,7 @@ function genTest(n){
   while (pick.length < Math.min(n, POOLX.length)) { let added = false; for (const k of keys) { if (groups[k].length && pick.length < n) { pick.push(groups[k].pop()); added = true; } } if (!added) break; }
   const ord = id => ORDER.findIndex(x=>x.id===id);
   pick.sort((a,b)=>ord(POOLX[a].tp)-ord(POOLX[b].tp));
-  return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q}; });
+  return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, k, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q, k}; });
 }
 function renderTest(){
   const hist = testsOf().slice(-5).reverse(), es = COURSE === "es";
@@ -1488,14 +1456,15 @@ function startTest(n){
       if (now) {
         row.dataset.locked = "1"; const j = +b.dataset.j, ok = j === q.a; q.sel = j; res[k] = ok;
         $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === q.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
-        fb.hidden = false; fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+        fb.hidden = false; fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${q.o[q.a]}</span>`) + whyHTML(q.o[q.a], q.e, poolRule(q));
+        gameAnswer("P|" + COURSE, q.k, ok ? "ok" : "bad");
       } else { $$(".opt", row).forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); q.sel = +b.dataset.j; }
       stat();
     }));
     box.appendChild(row);
     if (!q.o) {
       const inp = $(".ans", row);
-      if (now) wireInstant([{inp, a:q.a, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, q.a, q.e); }, hide: () => { fb.hidden = true; }}], (first, restoring) => { if (!restoring) { res[k] = first[0] === "ok"; stat(); } });
+      if (now) wireInstant([{inp, a:q.a, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, q.a) + whyHTML(q.a[0], q.e, poolRule(q)); }, hide: () => { fb.hidden = true; }}], (first, restoring) => { if (!restoring) { res[k] = first[0] === "ok"; stat(); } }, null, null, (j, st) => gameAnswer("P|" + COURSE, q.k, st));
       else inp.addEventListener("input", stat);
     }
   });
@@ -1511,12 +1480,14 @@ function gradeTest(box, now, res){
     if (q.o) {
       ok = q.sel === q.a;
       $$(".opt", row).forEach(b=>{ b.disabled = true; const j = +b.dataset.j; if (j === q.a) b.classList.add("is-ok"); else if (j === q.sel) b.classList.add("is-bad"); b.classList.remove("sel"); });
-      fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+      fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}`) + whyHTML(q.o[q.a], q.e, poolRule(q));
+      if (!now && q.sel !== undefined) gameAnswer("P|" + COURSE, q.k, ok ? "ok" : "bad");
     } else {
       const inp = $(".ans", row), st = judge(inp.value, q.a);
       ok = now ? res[k] === true : st === "ok"; inp.disabled = true;
       inp.classList.remove("r-ok","r-bad","r-acc"); inp.classList.add(st==="ok"?"r-ok":st==="acc"?"r-acc":"r-bad");
-      fb.innerHTML = fbHtml(st === "empty" ? "bad" : st, q.a, q.e);
+      fb.innerHTML = fbHtml(st === "empty" ? "bad" : st, q.a) + whyHTML(q.a[0], q.e, poolRule(q));
+      if (!now && st !== "empty") gameAnswer("P|" + COURSE, q.k, st);
     }
     if (ok) got++;
     const p = per[q.tp] || (per[q.tp] = {g:0, n:0}); p.n++; if (ok) p.g++;
@@ -1730,6 +1701,7 @@ function qzReview(stage){
     const r = srsNext(r0, g), sd = sdToday(); sd.a++; if (!r0) sd.n++; S.quiz.sd = sd;
     const lv = qLv(w.fr);
     qSet(w.fr, {r, lv: g === 1 ? 1 : Math.max(lv, r.st === 2 ? (r.ivl >= 4 ? 3 : 2) : 1)});
+    gameAnswer("q|" + k, null, g >= 2 ? "ok" : "bad", {daily:true, xp:2});
     served++; last = w.fr; qzRefreshList(); updSrsBadge(); next();
   };
   const undo = () => {
@@ -1840,6 +1812,7 @@ function qzLearn(stage){
   const result = (w, ok, right, accWarn) => {
     const lv = qLv(w.fr);
     qSet(w.fr, {lv: ok ? Math.min(3, lv+1) : Math.max(0, lv-1)}); qzRefreshList();
+    gameAnswer("q|" + qKey(w.fr), null, ok ? "ok" : "bad", {daily:true, xp:2});
     const fb = $(".qz-fb", stage);
     if (ok) { fb.innerHTML = `<span class="ok-t">${t("qzCorrect")}</span>${accWarn ? ` <span class="acc-t">${t("almost")}</span> <b>${esc(w.fr)}</b>` : ""}`; speak(w.fr); setTimeout(nextQ, accWarn ? 1600 : 850); }
     else { fb.innerHTML = `<span class="pen">${t("qzWrongIs")} ${esc(right)}</span> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; speak(w.fr); const go = $("#qzGo", stage); go.focus(); go.addEventListener("click", nextQ); }
@@ -1870,7 +1843,7 @@ function qzWrite(stage){
       done = true; inp.disabled = true;
       inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
       const fb = $(".qz-fb", stage), lv = qLv(w.fr);
-      speak(w.fr);
+      speak(w.fr); gameAnswer("q|" + qKey(w.fr), null, st, {daily:true, xp:3});
       if (st === "ok") { got++; qSet(w.fr, {lv: Math.min(3, lv+1)}); fb.innerHTML = `<span class="ok-t">${OKW()}</span>`; setTimeout(()=>{ if (done && round[i] === w) { i++; step(); } }, 800); }
       else { wrong.push(w); qSet(w.fr, {lv: Math.max(0, lv-1)}); fb.innerHTML = `${st === "acc" ? `<span class="acc-t">${t("almost")}</span>` : `<span class="pen">${t("qzWrongIs")}</span>`} <b>${esc(w.fr)}</b> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; $("#qzGo", stage).addEventListener("click", ()=>{ i++; step(); }); $("#qzGo", stage).focus(); }
       qzRefreshList();
@@ -1913,19 +1886,21 @@ function qzMatch(stage){
   }));
 }
 
+/*@@MODULES@@*/
+
 /* =========================================================
    router
    ========================================================= */
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico"].includes(h) ? h : "home";
-  $$(".nav a.nl, .nav a.acct").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
+  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank","shop"].includes(h) ? h : "home";
+  $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
 }
 function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
   if (synth) try { synth.cancel(); } catch(e) {}
   if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
-  clearInterval(qzTimer);
+  clearInterval(qzTimer); closeDeck(true);
   /* ссылка ведёт в другой курс — переключаемся */
   let want = null;
   if (h === "quizlet" || h === "shpargalka" || FR_IDS.has(h)) want = "fr";
@@ -1938,6 +1913,8 @@ function route(keepScroll){
   else if (h === "quizlet") renderQuizlet();
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
+  else if (h === "bank") renderBank();
+  else if (h === "shop") renderShop();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
@@ -1946,6 +1923,9 @@ function route(keepScroll){
 function rerender(){ route(true); }
 window.addEventListener("hashchange", ()=>route(false));
 $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav");
-buildNav(); route(false); updSrsBadge(); setInterval(updSrsBadge, 60000);
+applyLook(); buildNav(); route(false); updSrsBadge(); setInterval(updSrsBadge, 60000);
+gateCheck();
 if (Cloud.kind !== "supabase") initCloud();
+else setTimeout(()=>{ if (!Gate.ready) { Gate.ready = true; initCloud(); } }, 12000);
+setInterval(()=>{ if (S.game.day.d && S.game.day.d !== gDay()) paintMe(); }, 60000);
 })();

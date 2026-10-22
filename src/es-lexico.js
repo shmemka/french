@@ -268,11 +268,7 @@ const ES_LEX = [
 ["húmedo", "humid", "El clima es muy húmedo en la selva."],
 ["lluvioso", "rainy", "El clima es tropical y lluvioso."]
 ]},
-{u:"3", es:"Estaciones y puntos cardinales", ru:"Времена года и стороны света", en:"Seasons and compass points", w:[
-["el invierno", "winter", "En invierno nieva."],
-["la primavera", "spring", "En primavera llueve un poco."],
-["el verano", "summer", "En verano hace sol."],
-["el otoño", "autumn", "En otoño hace viento."],
+{u:"3", es:"Puntos cardinales", ru:"Стороны света", en:"Compass points", w:[
 ["el norte", "north", "Oviedo está en el norte de España."],
 ["el sur", "south", "Sevilla está en el sur."],
 ["el este", "east", "Valencia está en el este."],
@@ -332,5 +328,61 @@ const ES_LEX = [
 ["¿Cuándo?", "When?", "¿Cuándo es la fiesta?"],
 ["hay (haber)", "there is / there are", "En Chile hay muchos volcanes."],
 ["estar", "to be (located)", "Tikal está en Guatemala."]
+]},
+/* ---------- EXTRA: календарь ---------- */
+{u:"+", es:"Los días de la semana", ru:"Дни недели", en:"Days of the week", w:[
+["el lunes", "Monday", "El lunes tengo clase de español."],
+["el martes", "Tuesday", "Los martes voy al gimnasio."],
+["el miércoles", "Wednesday", "El miércoles es mi cumpleaños."],
+["el jueves", "Thursday", "El jueves hay un concierto."],
+["el viernes", "Friday", "Los viernes salimos de noche."],
+["el sábado", "Saturday", "El sábado quiero ir a la playa."],
+["el domingo", "Sunday", "Los domingos visito a mi familia."],
+["el fin de semana", "the weekend", "¿Qué haces el fin de semana?"],
+["los lunes / los domingos", "on Mondays / on Sundays", "Los lunes trabajo en casa."],
+["hoy · mañana · ayer", "today · tomorrow · yesterday", "Hoy es martes y mañana es miércoles."],
+["la semana", "week", "Tengo clase tres veces a la semana."]
+]},
+{u:"+", es:"Los meses del año", ru:"Месяцы", en:"Months", w:[
+["enero", "January", "En enero hace frío en Madrid."],
+["febrero", "February", "El catorce de febrero es San Valentín."],
+["marzo", "March", "La primavera empieza en marzo."],
+["abril", "April", "Mi cumpleaños es en abril."],
+["mayo", "May", "El primero de mayo no hay clase."],
+["junio", "June", "En junio terminamos el curso."],
+["julio", "July", "En julio vamos a la playa."],
+["agosto", "August", "En agosto hace mucho calor."],
+["septiembre", "September", "Las clases empiezan en septiembre."],
+["octubre", "October", "Estamos en octubre."],
+["noviembre", "November", "En noviembre llueve mucho."],
+["diciembre", "December", "En diciembre nieva en la montaña."],
+["el mes", "month", "¿En qué mes es tu cumpleaños?"],
+["el año", "year", "Un año tiene doce meses."]
+]},
+{u:"+", es:"Las estaciones del año", ru:"Времена года", en:"Seasons", w:[
+["la primavera", "spring", "En primavera llueve un poco."],
+["el verano", "summer", "En verano hace sol y calor."],
+["el otoño", "autumn", "En otoño hace viento."],
+["el invierno", "winter", "En invierno nieva en los Pirineos."],
+["en verano / en invierno", "in summer / in winter", "En verano vamos de vacaciones."],
+["la estación", "season", "¿Cuál es tu estación favorita?"]
+]},
+{u:"+", es:"La fecha y el cumpleaños", ru:"Дата и день рождения", en:"Dates and birthdays", w:[
+["¿Qué día es hoy?", "What day is it today?", "– ¿Qué día es hoy? – Hoy es jueves."],
+["¿Qué fecha es hoy?", "What's the date today?", "– ¿Qué fecha es hoy? – Hoy es tres de marzo."],
+["¿A qué estamos hoy?", "What's the date today? (colloquial)", "– ¿A qué estamos hoy? – Estamos a tres de marzo."],
+["Hoy es lunes, tres de marzo.", "Today is Monday, the 3rd of March.", "Hoy es lunes, tres de marzo de dos mil veintiséis."],
+["Estamos a + fecha", "It's the … (date)", "Estamos a quince de octubre."],
+["el uno / el primero de mayo", "the first of May", "El uno de mayo es fiesta."],
+["el + número + de + mes", "date pattern: the … of …", "El veinte de junio es mi cumpleaños."],
+["¿Cuándo es tu cumpleaños?", "When is your birthday?", "– ¿Cuándo es tu cumpleaños? – Es el doce de abril."],
+["Mi cumpleaños es el…", "My birthday is on…", "Mi cumpleaños es el quince de mayo."],
+["¿Cuándo naciste?", "When were you born?", "– ¿Cuándo naciste? – Nací el quince de mayo de dos mil cuatro."],
+["Nací el … de … de …", "I was born on …", "Nací el dos de febrero de dos mil cinco."],
+["¿En qué año naciste?", "What year were you born?", "– ¿En qué año naciste? – En dos mil seis."],
+["¿Cuántos años tienes?", "How old are you?", "– ¿Cuántos años tienes? – Tengo veinte años."],
+["el cumpleaños", "birthday", "¡Feliz cumpleaños!"],
+["la fecha de nacimiento", "date of birth", "Fecha de nacimiento: 15/05/2004."],
+["dos mil", "two thousand", "Nací en dos mil cinco."]
 ]}
 ];

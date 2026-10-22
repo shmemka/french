@@ -1186,6 +1186,277 @@ html.theme-anim *,html.theme-anim *::before,html.theme-anim *::after{transition:
 .ch h3{font-weight:800}
 .ch .tblw{padding:0}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* =========================================================
+   ПЛАТФОРМА: профиль, геймификация, вход, магазин, кабинет, банк, карточки
+   ========================================================= */
+/* аватар */
+.av{--s:36px;position:relative;flex:none;width:var(--s);height:var(--s);border-radius:50%;background:var(--avbg);display:inline-grid;place-items:center;isolation:isolate}
+.av-e{font-size:calc(var(--s)*.56);line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.12))}
+.av-s{--s:30px}.av-m{--s:42px}.av-l{--s:56px}.av-xl{--s:84px}
+.av[class*="fr-"]::before{content:"";position:absolute;inset:calc(var(--s)*-.09);border-radius:50%;z-index:-1}
+.av.fr-silver::before{background:linear-gradient(135deg,#f2f4f8,#9aa3b5 45%,#e9edf3 70%,#8b93a6)}
+.av.fr-gold::before{background:linear-gradient(135deg,#fff3b0,#d89b00 45%,#ffe58a 70%,#b37800)}
+.av.fr-rainbow::before{background:conic-gradient(#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff,#ff6b6b);animation:spin 6s linear infinite}
+.av.fr-leaf::before{background:repeating-conic-gradient(#5fbf6b 0 12deg,#2f8f4e 12deg 24deg)}
+.av.fr-sparkle::before{background:radial-gradient(circle at 20% 20%,#fff 0 6%,transparent 7%),radial-gradient(circle at 80% 30%,#fff 0 5%,transparent 6%),radial-gradient(circle at 60% 85%,#fff 0 5%,transparent 6%),linear-gradient(135deg,#a78bfa,#f472b6);animation:twinkle 2.4s ease-in-out infinite}
+.av.fr-flame::before{background:conic-gradient(from 180deg,#ff3d00,#ffb300,#ff6d00,#ffd54f,#ff3d00);filter:blur(.5px);animation:spin 3s linear infinite}
+.av.fr-flame::after{content:"";position:absolute;inset:calc(var(--s)*-.16);border-radius:50%;z-index:-2;background:radial-gradient(circle,rgba(255,120,0,.35),transparent 70%);animation:flick 1.2s ease-in-out infinite alternate}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes twinkle{50%{filter:brightness(1.25) saturate(1.2)}}
+@keyframes flick{to{transform:scale(1.08);opacity:.6}}
+
+/* виджет в сайдбаре */
+.nav-foot{border-top:0}
+.mew{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);padding:10px 12px;border-radius:20px;background:var(--tint);transition:background .2s,transform .25s var(--ease)}
+.mew:hover,.mew.on{background:var(--tint-2)}
+.me-av{display:inline-flex;transition:transform .35s var(--spring)}
+.me-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;line-height:1.2}
+.me-name{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
+.me-lv{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--ink-3)}
+.me-lvt{white-space:nowrap}
+.me-bar{flex:1;min-width:30px;height:5px;border-radius:99px;background:color-mix(in srgb,var(--ink) 10%,transparent);overflow:hidden;display:block}
+.me-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--encre),color-mix(in srgb,var(--encre) 55%,var(--marge)));transition:width .7s var(--ease)}
+.me-bar.big{height:8px;flex:none;width:100%}
+.me-side{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:12.5px;font-weight:700;color:var(--ink-2);line-height:1.2;font-variant-numeric:tabular-nums}
+.me-fire{filter:grayscale(1);opacity:.55;transition:filter .4s,opacity .4s;white-space:nowrap}
+.me-fire.lit{filter:none;opacity:1}
+.me-fire.burst{animation:burst .9s var(--spring)}
+.me-coin{white-space:nowrap}
+.mew.bump .me-av{animation:bump .5s var(--spring)}
+.mew.lvl-up,.me-top.lvl-up{animation:lvlglow 1.4s var(--ease)}
+@keyframes bump{40%{transform:scale(1.14)}}
+@keyframes burst{30%{transform:scale(1.5) rotate(-8deg)}60%{transform:scale(.95)}}
+@keyframes lvlglow{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--encre) 50%,transparent)}40%{box-shadow:0 0 0 8px color-mix(in srgb,var(--encre) 18%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+.xp-pop{position:fixed;z-index:90;pointer-events:none;transform:translate(-50%,0);font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:99px;white-space:nowrap;animation:xpup 1.25s var(--ease) both;box-shadow:var(--sh-1)}
+.xp-pop.xp{background:var(--encre);color:var(--on-encre)}
+.xp-pop.coin{background:#ffd54a;color:#4a3500}
+@keyframes xpup{0%{opacity:0;transform:translate(-50%,6px) scale(.8)}18%{opacity:1;transform:translate(-50%,-14px) scale(1)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-44px) scale(.96)}}
+.nl-coin{margin-left:auto;font-size:12px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+/* мини-виджет в верхней панели (телефон) */
+.me-top{display:none}
+@media (max-width:979px){
+  .topbar{gap:8px}
+  .topbar .brand{min-width:0;flex:1}
+  .me-top{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink);padding:4px 10px 4px 4px;border-radius:99px;background:var(--tint);flex:none}
+  .me-top-t{display:flex;flex-direction:column;gap:2px;line-height:1.1;min-width:42px}
+  .me-top-t b{font-size:11.5px;font-weight:800}
+  .me-top .me-bar{height:4px;flex:none;width:100%}
+  .me-top .me-fire{font-size:12px;font-weight:700}
+  .me-top.bump .av{animation:bump .5s var(--spring)}
+}
+@media (max-width:420px){.topbar .brand span:last-child{display:none}.me-top .me-fire{display:none}}
+
+/* цель дня */
+.daily{display:flex;align-items:center;gap:18px;background:var(--sheet);box-shadow:var(--sh-1);border-radius:var(--r-lg);padding:16px 22px;margin:-14px 0 36px}
+.dg-ring{--p:0;flex:none;width:58px;height:58px;border-radius:50%;background:conic-gradient(#ff8a3d calc(var(--p)*1%),var(--tint) 0);display:grid;place-items:center;position:relative;transition:--p .6s}
+.dg-ring::before{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--sheet)}
+.dg-ring span{position:relative;font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums}
+.daily.done .dg-ring span{font-size:24px}
+.dg-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35}
+.dg-tx b{font-size:16px;font-weight:800}
+.dg-tx span{font-size:14px;color:var(--ink-3)}
+.dg-st{display:flex;gap:8px;font-weight:700;font-size:14px;flex:none}
+.dg-st span{background:var(--tint);border-radius:99px;padding:6px 12px;white-space:nowrap}
+@media (max-width:600px){.daily{padding:14px 16px;gap:14px;flex-wrap:wrap}.dg-st{width:100%}}
+
+/* «?» с объяснением */
+.why-b{display:inline-grid;place-items:center;width:24px;height:24px;margin-left:8px;border-radius:50%;border:0;background:var(--tint);color:var(--ink-3);font:800 13px/1 var(--font-b);cursor:pointer;vertical-align:middle;transition:background .2s,color .2s,transform .2s var(--spring)}
+.why-b:hover{color:var(--encre-2);transform:scale(1.08)}
+.why-b.on{background:var(--encre);color:var(--on-encre)}
+.why-p{flex-basis:100%;margin:8px 0 2px;background:color-mix(in srgb,var(--encre-soft) 60%,var(--sheet));border-radius:14px;padding:11px 15px;font-size:14.5px;line-height:1.55;color:var(--ink);animation:whyin .25s var(--ease)}
+.why-p p{margin:0}.why-p p+p{margin-top:6px}
+.why-r span{font-weight:800;color:var(--encre-2)}
+@keyframes whyin{from{opacity:0;transform:translateY(-4px)}}
+.why-foot{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center}
+.why-foot .why-b{margin-left:0}
+.fb .why-p{display:block}
+
+/* ---------- экран входа и онбординг ---------- */
+body.gated{overflow:hidden}
+body.gated .app,body.gated .topbar,body.gated .nav-show{visibility:hidden}
+.gate{position:fixed;inset:0;z-index:100;overflow-y:auto;background:var(--paper);display:flex;justify-content:center;align-items:flex-start;padding:max(40px,env(safe-area-inset-top,0px)) 16px 40px;animation:gin .35s var(--ease)}
+.gate.out{animation:gout .38s var(--ease) forwards}
+@keyframes gin{from{opacity:0}}
+@keyframes gout{to{opacity:0;transform:scale(1.02)}}
+.gate-bg{position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 50% at 85% 0%,var(--encre-soft),transparent 70%),radial-gradient(50% 45% at 0% 100%,color-mix(in srgb,var(--marge-soft) 80%,transparent),transparent 70%)}
+.gate-in{position:relative;width:100%;max-width:460px;display:grid;gap:18px;margin:auto 0}
+.gate-brand{display:flex;align-items:center;gap:6px;justify-content:center}
+.gate-brand b{font-family:var(--font-d);font-weight:800;font-size:18px;margin-left:6px;letter-spacing:-.02em}
+.gate-lang{justify-self:center;width:120px;grid-template-columns:1fr 1fr}
+.gate-lang button{border:0;background:transparent;cursor:pointer;font-weight:700;font-size:12.5px;color:var(--ink-3)}
+.gate-lang button.on{background:var(--sheet);color:var(--ink);box-shadow:var(--sh-1)}
+.gate-card{background:var(--sheet);border-radius:var(--r-xl);box-shadow:var(--sh-2);padding:28px 26px 24px;animation:cardin .45s var(--spring)}
+.gate-card.center{display:grid;justify-items:center;gap:14px;padding:44px 26px}
+.gate-card .auth{box-shadow:none;padding:0;margin:0;max-width:none;background:transparent}
+.gate-card .auth .btn.pri,.ob .btn.pri{justify-self:stretch;justify-content:center}
+@keyframes cardin{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.spin.big{width:32px;height:32px;border-width:3px}
+.ob{display:grid;gap:16px}
+.ob h2{font-size:26px;font-weight:800;margin:0;text-align:center}
+.ob .auth-sub{text-align:center;margin:-8px 0 0}
+.ob-prev{justify-self:center;animation:bump .5s var(--spring)}
+.ob-sec{display:grid;gap:8px}
+.ob-l{font-size:13px;font-weight:700;color:var(--ink-2)}
+.sw-row{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:34px;height:34px;border-radius:50%;border:0;background:var(--sw);cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);transition:transform .2s var(--spring),box-shadow .2s}
+.sw:hover{transform:scale(1.08)}
+.sw.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--encre)}
+.em-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.em-grid.sm{grid-template-columns:repeat(auto-fill,minmax(40px,1fr))}
+.em{aspect-ratio:1;border:0;border-radius:12px;background:var(--tint);font-size:22px;line-height:1;cursor:pointer;transition:transform .2s var(--spring),background .2s,box-shadow .2s;display:grid;place-items:center;padding:0}
+.em:hover{transform:scale(1.08)}
+.em.on{background:var(--encre-soft);box-shadow:0 0 0 2px var(--encre)}
+@media (max-width:420px){.em-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.gate-card{padding:22px 18px 20px}}
+
+/* ---------- магазин ---------- */
+.t-head{position:relative}
+.shop-head{display:flex;gap:20px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.shop-head>div:first-child{flex:1 1 380px}
+.bal{background:var(--sheet);box-shadow:var(--sh-1);border-radius:var(--r-lg);padding:12px 18px;display:flex;flex-direction:column;line-height:1.2}
+.bal-l{font-size:12px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.bal b{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.shop-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:-20px 0 22px}
+.shop-tabs button{border:0;background:var(--sheet);box-shadow:var(--sh-1);border-radius:99px;padding:9px 16px;font:inherit;font-size:14px;font-weight:700;color:var(--ink-2);cursor:pointer;transition:background .2s,color .2s,transform .2s var(--ease)}
+.shop-tabs button:hover{transform:translateY(-1px)}
+.shop-tabs button.on{background:var(--encre);color:var(--on-encre)}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.si{background:var(--sheet);box-shadow:var(--sh-1);border-radius:var(--r-lg);padding:18px 14px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;position:relative;transition:transform .25s var(--ease),box-shadow .25s}
+.si:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}
+.si.on{box-shadow:0 0 0 2px var(--encre),var(--sh-1)}
+.si.pop{animation:bump .5s var(--spring)}
+.si-prev{height:64px;display:grid;place-items:center}
+.si-n{font-weight:700;font-size:14px;min-height:1.3em}
+.si-free{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--ok);background:var(--ok-soft);border-radius:99px;padding:2px 8px}
+.si .btn{width:100%;justify-content:center;flex-direction:column;gap:0;line-height:1.25}
+.si .btn small{font-size:11px;font-weight:600;opacity:.8}
+.si .btn.armed{background:var(--marge)}
+.si .btn.poor{opacity:.6;cursor:not-allowed}
+.si .btn.on{color:var(--ok)}
+.pal-sw{display:flex}
+.pal-sw i{width:26px;height:44px;border-radius:12px;margin-left:-8px;box-shadow:0 0 0 3px var(--sheet)}
+.pal-sw i:first-child{margin-left:0}
+.pat-sw{width:76px;height:52px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line)}
+.cur-sw{width:52px;height:52px;border-radius:14px;background:var(--tint);display:grid;place-items:center}
+.cur-sw svg{width:28px;height:28px}
+
+/* ---------- личный кабинет ---------- */
+.acc-hero{display:flex;gap:24px;align-items:center}
+.acc-id{flex:1;min-width:0}
+.acc-id h1{margin:0 0 10px;overflow-wrap:anywhere}
+.acc-stats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.pill{background:var(--sheet);box-shadow:var(--sh-1);border-radius:99px;padding:5px 12px;font-size:13.5px;font-weight:700}
+.acc-xp{display:flex;flex-direction:column;gap:6px;max-width:380px}
+.acc-xp small,.lv-big small{color:var(--ink-3);font-weight:600;font-size:12.5px}
+.acc-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:-14px 0 22px}
+.acc-tile{border:0;text-align:left;font:inherit;color:var(--ink);background:var(--sheet);box-shadow:var(--sh-1);border-radius:var(--r-lg);padding:16px 16px 14px;display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s,background .25s}
+.acc-tile:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.acc-tile b{font-size:15.5px;font-weight:800}
+.acc-tile small{font-size:12.5px;color:var(--ink-3);line-height:1.35}
+.at-ico{width:34px;height:34px;border-radius:12px;background:var(--tint);color:var(--ink-2);display:grid;place-items:center;margin-bottom:8px;transition:background .25s,color .25s}
+.at-ico svg{width:19px;height:19px}
+.acc-tile.on{background:var(--encre);color:var(--on-encre)}
+.acc-tile.on small{color:color-mix(in srgb,var(--on-encre) 75%,transparent)}
+.acc-tile.on .at-ico{background:color-mix(in srgb,var(--on-encre) 18%,transparent);color:var(--on-encre)}
+.acc-panel.in{animation:whyin .35s var(--ease)}
+.panel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.panel-grid.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.pcard{background:var(--sheet);box-shadow:var(--sh-1);border-radius:var(--r-lg);padding:18px 20px;display:grid;gap:12px;align-content:start;margin-bottom:14px}
+.panel-grid .pcard{margin-bottom:0}
+.pcard h3{margin:0;font-size:15px;font-weight:800;letter-spacing:-.01em}
+.fld-row{display:flex;gap:8px}
+.fld-row input{flex:1;min-width:0}
+.kv{display:flex;justify-content:space-between;gap:12px;font-size:14px;flex-wrap:wrap}
+.kv span{color:var(--ink-3);font-weight:600}
+.lnk{font-size:14px;font-weight:700;color:var(--encre-2);text-decoration:none}
+.lnk:hover{text-decoration:underline}
+.seg.big button{padding:8px 14px;font-size:14px;font:inherit;font-size:14px}
+.seg.big{flex-wrap:wrap;border-radius:18px}
+.prog-sw{margin:0 0 16px}
+.lv-big{display:flex;gap:16px;align-items:center}
+.lv-big>b{font-size:44px;font-weight:800;line-height:1;color:var(--encre);font-variant-numeric:tabular-nums}
+.lv-big>div{flex:1;display:flex;flex-direction:column;gap:6px}
+.cal{display:grid;grid-template-rows:repeat(7,12px);grid-auto-flow:column;grid-auto-columns:12px;gap:4px}
+.cal i{border-radius:4px;background:var(--tint)}
+.cal i.c1{background:color-mix(in srgb,#ff8a3d 35%,var(--tint))}
+.cal i.c2{background:color-mix(in srgb,#ff8a3d 65%,var(--tint))}
+.cal i.c3{background:#ff8a3d}
+.cal i.today{box-shadow:0 0 0 1.5px var(--ink-3)}
+.theme-seg button{min-width:100px}
+.look-row{display:flex;flex-wrap:wrap;gap:10px}
+.look-i{border:0;background:var(--tint);border-radius:16px;padding:10px 10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);min-width:88px;transition:transform .2s var(--ease),box-shadow .2s,background .2s}
+.look-i:hover{transform:translateY(-2px)}
+.look-i.on{box-shadow:0 0 0 2px var(--encre);background:var(--sheet);color:var(--ink)}
+.look-i.lock{opacity:.55}
+.look-i em{font-style:normal;font-size:11px;color:var(--ink-3)}
+.look-i .pal-sw i{height:32px;width:20px}
+.look-i .pat-sw{width:60px;height:36px}
+.look-i .cur-sw{width:40px;height:40px;background:var(--sheet)}
+.look-i .av-l{--s:40px}
+@media (max-width:760px){.acc-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.panel-grid,.panel-grid.two{grid-template-columns:minmax(0,1fr)}.acc-hero{flex-direction:column;align-items:flex-start;gap:14px}}
+
+/* ---------- банк заданий ---------- */
+.bank-set{display:grid;gap:14px}
+.bank-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bank-h span{display:flex;gap:6px}
+.bank-g{display:grid;gap:8px}
+.bank-gh{justify-self:start;border:0;background:transparent;padding:0;font:inherit;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);cursor:pointer}
+.bank-gh:hover{color:var(--encre-2)}
+.tchips{display:flex;flex-wrap:wrap;gap:6px}
+.tchip{border:0;font:inherit;font-size:13.5px;font-weight:600;background:var(--tint);color:var(--ink-2);border-radius:99px;padding:7px 12px;cursor:pointer;display:inline-flex;gap:6px;align-items:baseline;transition:background .2s,color .2s,transform .15s}
+.tchip small{font-size:11px;opacity:.7;font-variant-numeric:tabular-nums}
+.tchip.on{background:var(--encre);color:var(--on-encre)}
+.tchip:active{transform:scale(.96)}
+.bank-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.bank-row .pcard{margin:0}
+.bank-go{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.bank-go .auth-msg:empty{display:none}
+.bank-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.bank-ctr{font-size:14px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.bank-prog{height:6px;border-radius:99px;background:var(--tint);overflow:hidden;margin-bottom:20px}
+.bank-prog i{display:block;height:100%;background:var(--encre);border-radius:inherit;transition:width .45s var(--ease)}
+.bank-card.in{animation:cardin .35s var(--ease)}
+.bank-card .exb-k a{color:inherit}
+.bank-done{display:grid;justify-items:center;text-align:center;gap:8px;padding:30px 10px}
+.bank-done .note20{font-size:64px;font-weight:800;color:var(--encre);line-height:1}
+.bank-done h2{margin:0}
+.bank-done .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+@media (max-width:600px){.bank-row{grid-template-columns:minmax(0,1fr)}.bank-go .btn{flex:1;justify-content:center}}
+
+/* ---------- карточный режим ---------- */
+.deck-tg{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:12px;border:0;background:transparent;color:var(--ink-3);opacity:.55;cursor:pointer;display:grid;place-items:center;transition:opacity .2s,background .2s,color .2s}
+.deck-tg:hover,.deck-tg.on{opacity:1;background:var(--tint);color:var(--encre-2)}
+.deck-tg svg{width:20px;height:20px}
+body.deck-open{overflow:hidden}
+.deck{position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;padding:max(14px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));opacity:0;transition:opacity .3s var(--ease)}
+.deck.open{opacity:1}
+.deck.closing{opacity:0}
+.dk-top{display:flex;align-items:center;gap:12px;max-width:860px;width:100%;margin:0 auto 12px}
+.dk-t{flex:1;min-width:0;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-2)}
+.dk-ctr{font-size:13px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.dk-x{width:38px;height:38px;border:0;border-radius:12px;background:var(--tint);color:var(--ink-2);display:grid;place-items:center;cursor:pointer}
+.dk-x svg{width:20px;height:20px}
+.dk-stage{position:relative;min-height:0;display:grid;max-width:860px;width:100%;margin:0 auto}
+.dk-card{grid-area:1/1;min-height:0;overflow-y:auto;background:var(--sheet);border-radius:var(--r-xl);box-shadow:var(--sh-2);overscroll-behavior:contain}
+.dk-card.in.fw{animation:dkfw .42s var(--ease)}
+.dk-card.in.bw{animation:dkbw .42s var(--ease)}
+@keyframes dkfw{from{opacity:0;transform:translateX(40px) scale(.98)}}
+@keyframes dkbw{from{opacity:0;transform:translateX(-40px) scale(.98)}}
+.dk-in{padding:clamp(22px,4vw,44px);min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center}
+.dk-in .theory>h3:first-child{margin-top:0}
+.dk-intro h1{font-size:clamp(30px,5vw,48px);font-weight:800;letter-spacing:-.03em;margin:0 0 12px}
+.dk-end{display:grid;justify-items:center;text-align:center;gap:10px}
+.dk-end-i{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:30px;font-weight:800}
+.dk-end h2{margin:0}
+.dk-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px}
+.dk-arr{width:46px;height:46px;border-radius:50%;border:0;background:var(--sheet);box-shadow:var(--sh-1);font-size:18px;font-weight:800;color:var(--ink);cursor:pointer;transition:transform .2s var(--spring),opacity .2s}
+.dk-arr:hover:not(:disabled){transform:scale(1.08)}
+.dk-arr:disabled{opacity:.3;cursor:default}
+.dk-dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:60vw}
+.dk-dots i{width:8px;height:8px;border-radius:99px;background:var(--tint-2);cursor:pointer;transition:width .3s var(--ease),background .3s}
+.dk-dots i.on{width:22px;background:var(--encre)}
+.dk-keys{text-align:center;font-size:12px;color:var(--ink-3);margin:8px 0 0}
+@media (pointer:coarse){.dk-keys{display:none}}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -4496,11 +4767,7 @@ const ES_LEX = [
 ["húmedo", "humid", "El clima es muy húmedo en la selva."],
 ["lluvioso", "rainy", "El clima es tropical y lluvioso."]
 ]},
-{u:"3", es:"Estaciones y puntos cardinales", ru:"Времена года и стороны света", en:"Seasons and compass points", w:[
-["el invierno", "winter", "En invierno nieva."],
-["la primavera", "spring", "En primavera llueve un poco."],
-["el verano", "summer", "En verano hace sol."],
-["el otoño", "autumn", "En otoño hace viento."],
+{u:"3", es:"Puntos cardinales", ru:"Стороны света", en:"Compass points", w:[
 ["el norte", "north", "Oviedo está en el norte de España."],
 ["el sur", "south", "Sevilla está en el sur."],
 ["el este", "east", "Valencia está en el este."],
@@ -4560,6 +4827,62 @@ const ES_LEX = [
 ["¿Cuándo?", "When?", "¿Cuándo es la fiesta?"],
 ["hay (haber)", "there is / there are", "En Chile hay muchos volcanes."],
 ["estar", "to be (located)", "Tikal está en Guatemala."]
+]},
+/* ---------- EXTRA: календарь ---------- */
+{u:"+", es:"Los días de la semana", ru:"Дни недели", en:"Days of the week", w:[
+["el lunes", "Monday", "El lunes tengo clase de español."],
+["el martes", "Tuesday", "Los martes voy al gimnasio."],
+["el miércoles", "Wednesday", "El miércoles es mi cumpleaños."],
+["el jueves", "Thursday", "El jueves hay un concierto."],
+["el viernes", "Friday", "Los viernes salimos de noche."],
+["el sábado", "Saturday", "El sábado quiero ir a la playa."],
+["el domingo", "Sunday", "Los domingos visito a mi familia."],
+["el fin de semana", "the weekend", "¿Qué haces el fin de semana?"],
+["los lunes / los domingos", "on Mondays / on Sundays", "Los lunes trabajo en casa."],
+["hoy · mañana · ayer", "today · tomorrow · yesterday", "Hoy es martes y mañana es miércoles."],
+["la semana", "week", "Tengo clase tres veces a la semana."]
+]},
+{u:"+", es:"Los meses del año", ru:"Месяцы", en:"Months", w:[
+["enero", "January", "En enero hace frío en Madrid."],
+["febrero", "February", "El catorce de febrero es San Valentín."],
+["marzo", "March", "La primavera empieza en marzo."],
+["abril", "April", "Mi cumpleaños es en abril."],
+["mayo", "May", "El primero de mayo no hay clase."],
+["junio", "June", "En junio terminamos el curso."],
+["julio", "July", "En julio vamos a la playa."],
+["agosto", "August", "En agosto hace mucho calor."],
+["septiembre", "September", "Las clases empiezan en septiembre."],
+["octubre", "October", "Estamos en octubre."],
+["noviembre", "November", "En noviembre llueve mucho."],
+["diciembre", "December", "En diciembre nieva en la montaña."],
+["el mes", "month", "¿En qué mes es tu cumpleaños?"],
+["el año", "year", "Un año tiene doce meses."]
+]},
+{u:"+", es:"Las estaciones del año", ru:"Времена года", en:"Seasons", w:[
+["la primavera", "spring", "En primavera llueve un poco."],
+["el verano", "summer", "En verano hace sol y calor."],
+["el otoño", "autumn", "En otoño hace viento."],
+["el invierno", "winter", "En invierno nieva en los Pirineos."],
+["en verano / en invierno", "in summer / in winter", "En verano vamos de vacaciones."],
+["la estación", "season", "¿Cuál es tu estación favorita?"]
+]},
+{u:"+", es:"La fecha y el cumpleaños", ru:"Дата и день рождения", en:"Dates and birthdays", w:[
+["¿Qué día es hoy?", "What day is it today?", "– ¿Qué día es hoy? – Hoy es jueves."],
+["¿Qué fecha es hoy?", "What's the date today?", "– ¿Qué fecha es hoy? – Hoy es tres de marzo."],
+["¿A qué estamos hoy?", "What's the date today? (colloquial)", "– ¿A qué estamos hoy? – Estamos a tres de marzo."],
+["Hoy es lunes, tres de marzo.", "Today is Monday, the 3rd of March.", "Hoy es lunes, tres de marzo de dos mil veintiséis."],
+["Estamos a + fecha", "It's the … (date)", "Estamos a quince de octubre."],
+["el uno / el primero de mayo", "the first of May", "El uno de mayo es fiesta."],
+["el + número + de + mes", "date pattern: the … of …", "El veinte de junio es mi cumpleaños."],
+["¿Cuándo es tu cumpleaños?", "When is your birthday?", "– ¿Cuándo es tu cumpleaños? – Es el doce de abril."],
+["Mi cumpleaños es el…", "My birthday is on…", "Mi cumpleaños es el quince de mayo."],
+["¿Cuándo naciste?", "When were you born?", "– ¿Cuándo naciste? – Nací el quince de mayo de dos mil cuatro."],
+["Nací el … de … de …", "I was born on …", "Nací el dos de febrero de dos mil cinco."],
+["¿En qué año naciste?", "What year were you born?", "– ¿En qué año naciste? – En dos mil seis."],
+["¿Cuántos años tienes?", "How old are you?", "– ¿Cuántos años tienes? – Tengo veinte años."],
+["el cumpleaños", "birthday", "¡Feliz cumpleaños!"],
+["la fecha de nacimiento", "date of birth", "Fecha de nacimiento: 15/05/2004."],
+["dos mil", "two thousand", "Nací en dos mil cinco."]
 ]}
 ];
 
@@ -6206,6 +6529,416 @@ const CHEAT_EN = `
 <section class="ch"><h3>Family</h3>${TBL(["",""],[["père / mère","father / mother"],["fils [fis] / fille","son / daughter"],["frère / sœur","brother / sister"],["oncle / tante","uncle / aunt"],["cousin(e)","cousin"],["neveu / nièce","nephew / niece"],["petit-fils / petite-fille","grandson / granddaughter"],["mari / femme","husband / wife"]])}<p class="ch-n">Je n’ai pas <b>de</b> frères. Je suis fils unique.</p></section>
 </div>`;
 
+/* ===== Дополнительные вопросы для банка заданий и пробных контрольных =====
+   Поле может быть строкой или парой [ru, en]. */
+const POOL_X_FR = [
+/* u0 */
+{tp:"u0-contact", q:"– Salut Léa ! Ça va ? – Oui, et ___ ?", o:["toi","vous","moi"], a:0},
+{tp:"u0-contact", q:"Bonjour madame, vous allez ___ ?", o:["bien","bon","beau"], a:0},
+{tp:"u0-contact", q:["Как сказать «До завтра!»?","How do you say “See you tomorrow!”?"], o:["À demain !","À bientôt !","Bonsoir !"], a:0},
+{tp:"u0-contact", q:["___, je suis russe. (я)","___, je suis russe. (me)"], a:["Moi"]},
+{tp:"u0-dates", q:"Aujourd’hui, c’est mercredi. Demain, c’est ___.", a:["jeudi"]},
+{tp:"u0-dates", q:["Месяц после mars:","The month after mars:"], o:["avril","mai","février"], a:0},
+{tp:"u0-dates", q:"25/12 → le vingt-cinq ___", a:["décembre"]},
+/* u1 */
+{tp:"u1-verbes", q:"Tu ___ quel âge ? (avoir)", a:["as"]},
+{tp:"u1-verbes", q:"Ils ___ espagnols. (être)", a:["sont"]},
+{tp:"u1-verbes", q:"Vous ___ français ? (parler)", a:["parlez"]},
+{tp:"u1-verbes", q:"Elle ___ Anna. (s’appeler)", o:["s’appelle","s’appele","appelle"], a:0},
+{tp:"u1-presenter", q:["Je suis ___ le 3 mai 2001. (женщина)","Je suis ___ le 3 mai 2001. (a woman)"], a:["née"]},
+{tp:"u1-presenter", q:["«prénom» — это…","“prénom” means…"], o:[["имя","first name"],["фамилия","surname"],["возраст","age"]], a:0},
+{tp:"u1-presenter", q:"– Tu as un e-mail ? – Oui, c’est anna ___ mail point com.", o:["arobase","point","tiret"], a:0},
+{tp:"u1-nationalites", q:"Paula est ___ (espagnol).", a:["espagnole"]},
+{tp:"u1-nationalites", q:"Ana est ___ (brésilien).", a:["brésilienne"]},
+{tp:"u1-nationalites", q:"Mia est ___ (suisse).", a:["suisse"]},
+{tp:"u1-nationalites", q:"Kenji est ___ (japonais).", o:["japonais","japonaise","japonaises"], a:0},
+{tp:"u1-articles-def", q:"Tu aimes ___ art ?", o:["l’","le","la"], a:0},
+{tp:"u1-articles-def", q:"J’adore ___ langues.", o:["les","la","le"], a:0},
+{tp:"u1-articles-def", q:"___ Canada", o:["le","la","les"], a:0},
+{tp:"u1-prepositions", q:"Il habite ___ Rome, ___ Italie.", o:["à … en","en … à","au … en"], a:0},
+{tp:"u1-prepositions", q:"Elle est née ___ Portugal.", a:["au"]},
+{tp:"u1-prepositions", q:"Nous habitons ___ Pays-Bas.", a:["aux"]},
+{tp:"u1-quel", q:"___ est ton numéro ?", a:["Quel"]},
+{tp:"u1-quel", q:"Tu aimes ___ sports ?", a:["quels"]},
+{tp:"u1-quel", q:"___ est ta nationalité ?", o:["Quelle","Quel","Quels"], a:0},
+{tp:"u1-nombres", q:"75 = ___", a:["soixante-quinze"]},
+{tp:"u1-nombres", q:"91 = ___", a:["quatre-vingt-onze"]},
+{tp:"u1-nombres", q:"soixante-dix-huit =", o:["78","68","98"], a:0},
+{tp:"u1-phonetique", q:["Во французском ударение падает на…","In French, the stress falls on…"], o:[["последний слог группы","the last syllable of the group"],["первый слог слова","the first syllable of the word"]], a:0},
+/* u2 */
+{tp:"u2-habiter", q:"Nous ___ à Nice. (habiter)", a:["habitons"]},
+{tp:"u2-habiter", q:"On ___ dans un appartement. (habiter)", o:["habite","habitons","habitent"], a:0},
+{tp:"u2-articles", q:"J’ai ___ frère et ___ sœur.", o:["un … une","une … un","le … la"], a:0},
+{tp:"u2-articles", q:"Il n’y a pas ___ plage ici.", a:["de"]},
+{tp:"u2-articles", q:"C’est ___ guitare de Paul.", o:["la","une","de"], a:0},
+{tp:"u2-verbes-er", q:"Vous ___ le ski ? (aimer)", a:["aimez"]},
+{tp:"u2-verbes-er", q:"Ils ne ___ pas. (danser)", a:["dansent"]},
+{tp:"u2-verbes-er", q:"Tu ___ beaucoup ? (travailler)", a:["travailles"]},
+{tp:"u2-gouts", q:"Elle adore ___ cinéma.", o:["le","du","de"], a:0},
+{tp:"u2-gouts", q:"Il joue ___ guitare.", o:["de la","du","à la"], a:0},
+{tp:"u2-possessifs", q:["Paul et ___ sœur (его)","Paul et ___ sœur (his)"], a:["sa"]},
+{tp:"u2-possessifs", q:["___ amie Léa (моя)","___ amie Léa (my)"], o:["Mon","Ma","Mes"], a:0},
+{tp:"u2-possessifs", q:["Ils aiment ___ parents. (их)","Ils aiment ___ parents. (their)"], a:["leurs"]},
+{tp:"u2-famille", q:"Le frère de ma mère, c’est mon ___.", a:["oncle"]},
+{tp:"u2-famille", q:"La mère de ma mère, c’est ma ___.", a:["grand-mère"]},
+{tp:"u2-professions", q:"Paul est vendeur. Julie est ___.", a:["vendeuse"]},
+{tp:"u2-professions", q:"Marc est musicien. Anne est ___.", a:["musicienne"]},
+/* справка */
+{tp:"r-negation", q:"J’ai un chat. → Je n’ai pas ___ chat.", a:["de"]},
+{tp:"r-negation", q:"Nous ___ parlons pas chinois.", a:["ne"]},
+{tp:"r-cest", q:"___ ma sœur.", o:["C’est","Elle est","Il y a"], a:0},
+{tp:"r-cest", q:"___ médecin.", o:["Elle est","C’est","Il y a"], a:0},
+{tp:"r-irreg", q:"Nous ___ au cinéma. (aller)", a:["allons"]},
+{tp:"r-irreg", q:"Ils ___ du sport. (faire)", a:["font"]},
+{tp:"r-irreg", q:"Je ___ de Moscou. (venir)", a:["viens"]},
+{tp:"r-questions", q:"___ tu habites ? — À Lyon.", a:["Où"]},
+{tp:"r-questions", q:"– Tu n’aimes pas le ski ? – ___, j’adore !", o:["Si","Oui","Non"], a:0},
+{tp:"r-genre", q:"le bureau → les ___", a:["bureaux"]},
+{tp:"r-er-ortho", q:"Nous ___ (manger)", a:["mangeons"]}
+];
+const pickL = (v, i) => Array.isArray(v) ? v[i] : v;
+POOL_X_FR.forEach(q=>{
+  const mk = i => { const o = Object.assign({}, q); o.q = pickL(q.q, i); if (q.o) o.o = q.o.map(x=>pickL(x, i)); if (q.e) o.e = pickL(q.e, i); return o; };
+  POOL.push(mk(0)); POOL_EN.push(mk(1));
+});
+
+function ES_POOL_EXTRA(L) {
+ESL = L;
+return [
+{tp:"es1-saludos", q:"– ¡Adiós! – ¡Hasta ___!", o:["luego","tarde","noche"], a:0},
+{tp:"es1-saludos", q:"Buenas ___. (21:30)", a:["noches"]},
+{tp:"es1-saludos", q:T("Неформально к одному другу:", "Informally to one friend:"), o:["tú","usted","ustedes"], a:0},
+{tp:"es1-datos", q:"¿De ___ eres? – Soy de Moscú.", a:["dónde"]},
+{tp:"es1-datos", q:"¿Cómo te ___? – Me llamo Ana.", a:["llamas"]},
+{tp:"es1-datos", q:"¿Cuál es ___ número de teléfono? (tú)", o:["tu","tú","su"], a:0},
+{tp:"es1-datos", q:"– ¿A qué se dedica? – ___ médica.", o:["Soy","Tengo","Estoy"], a:0},
+{tp:"es1-numeros", q:"33 = ___", a:["treinta y tres"]},
+{tp:"es1-numeros", q:"19 = ___", a:["diecinueve"]},
+{tp:"es1-numeros", q:"ochenta y ocho =", o:["88","78","98"], a:0},
+{tp:"es1-numeros", q:"veintiséis =", o:["26","36","62"], a:0},
+{tp:"es1-nacionalidades", q:"Ella es ___ (francés).", a:["francesa"]},
+{tp:"es1-nacionalidades", q:"Ella es ___ (ruso).", a:["rusa"]},
+{tp:"es1-nacionalidades", q:"Ella es ___ (belga).", a:["belga"]},
+{tp:"es1-nacionalidades", q:"Brasil → ___", o:["brasileño","brasilés","brasiliano"], a:0},
+{tp:"es1-profesiones", q:"Él es enfermero. Ella es ___.", a:["enfermera"]},
+{tp:"es1-profesiones", q:"Él es traductor. Ella es ___.", a:["traductora"]},
+{tp:"es1-profesiones", q:"Un periodista trabaja en ___.", o:["un periódico","un taller","un gimnasio"], a:0},
+{tp:"es1-verbos", q:"Vosotros ___ muy simpáticos. (ser)", a:["sois"]},
+{tp:"es1-verbos", q:"Ella ___ 25 años. (tener)", a:["tiene"]},
+{tp:"es1-verbos", q:"Yo me ___ Pablo. (llamarse)", a:["llamo"]},
+{tp:"es2-sustantivos", q:"___ día", o:["el","la"], a:0},
+{tp:"es2-sustantivos", q:"___ canción", o:["la","el"], a:0},
+{tp:"es2-sustantivos", q:"___ mensaje", o:["el","la"], a:0},
+{tp:"es2-sustantivos", q:"la ciudad → las ___", a:["ciudades"]},
+{tp:"es2-presente", q:"Ellas ___ en Sevilla. (vivir)", a:["viven"]},
+{tp:"es2-presente", q:"¿Tú ___ inglés? (hablar)", a:["hablas"]},
+{tp:"es2-presente", q:"Nosotros ___ mucho. (leer)", a:["leemos"]},
+{tp:"es2-querer", q:"¿___ (tú) ir al cine?", a:["Quieres"]},
+{tp:"es2-querer", q:"Ellos ___ aprender ruso. (querer)", a:["quieren"]},
+{tp:"es2-motivos", q:"Quiero ir a México ___ visitar Oaxaca.", a:["para"]},
+{tp:"es2-motivos", q:"Estudio francés ___ mis amigos.", o:["por","para","porque"], a:0},
+{tp:"es2-ocio", q:"___ la radio", o:["escuchar","ver","jugar"], a:0},
+{tp:"es2-ocio", q:"Quiero aprender ___ bailar.", a:["a"]},
+{tp:"es2-ocio", q:"___ de excursión", o:["ir","hacer","salir a"], a:0},
+{tp:"es3-ser-estar-hay", q:"Madrid ___ en el centro de España.", a:["está"]},
+{tp:"es3-ser-estar-hay", q:"En Cuba ___ playas muy bonitas.", a:["hay"]},
+{tp:"es3-ser-estar-hay", q:"Bolivia ___ un país muy interesante.", o:["es","está","hay"], a:0},
+{tp:"es3-muy-mucho", q:"Hay ___ gente en la playa.", a:["mucha"]},
+{tp:"es3-muy-mucho", q:"El café de Colombia es ___ bueno.", a:["muy"]},
+{tp:"es3-muy-mucho", q:"Es el río ___ largo de España.", o:["más","muy","mucho"], a:0},
+{tp:"es3-preguntas", q:"¿___ es el tango? – Un baile.", o:["Qué","Cuál","Cuáles"], a:0},
+{tp:"es3-preguntas", q:"¿___ habitantes tiene Lima?", o:["Cuántos","Cuántas","Cuál"], a:0},
+{tp:"es3-paises", q:"En invierno hace ___.", o:["frío","calor","sol y calor"], a:0},
+{tp:"es3-paises", q:"Una isla es…", o:[T("суша, окружённая водой","land surrounded by water"), T("горная цепь","a mountain range"), T("пустыня","a desert")], a:0},
+{tp:"esg-ar", q:"Nosotros ___ en un banco. (trabajar)", a:["trabajamos"]},
+{tp:"esg-ar", q:"Ellas ___ en casa. (estar)", a:["están"]},
+{tp:"esg-er", q:"¿Vosotros ___ ir mañana? (poder)", a:["podéis"]},
+{tp:"esg-er", q:"Yo ___ un café. (querer)", a:["quiero"]},
+{tp:"esg-ir", q:"Ellos ___ al cine. (ir)", a:["van"]},
+{tp:"esg-ir", q:"Yo ___ de casa a las 8. (salir)", a:["salgo"]},
+{tp:"esg-irreg", q:"Yo ___ a mucha gente. (conocer)", a:["conozco"]},
+{tp:"esg-irreg", q:"Ellos ___ paella. (pedir)", a:["piden"]},
+{tp:"esr-pronunciacion", q:T("Где ударение в «Madrid»?", "Where's the stress in “Madrid”?"), o:["ma-DRID","MA-drid"], a:0},
+{tp:"esr-pronunciacion", q:T("В слове «guitarra» u…", "In “guitarra”, the u is…"), o:[T("не читается","silent"), T("читается","pronounced")], a:0}
+];
+}
+
+/* ===== Пояснения «почему так» к упражнениям (значок «?» после ответа) =====
+   WHY[topicId][номер упражнения] = [ru, en] */
+const WHY = {
+/* ---------- FRANÇAIS ---------- */
+"u0-contact":[
+["Salut — неформально (и привет, и пока), Bonjour / Au revoir — нейтрально. À + день или слово времени = «до…».","Salut is informal (both hi and bye); Bonjour / Au revoir are neutral. À + a day or time word = “see you…”."],
+["Tu — одному близкому человеку или ребёнку. Vous — вежливо одному человеку или любой группе людей.","Tu — to one person you're close to, or a child. Vous — politely to one person, or to any group."],
+["После et и в начале фразы для выделения — ударные местоимения: moi, toi, lui, elle, nous, vous, eux, elles.","After et, and for emphasis at the start, use stressed pronouns: moi, toi, lui, elle, nous, vous, eux, elles."],
+["Названия букв нужно запомнить: e — [ə], g — [ʒe], j — [ʒi], h — [aʃ], u — [y], y — i grec.","Letter names must be learned: e — [ə], g — [ʒe], j — [ʒi], h — [aʃ], u — [y], y — i grec."],
+["Ударное местоимение ставят после et, после предлога и перед подлежащим для выделения: Moi, je… / Lui, il…","Stressed pronouns come after et, after a preposition, and before the subject for emphasis: Moi, je… / Lui, il…"]],
+"u0-dates":[
+["Дни недели и месяцы пишутся с маленькой буквы и всегда мужского рода: le lundi, en mai.","Days and months are written in lower case and are masculine: le lundi, en mai."],
+["Неделя начинается с lundi. Порядок месяцев: … juin, juillet, août …","The week starts on lundi. Month order: … juin, juillet, août …"],
+["Дата: le + количественное число + месяц. Исключение — первое число: le premier.","Dates: le + cardinal number + month. Exception — the first: le premier."],
+["Конечная x и s читаются как [z] только перед гласной (связывание), перед согласной — не читаются.","Final x and s sound [z] only before a vowel (liaison); before a consonant they're silent."]],
+"u1-verbes":[
+["être, avoir и s’appeler — неправильные, их формы учат наизусть. В s’appeler двойная ll там, где окончание не читается.","être, avoir and s’appeler are irregular — learn the forms by heart. s’appeler has double ll where the ending is silent."],
+["Возраст — с avoir (j’ai 20 ans), национальность и профессия — с être.","Age takes avoir (j’ai 20 ans); nationality and job take être."],
+["Местоимение-«себя» меняется вместе с лицом: je m’appelle, tu t’appelles, vous vous appelez.","The reflexive pronoun changes with the person: je m’appelle, tu t’appelles, vous vous appelez."],
+["Порядок слов: подлежащее + глагол + остальное. Je → j’ перед гласной.","Word order: subject + verb + the rest. Je → j’ before a vowel."],
+["Возраст — avoir + ans; профессия после être — без артикля.","Age is avoir + ans; a job after être takes no article."]],
+"u1-presenter":[
+["Вопрос и ответ используют один и тот же глагол: Tu as quel âge ? — J’ai… ans.","The question and answer use the same verb: Tu as quel âge ? — J’ai… ans."],
+["Tu — формы на tu / ton / ta / tes; vous — на vous / votre / vos.","Tu goes with tu / ton / ta / tes; vous with vous / votre / vos."],
+["nom — фамилия, prénom — имя. В адресе: @ — arobase, . — point.","nom — surname, prénom — first name. In addresses: @ — arobase, . — point."],
+["Документы: passeport, permis de conduire, carte d’identité, carte d’étudiant.","Documents: passeport, permis de conduire, carte d’identité, carte d’étudiant."],
+["Je suis née — согласование с женским родом (née). Город — à, страна женского рода — en.","Je suis née agrees with the feminine (née). City — à, feminine country — en."]],
+"u1-nationalites":[
+["Женский род: + e; -ien → -ienne, -éen → -éenne; на -e не меняется; grec → grecque.","Feminine: + e; -ien → -ienne, -éen → -éenne; -e stays the same; grec → grecque."],
+["Если прилагательное оканчивается на -e, форма одна для обоих родов (suisse, russe, belge).","If the adjective already ends in -e, it's the same for both genders (suisse, russe, belge)."],
+["Прилагательное согласуется с тем, о ком говорят: elle → + e; il — без изменений.","The adjective agrees with the person: elle → + e; il — no change."],
+["Мужской род национальности — форма из словаря.","The masculine nationality is the dictionary form."],
+["Конечная согласная не читается, а e делает её слышной: français [frɑ̃sɛ] — française [frɑ̃sɛz].","A final consonant is silent; adding e makes it heard: français — française."],
+["Страны запоминай вместе с артиклем: la Russie, le Japon, les États-Unis — от артикля зависит предлог (en Russie, au Japon).","Learn countries together with their article: la Russie, le Japon, les États-Unis — the article decides the preposition (en Russie, au Japon)."]],
+"u1-articles-def":[
+["После aimer, adorer, détester ставится определённый артикль: J’aime la musique.","After aimer, adorer, détester use the definite article: J’aime la musique."],
+["Страны на -e почти всегда женского рода (la France), остальные — мужского (le Japon); во мн. ч. — les.","Countries ending in -e are almost always feminine (la France), others masculine (le Japon); plural — les."],
+["Перед гласной и немой h — l’; во множественном числе — les.","Before a vowel or silent h — l’; in the plural — les."],
+["Вкусы — всегда с артиклем: aimer le cinéma, aimer l’art, aimer les langues.","Likes always take the article: aimer le cinéma, aimer l’art, aimer les langues."]],
+"u1-prepositions":[
+["Город — à; страна женского рода — en; мужского — au; множественного — aux.","City — à; feminine country — en; masculine — au; plural — aux."],
+["à + le = au, à + les = aux. С городами — всегда à.","à + le = au, à + les = aux. Cities always take à."],
+["Род страны: на -e — женский (en), иначе мужской (au), во мн. ч. — aux.","Country gender: -e → feminine (en), otherwise masculine (au), plural — aux."],
+["Сначала город, потом страна: à Moscou, en Russie.","City first, then country: à Moscou, en Russie."],
+["Перед гласной en и aux связываются: en‿Italie [n], aux‿États-Unis [z]. Au не связывается.","Before a vowel, en and aux link: en‿Italie [n], aux‿États-Unis [z]. Au doesn't."]],
+"u1-quel":[
+["Quel согласуется с существительным: quel (м.), quelle (ж.), quels (м. мн.), quelles (ж. мн.).","Quel agrees with the noun: quel (m), quelle (f), quels (m pl), quelles (f pl)."],
+["Форма quel подсказывает род и число существительного.","The form of quel tells you the noun's gender and number."],
+["Quel est… / Quelle est… — смотри на род существительного после глагола.","Quel est… / Quelle est… — look at the gender of the noun after the verb."],
+["Quel стоит перед существительным или перед est / sont.","Quel goes before the noun or before est / sont."]],
+"u1-nombres":[
+["70 = 60 + 10, 80 = 4 × 20, 90 = 4 × 20 + 10.","70 = 60 + 10, 80 = 4 × 20, 90 = 4 × 20 + 10."],
+["quatre-vingts — с -s только ровно 80; et только в 21, 31, 41, 51, 61, 71.","quatre-vingts takes -s only for exactly 80; et only in 21, 31, 41, 51, 61, 71."],
+["Разложи число: soixante-seize = 60 + 16, quatre-vingt-six = 80 + 6.","Break it down: soixante-seize = 60 + 16, quatre-vingt-six = 80 + 6."],
+["Дефисы между частями числа; et — только в 21–71; 81 = quatre-vingt-un (без et и без s).","Hyphens join the parts; et only in 21–71; 81 = quatre-vingt-un (no et, no s)."]],
+"u1-phonetique":[
+["Во французском ударение падает на последний слог ритмической группы.","French stress falls on the last syllable of a rhythmic group."],
+["Ритмическая группа — смысловой кусок фразы, который говорят на одном дыхании.","A rhythmic group is a chunk of meaning said in one breath."],
+["Связывание бывает после en, les, des, nous, vous… перед гласной; после et — никогда.","Liaison happens after en, les, des, nous, vous… before a vowel; never after et."],
+["Ударение — на последний слог группы, а не каждого слова.","Stress goes on the last syllable of the group, not every word."]],
+"u2-habiter":[
+["Глаголы на -er: -e, -es, -e, -ons, -ez, -ent. Перед гласной je → j’ : j’habite.","-er verbs: -e, -es, -e, -ons, -ez, -ent. Before a vowel je → j’: j’habite."],
+["Ответ ищи в тексте: где живёт, с кем, в каком квартале.","Find the answer in the text: where they live, with whom, which neighbourhood."],
+["On = nous в разговоре, но глагол стоит в форме il / elle: on habite.","On = nous in speech, but the verb is in the il / elle form: on habite."],
+["Habiter dans + un quartier / un appartement / une rue; à + город.","Habiter dans + un quartier / un appartement / une rue; à + city."],
+["Вопрос и ответ отвечают на один и тот же вопрос: où, avec qui, comment.","Question and answer match on the same point: où, avec qui, comment."]],
+"u2-articles":[
+["Un / une — что-то впервые или «один из многих»; le / la — конкретное, уже известное.","Un / une — something new or one of many; le / la — a specific, known thing."],
+["Если ясно, какой именно предмет (чей, который), — le / la / l’.","If it's clear which one (whose, which), use le / la / l’."],
+["Un — мужской род, une — женский, des — множественное число.","Un — masculine, une — feminine, des — plural."],
+["После отрицания un / une / des → de (d’). Но le / la / les остаются: je n’aime pas la danse.","After a negative un / une / des → de (d’). But le / la / les stay: je n’aime pas la danse."],
+["Отрицание + de: Je n’ai pas de frère. Принадлежность — de: l’appartement de Lina.","Negative + de: Je n’ai pas de frère. Possession — de: l’appartement de Lina."]],
+"u2-verbes-er":[
+["Основа + -e, -es, -e, -ons, -ez, -ent. -e, -es, -ent не читаются.","Stem + -e, -es, -e, -ons, -ez, -ent. -e, -es, -ent are silent."],
+["Окончание подсказывает лицо: -es → tu, -ons → nous, -ez → vous.","The ending tells the person: -es → tu, -ons → nous, -ez → vous."],
+["Два и больше человек → форма ils (-ent); toi + кто-то → vous (-ez).","Two or more people → ils form (-ent); you + someone → vous (-ez)."],
+["Отрицание обнимает глагол: ne … pas. Перед гласной ne → n’.","The negative wraps the verb: ne … pas. Before a vowel ne → n’."],
+["ne … pas стоит вокруг глагола, а не в конце фразы.","ne … pas goes around the verb, not at the end of the sentence."]],
+"u2-gouts":[
+["Вкусы учат вместе с артиклем: le cinéma, la danse, les langues.","Learn likes with their article: le cinéma, la danse, les langues."],
+["Существительное и глагол от одного корня: la danse — danser, la natation — nager.","Noun and verb share a root: la danse — danser, la natation — nager."],
+["Спорт — то, чем занимаются физически: le ski, la natation, la danse.","Sport is something physical: le ski, la natation, la danse."],
+["aimer + артикль + сущ. или + инфинитив; jouer du (de + le) + инструмент.","aimer + article + noun or + infinitive; jouer du (de + le) + instrument."],
+["После aimer / adorer / détester — либо артикль + существительное, либо инфинитив.","After aimer / adorer / détester — either article + noun, or an infinitive."]],
+"u2-possessifs":[
+["Притяжательное согласуется с предметом, а не с владельцем: mon oncle, ma tante, mes cousins.","The possessive agrees with the thing owned, not the owner: mon oncle, ma tante, mes cousins."],
+["Ответ меняет лицо: ta → ma, vos → nos, votre → ma / mon.","The answer changes person: ta → ma, vos → nos, votre → ma / mon."],
+["son / sa / ses — «его» и «её»: выбор по роду предмета. leur(s) — когда владельцев несколько.","son / sa / ses mean both “his” and “her” — chosen by the thing's gender. leur(s) — several owners."],
+["sa mère — и «его мать», и «её мать»; leurs — их (много предметов).","sa mère is both “his mother” and “her mother”; leurs — their (several things)."],
+["Перед гласной в женском роде — mon, ton, son: mon amie (а не ma amie).","Before a vowel in the feminine — mon, ton, son: mon amie (not ma amie)."]],
+"u2-famille":[
+["Пары запоминай вместе: le père / la mère, le frère / la sœur, l’oncle / la tante.","Learn the pairs together: le père / la mère, le frère / la sœur, l’oncle / la tante."],
+["Дети брата или сестры — le neveu / la nièce; fils unique — единственный сын.","A sibling's children are le neveu / la nièce; fils unique — only son."],
+["marié(e) — женат / замужем; la femme — жена; le petit ami / la petite amie — парень / девушка.","marié(e) — married; la femme — wife; le petit ami / la petite amie — boyfriend / girlfriend."],
+["Строй цепочку: père de mon père = grand-père, fille de ma tante = cousine.","Build the chain: my father's father = grand-père, my aunt's daughter = cousine."],
+["Ответ ищи в тексте приглашения: кого приглашают и кто кем кому приходится.","Find the answer in the invitation text: who is invited and how they're related."]],
+"u2-professions":[
+["-eur → -euse, -ier → -ière, -ien → -ienne, -teur → -trice; на -e — без изменений.","-eur → -euse, -ier → -ière, -ien → -ienne, -teur → -trice; -e stays the same."],
+["Схемы: coiffeur → -euse, acteur → -trice, informaticien → -ienne.","Patterns: coiffeur → -euse, acteur → -trice, informaticien → -ienne."],
+["Новые слова меняются по тем же схемам.","New words follow the same patterns."],
+["Il / elle est + профессия — без артикля; c’est + артикль + профессия.","Il / elle est + job — no article; c’est + article + job."],
+["Многие профессии похожи на английские: informaticien, acteur.","Many jobs look like English: informaticien, acteur."]],
+"u2-phonetique":[
+["Связывание [z] — после les, des, mes перед гласной; [n] — после un, en, on.","Liaison [z] after les, des, mes before a vowel; [n] after un, en, on."],
+["-ent в глаголах не читается, поэтому il parle и ils parlent звучат одинаково (кроме глаголов на гласную: ils‿écoutent).","Verb -ent is silent, so il parle and ils parlent sound the same (except vowel-initial verbs: ils‿écoutent)."],
+["Перед согласной связывания нет: les professeurs.","No liaison before a consonant: les professeurs."]],
+"r-lecture":[
+["Главные правила: конечные согласные (кроме c, r, f, l) молчат, e на конце не читается, ou = [u], u = [y].","Key rules: final consonants (except c, r, f, l) are silent, final e is silent, ou = [u], u = [y]."],
+["-ent в глаголах не читается; s между гласными — [z]; конечная s молчит.","Verb -ent is silent; s between vowels is [z]; final s is silent."],
+["an / en / am / em — [ɑ̃]; on / om — [ɔ̃]; in / ain / ein — [ɛ̃].","an / en / am / em — [ɑ̃]; on / om — [ɔ̃]; in / ain / ein — [ɛ̃]."],
+["Читаются только конечные c, r, f, l (CaReFuL), и то не всегда.","Only final c, r, f, l are pronounced (CaReFuL), and not always."],
+["Носовой звук пропадает, если после n / m идёт гласная или вторая n / m: bonne.","The nasal sound disappears if n / m is followed by a vowel or another n / m: bonne."]],
+"r-accents":[
+["Акцент различает слова: a (имеет) — à (в), ou (или) — où (где).","Accents tell words apart: a (has) — à (to), ou (or) — où (where)."],
+["é — [e] в открытом слоге; è — [ɛ] перед немым слогом; ê часто на месте старой s.","é — [e] in an open syllable; è — [ɛ] before a silent syllable; ê often replaces an old s."],
+["é — accent aigu, è — accent grave, ê — accent circonflexe, ç — cédille.","é — accent aigu, è — accent grave, ê — accent circonflexe, ç — cédille."]],
+"r-liaison":[
+["Élision: je, ne, me, te, se, le, la, de → j’, n’, m’… перед гласной и немой h.","Elision: je, ne, me, te, se, le, la, de → j’, n’, m’… before a vowel or silent h."],
+["Если следующее слово начинается с гласной, e или a выпадает и ставится апостроф.","If the next word starts with a vowel, e or a drops and an apostrophe appears."],
+["Связывание обязательно после артикля и местоимения перед гласной; после et — запрещено.","Liaison is required after articles and pronouns before a vowel; never after et."]],
+"r-genre":[
+["-age, -ment обычно мужского рода, -tion, -té — женского. Но la plage — исключение.","-age, -ment are usually masculine, -tion, -té feminine. But la plage is an exception."],
+["Мн. ч.: + s; -eau, -eu → + x; -al → -aux.","Plural: + s; -eau, -eu → + x; -al → -aux."],
+["На слух множественное число слышно только по артиклю: le film — les films.","You hear the plural only through the article: le film — les films."]],
+"r-pronoms":[
+["Ударные местоимения — после предлогов и et, для выделения: avec lui, et toi, c’est moi.","Stressed pronouns go after prepositions and et, and for emphasis: avec lui, et toi, c’est moi."],
+["Ils — мужчины или смешанная группа, elles — только женщины; вещь заменяется по её роду.","Ils — men or a mixed group, elles — only women; things follow their gender."]],
+"r-questions":[
+["où — где, quand — когда, comment — как, qui — кто, combien — сколько, pourquoi — почему.","où — where, quand — when, comment — how, qui — who, combien — how many, pourquoi — why."],
+["Вопросительное слово стоит в начале фразы.","The question word comes first."],
+["Три способа вопроса: интонация, est-ce que, инверсия. На отрицательный вопрос «да» = si.","Three ways to ask: intonation, est-ce que, inversion. Yes to a negative question = si."],
+["Est-ce que стоит сразу после вопросительного слова; при инверсии глагол и местоимение через дефис.","Est-ce que comes right after the question word; with inversion, verb and pronoun are hyphenated."]],
+"r-negation":[
+["ne … pas вокруг глагола; un / une / des → de после отрицания.","ne … pas around the verb; un / une / des → de after a negative."],
+["Определённые артикли после отрицания не меняются: je n’aime pas la musique.","Definite articles don't change after a negative: je n’aime pas la musique."]],
+"r-cest":[
+["C’est + артикль + сущ.; il / elle est + профессия или прилагательное; il y a — «есть, имеется».","C’est + article + noun; il / elle est + job or adjective; il y a — “there is”."]],
+"r-er-ortho":[
+["Перед -ons: -ger → -geons, -cer → -çons, чтобы звук остался мягким.","Before -ons: -ger → -geons, -cer → -çons, to keep the soft sound."],
+["acheter: e → è там, где окончание немое; возвратные глаголы: me, te, se, nous, vous, se.","acheter: e → è where the ending is silent; reflexives: me, te, se, nous, vous, se."]],
+"r-irreg":[
+["aller, faire, venir — неправильные, их учат наизусть.","aller, faire, venir are irregular — learn them by heart."],
+["venir de + страна: de (женский род), du (мужской), des (множественное).","venir de + country: de (feminine), du (masculine), des (plural)."]],
+"r-erreurs":[
+["Возраст — avoir; профессия после être — без артикля; вкусы — с артиклем.","Age — avoir; job after être — no article; likes — with the article."],
+["Il est + профессия без артикля; c’est + un / une + профессия.","Il est + job, no article; c’est + un / une + job."]],
+"r-consignes":[
+["Задания в учебнике — в повелительном наклонении на vous: complétez, choisissez, associez.","Textbook instructions use the vous imperative: complétez, choisissez, associez."],
+["Внимательно читай глагол задания: mettez à la forme négative — сделать отрицание, accordez — согласовать.","Read the instruction verb carefully: mettez à la forme négative — make it negative, accordez — make it agree."]],
+
+/* ---------- ESPAÑOL ---------- */
+"es1-saludos":[
+["Hola — всегда; buenos días — до обеда, buenas tardes — после, buenas noches — поздно вечером; hasta + момент = «до…».","Hola — always; buenos días until lunch, buenas tardes after, buenas noches late; hasta + time = “see you…”."],
+["Приветствие — при встрече (hola, ¿qué tal?), прощание — при уходе (adiós, hasta luego).","Greetings are for meeting (hola, ¿qué tal?), goodbyes for leaving (adiós, hasta luego)."],
+["Время дня решает: ≈ до 14:00 — días, до ужина — tardes, поздно — noches.","Time decides: ≈ until 2 pm — días, until dinner — tardes, late — noches."],
+["Один близкий — tú; один официально — usted; группа неформально — vosotros; официально — ustedes.","One person you know — tú; one, formally — usted; a group, informally — vosotros; formally — ustedes."],
+["Вопрос с ¿…? открывается перевёрнутым знаком; ¿y tú? — «а ты?».","A question opens with an upside-down ¿; ¿y tú? — “and you?”."]],
+"es1-datos":[
+["Отвечай тем же глаголом, что в вопросе: ¿Cuántos años tienes? — Tengo…","Answer with the same verb as the question: ¿Cuántos años tienes? — Tengo…"],
+["Вопросительные слова с тильдой: cómo, cuántos, dónde, qué, cuál.","Question words carry an accent: cómo, cuántos, dónde, qué, cuál."],
+["Usted — формы «он/она»: te → se, tu → su, tienes → tiene.","Usted takes he/she forms: te → se, tu → su, tienes → tiene."],
+["Возраст — tener; профессия без артикля; trabajar en + место, de + профессия.","Age — tener; jobs take no article; trabajar en + place, de + job."],
+["Порядок как в английском: подлежащее (часто опущено) + глагол + остальное.","Word order like English: subject (often dropped) + verb + the rest."],
+["Возраст — tener, не ser; профессия после ser — без un / una.","Age — tener, not ser; no un / una after ser + job."]],
+"es1-numeros":[
+["16–29 — одно слово (dieciséis, veintidós), с 31 — три слова через y (treinta y uno).","16–29 are one word (dieciséis, veintidós); from 31, three words with y (treinta y uno)."],
+["Тильда: dieciséis, veintidós, veintitrés, veintiséis. 60 — sesenta, 70 — setenta.","Accents: dieciséis, veintidós, veintitrés, veintiséis. 60 — sesenta, 70 — setenta."],
+["por — умножить, menos — минус, más — плюс.","por — times, menos — minus, más — plus."],
+["Однокоренные: dos → doce → veinte; seis → sesenta; siete → setenta.","Related forms: dos → doce → veinte; seis → sesenta; siete → setenta."],
+["Найди шаг ряда и продолжи его.","Find the step of the series and continue it."]],
+"es1-nacionalidades":[
+["-o → -a; согласная → + a (и тильда исчезает: alemán → alemana); на -a, -e, -í — одна форма.","-o → -a; consonant → + a (the accent drops: alemán → alemana); -a, -e, -í — one form."],
+["Смотри на окончание мужского рода — оно определяет схему.","Look at the masculine ending — it decides the pattern."],
+["Национальность — мужской род на -o или согласную; страна пишется с большой буквы.","The nationality is the masculine form; countries are capitalised."],
+["Прилагательное согласуется с существительным: el tango — argentino, la pizza — italiana.","The adjective agrees with the noun: el tango — argentino, la pizza — italiana."],
+["Мн. ч.: гласная + s, согласная + es, -í + es.","Plural: vowel + s, consonant + es, -í + es."],
+["Национальности — с маленькой буквы; -ense и -a не меняются по роду.","Nationalities are lower case; -ense and -a don't change for gender."]],
+"es1-profesiones":[
+["-o → -a, -or → -ora, -z → -za; -ista, -ante, -ente — одна форма.","-o → -a, -or → -ora, -z → -za; -ista, -ante, -ente — one form."],
+["Логика: где этим занимаются — hospital, escuela, laboratorio, periódico.","Logic: where the job is done — hospital, escuela, laboratorio, periódico."],
+["Смотри на окончание: -o, -or или -ista / -ante / -al.","Look at the ending: -o, -or or -ista / -ante / -al."],
+["trabajar en + место, de / como + профессия; soy + профессия без артикля.","trabajar en + place, de / como + job; soy + job, no article."],
+["Soy + профессия; trabajo en + un / una + место.","Soy + job; trabajo en + un / una + place."]],
+"es1-verbos":[
+["ser и tener неправильные; llamarse — правильный, но с me / te / se / nos / os / se.","ser and tener are irregular; llamarse is regular but takes me / te / se / nos / os / se."],
+["Имя — llamarse, национальность и профессия — ser, возраст и вещи — tener.","Name — llamarse, nationality and job — ser, age and things — tener."],
+["ser — кто / откуда; tener — возраст, телефон, e-mail.","ser — who / from where; tener — age, phone, e-mail."],
+["Usted — как él / ella, ustedes — как ellos.","Usted works like él / ella, ustedes like ellos."],
+["Форма глагола должна совпасть с подлежащим.","The verb form must match the subject."],
+["Местоимение часто опускают: окончание показывает лицо.","The pronoun is often dropped: the ending shows the person."]],
+"es2-sustantivos":[
+["-o обычно мужской, -a — женский, -e — любой; -ción, -dad — женский; ловушки: el día, el idioma, la mano.","-o is usually masculine, -a feminine, -e either; -ción, -dad feminine; traps: el día, el idioma, la mano."],
+["Артикль по роду и числу: el / la / los / las.","The article follows gender and number: el / la / los / las."],
+["Un / una — впервые упоминаем; el / la — конкретная, известная вещь. После hablar язык без артикля.","Un / una — first mention; el / la — a specific known thing. No article after hablar + language."],
+["Гласная + s, согласная + es; артикль тоже во мн. ч.","Vowel + s, consonant + es; the article goes plural too."],
+["a + el = al, de + el = del; с la — без слияния.","a + el = al, de + el = del; no contraction with la."]],
+"es2-presente":[
+["-ar: -o, -as, -a, -amos, -áis, -an; -er: -o, -es, -e, -emos, -éis, -en; -ir: -imos, -ís.","-ar: -o, -as, -a, -amos, -áis, -an; -er: -o, -es, -e, -emos, -éis, -en; -ir: -imos, -ís."],
+["Окончание по лицу подлежащего; hacer — hago в yo.","The ending follows the subject; hacer — hago in yo."],
+["Группа — по окончанию инфинитива: -ar, -er, -ir.","The group comes from the infinitive ending: -ar, -er, -ir."],
+["-áis / -éis / -ís → vosotros; -o → yo; -amos / -emos / -imos → nosotros.","-áis / -éis / -ís → vosotros; -o → yo; -amos / -emos / -imos → nosotros."],
+["-er и -ir отличаются только у nosotros и vosotros.","-er and -ir differ only in nosotros and vosotros."],
+["Глагол стоит после подлежащего, местоимение можно опустить.","The verb follows the subject; the pronoun can be dropped."]],
+"es2-querer":[
+["querer: e → ie под ударением (quiero), но queremos, queréis.","querer: e → ie when stressed (quiero), but queremos, queréis."],
+["Форма querer по подлежащему, после неё — инфинитив.","querer agrees with the subject, followed by an infinitive."],
+["querer + инфинитив без предлога: quiero viajar.","querer + infinitive, no preposition: quiero viajar."],
+["Quiero / quieres + инфинитив — план или желание.","Quiero / quieres + infinitive — a plan or wish."],
+["У nosotros / vosotros корень не меняется; после querer нет «a».","nosotros / vosotros keep the stem; no “a” after querer."]],
+"es2-motivos":[
+["por + существительное, para + инфинитив, porque + спряжённый глагол.","por + noun, para + infinitive, porque + conjugated verb."],
+["Смотри, что идёт после: существительное, инфинитив или глагол с окончанием.","Look at what follows: a noun, an infinitive or a conjugated verb."],
+["¿Por qué? — вопрос (два слова, тильда); porque — ответ.","¿Por qué? — the question (two words, accent); porque — the answer."],
+["Ответ на ¿por qué? начинается с porque, para или por.","An answer to ¿por qué? starts with porque, para or por."]],
+"es2-ocio":[
+["Сочетания учат целиком: ir de compras, salir a cenar, salir con amigos; a + el = al.","Learn the combinations whole: ir de compras, salir a cenar, salir con amigos; a + el = al."],
+["Глагол подбирается к предмету: ver una serie, escuchar un pódcast, leer una revista.","The verb fits the object: ver una serie, escuchar un pódcast, leer una revista."],
+["ir a + место, ir de + занятие, salir a + инфинитив.","ir a + place, ir de + activity, salir a + infinitive."],
+["Язык = мужской род национальности; y → e перед i- / hi-.","Language = masculine nationality; y → e before i- / hi-."],
+["Карточки: вспомни сочетание целиком, а не одно слово.","Flashcards: recall the whole combination, not just one word."]],
+"es3-ser-estar-hay":[
+["estar: estoy, estás, está, estamos, estáis, están.","estar: estoy, estás, está, estamos, estáis, están."],
+["ser — какое / что это; estar — где находится конкретное; hay — что существует.","ser — what it's like / what it is; estar — where a specific thing is; hay — what exists."],
+["С el / la / названием — está; с un / una / числом / mucho — hay; описание — es.","With el / la / a name — está; with un / una / a number / mucho — hay; description — es."],
+["Hay не сочетается с el / la; местонахождение — estar, не ser.","Hay never goes with el / la; location is estar, not ser."],
+["Задай вопрос: «какой?» — es, «где?» — está, «что есть?» — hay.","Ask yourself: “what like?” — es, “where?” — está, “what's there?” — hay."],
+["Порядок: место + hay + что, или подлежащее + está + где.","Order: place + hay + what, or subject + está + where."]],
+"es3-muy-mucho":[
+["muy + прилагательное; mucho/a/os/as + существительное (согласуется); глагол + mucho.","muy + adjective; mucho/a/os/as + noun (agrees); verb + mucho."],
+["Перед прилагательным — muy, перед существительным и после глагола — mucho.","Before an adjective — muy; before a noun and after a verb — mucho."],
+["el / la / los / las + (сущ.) + más + прилаг. + de; de + el = del.","el / la / los / las + (noun) + más + adj. + de; de + el = del."],
+["Превосходная — с de (не en); muy — перед прилагательным.","The superlative uses de (not en); muy goes before an adjective."],
+["Порядок: артикль + существительное + más + прилагательное + de.","Order: article + noun + más + adjective + de."]],
+"es3-preguntas":[
+["dónde — место, cómo — какой, qué — определение, cuál — выбор из набора, cuántos/as — количество (согласуется).","dónde — place, cómo — what like, qué — definition, cuál — choice from a set, cuántos/as — quantity (agrees)."],
+["¿Qué es…? — определение; ¿Cuál es…? — выбрать один из известных; qué + существительное.","¿Qué es…? — a definition; ¿Cuál es…? — pick one from a known set; qué + noun."],
+["Ответ отвечает на вопросительное слово: dónde → место, cuál → название, qué → что это.","The answer matches the question word: dónde → place, cuál → a name, qué → what it is."],
+["Вопросительные слова всегда с тильдой; cuántos / cuántas — по роду существительного.","Question words always carry an accent; cuántos / cuántas follow the noun's gender."],
+["Вопрос: ¿ + вопросительное слово + глагол + остальное + ?","Question: ¿ + question word + verb + the rest + ?"]],
+"es3-paises":[
+["hace + calor / frío / sol / viento; llueve, nieva; está nublado.","hace + calor / frío / sol / viento; llueve, nieva; está nublado."],
+["hace + сущ.; está + nublado; hay + nubes; el clima es + прилагательное.","hace + noun; está + nublado; hay + nubes; el clima es + adjective."],
+["Проверяй факты: в Аргентине ≈ 46 млн, Анды на западе, официальный язык — испанский.","Check the facts: Argentina ≈ 46 million, the Andes are in the west, the official language is Spanish."],
+["Подбирай слово по смыслу и роду: el río, la isla, la montaña, la cordillera.","Choose by meaning and gender: el río, la isla, la montaña, la cordillera."],
+["Погода — hace / llueve / nieva; климат — es; стороны света: norte — sur, este — oeste.","Weather — hace / llueve / nieva; climate — es; compass: norte — sur, este — oeste."],
+["Повтори род: географические слова на -o / согласную — чаще el, на -a — la.","Review gender: geography words in -o / a consonant are usually el, in -a — la."]],
+"esg-ar":[
+["-ar: -o, -as, -a, -amos, -áis, -an. estar: estoy, estás…; jugar: u → ue.","-ar: -o, -as, -a, -amos, -áis, -an. estar: estoy, estás…; jugar: u → ue."],
+["Окончание по лицу; у vosotros тильда: -áis.","The ending follows the person; vosotros has an accent: -áis."],
+["jugar меняет u → ue везде, кроме nosotros и vosotros.","jugar changes u → ue except in nosotros and vosotros."],
+["Окончание подскажет лицо: -o → yo, -as → tú, -an → ellos.","The ending gives the person: -o → yo, -as → tú, -an → ellos."]],
+"esg-er":[
+["-er: -o, -es, -e, -emos, -éis, -en. hacer — hago; poder — o → ue.","-er: -o, -es, -e, -emos, -éis, -en. hacer — hago; poder — o → ue."],
+["ser, tener, hacer, querer, poder — неправильные; остальные — по схеме.","ser, tener, hacer, querer, poder are irregular; the rest follow the pattern."],
+["Неправильные: ser, tener, hacer, querer, poder.","Irregular: ser, tener, hacer, querer, poder."],
+["Помни особые формы: hago, puedo / podemos, tiene, sois.","Remember the special forms: hago, puedo / podemos, tiene, sois."]],
+"esg-ir":[
+["-ir: -o, -es, -e, -imos, -ís, -en. ir: voy, vas…; venir: vengo, vienes…","-ir: -o, -es, -e, -imos, -ís, -en. ir: voy, vas…; venir: vengo, vienes…"],
+["Особые yo: voy, salgo, vengo, digo, pido.","Special yo forms: voy, salgo, vengo, digo, pido."],
+["Запомни yo-формы неправильных глаголов парами: salir — salgo, decir — digo.","Learn the yo forms in pairs: salir — salgo, decir — digo."],
+["ir — полностью неправильный; venir — -g- + e → ie; -ir у nosotros — -imos.","ir is fully irregular; venir — -g- + e → ie; -ir nosotros — -imos."]],
+"esg-irreg":[
+["«Ботинок» — меняется гласная корня; особое yo — меняется только yo; полностью — учить наизусть.","“Boot” — the stem vowel changes; special yo — only yo changes; completely — learn by heart."],
+["tener: tengo + ie; pedir: e → i; ser и ir — полностью неправильные.","tener: tengo + ie; pedir: e → i; ser and ir are completely irregular."],
+["yo-формы: sé, pongo, conozco, estoy, soy, puedo, quiero, juego.","yo forms: sé, pongo, conozco, estoy, soy, puedo, quiero, juego."],
+["Определи тип глагола, потом примени схему.","Identify the verb type, then apply its pattern."],
+["nosotros и vosotros в «ботинке» не меняются; yo hago, yo sé.","nosotros and vosotros don't change in the “boot”; yo hago, yo sé."]],
+"esr-pronunciacion":[
+["j и g перед e / i — [x]; g перед a / o / u и gu — [g].","j and g before e / i — [x]; g before a / o / u and gu — [g]."],
+["c перед a / o / u и qu — [k]; z и c перед e / i — [θ].","c before a / o / u and qu — [k]; z and c before e / i — [θ]."],
+["Сначала прочитай сам, потом сравни с образцом.","Read it yourself first, then compare with the model."],
+["На гласную, -n, -s — ударение на предпоследний слог; на другую согласную — на последний; иначе тильда.","Ending in a vowel, -n, -s — stress the second-to-last syllable; another consonant — the last; otherwise an accent."],
+["Тильда различает слова: tú / tu, él / el, sí / si, qué / que.","The accent separates words: tú / tu, él / el, sí / si, qué / que."]]
+};
+const whyOf = (tid, i) => { const w = WHY[tid] && WHY[tid][i]; return w ? (typeof LANG_NOW === "function" && LANG_NOW() === "en" ? w[1] : w[0]) : ""; };
+
 (function(){
 "use strict";
 const $ = (s,r=document)=>r.querySelector(s), $$ = (s,r=document)=>[...r.querySelectorAll(s)];
@@ -6224,6 +6957,8 @@ const ICO = {
   star:'<svg viewBox="0 0 20 20"><path d="m10 2.8 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></svg>',
   lex:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H16v12H5.5A1.5 1.5 0 0 0 4 16.5z"/><path d="M4 16.5A1.5 1.5 0 0 0 5.5 18H16v-3M7.5 7h5M7.5 10h3.5"/></svg>',
   check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10.5 3.2 3.2L15 6.8"/></svg>',
+  bank:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><path d="M14 11.5v5M11.5 14h5"/></svg>',
+  shop:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 7.5h13l-1 9a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M7 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
   cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>'
 };
 
@@ -6435,7 +7170,7 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG)});
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG))});
     TOP = c.top; POOLX = c.pool; CHEATX = "";
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...GRAM, ...REF];
@@ -6449,11 +7184,13 @@ setData();
    STORE: local cache + cloud (db) under data/users/<id>/
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
-let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, ts:{}};
+const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, at: o.at || 0}; };
+const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}}; };
+let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
   try {
     const raw = ls.get(LKEY);
-    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, ts:o.ts||{}}; }
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
     else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
   } catch(e) {}
 })();
@@ -6495,6 +7232,8 @@ function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
   if (key === "settings") return {lang:LANG, course:COURSE, ts:S.ts.settings||0};
   if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
+  if (key === "profile") return Object.assign({}, S.prof, {ts:S.ts.profile||0});
+  if (key === "game") return Object.assign({}, S.game, {ts:S.ts.game||0});
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
   return null;
 }
@@ -6503,6 +7242,7 @@ function setCloud(st){
   Cloud.state = st;
   $$("[data-cloud]").forEach(el=>{ el.textContent = t("cloud")[st] + (st === "saved" && Cloud.lastOk ? " · " + hhmm(Cloud.lastOk).slice(0,5) : ""); el.dataset.st = st; el.title = Cloud.lastErr || ""; });
   const d = $("#cloudDiag"); if (d) d.innerHTML = cloudDiag();
+  try { gateCheck(); } catch(e) {}
 }
 function schedule(ms){ clearTimeout(Cloud.timer); Cloud.timer = setTimeout(flush, ms); }
 function touch(key){
@@ -6538,14 +7278,18 @@ function hasData(k){
   if (k === "progress") return Object.keys(S.p).length || S.tests.length;
   if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length;
   if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
+  if (k === "profile") return !!S.prof.name;
+  if (k === "game") return S.game.xp > 0 || S.game.day.n > 0 || S.game.coins !== 50;
   if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
   return false;
 }
-function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, ts:{}}; persistLocal(); }
+function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}}; persistLocal(); }
 function initCloud(){
-  if (Cloud.initing) return Cloud.initing;
-  Cloud.initing = initCloudRun().finally(()=>{ Cloud.initing = null; });
-  return Cloud.initing;
+  const prev = Cloud.initing || Promise.resolve();
+  const run = prev.catch(()=>{}).then(()=>initCloudRun());
+  Cloud.initing = run.finally(()=>{ if (Cloud.initing === run2) Cloud.initing = null; });
+  const run2 = Cloud.initing;
+  return run2;
 }
 async function initCloudRun(){
   if (Cloud.kind === "none") { setCloud("local"); return; }
@@ -6580,10 +7324,12 @@ async function initCloudRun(){
         if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
         else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
+        else if (k === "profile") S.prof = normProf(v);
+        else if (k === "game") S.game = normGame(v);
         S.ts[k] = ct; changed = true;
       } else if (lt > ct) Cloud.dirty.add(k);
     });
-    ["progress","quiz","settings", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
+    ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
     persistLocal();
     Cloud.be = be; Cloud.uid = be.uid; Cloud.fails = 0; Cloud.lastOk = Date.now(); Cloud.lastErr = null;
     setCloud(Cloud.dirty.size ? "saving" : "saved");
@@ -6596,7 +7342,7 @@ async function initCloudRun(){
     if (location.hash === "#account") try { rerender(); } catch(_) {}
     return;
   }
-  try { paintNavProgress(); if (langChanged) { setData(); buildNav(); } if (changed || langChanged || location.hash === "#account") rerender(); } catch(e) {}
+  try { paintNavProgress(); applyLook(); paintMe(); if (langChanged) { setData(); buildNav(); } if (changed || langChanged || location.hash === "#account") rerender(); } catch(e) {}
 }
 function cloudDiag(){
   const lines = [];
@@ -6607,7 +7353,7 @@ function cloudDiag(){
 }
 async function syncNow(){
   if (Cloud.kind === "none") return;
-  ["progress","quiz","settings", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
+  ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
   if (!Cloud.be) { Cloud.inits = 0; await initCloud(); }
   if (Cloud.be) { Cloud.fails = 0; await flush(); }
 }
@@ -6637,13 +7383,14 @@ function authSay(msg, kind){ Auth.msg = msg; Auth.msgKind = kind || ""; const el
 if (sb) {
   sb.auth.onAuthStateChange((ev, session)=>{
     setTimeout(()=>{
-      if (ev === "INITIAL_SESSION") { initCloud(); if (Auth.redirect && session) { Auth.redirect = false; location.hash = "account"; } return; }
+      if (ev === "INITIAL_SESSION") { Gate.ready = true; initCloud(); if (Auth.redirect && session) { Auth.redirect = false; location.hash = "account"; } return; }
       if (ev === "PASSWORD_RECOVERY") { Auth.recovery = true; Auth.redirect = false; if (location.hash !== "#account") location.hash = "account"; else rerender(); return; }
-      if (ev === "SIGNED_IN") { if (!session || session.user.id !== Cloud.uid) { Auth.msg = ""; initCloud().then(()=>{ if (Auth.redirect) { Auth.redirect = false; location.hash = "account"; } }); } return; }
+      if (ev === "SIGNED_IN") { ls.set("edito-seen-auth", "1"); if (!session || session.user.id !== Cloud.uid) { Auth.msg = ""; initCloud().then(()=>{ if (Auth.redirect) { Auth.redirect = false; location.hash = "account"; } }); } return; }
       if (ev === "USER_UPDATED") { if (session && session.user) { ME = {id:session.user.id, name:session.user.email || t("you"), email:session.user.email || ""}; paintAccount(); } return; }
       if (ev === "SIGNED_OUT") {
         clearTimeout(Cloud.timer); Cloud.be = null; Cloud.uid = null; ME = null; Cloud.dirty.clear(); Cloud.lastOk = 0; Cloud.lastErr = null;
         resetLocal(); try { localStorage.removeItem("edito-owner"); } catch(e) {}
+        Auth.mode = "in"; Auth.touched = true; applyLook(); setData(); buildNav();
         setCloud("signedout"); paintAccount(); paintNavProgress(); rerender();
       }
     }, 0);
@@ -6862,7 +7609,6 @@ function spAllowed(sel){
   if (h === "test" || h === "quizlet") return false;
   const n = sel.anchorNode; const el = n && (n.nodeType === 1 ? n : n.parentElement);
   if (!el || el.closest("input,textarea,.selpop,.nav,.topbar,[contenteditable]")) return false;
-  const a = document.activeElement; if (a && /INPUT|TEXTAREA/.test(a.tagName)) return false;
   return true;
 }
 
@@ -7031,7 +7777,7 @@ const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" sp
 function praise(r){ if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
 function makeBlock(tp, ex, i){
   const el = document.createElement("section"); el.className = "exb"; el.dataset.i = i;
-  el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${t("label")[ex.t]}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
+  el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${exLabel(ex)}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
   const api = {
     el, body: $(".exb-b", el), score: $(".exb-score", el), btns: $(".exb-btns", el),
     saved: (S.ans[tp.id] || {})[i] || null,
@@ -7040,23 +7786,37 @@ function makeBlock(tp, ex, i){
     showBest(){ const p = (S.p[tp.id]||{})[i]; $(".exb-best", el).textContent = p ? t("best", Math.round(p.b*100)) : ""; },
     finish(got, total, msg, restoring){ if (!restoring) setScore(tp.id, i, got, total); const r = total ? got/total : 1; api.score.innerHTML = msg || `<b>${got} / ${total}</b> · <span class="pen">${praise(r)}</span>`; api.showBest(); },
     status(txt){ api.score.innerHTML = txt; },
-    button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; }
+    button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; },
+    tid: tp.id, ei: i,
+    ans(k, st, restoring){ if (!restoring) gameAnswer(tp.id + "|" + i, k, st); },
+    whyItem(answer, e){ return whyHTML(answer, e, ruleFor(tp.id, i)); },
+    whyFoot(){ if ($(".why-foot", el)) return; const f = $(".exb-f", el); f.insertAdjacentHTML("beforeend", `<div class="why-foot">${whyHTML("", "", ruleFor(tp.id, i))}</div>`); }
   };
   api.showBest();
   return api;
 }
-const fbHtml = (state, answers, e) => {
+function ruleFor(tid, ei){ const w = WHY[tid] && WHY[tid][ei]; return w ? (LANG === "en" ? w[1] : w[0]) : ""; }
+function whyHTML(answer, e, rule){
+  if (!answer && !e && !rule) return "";
+  return `<button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button><div class="why-p" hidden>${answer !== "" && answer != null ? `<p><b>${t("answerIs")}</b> ${esc(answer)}</p>` : ""}${e ? `<p>${e}</p>` : ""}${rule ? `<p class="why-r"><span>${t("whyRule")}</span>${rule}</p>` : ""}</div>`;
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".why-b"); if (!b) return;
+  const p = b.nextElementSibling; if (!p || !p.classList.contains("why-p")) return;
+  const open = p.hidden; p.hidden = !open; b.setAttribute("aria-expanded", open); b.classList.toggle("on", open);
+});
+const fbHtml = (state, answers) => {
   const right = esc(answers[0]);
-  if (state === "ok") return `<span class="ok-t">${OKW()}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
-  if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>${e?` <span class="ex-e">${e}</span>`:""}`;
-  if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b>${e?" · " + e:""}</span>`;
-  return `<span class="pen">→ ${right}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
+  if (state === "ok") return `<span class="ok-t">${OKW()}</span>`;
+  if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>`;
+  if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b></span>`;
+  return `<span class="pen">→ ${right}</span>`;
 };
 const INIT = {};
 
 /* multiple choice + true/false */
 INIT.mc = (api, ex) => {
-  const items = ex.t === "tf" ? ex.items.map(it=>({q:it.q, o:[t("vrai"), t("faux")], a: it.a?0:1, e:it.e, keep:true})) : ex.items;
+  const items = ex.t === "tf" ? ex.items.map(it=>({q:it.q, o:tfOpts(), a: it.a?0:1, e:it.e, keep:true})) : ex.items;
   let answered, correct, sel, rows;
   const choose = (k, j, restoring) => {
     const row = rows[k], it = items[k];
@@ -7064,8 +7824,8 @@ INIT.mc = (api, ex) => {
     const ok = j === it.a; answered++; if (ok) correct++;
     $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
     const fb = $(".fb", row); fb.hidden = false;
-    fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}` : `<span class="pen">→ ${it.o[it.a]}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}`;
-    sel[k] = j; if (!restoring) api.save({sel});
+    fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${it.o[it.a]}</span>`) + api.whyItem(it.o[it.a], it.e);
+    sel[k] = j; if (!restoring) { api.save({sel}); api.ans(k, ok ? "ok" : "bad"); }
     if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcProg", answered, items.length, correct));
   };
   const build = restore => {
@@ -7085,7 +7845,7 @@ INIT.mc = (api, ex) => {
 INIT.tf = INIT.mc;
 
 /* instant checking for text inputs */
-function wireInstant(slots, onFirst, init, onSave){
+function wireInstant(slots, onFirst, init, onSave, onAns){
   const first = slots.map((_,k)=> init && init.f && init.f[k] ? init.f[k] : null);
   const save = () => { if (onSave) onSave({v: slots.map(s=>s.inp.value), f: first}); };
   const paint = k => {
@@ -7096,23 +7856,17 @@ function wireInstant(slots, onFirst, init, onSave){
   };
   const mark = k => {
     const st = paint(k); if (st === "empty") return st;
-    if (!first[k]) { first[k] = st; onFirst(first, false); }
+    if (!first[k]) { first[k] = st; onFirst(first, false); if (onAns) onAns(k, st); }
     save(); return st;
   };
-  const next = k => { const n = slots[k+1]; if (n) n.inp.focus(); };
+  const next = k => { const n = slots[k+1]; if (n) n.inp.focus(); else s0blur(k); };
+  const s0blur = k => { try { slots[k].inp.blur(); } catch(e) {} };
   slots.forEach((s,k)=>{
-    s.inp.addEventListener("input", ()=>{
-      const v = norm(s.inp.value);
-      if (judge(s.inp.value, s.a) === "ok") {
-        paint(k);
-        const longer = s.a.some(a=>{ const na = norm(a); return na !== v && na.startsWith(v); });
-        if (!s.long && !longer && v.length >= (s.minAdv || 3) && document.activeElement === s.inp) next(k);
-      } else { s.inp.classList.remove("r-ok","r-bad","r-acc"); s.hide(); }
-    });
-    s.inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); mark(k); next(k); } });
-    s.inp.addEventListener("blur", ()=>mark(k));
+    s.inp.setAttribute("enterkeyhint", k < slots.length - 1 ? "next" : "done");
+    s.inp.addEventListener("input", ()=>{ s.inp.classList.remove("r-ok","r-bad","r-acc"); s.hide(); });
+    s.inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); if (mark(k) !== "empty") next(k); } });
   });
-  if (init && init.v) slots.forEach((s,k)=>{ if (init.v[k]) { s.inp.value = init.v[k]; paint(k); } });
+  if (init && init.v) slots.forEach((s,k)=>{ if (init.v[k]) { s.inp.value = init.v[k]; if (first[k]) paint(k); } });
   onFirst(first, true);
   return {
     first,
@@ -7135,9 +7889,9 @@ INIT.fill = (api, ex) => {
       row.innerHTML = `<p class="fillq">${it.q.includes("___") ? it.q.replace("___", inp).replace(/___/g,"…") : `${it.q} ${inp}`}</p><div class="fb" hidden></div>`;
       api.body.appendChild(row);
       const fb = $(".fb", row);
-      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, it.a, it.e); }, hide: () => { fb.hidden = true; }};
+      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, it.a) + api.whyItem(it.a[0], it.e); }, hide: () => { fb.hidden = true; }};
     });
-    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -7152,9 +7906,9 @@ INIT.conj = (api, ex) => {
     const slots = $$(".ans", api.body).map(inp=>{
       const f = ex.items[+inp.dataset.v].f[+inp.dataset.k], row = inp.parentNode;
       const clear = () => $$(".pen,.acc-t", row).forEach(n=>n.remove());
-      return {inp, a:[f], show: st => { clear(); if (st === "bad") row.insertAdjacentHTML("beforeend", `<span class="pen">${esc(f)}</span>`); else if (st === "acc") row.insertAdjacentHTML("beforeend", `<span class="acc-t">${esc(f)}</span>`); }, hide: clear};
+      return {inp, a:[f], show: st => { clear(); api.whyFoot(); if (st === "bad") row.insertAdjacentHTML("beforeend", `<span class="pen">${esc(f)}</span>`); else if (st === "acc") row.insertAdjacentHTML("beforeend", `<span class="acc-t">${esc(f)}</span>`); }, hide: clear};
     });
-    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -7171,9 +7925,9 @@ INIT.listen = (api, ex) => {
     api.status(t("listenHint"));
     const slots = $$(".it", api.body).map((row,k)=>{ const fb = $(".fb", row), it = items[k];
       return {inp: $(".ans", row), a: it.a, minAdv: 2,
-        show: st => { fb.hidden = false; fb.innerHTML = st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`; },
+        show: st => { fb.hidden = false; fb.innerHTML = (st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`) + api.whyItem(it.a[0] + " — " + it.say, ""); },
         hide: () => { fb.hidden = true; }}; });
-    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
+    ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -7201,13 +7955,13 @@ INIT.match = (api, ex) => {
       if (side === "L") selL = b; else selR = b;
       if (side === "L" && synth) speak(b.textContent);
       if (selL && selR) {
-        if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); }
-        else { mistakes++; const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
+        if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); api.ans(+selL.dataset.k, "ok"); }
+        else { mistakes++; api.ans(null, "bad"); const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
         selL = null; selR = null;
-        api.save({m: done, mis: mistakes}); report(false);
+        api.save({m: done, mis: mistakes}); api.whyFoot(); report(false);
       }
     }));
-    if (restore && restore.m) { mistakes = restore.mis || 0; restore.m.forEach(k=>{ lockPair(k); matched++; done.push(k); }); }
+    if (restore && restore.m) { mistakes = restore.mis || 0; restore.m.forEach(k=>{ lockPair(k); matched++; done.push(k); }); if (restore.m.length || mistakes) api.whyFoot(); }
     report(true);
   };
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
@@ -7225,13 +7979,14 @@ INIT.sort = (api, ex) => {
     sel = null; if (!chip || chip.classList.contains("is-ok")) return;
     chip.classList.remove("sel");
     const b = +binEl.dataset.bin, k = +chip.dataset.k, it = ex.items[k];
-    if (b === it[1]) { lockIn(chip, binEl); placed++; pl.push(k); }
+    if (b === it[1]) { lockIn(chip, binEl); placed++; pl.push(k); if (!firstWrong.has(k)) api.ans(k, "ok"); }
     else {
+      if (!firstWrong.has(k)) api.ans(null, "bad");
       firstWrong.add(k); wrong[k] = (wrong[k]||0) + 1;
       chip.classList.add("is-bad","flash"); setTimeout(()=>chip.classList.remove("is-bad","flash"), 650);
       if (wrong[k] >= 2 && !$(".pen", chip)) chip.insertAdjacentHTML("beforeend", `<span class="pen">→ ${esc(ex.cats[it[1]])}</span>`);
     }
-    persist(); report(false);
+    persist(); api.whyFoot(); report(false);
   };
   api.body.addEventListener("click", e=>{
     const chip = e.target.closest(".chip");
@@ -7253,6 +8008,7 @@ INIT.sort = (api, ex) => {
     if (restore) {
       (restore.fw || []).forEach(k=>firstWrong.add(k)); wrong = restore.w || {};
       (restore.pl || []).forEach(k=>{ const chip = $(`.chip[data-k="${k}"]`, api.body), bin = $(`.bin[data-bin="${ex.items[k][1]}"]`, api.body); if (chip && bin) { lockIn(chip, bin); placed++; pl.push(k); } });
+      if ((restore.pl || []).length || (restore.fw || []).length) api.whyFoot();
     }
     report(true);
   };
@@ -7274,7 +8030,7 @@ INIT.order = (api, ex) => {
       const row = document.createElement("div"); row.className = "it ord";
       row.innerHTML = `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div><div class="fb" hidden></div>`;
       const line = $(".ord-line", row), fb = $(".fb", row), bank = $(".ord-bank", row);
-      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`; };
+      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = (r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`) + api.whyItem(it.s, it.ru); };
       for (let p = 0; p < res[k].pos; p++) { const tk = $$(".tok", bank).find(x=>x.textContent === words[p]); if (tk) line.appendChild(tk); }
       if (res[k].done) finishRow();
       row.addEventListener("click", e=>{
@@ -7282,7 +8038,7 @@ INIT.order = (api, ex) => {
         if (!tk || r.done) return;
         if (tk.textContent === words[r.pos]) {
           line.appendChild(tk); r.pos++;
-          if (r.pos === words.length) { r.done = true; finishRow(); speak(it.s); }
+          if (r.pos === words.length) { r.done = true; finishRow(); speak(it.s); api.ans(k, r.mis ? "bad" : "ok"); }
         } else {
           r.mis++; tk.classList.add("is-bad","flash"); setTimeout(()=>tk.classList.remove("is-bad","flash"), 550);
           fb.hidden = false; fb.innerHTML = `<span class="pen">${t("wrongWord")}</span> <span class="ex-e">${t("errorsN", r.mis)}</span>`;
@@ -7322,7 +8078,7 @@ INIT.cards = (api, ex) => {
     card.addEventListener("click", flip);
     card.addEventListener("keydown", e=>{ if (e.key==="Enter"||e.key===" ") { e.preventDefault(); flip(); } });
     $$(".seg button", api.body).forEach(b=>b.addEventListener("click", ()=>{ dir = b.dataset.d; flipped = false; persist(); draw(); }));
-    $('[data-a="know"]', api.body).addEventListener("click", ()=>{ known.push(queue.shift()); flipped = false; persist(); draw(); });
+    $('[data-a="know"]', api.body).addEventListener("click", ()=>{ const k = queue.shift(); known.push(k); api.ans(k, "self"); api.whyFoot(); flipped = false; persist(); draw(); });
     $('[data-a="again"]', api.body).addEventListener("click", ()=>{ queue.push(queue.shift()); flipped = false; draw(); });
     api.status(t("cardsHint"));
   };
@@ -7339,9 +8095,9 @@ INIT.drill = (api, ex) => {
     const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">Bravo !</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
     $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>{
       const k = +b.dataset.k; b.previousElementSibling.hidden = false; b.dataset.seen = "1"; speak(ex.items[k][0], .8);
-      if (!seen.includes(k)) { seen.push(k); api.save({seen}); upd(false); }
+      if (!seen.includes(k)) { seen.push(k); api.save({seen}); api.ans(k, "self"); api.whyFoot(); upd(false); }
     }));
-    upd(true);
+    upd(true); if (seen.length) api.whyFoot();
   };
   api.button(t("again"), "sec", ()=>{ api.clear(); build(null); });
   build(api.saved);
@@ -7363,8 +8119,10 @@ function buildNav(){
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
+      <a class="nl big" href="#bank" data-id="bank">${ICO.bank}<span class="nl-t">${t("bank")}</span></a>
       ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>`}
+      <a class="nl big" href="#shop" data-id="shop">${ICO.shop}<span class="nl-t">${t("shop")}</span><span class="nl-coin">🪙 <b data-coins>${S.game.coins}</b></span></a>
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
     ${units.map(u=>`<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
@@ -7373,13 +8131,13 @@ function buildNav(){
     ${REF.map(navLink).join("")}
   </div>
   <div class="nav-foot">
-    <div class="lang-sw" role="group" aria-label="${esc(t("lang"))}"><button type="button" data-lang="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang="en" class="${LANG==="en"?"on":""}">English</button></div>
-    <a class="acct" href="#account" data-id="account"><span class="acct-av" id="acctAv"></span><span class="acct-tx"><b id="acctName">${t("account")}</b><small data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</small></span></a>
+    ${meHTML()}
   </div>`;
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
   $$("[data-course]", nav).forEach(b=>b.addEventListener("click", ()=>setCourse(b.dataset.course)));
   const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
+  const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
 }
 function setCourse(c, silent){
@@ -7396,11 +8154,6 @@ function setCourse(c, silent){
   };
   if (silent) finish(); else setTimeout(finish, 240);
 }
-function avatarHTML(){
-  if (ME && ME.avatarUrl) return `<img src="${esc(ME.avatarUrl)}" alt="">`;
-  if (ME && ME.email) return `<span class="av-l">${esc(ME.email.trim().charAt(0).toUpperCase())}</span>`;
-  return ICO.cloud;
-}
 function authHTML(){
   const m = Auth.mode, up = m === "up", reset = m === "reset";
   return `<form class="auth" id="authForm" novalidate data-mode="${m}">
@@ -7412,7 +8165,6 @@ function authHTML(){
     <p class="auth-msg" id="authMsg" data-k="${Auth.msgKind}" aria-live="polite">${esc(Auth.msg)}</p>
     <button type="submit" class="btn pri auth-go" id="authGo">${up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn")}</button>
     <div class="auth-links" id="authLinks">${authLinks(m)}</div>
-    <p class="auth-note">${t("authNote")}</p>
   </form>`;
 }
 function authLinks(m){
@@ -7422,7 +8174,7 @@ function authLinks(m){
 }
 function setAuthMode(m){
   const f = $("#authForm"); if (!f) return;
-  Auth.mode = m; Auth.msg = ""; Auth.msgKind = "";
+  Auth.mode = m; Auth.touched = true; Auth.msg = ""; Auth.msgKind = "";
   f.classList.add("swap");
   setTimeout(()=>{
     const up = m === "up", reset = m === "reset";
@@ -7444,7 +8196,7 @@ function recoveryHTML(){
 }
 function wireAuth(){
   const f = $("#authForm");
-  if (f) {
+  if (f && !f.dataset.wired) { f.dataset.wired = "1";
     f.addEventListener("click", e=>{ const b = e.target.closest("[data-am]"); if (b) setAuthMode(b.dataset.am); });
     f.addEventListener("submit", async ev=>{
       ev.preventDefault();
@@ -7456,7 +8208,7 @@ function wireAuth(){
       try {
         let r;
         if (Auth.mode === "up") {
-          r = await sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}});
+          r = await withTimeout(sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}}), 20000);
           if (r.error) throw r.error;
           if (r.data && r.data.user && Array.isArray(r.data.user.identities) && !r.data.user.identities.length) throw {message:"already registered"};
           if (!r.data.session) { authSay(t("authCheckMail", email), "ok"); done(); return; }
@@ -7464,15 +8216,21 @@ function wireAuth(){
           r = await sb.auth.resetPasswordForEmail(email, {redirectTo:authRedirectTo()});
           if (r.error) throw r.error; authSay(t("authResetSent", email), "ok"); done(); return;
         } else {
-          r = await sb.auth.signInWithPassword({email, password:pw});
+          r = await withTimeout(sb.auth.signInWithPassword({email, password:pw}), 20000);
           if (r.error) throw r.error;
         }
-        Auth.msg = ""; Auth.mode = "in";
-      } catch(e) { authSay(authErrText(e), "err"); done(); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake"); }
+        Auth.msg = ""; Auth.mode = "in"; ls.set("edito-seen-auth", "1");
+        if (r && r.data && r.data.session && !ME) initCloud();
+      } catch(e) {
+        /* бывает, что ответ пришёл с ошибкой, но сессия уже создана — тогда это успех */
+        let s2 = null; if (Auth.mode !== "reset") { try { const g = await withTimeout(sb.auth.getSession(), 5000); s2 = g && g.data && g.data.session; } catch(_) {} }
+        if (s2) { Auth.msg = ""; Auth.mode = "in"; ls.set("edito-seen-auth", "1"); if (!ME) initCloud(); return; }
+        authSay(authErrText(e), "err"); done(); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake");
+      }
     });
   }
   const pf = $("#pwForm");
-  if (pf) {
+  if (pf && !pf.dataset.wired) { pf.dataset.wired = "1";
     $("#pwCancel").addEventListener("click", ()=>{ Auth.recovery = false; renderAccount(); });
     pf.addEventListener("submit", async ev=>{
       ev.preventDefault();
@@ -7484,11 +8242,7 @@ function wireAuth(){
     });
   }
 }
-function paintAccount(){
-  const av = $("#acctAv"), nm = $("#acctName");
-  if (av) av.innerHTML = avatarHTML();
-  if (nm) nm.textContent = ME && ME.name ? ME.name : t("account");
-}
+function paintAccount(){ paintMe(); }
 function paintNavProgress(){
   $$("[data-ring]").forEach(r=>{ const tp = byId[r.dataset.ring]; if (!tp) return; const p = topicPct(tp).pct*100; r.style.setProperty("--p", p.toFixed(0)); r.classList.toggle("full", p>=99.5); });
 }
@@ -7533,7 +8287,7 @@ function renderHome(){
     <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${es ? t("esStart") : t("startFirst")}</a>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#quizlet">${t("quizlet")}</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
-  ${saveNudge()}
+  ${dailyHTML()}
   <ol class="how">${how.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
   <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
@@ -7548,7 +8302,7 @@ function renderTopic(tp){
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
-    <h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
+    ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
     <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
   </header>
   <section class="theory">${tp.theory}</section>
@@ -7558,6 +8312,7 @@ function renderTopic(tp){
   const exs = $(".exs", main);
   tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
   $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
+  wireDeck(tp);
 }
 function renderCheat(){
   main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
@@ -7573,12 +8328,12 @@ function renderLexico(){
   <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–3</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
     <div class="lex-tools">
       <label class="lex-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg><input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
-      <span class="seg lex-units">${["all","1","2","3"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : "Unidad " + u}</button>`).join("")}</span>
+      <span class="seg lex-units">${["all","1","2","3","+"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : u==="+" ? "📅 " + t("lexCal") : "Unidad " + u}</button>`).join("")}</span>
       <button type="button" class="chip-t${LEX.hide?" on":""}" id="lexHide">${LEX.hide ? t("lexShow") : t("lexHide")}</button>
     </div>
   </header>
   <p class="lex-count" id="lexCount"></p>
-  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">U${c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
+  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
   <p class="muted lex-none" id="lexNone" hidden>${t("lexNone")}</p></div>`;
   const box = $("#lexBox"), save = () => ls.set("edito-lex", JSON.stringify({u:LEX.u, hide:LEX.hide}));
   const apply = () => {
@@ -7598,60 +8353,6 @@ function renderLexico(){
   apply();
 }
 
-/* ---------- account ---------- */
-function renderAccount(){
-  const es = COURSE === "es", tt = totals(), tests = testsOf();
-  const words = QSETS.flatMap(s=>s.w.map(w=>w[0])); const uniq = [...new Set(words)];
-  const learned = uniq.filter(w=>qLv(w) >= 3).length;
-  const best = tests.reduce((m,x)=>Math.max(m, x.got/(x.total||1)), 0);
-  const name = ME && ME.name ? ME.name : (Cloud.be ? t("you") : t("guest"));
-  const isSupa = Cloud.kind === "supabase", signedIn = !!(isSupa && ME);
-  const cname = `${COURSES[COURSE].name} · ${COURSES[COURSE].book}`;
-  let armed = false;
-  const status = () => {
-    if (isSupa && !signedIn) return Cloud.state === "loading" ? `<div class="acc-card soft"><span class="spin"></span><p>${t("cloud").loading}</p></div>` : authHTML();
-    if (Cloud.kind === "none") return `<div class="acc-card soft"><span class="acc-ic">${ICO.cloud}</span><p>${t("accLocal")}</p></div>`;
-    const ok = !!Cloud.be;
-    return `<div class="acc-card ${ok ? "good" : "warn"}"><span class="acc-ic">${ok ? ICO.check : ICO.cloud}</span><div class="acc-tx"><p>${ok ? t("accSaved") : t("accOffline")}</p>${ME && ME.email ? `<small>${esc(ME.email)}</small>` : ""}</div>
-      <div class="cb-btns">${ok ? "" : `<button type="button" class="btn sm pri" id="syncNow">${t("retry")}</button>`}${isSupa ? `<button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button>` : ""}</div></div>`;
-  };
-  main.innerHTML = `<div class="col">
-  <header class="t-head seyes acc-head"><div class="acc-big">${avatarHTML()}</div><div><p class="eyebrow">${t("accEyebrow")}</p><h1 id="accName"></h1><p class="t-ru"><span class="cloud-pill" data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</span></p></div></header>
-  ${Auth.recovery && signedIn ? recoveryHTML() : ""}
-  ${status()}
-  <div class="sec-h"><h2>${t("accFor", cname)}</h2></div>
-  <div class="kpis">
-    <div class="kpi"><b>${tt.done}<small>/${tt.ex}</small></b><span>${t("stSolved")}</span></div>
-    <div class="kpi"><b>${tt.full}<small>/${TOP.length}</small></b><span>${t("stTopics")}</span></div>
-    <div class="kpi"><b>${Math.round(tt.avg*100)}%</b><span>${t("stAvg")}</span></div>
-    <div class="kpi"><b>${tests.length}</b><span>${t("stTests")}</span></div>
-    <div class="kpi"><b>${tests.length ? (es ? Math.round(best*100) + "%" : String(Math.round(best*40)/2).replace(".",",") + "<small>/20</small>") : "—"}</b><span>${t("stBest")}</span></div>
-    ${es ? `<div class="kpi"><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b><span>${t("stLex")}</span></div>` : `<div class="kpi"><b>${learned}<small>/${uniq.length}</small></b><span>${t("stWords")}</span></div>`}
-  </div>
-  <div class="sec-h"><h2>${t("progressByTopic")}</h2></div>
-  <div class="brk">${ORDER.map(tp=>{ const p = topicPct(tp), r = p.pct; return `<div class="brk-r"><a href="#${tp.id}">${tp.title}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(r?4:0, r*100)}%"></i></div><span>${Math.round(r*100)}%</span></div>`; }).join("")}</div>
-  <div class="sec-h"><h2>${t("history")}</h2></div>
-  ${tests.length ? `<ul class="hist">${tests.slice().reverse().map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : `<p class="muted">${t("noTests")}</p>`}
-  <div class="sec-h"><h2>${t("settings")}</h2></div>
-  <div class="settings-row"><span>${t("lang")}</span><div class="lang-sw big"><button type="button" data-lang2="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang2="en" class="${LANG==="en"?"on":""}">English</button></div></div>
-  <div class="settings-row"><span></span><button type="button" class="btn sec danger" id="resetAll">${t("resetCourse", COURSES[COURSE].name)}</button></div>
-  </div>`;
-  $("#accName").textContent = name;
-  const sn = $("#syncNow"); if (sn) sn.addEventListener("click", async e=>{ const b = e.currentTarget; b.disabled = true; await syncNow(); renderAccount(); });
-  const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
-  const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
-  wireAuth();
-  $$("[data-lang2]", main).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
-  $("#resetAll").addEventListener("click", e=>{
-    const b = e.currentTarget;
-    if (!armed) { armed = true; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed) { armed = false; b.textContent = t("resetCourse", COURSES[COURSE].name); b.classList.remove("armed"); } }, 5000); return; }
-    const ids = TOP.map(x=>x.id);
-    ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
-    S.tests = S.tests.filter(x=>(x.c||"fr") !== COURSE);
-    if (!es) { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
-    touch("progress"); paintNavProgress(); renderAccount(); toast(t("resetDone"));
-  });
-}
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.classList.add("out"), 1800); setTimeout(()=>el.remove(), 2300); }
 
 /* ---------- mock test ---------- */
@@ -7663,7 +8364,7 @@ function genTest(n){
   while (pick.length < Math.min(n, POOLX.length)) { let added = false; for (const k of keys) { if (groups[k].length && pick.length < n) { pick.push(groups[k].pop()); added = true; } } if (!added) break; }
   const ord = id => ORDER.findIndex(x=>x.id===id);
   pick.sort((a,b)=>ord(POOLX[a].tp)-ord(POOLX[b].tp));
-  return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q}; });
+  return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, k, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q, k}; });
 }
 function renderTest(){
   const hist = testsOf().slice(-5).reverse(), es = COURSE === "es";
@@ -7696,14 +8397,15 @@ function startTest(n){
       if (now) {
         row.dataset.locked = "1"; const j = +b.dataset.j, ok = j === q.a; q.sel = j; res[k] = ok;
         $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === q.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
-        fb.hidden = false; fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+        fb.hidden = false; fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${q.o[q.a]}</span>`) + whyHTML(q.o[q.a], q.e, poolRule(q));
+        gameAnswer("P|" + COURSE, q.k, ok ? "ok" : "bad");
       } else { $$(".opt", row).forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); q.sel = +b.dataset.j; }
       stat();
     }));
     box.appendChild(row);
     if (!q.o) {
       const inp = $(".ans", row);
-      if (now) wireInstant([{inp, a:q.a, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, q.a, q.e); }, hide: () => { fb.hidden = true; }}], (first, restoring) => { if (!restoring) { res[k] = first[0] === "ok"; stat(); } });
+      if (now) wireInstant([{inp, a:q.a, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, q.a) + whyHTML(q.a[0], q.e, poolRule(q)); }, hide: () => { fb.hidden = true; }}], (first, restoring) => { if (!restoring) { res[k] = first[0] === "ok"; stat(); } }, null, null, (j, st) => gameAnswer("P|" + COURSE, q.k, st));
       else inp.addEventListener("input", stat);
     }
   });
@@ -7719,12 +8421,14 @@ function gradeTest(box, now, res){
     if (q.o) {
       ok = q.sel === q.a;
       $$(".opt", row).forEach(b=>{ b.disabled = true; const j = +b.dataset.j; if (j === q.a) b.classList.add("is-ok"); else if (j === q.sel) b.classList.add("is-bad"); b.classList.remove("sel"); });
-      fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+      fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}`) + whyHTML(q.o[q.a], q.e, poolRule(q));
+      if (!now && q.sel !== undefined) gameAnswer("P|" + COURSE, q.k, ok ? "ok" : "bad");
     } else {
       const inp = $(".ans", row), st = judge(inp.value, q.a);
       ok = now ? res[k] === true : st === "ok"; inp.disabled = true;
       inp.classList.remove("r-ok","r-bad","r-acc"); inp.classList.add(st==="ok"?"r-ok":st==="acc"?"r-acc":"r-bad");
-      fb.innerHTML = fbHtml(st === "empty" ? "bad" : st, q.a, q.e);
+      fb.innerHTML = fbHtml(st === "empty" ? "bad" : st, q.a) + whyHTML(q.a[0], q.e, poolRule(q));
+      if (!now && st !== "empty") gameAnswer("P|" + COURSE, q.k, st);
     }
     if (ok) got++;
     const p = per[q.tp] || (per[q.tp] = {g:0, n:0}); p.n++; if (ok) p.g++;
@@ -7938,6 +8642,7 @@ function qzReview(stage){
     const r = srsNext(r0, g), sd = sdToday(); sd.a++; if (!r0) sd.n++; S.quiz.sd = sd;
     const lv = qLv(w.fr);
     qSet(w.fr, {r, lv: g === 1 ? 1 : Math.max(lv, r.st === 2 ? (r.ivl >= 4 ? 3 : 2) : 1)});
+    gameAnswer("q|" + k, null, g >= 2 ? "ok" : "bad", {daily:true, xp:2});
     served++; last = w.fr; qzRefreshList(); updSrsBadge(); next();
   };
   const undo = () => {
@@ -8048,6 +8753,7 @@ function qzLearn(stage){
   const result = (w, ok, right, accWarn) => {
     const lv = qLv(w.fr);
     qSet(w.fr, {lv: ok ? Math.min(3, lv+1) : Math.max(0, lv-1)}); qzRefreshList();
+    gameAnswer("q|" + qKey(w.fr), null, ok ? "ok" : "bad", {daily:true, xp:2});
     const fb = $(".qz-fb", stage);
     if (ok) { fb.innerHTML = `<span class="ok-t">${t("qzCorrect")}</span>${accWarn ? ` <span class="acc-t">${t("almost")}</span> <b>${esc(w.fr)}</b>` : ""}`; speak(w.fr); setTimeout(nextQ, accWarn ? 1600 : 850); }
     else { fb.innerHTML = `<span class="pen">${t("qzWrongIs")} ${esc(right)}</span> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; speak(w.fr); const go = $("#qzGo", stage); go.focus(); go.addEventListener("click", nextQ); }
@@ -8078,7 +8784,7 @@ function qzWrite(stage){
       done = true; inp.disabled = true;
       inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
       const fb = $(".qz-fb", stage), lv = qLv(w.fr);
-      speak(w.fr);
+      speak(w.fr); gameAnswer("q|" + qKey(w.fr), null, st, {daily:true, xp:3});
       if (st === "ok") { got++; qSet(w.fr, {lv: Math.min(3, lv+1)}); fb.innerHTML = `<span class="ok-t">${OKW()}</span>`; setTimeout(()=>{ if (done && round[i] === w) { i++; step(); } }, 800); }
       else { wrong.push(w); qSet(w.fr, {lv: Math.max(0, lv-1)}); fb.innerHTML = `${st === "acc" ? `<span class="acc-t">${t("almost")}</span>` : `<span class="pen">${t("qzWrongIs")}</span>`} <b>${esc(w.fr)}</b> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; $("#qzGo", stage).addEventListener("click", ()=>{ i++; step(); }); $("#qzGo", stage).focus(); }
       qzRefreshList();
@@ -8122,18 +8828,718 @@ function qzMatch(stage){
 }
 
 /* =========================================================
+   GAME: опыт, уровни, монеты, стрик, анимации начисления
+   (встраивается внутрь движка при сборке)
+   ========================================================= */
+Object.assign(I18N.ru, {
+  lvl:n=>`Уровень ${n}`, lvlS:n=>`Ур. ${n}`, lvlUp:(n, c)=>`Новый уровень — ${n}! +${c} 🪙`, xpN:n=>`${n} XP`, xpTo:(a, b)=>`${a} / ${b} XP до следующего уровня`,
+  streakT:"Стрик", streakDays:n=>`${n} ${plural(n,["день","дня","дней"])} подряд`, streakToday:(n)=>`Сегодня: ${Math.min(n,10)}/10 заданий для огонька`, streakDone:"Огонёк на сегодня получен 🔥", streakGot:n=>`🔥 Стрик: ${n} ${plural(n,["день","дня","дней"])}! +10 🪙`,
+  coinsN:n=>`${n} ${plural(n,["монета","монеты","монет"])}`, dailyH:"Цель дня", dailySub:"Выполни 10 заданий — и получишь огонёк в стрик.", dailyDone:"Цель на сегодня выполнена!", dailyGo:"К заданиям",
+  whyA:"Пояснение", whyRule:"Почему так: ",
+  instantHint:"Впиши ответ и нажми Enter — он сразу проверится. Засчитывается первая попытка.",
+  conjHint:"Впиши форму и нажми Enter — проверка, и курсор перейдёт к следующей."
+});
+Object.assign(I18N.en, {
+  lvl:n=>`Level ${n}`, lvlS:n=>`Lv ${n}`, lvlUp:(n, c)=>`Level ${n} reached! +${c} 🪙`, xpN:n=>`${n} XP`, xpTo:(a, b)=>`${a} / ${b} XP to the next level`,
+  streakT:"Streak", streakDays:n=>`${n} ${n===1?"day":"days"} in a row`, streakToday:(n)=>`Today: ${Math.min(n,10)}/10 tasks for your flame`, streakDone:"Today's flame earned 🔥", streakGot:n=>`🔥 Streak: ${n} ${n===1?"day":"days"}! +10 🪙`,
+  coinsN:n=>`${n} ${n===1?"coin":"coins"}`, dailyH:"Daily goal", dailySub:"Complete 10 tasks to keep your streak alive.", dailyDone:"Today's goal is done!", dailyGo:"Go to exercises",
+  whyA:"Explanation", whyRule:"Why: ",
+  instantHint:"Type the answer and press Enter to check it. Your first attempt counts.",
+  conjHint:"Type the form and press Enter to check it — the cursor moves to the next one."
+});
+
+const gDay = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const dayShift = (k, n) => { const [y,m,d] = k.split("-").map(Number); return gDay(new Date(y, m-1, d + n)); };
+const lvlNeed = L => 100 + (L - 1) * 50;
+function lvlOf(xp){ let L = 1, base = 0; while (xp >= base + lvlNeed(L)) { base += lvlNeed(L); L++; } return {L, cur: xp - base, need: lvlNeed(L), pct: (xp - base) / lvlNeed(L)}; }
+function dayRoll(){ const g = S.game, k = gDay(); if (g.day.d !== k) g.day = {d:k, n:0, q:{}}; }
+function streakNow(){ const s = S.game.streak, k = gDay(); return s.last === k || s.last === dayShift(k, -1) ? s.cur : 0; }
+function awTake(base, k){
+  const aw = S.game.aw;
+  if (typeof k === "number" && k >= 0 && k < 31) { const m = aw[base] || 0; if (m & (1 << k)) return false; aw[base] = m | (1 << k); return true; }
+  const key = base + "|" + k; if (aw[key]) return false; aw[key] = 1; return true;
+}
+/* ответ на задание: st = ok | acc | bad | self; k — номер пункта (для «один раз за пункт») */
+function gameAnswer(base, k, st, opt){
+  const g = S.game; dayRoll();
+  g.day.n++; g.hist[g.day.d] = (g.hist[g.day.d] || 0) + 1;
+  const hk = Object.keys(g.hist); if (hk.length > 140) hk.sort().slice(0, hk.length - 140).forEach(x=>delete g.hist[x]);
+  let xp = 0, coins = 0;
+  if (st === "ok" || st === "acc" || st === "self") {
+    const fresh = opt && opt.daily ? !g.day.q[base] && (g.day.q[base] = 1) : (k == null ? true : awTake(base, k));
+    if (fresh) { xp = st === "ok" ? (opt && opt.xp || 10) : st === "acc" ? 5 : 2; coins = st === "ok" ? 1 : 0; }
+  }
+  gain(xp, coins);
+  streakTick();
+  touch("game");
+}
+function gain(xp, coins){
+  const g = S.game, before = lvlOf(g.xp).L;
+  g.xp += xp; g.coins += coins;
+  const after = lvlOf(g.xp).L; let bonus = 0;
+  if (after > before) { bonus = 20 * (after - before); g.coins += bonus; }
+  paintMe();
+  if (xp || coins) fxPop(xp, coins);
+  if (after > before) { fxLevel(after); toast(t("lvlUp", after, bonus)); }
+}
+function streakTick(){
+  const g = S.game, k = g.day.d;
+  if (g.day.n >= 10 && g.streak.last !== k) {
+    g.streak.cur = g.streak.last === dayShift(k, -1) ? g.streak.cur + 1 : 1;
+    g.streak.last = k; g.streak.best = Math.max(g.streak.best, g.streak.cur);
+    g.coins += 10; paintMe(); fxStreak(); toast(t("streakGot", g.streak.cur));
+  }
+}
+
+/* --- виджет профиля в сайдбаре и в верхней панели --- */
+function meHTML(){
+  const L = lvlOf(S.game.xp), st = streakNow(), today = S.game.day.d === gDay() ? S.game.day.n : 0, lit = S.game.streak.last === gDay();
+  return `<a class="mew" href="#account" data-id="account" id="me">
+    <span class="me-av">${avHTML(S.prof, "m")}</span>
+    <span class="me-tx"><b class="me-name">${esc(S.prof.name || t("guest"))}</b><span class="me-lv"><span class="me-lvt">${t("lvl", L.L)}</span><span class="me-bar"><i style="width:${(L.pct*100).toFixed(1)}%"></i></span></span></span>
+    <span class="me-side"><span class="me-fire${lit ? " lit" : ""}" title="${esc(lit ? t("streakDone") : t("streakToday", today))}">🔥 <b>${st}</b></span><span class="me-coin" title="${esc(t("coinsN", S.game.coins))}">🪙 <b>${S.game.coins}</b></span></span>
+  </a>`;
+}
+function meTopHTML(){
+  const L = lvlOf(S.game.xp), lit = S.game.streak.last === gDay();
+  return `<a class="me-top" href="#account" id="meTop" aria-label="${esc(t("account"))}">${avHTML(S.prof, "s")}<span class="me-top-t"><b>${t("lvlS", L.L)}</b><span class="me-bar"><i style="width:${(L.pct*100).toFixed(1)}%"></i></span></span><span class="me-fire${lit ? " lit" : ""}">🔥<b>${streakNow()}</b></span></a>`;
+}
+function paintMe(){
+  const L = lvlOf(S.game.xp), lit = S.game.streak.last === gDay(), today = S.game.day.d === gDay() ? S.game.day.n : 0;
+  $$("#me, #meTop").forEach(w=>{
+    const bar = $(".me-bar i", w); if (bar) bar.style.width = (L.pct*100).toFixed(1) + "%";
+    const lt = $(".me-lvt", w); if (lt) lt.textContent = t("lvl", L.L);
+    const tt = $(".me-top-t b", w); if (tt) tt.textContent = t("lvlS", L.L);
+    const f = $(".me-fire", w); if (f) { f.classList.toggle("lit", lit); $("b", f).textContent = streakNow(); f.title = lit ? t("streakDone") : t("streakToday", today); }
+    const c = $(".me-coin b", w); if (c) c.textContent = S.game.coins;
+    const nm = $(".me-name", w); if (nm) nm.textContent = S.prof.name || t("guest");
+    const av = $(".av", w); if (av) av.outerHTML = avHTML(S.prof, w.id === "me" ? "m" : "s");
+  });
+  $$("[data-coins]").forEach(x=>x.textContent = S.game.coins);
+  const dg = $("#dailyGoal"); if (dg) dg.outerHTML = dailyHTML();
+}
+function meVisible(){
+  const a = $("#me"), b = $("#meTop");
+  const vis = el => el && el.offsetParent !== null && el.getBoundingClientRect().width > 0 && getComputedStyle(el).visibility !== "hidden";
+  if (vis(b) && !nav.classList.contains("open")) return b;
+  if (vis(a)) { const r = a.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) return a; }
+  return vis(b) ? b : null;
+}
+function fxPop(xp, coins){
+  if (!S.prof.fx) return;
+  const w = meVisible(); if (!w) return;
+  const host = $(".me-av", w) || $(".av", w) || w;
+  const r = host.getBoundingClientRect();
+  const mk = (txt, cls, delay) => {
+    const el = document.createElement("span"); el.className = "xp-pop " + cls; el.textContent = txt;
+    el.style.left = (r.left + r.width / 2) + "px"; el.style.top = (r.top) + "px"; el.style.animationDelay = delay + "ms";
+    document.body.appendChild(el); setTimeout(()=>el.remove(), 1400 + delay);
+  };
+  if (xp) mk(`+${xp} XP`, "xp", 0);
+  if (coins) mk(`+${coins} 🪙`, "coin", 180);
+  w.classList.remove("bump"); void w.offsetWidth; w.classList.add("bump");
+}
+function fxLevel(){ if (!S.prof.fx) return; $$("#me, #meTop").forEach(w=>{ w.classList.remove("lvl-up"); void w.offsetWidth; w.classList.add("lvl-up"); }); }
+function fxStreak(){ if (!S.prof.fx) return; $$(".me-fire").forEach(f=>{ f.classList.remove("burst"); void f.offsetWidth; f.classList.add("burst"); }); }
+
+/* --- цель дня на главной --- */
+function dailyHTML(){
+  const n = S.game.day.d === gDay() ? S.game.day.n : 0, done = S.game.streak.last === gDay(), p = Math.min(1, n / 10);
+  return `<div class="daily${done ? " done" : ""}" id="dailyGoal">
+    <div class="dg-ring" style="--p:${(p*100).toFixed(0)}"><span>${done ? "🔥" : Math.min(n,10) + "/10"}</span></div>
+    <div class="dg-tx"><b>${done ? t("dailyDone") : t("dailyH")}</b><span>${done ? t("streakDays", streakNow()) : t("dailySub")}</span></div>
+    <div class="dg-st"><span class="dg-fire">🔥 ${streakNow()}</span><span class="dg-coin">🪙 <b data-coins>${S.game.coins}</b></span></div>
+  </div>`;
+}
+
+/* =========================================================
+   PLATFORM: профиль и аватар, вход/регистрация, онбординг,
+   магазин, оформление, личный кабинет
+   ========================================================= */
+Object.assign(I18N.ru, {
+  shop:"Магазин", shopSub:"Трать монеты на аватарки, рамки, фоны, курсоры и цветовые темы. Монеты дают за правильные ответы, новые уровни и стрик.",
+  shopCats:{emoji:"Аватарки", bg:"Фоны аватарки", frame:"Рамки", theme:"Цветовые темы", pattern:"Фоны страницы", cursor:"Курсоры"},
+  buy:"Купить", buyQ:p=>`Купить за ${p}?`, owned:"Выбрать", equipped:"Выбрано", free:"Бесплатно", needMore:n=>`Не хватает ${n} 🪙`, bought:n=>`Куплено: ${n}`, balance:"Баланс",
+  gateUpH:"Создай аккаунт", gateUpSub:"Почта и пароль — и можно начинать. Прогресс будет на всех твоих устройствах.", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
+  gateLoading:"Загружаем твой прогресс…", gateRetry:"Повторить", gateErr:"Не получилось связаться с сервером. Проверь интернет (и VPN, если он нужен).",
+  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.", obBonus:"Добро пожаловать! Держи 50 🪙 на первые покупки.",
+  accTabs:{acc:["Аккаунт","Имя, аватар, почта и пароль"], set:["Настройки","Язык, обучение и сброс"], prog:["Прогресс","Темы, уровни и контрольные"], look:["Оформление","Тема, цвета и украшения"]},
+  profileH:"Профиль", nameSave:"Сохранить", nameSaved:"Имя сохранено", avatarH:"Аватар", emailL:"Почта", securityH:"Безопасность",
+  langH:"Язык интерфейса", courseH:"Курс по умолчанию", fxH:"Анимации начисления очков", fxOn:"Показывать", fxOff:"Не показывать", newWordsH:"Новых слов в день (Quizlet)", resetH:"Сброс прогресса",
+  themeH:"Тема", themeModes:{light:"Светлая", dark:"Тёмная", system:"Системная"}, paletteH:"Цветовая тема", frameH:"Рамка аватарки", patternH:"Фон страницы", cursorH:"Курсор", toShop:"Больше — в магазине →", locked:"в магазине",
+  levelH:"Уровень и опыт", streakH:"Стрик", bestStreak:n=>`рекорд: ${n}`, bestStreakL:"рекорд стрика", calH:"Активность за 8 недель", courseSw:"Курс",
+  bankL:"Банк заданий"
+});
+Object.assign(I18N.en, {
+  shop:"Shop", shopSub:"Spend coins on avatars, frames, backgrounds, cursors and colour themes. You earn coins for correct answers, new levels and your streak.",
+  shopCats:{emoji:"Avatars", bg:"Avatar backgrounds", frame:"Frames", theme:"Colour themes", pattern:"Page backgrounds", cursor:"Cursors"},
+  buy:"Buy", buyQ:p=>`Buy for ${p}?`, owned:"Use", equipped:"In use", free:"Free", needMore:n=>`${n} 🪙 short`, bought:n=>`Bought: ${n}`, balance:"Balance",
+  gateUpH:"Create your account", gateUpSub:"An e-mail and a password — and you're in. Your progress will be on all your devices.", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
+  gateLoading:"Loading your progress…", gateRetry:"Try again", gateErr:"Couldn't reach the server. Check your internet connection (and VPN if you need one).",
+  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.", obBonus:"Welcome! Here are 50 🪙 for your first purchases.",
+  accTabs:{acc:["Account","Name, avatar, e-mail and password"], set:["Settings","Language, learning and reset"], prog:["Progress","Topics, levels and tests"], look:["Appearance","Theme, colours and extras"]},
+  profileH:"Profile", nameSave:"Save", nameSaved:"Name saved", avatarH:"Avatar", emailL:"E-mail", securityH:"Security",
+  langH:"Interface language", courseH:"Default course", fxH:"Points animations", fxOn:"Show", fxOff:"Hide", newWordsH:"New words per day (Quizlet)", resetH:"Reset progress",
+  themeH:"Theme", themeModes:{light:"Light", dark:"Dark", system:"System"}, paletteH:"Colour theme", frameH:"Avatar frame", patternH:"Page background", cursorH:"Cursor", toShop:"More in the shop →", locked:"in the shop",
+  levelH:"Level and XP", streakH:"Streak", bestStreak:n=>`best: ${n}`, bestStreakL:"best streak", calH:"Activity over 8 weeks", courseSw:"Course",
+  bankL:"Exercise bank"
+});
+
+/* ---------- каталог ---------- */
+const CAT = {
+  emoji:[
+    ...["😀","😎","🙂","🤓","🦊","🐱","🐶","🐻","🌸","⭐","📚","🎧","🍀","🌙","☕","🎨"].map(v=>({id:v, v, p:0})),
+    {id:"🐼", v:"🐼", p:40}, {id:"🐸", v:"🐸", p:40}, {id:"🥐", v:"🥐", p:40}, {id:"🌶️", v:"🌶️", p:40}, {id:"🦋", v:"🦋", p:50}, {id:"🐙", v:"🐙", p:50},
+    {id:"🗼", v:"🗼", p:50}, {id:"🎸", v:"🎸", p:50}, {id:"🦁", v:"🦁", p:60}, {id:"🚀", v:"🚀", p:60}, {id:"💃", v:"💃", p:60}, {id:"🧠", v:"🧠", p:60},
+    {id:"🦖", v:"🦖", p:70}, {id:"🌈", v:"🌈", p:70}, {id:"🦄", v:"🦄", p:80}, {id:"🔥", v:"🔥", p:90}, {id:"👑", v:"👑", p:120}, {id:"🐉", v:"🐉", p:150}, {id:"💎", v:"💎", p:200}
+  ],
+  bg:[
+    {id:"peach", css:"#ffd9c2", p:0}, {id:"mint", css:"#c8f0dc", p:0}, {id:"sky", css:"#cfe3ff", p:0}, {id:"lavender", css:"#e2d6ff", p:0}, {id:"lemon", css:"#fff1b8", p:0}, {id:"rose", css:"#ffd3e1", p:0},
+    {id:"sunset", css:"linear-gradient(135deg,#ff9a8b,#ff6a88 55%,#ffcc70)", p:60}, {id:"ocean", css:"linear-gradient(135deg,#43cbff,#9708cc)", p:60}, {id:"forest", css:"linear-gradient(135deg,#a8e063,#2f9e61)", p:60},
+    {id:"candy", css:"linear-gradient(135deg,#f6d5f7,#fbe9d7 50%,#a1c4fd)", p:80}, {id:"aurora", css:"linear-gradient(135deg,#00c9a7,#845ec2 60%,#ff6f91)", p:90}, {id:"night", css:"radial-gradient(circle at 30% 25%,#5b5fc7,#1b1d3a 70%)", p:100},
+    {id:"gold", css:"linear-gradient(135deg,#fceabb,#f8b500)", p:150}, {id:"rainbow", css:"conic-gradient(from 0deg,#ff6b6b,#ffd93d,#6bcB77,#4d96ff,#c77dff,#ff6b6b)", p:200}
+  ],
+  frame:[
+    {id:"", p:0}, {id:"leaf", p:120}, {id:"silver", p:100}, {id:"gold", p:180}, {id:"sparkle", p:220}, {id:"rainbow", p:250}, {id:"flame", p:300}
+  ],
+  theme:[
+    {id:"", p:0, sw:["#3446d0","#b9520f","#d23466"]},
+    {id:"mint", p:150, sw:["#0f8a6a","#d4f5e9","#ff7a59"]}, {id:"lavender", p:150, sw:["#6c4fd8","#ece6ff","#e05297"]}, {id:"cherry", p:150, sw:["#c2185b","#fde3ec","#ff8a3d"]},
+    {id:"ocean", p:180, sw:["#0b72b9","#dff0ff","#00a3a3"]}, {id:"forest", p:180, sw:["#2e7d32","#e5f4e3","#c77d1a"]}, {id:"midnight", p:220, sw:["#5c6bff","#1a1c3a","#ff6fb5"]}, {id:"gold", p:300, sw:["#a46b00","#fff3d1","#d9480f"]}
+  ],
+  pattern:[{id:"", p:0}, {id:"dots", p:80}, {id:"grid", p:80}, {id:"waves", p:120}, {id:"confetti", p:140}, {id:"stars", p:160}],
+  cursor:[{id:"", p:0}, {id:"dot", p:60}, {id:"heart", p:90}, {id:"star", p:90}, {id:"paw", p:100}, {id:"pen", p:120}]
+};
+const NAMES = {
+  ru:{frame:{"":"Без рамки", leaf:"Листья", silver:"Серебро", gold:"Золото", sparkle:"Искры", rainbow:"Радуга", flame:"Пламя"}, theme:{"":"Как у курса", mint:"Мята", lavender:"Лаванда", cherry:"Вишня", ocean:"Океан", forest:"Лес", midnight:"Полночь", gold:"Золото"}, pattern:{"":"Без узора", dots:"Точки", grid:"Клетка", waves:"Волны", confetti:"Конфетти", stars:"Звёзды"}, cursor:{"":"Обычный", dot:"Точка", heart:"Сердце", star:"Звезда", paw:"Лапка", pen:"Перо"}, bg:{peach:"Персик", mint:"Мята", sky:"Небо", lavender:"Лаванда", lemon:"Лимон", rose:"Роза", sunset:"Закат", ocean:"Океан", forest:"Лес", candy:"Конфета", aurora:"Сияние", night:"Ночь", gold:"Золото", rainbow:"Радуга"}},
+  en:{frame:{"":"No frame", leaf:"Leaves", silver:"Silver", gold:"Gold", sparkle:"Sparkles", rainbow:"Rainbow", flame:"Flame"}, theme:{"":"Course colours", mint:"Mint", lavender:"Lavender", cherry:"Cherry", ocean:"Ocean", forest:"Forest", midnight:"Midnight", gold:"Gold"}, pattern:{"":"No pattern", dots:"Dots", grid:"Grid", waves:"Waves", confetti:"Confetti", stars:"Stars"}, cursor:{"":"Default", dot:"Dot", heart:"Heart", star:"Star", paw:"Paw", pen:"Feather"}, bg:{peach:"Peach", mint:"Mint", sky:"Sky", lavender:"Lavender", lemon:"Lemon", rose:"Rose", sunset:"Sunset", ocean:"Ocean", forest:"Forest", candy:"Candy", aurora:"Aurora", night:"Night", gold:"Gold", rainbow:"Rainbow"}}
+};
+const itemName = (cat, id) => cat === "emoji" ? id : (NAMES[LANG][cat] || {})[id] || id;
+const catItem = (cat, id) => CAT[cat].find(x=>x.id === id);
+const owns = (cat, id) => { const it = catItem(cat, id); return !!it && (it.p === 0 || S.prof.own.includes(cat + ":" + id)); };
+const bgCss = id => (catItem("bg", id) || CAT.bg[0]).css;
+function avHTML(prof, size, override){
+  const p = Object.assign({}, prof, override || {});
+  const emoji = p.emoji || "🙂", fr = p.eq && p.eq.frame ? " fr-" + p.eq.frame : "";
+  return `<span class="av av-${size || "m"}${fr}" style="--avbg:${bgCss(p.bg || "peach")}"><span class="av-e">${emoji}</span></span>`;
+}
+
+/* ---------- оформление: тема, палитра, узор, курсор ---------- */
+const PAL = {
+  mint:{l:["#0f8a6a","#0a6a51","#d7f5ea","#ff7a59","#ffe6df","#f3faf7","#e6f4ee","#d6ece2"], d:["#4fd6ae","#8aeccd","#173a31","#ff9d84","#46261f","#0d1714","#1d2c27","#26392f"]},
+  lavender:{l:["#6c4fd8","#5236b5","#ece6ff","#e05297","#fce4f0","#f6f4fd","#ece8fb","#e1dbf7"], d:["#a995ff","#c8bcff","#2c2457","#ff86bd","#45203a","#121026","#1f1b3d","#29234f"]},
+  cherry:{l:["#c2185b","#960f44","#fde3ec","#ff8a3d","#ffeadb","#fdf5f7","#f9e8ee","#f3d9e2"], d:["#ff7aa8","#ffaac8","#4a1a2c","#ffa66b","#47291a","#1a0f13","#2b1820","#38202a"]},
+  ocean:{l:["#0b72b9","#08568d","#dff0ff","#00a3a3","#d9f6f6","#f2f8fc","#e4f0f8","#d4e6f3"], d:["#5bb6ff","#9ad2ff","#13324d","#3fd6d6","#123a3a","#0b131b","#16222e","#1d2d3c"]},
+  forest:{l:["#2e7d32","#1f5c23","#e5f4e3","#c77d1a","#fbecd6","#f5f9f3","#e8f1e5","#dae8d6"], d:["#7fd283","#aee6b0","#1d3a1f","#f0a64a","#45311a","#0f160f","#1b261b","#233323"]},
+  midnight:{l:["#4f5bd5","#3a44a8","#e6e8ff","#e0559b","#fce3ef","#f4f5fb","#e9ebf7","#dde0f2"], d:["#8b96ff","#b6bdff","#262b5c","#ff6fb5","#471f37","#0b0c1d","#171933","#20234a"]},
+  gold:{l:["#a46b00","#7a5000","#fff1cf","#d9480f","#ffe6d9","#fdfaf2","#f7f0de","#efe4c9"], d:["#ffc94d","#ffdc8a","#40310f","#ff8a5c","#472316","#15120a","#262012","#332b18"]}
+};
+const PAT = {
+  dots:"radial-gradient(color-mix(in srgb,var(--encre) 13%,transparent) 1.4px,transparent 1.6px) 0 0/22px 22px",
+  grid:"linear-gradient(color-mix(in srgb,var(--encre) 7%,transparent) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,color-mix(in srgb,var(--encre) 7%,transparent) 1px,transparent 1px) 0 0/28px 28px",
+  waves:`url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40"><path d="M0 20 Q15 8 30 20 T60 20 T90 20 T120 20" fill="none" stroke="#888" stroke-opacity=".13" stroke-width="2"/></svg>')}") 0 0/120px 40px`,
+  confetti:`url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><g opacity=".22"><rect x="12" y="18" width="10" height="4" rx="2" fill="#ff6b6b" transform="rotate(25 17 20)"/><rect x="80" y="30" width="10" height="4" rx="2" fill="#4d96ff" transform="rotate(-30 85 32)"/><circle cx="45" cy="80" r="3" fill="#ffd93d"/><rect x="100" y="95" width="10" height="4" rx="2" fill="#6bcb77" transform="rotate(60 105 97)"/><circle cx="120" cy="20" r="2.5" fill="#c77dff"/><circle cx="20" cy="120" r="2.5" fill="#ff9f43"/></g></svg>')}") 0 0/140px 140px`,
+  stars:`url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="110" height="110"><g fill="#f5b300" fill-opacity=".25"><path d="M20 10l2.4 5 5.4.7-4 3.7 1 5.3-4.8-2.6-4.8 2.6 1-5.3-4-3.7 5.4-.7z"/><path d="M80 60l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z"/><circle cx="60" cy="25" r="1.6"/><circle cx="25" cy="85" r="1.6"/></g></svg>')}") 0 0/110px 110px`
+};
+const CUR = {
+  dot:['<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="6" fill="#ff7a59" stroke="#fff" stroke-width="2.5"/></svg>', 12, 12],
+  heart:['<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><path d="M13 22s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 21 11c0 6-8 11-8 11z" fill="#ff4d7e" stroke="#fff" stroke-width="2"/></svg>', 13, 6],
+  star:['<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><path d="m13 2 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L13 18.9l-6.6 3.5 1.3-7.4L2.3 9.8l7.4-1z" fill="#ffc83d" stroke="#fff" stroke-width="1.8"/></svg>', 13, 4],
+  paw:['<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#8a5a3c" stroke="#fff" stroke-width="1.5"><ellipse cx="13" cy="17" rx="5.5" ry="4.5"/><circle cx="6" cy="10" r="2.6"/><circle cx="10.5" cy="6" r="2.6"/><circle cx="15.5" cy="6" r="2.6"/><circle cx="20" cy="10" r="2.6"/></svg>', 13, 6],
+  pen:['<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><path d="M3 25 6 16 20 2l6 6-14 14z" fill="#4f5bd5" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M3 25l3-9 3 3z" fill="#1a1f3d"/></svg>', 3, 25]
+};
+function applyLook(){
+  const root = document.documentElement, p = S.prof;
+  if (p.theme === "light" || p.theme === "dark") root.dataset.theme = p.theme; else delete root.dataset.theme;
+  const pal = p.eq.theme && owns("theme", p.eq.theme) ? p.eq.theme : "";
+  if (pal) root.dataset.palette = pal; else delete root.dataset.palette;
+  let css = "";
+  if (pal && PAL[pal]) {
+    const v = (a, dark) => `--encre:${a[0]};--encre-2:${a[1]};--encre-soft:${a[2]};--on-encre:${dark ? a[5] : "#fff"};--marge:${a[3]};--marge-soft:${a[4]};--paper:${a[5]};--tint:${a[6]};--tint-2:${a[7]};` + (dark ? `--sheet:color-mix(in srgb,${a[6]} 70%,${a[5]});` : "");
+    css += `:root[data-palette][data-palette]{${v(PAL[pal].l)}}@media (prefers-color-scheme:dark){:root[data-palette][data-palette]:not([data-theme="light"]){${v(PAL[pal].d, 1)}}}:root[data-palette][data-palette][data-theme="dark"]{${v(PAL[pal].d, 1)}}`;
+  }
+  const pat = p.eq.pattern && owns("pattern", p.eq.pattern) ? p.eq.pattern : "";
+  if (pat) css += `body{background:${PAT[pat]},var(--paper);background-attachment:fixed}`;
+  const cur = p.eq.cursor && owns("cursor", p.eq.cursor) ? CUR[p.eq.cursor] : null;
+  if (cur) { const u = `url("data:image/svg+xml,${encodeURIComponent(cur[0])}") ${cur[1]} ${cur[2]}`; css += `html,html *{cursor:${u},auto!important}html input,html textarea,html [contenteditable]{cursor:text!important}`; }
+  let st = document.getElementById("lookCss"); if (!st) { st = document.createElement("style"); st.id = "lookCss"; document.head.appendChild(st); }
+  st.textContent = css;
+}
+function setProf(patch, quiet){ Object.assign(S.prof, patch); S.prof.at = Date.now(); touch("profile"); applyLook(); paintMe(); if (!quiet) paintAccount(); }
+
+/* ---------- экран входа и онбординг ---------- */
+const gateEl = (() => { const el = document.createElement("div"); el.className = "gate"; el.id = "gate"; el.hidden = true; document.body.appendChild(el); return el; })();
+let GATE = "";
+function gateCheck(){
+  let want = "";
+  if (Cloud.kind === "supabase") {
+    if (!ME) want = Cloud.state === "loading" || !Gate.ready ? "loading" : "auth";
+    else if (!S.prof.name) want = Cloud.be || Cloud.state === "error" ? "onboard" : "loading";
+  } else if (!S.prof.name) want = "onboard";
+  showGate(want);
+}
+const Gate = {ready:false, busy:false};
+function showGate(mode){
+  if (!mode) { if (GATE) { GATE = ""; gateEl.classList.add("out"); document.body.classList.remove("gated"); setTimeout(()=>{ if (!GATE) { gateEl.hidden = true; gateEl.classList.remove("out"); gateEl.innerHTML = ""; } }, 380); route(false); } return; }
+  if (GATE === mode && mode !== "auth") return;
+  if (GATE === "auth" && mode === "auth" && $("#authForm", gateEl)) return;
+  GATE = mode; gateEl.hidden = false; gateEl.classList.remove("out"); document.body.classList.add("gated"); closeNav();
+  const langSw = `<div class="lang-sw gate-lang"><button type="button" data-glang="ru" class="${LANG==="ru"?"on":""}">RU</button><button type="button" data-glang="en" class="${LANG==="en"?"on":""}">EN</button></div>`;
+  const brand = `<div class="gate-brand"><span class="cs-badge cs-fr">FR</span><span class="cs-badge cs-es">ES</span><b>Révisions · Repaso</b></div>`;
+  let body = "";
+  if (mode === "loading") body = `<div class="gate-card center"><span class="spin big"></span><p class="muted">${t("gateLoading")}</p></div>`;
+  else if (mode === "auth") { if (!Auth.touched) Auth.mode = ls.get("edito-seen-auth") ? "in" : "up"; body = `<div class="gate-card">${authHTML()}</div>`; }
+  else if (mode === "onboard") body = onboardHTML();
+  gateEl.innerHTML = `<div class="gate-bg"></div><div class="gate-in">${brand}${langSw}${body}</div>`;
+  $$("[data-glang]", gateEl).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.glang !== LANG) { setLang(b.dataset.glang); const m = GATE; GATE = ""; showGate(m); } }));
+  if (mode === "auth") { wireAuth(); const e = $("#authEmail", gateEl); if (e) setTimeout(()=>e.focus(), 60); }
+  if (mode === "onboard") wireOnboard();
+}
+function onboardHTML(){
+  const d = {emoji: S.prof.emoji || "🙂", bg: S.prof.bg || "peach"};
+  return `<form class="gate-card ob" id="obForm" novalidate>
+    <div class="ob-prev" id="obPrev">${avHTML(S.prof, "xl", d)}</div>
+    <h2>${t("obH")}</h2><p class="auth-sub">${t("obSub")}</p>
+    <label class="fld"><span>${t("obName")}</span><input id="obName" maxlength="30" autocomplete="given-name" placeholder="${esc(t("obNamePh"))}" value="${esc(S.prof.name || "")}"></label>
+    <div class="ob-sec"><span class="ob-l">${t("obBg")}</span><div class="sw-row">${CAT.bg.filter(x=>x.p === 0).map(x=>`<button type="button" class="sw${x.id===d.bg?" on":""}" data-obbg="${x.id}" style="--sw:${x.css}" aria-label="${esc(itemName("bg", x.id))}"></button>`).join("")}</div></div>
+    <div class="ob-sec"><span class="ob-l">${t("obEmoji")}</span><div class="em-grid">${CAT.emoji.filter(x=>x.p === 0).map(x=>`<button type="button" class="em${x.v===d.emoji?" on":""}" data-obem="${x.v}">${x.v}</button>`).join("")}</div></div>
+    <p class="auth-msg" id="obMsg" data-k="err"></p>
+    <button type="submit" class="btn pri auth-go">${t("obGo")} →</button>
+  </form>`;
+}
+function wireOnboard(){
+  const st = {emoji: S.prof.emoji || "🙂", bg: S.prof.bg || "peach"};
+  const prev = () => { $("#obPrev").innerHTML = avHTML(S.prof, "xl", st); };
+  $$("[data-obbg]", gateEl).forEach(b=>b.addEventListener("click", ()=>{ st.bg = b.dataset.obbg; $$("[data-obbg]", gateEl).forEach(x=>x.classList.toggle("on", x===b)); prev(); }));
+  $$("[data-obem]", gateEl).forEach(b=>b.addEventListener("click", ()=>{ st.emoji = b.dataset.obem; $$("[data-obem]", gateEl).forEach(x=>x.classList.toggle("on", x===b)); prev(); }));
+  $("#obForm").addEventListener("submit", e=>{
+    e.preventDefault();
+    const name = $("#obName").value.trim().replace(/\s+/g, " ");
+    if (!name) { $("#obMsg").textContent = t("obNeedName"); $("#obName").focus(); return; }
+    const first = !S.prof.name;
+    setProf({name, emoji: st.emoji, bg: st.bg}, true);
+    buildNav(); gateCheck();
+    if (first) setTimeout(()=>toast(t("obBonus")), 500);
+  });
+  setTimeout(()=>$("#obName").focus(), 60);
+}
+
+/* ---------- магазин ---------- */
+let SHOP_CAT = "emoji", ARMED = "";
+function renderShop(){
+  const cats = Object.keys(CAT);
+  main.innerHTML = `<div class="col" style="max-width:1000px">
+    <header class="t-head seyes shop-head"><div><p class="eyebrow">${t("shop")}</p><h1>${t("shop")}</h1><p class="t-ru">${t("shopSub")}</p></div>
+      <div class="bal"><span class="bal-l">${t("balance")}</span><b>🪙 <span data-coins>${S.game.coins}</span></b></div></header>
+    <div class="shop-tabs" role="tablist">${cats.map(c=>`<button type="button" role="tab" data-scat="${c}" class="${SHOP_CAT===c?"on":""}">${t("shopCats")[c]}</button>`).join("")}</div>
+    <div class="shop-grid" id="shopGrid"></div></div>`;
+  $$("[data-scat]", main).forEach(b=>b.addEventListener("click", ()=>{ SHOP_CAT = b.dataset.scat; ARMED = ""; $$("[data-scat]", main).forEach(x=>x.classList.toggle("on", x===b)); paintShop(); }));
+  paintShop();
+}
+function equippedId(cat){ return cat === "emoji" ? S.prof.emoji : cat === "bg" ? S.prof.bg : S.prof.eq[cat] || ""; }
+function itemPreview(cat, it){
+  if (cat === "emoji") return avHTML(S.prof, "l", {emoji: it.v});
+  if (cat === "bg") return avHTML(S.prof, "l", {bg: it.id});
+  if (cat === "frame") return avHTML(S.prof, "l", {eq: Object.assign({}, S.prof.eq, {frame: it.id})});
+  if (cat === "theme") return `<span class="pal-sw">${it.sw.map(c=>`<i style="background:${c}"></i>`).join("")}</span>`;
+  if (cat === "pattern") return `<span class="pat-sw" style="background:${esc(it.id ? PAT[it.id] + ",var(--paper)" : "var(--paper)")}"></span>`;
+  if (cat === "cursor") return `<span class="cur-sw">${it.id ? CUR[it.id][0] : `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 2v16l4-4 3 6 3-1.5-3-6h5z" fill="var(--ink)" stroke="var(--sheet)" stroke-width="1.5"/></svg>`}</span>`;
+  return "";
+}
+function paintShop(){
+  const g = $("#shopGrid"); if (!g) return;
+  const cat = SHOP_CAT, eq = equippedId(cat);
+  g.innerHTML = CAT[cat].map(it=>{
+    const id = cat === "emoji" ? it.v : it.id, own = owns(cat, it.id), on = eq === id || (!eq && !id && cat !== "emoji" && cat !== "bg"), key = cat + ":" + it.id;
+    let btn;
+    if (on) btn = `<button type="button" class="btn sm sec on" disabled>✓ ${t("equipped")}</button>`;
+    else if (own) btn = `<button type="button" class="btn sm sec" data-use="${esc(key)}">${t("owned")}</button>`;
+    else if (S.game.coins < it.p) btn = `<button type="button" class="btn sm sec poor" disabled>🪙 ${it.p}<small>${t("needMore", it.p - S.game.coins)}</small></button>`;
+    else btn = `<button type="button" class="btn sm pri${ARMED === key ? " armed" : ""}" data-buy="${esc(key)}">${ARMED === key ? t("buyQ", it.p) : "🪙 " + it.p}</button>`;
+    return `<div class="si${on ? " on" : ""}${own ? " own" : ""}"><div class="si-prev">${itemPreview(cat, it)}</div><span class="si-n">${esc(itemName(cat, it.id))}</span>${it.p === 0 ? `<span class="si-free">${t("free")}</span>` : ""}${btn}</div>`;
+  }).join("");
+  $$("[data-use]", g).forEach(b=>b.addEventListener("click", ()=>equip(b.dataset.use)));
+  $$("[data-buy]", g).forEach(b=>b.addEventListener("click", ()=>{
+    const key = b.dataset.buy;
+    if (ARMED !== key) { ARMED = key; paintShop(); clearTimeout(paintShop.tm); paintShop.tm = setTimeout(()=>{ if (ARMED === key) { ARMED = ""; paintShop(); } }, 4000); return; }
+    const [cat, id] = [key.slice(0, key.indexOf(":")), key.slice(key.indexOf(":") + 1)], it = catItem(cat, id);
+    if (!it || S.game.coins < it.p) return;
+    S.game.coins -= it.p; touch("game"); ARMED = "";
+    if (!S.prof.own.includes(key)) S.prof.own.push(key);
+    equip(key, true);
+    toast(t("bought", itemName(cat, id)));
+    const card = b.closest(".si"); if (card) { card.classList.add("pop"); }
+  }));
+}
+function equip(key, silent){
+  const cat = key.slice(0, key.indexOf(":")), id = key.slice(key.indexOf(":") + 1), it = catItem(cat, id);
+  if (cat === "emoji") setProf({emoji: it.v}, true);
+  else if (cat === "bg") setProf({bg: id}, true);
+  else setProf({eq: Object.assign({}, S.prof.eq, {[cat]: id})}, true);
+  paintShop(); if ($("#accLook")) paintLook();
+}
+
+/* ---------- личный кабинет ---------- */
+let ACC_TAB = ls.get("edito-acctab") || "acc", PROG_C = null;
+function renderAccount(){
+  const isSupa = Cloud.kind === "supabase", L = lvlOf(S.game.xp);
+  const tabs = I18N[LANG].accTabs;
+  const ico = {acc:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="7" r="3.5"/><path d="M3.5 17c1.2-3.2 3.6-4.6 6.5-4.6s5.3 1.4 6.5 4.6"/></svg>', set:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h8M15 6h1M4 14h2M9 14h7"/><circle cx="13.5" cy="6" r="1.8"/><circle cx="7.5" cy="14" r="1.8"/></svg>', prog:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 16.5h14M5.5 13V9.5M10 13V5.5M14.5 13V8"/></svg>', look:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3a7 7 0 1 0 0 14c1 0 1.5-.7 1.5-1.4 0-1-.9-1.3-.9-2.2 0-.8.7-1.4 1.6-1.4H14a3 3 0 0 0 3-3C17 5.6 13.9 3 10 3z"/><circle cx="6.5" cy="9" r="1"/><circle cx="9" cy="6.3" r="1"/><circle cx="12.5" cy="6.6" r="1"/></svg>'};
+  main.innerHTML = `<div class="col">
+  <header class="t-head seyes acc-hero">
+    <div class="acc-av">${avHTML(S.prof, "xl")}</div>
+    <div class="acc-id"><p class="eyebrow">${t("accEyebrow")}</p><h1>${esc(S.prof.name || t("guest"))}</h1>
+      <div class="acc-stats"><span class="pill">${t("lvl", L.L)}</span><span class="pill">🔥 ${streakNow()}</span><span class="pill">🪙 <b data-coins>${S.game.coins}</b></span></div>
+      <div class="acc-xp"><span class="me-bar big"><i style="width:${(L.pct*100).toFixed(1)}%"></i></span><small>${t("xpTo", L.cur, L.need)}</small></div></div>
+  </header>
+  ${Auth.recovery && ME ? recoveryHTML() : ""}
+  <div class="acc-tiles" role="tablist">${["acc","set","prog","look"].map(k=>`<button type="button" role="tab" class="acc-tile${ACC_TAB===k?" on":""}" data-tab="${k}" aria-selected="${ACC_TAB===k}"><span class="at-ico">${ico[k]}</span><b>${tabs[k][0]}</b><small>${tabs[k][1]}</small></button>`).join("")}</div>
+  <section class="acc-panel" id="accPanel"></section></div>`;
+  $$("[data-tab]", main).forEach(b=>b.addEventListener("click", ()=>{ ACC_TAB = b.dataset.tab; ls.set("edito-acctab", ACC_TAB); $$("[data-tab]", main).forEach(x=>{ x.classList.toggle("on", x===b); x.setAttribute("aria-selected", x===b); }); paintPanel(); }));
+  wireAuth();
+  paintPanel();
+}
+function paintPanel(){
+  const p = $("#accPanel"); if (!p) return;
+  p.classList.remove("in"); void p.offsetWidth; p.classList.add("in");
+  if (ACC_TAB === "acc") return panelAcc(p);
+  if (ACC_TAB === "set") return panelSet(p);
+  if (ACC_TAB === "prog") return panelProg(p);
+  return panelLook(p);
+}
+function panelAcc(p){
+  const isSupa = Cloud.kind === "supabase";
+  p.innerHTML = `<div class="panel-grid">
+    <div class="pcard"><h3>${t("profileH")}</h3>
+      <label class="fld"><span>${t("obName")}</span><div class="fld-row"><input id="accNameIn" maxlength="30" value="${esc(S.prof.name)}"><button type="button" class="btn sm pri" id="accNameSave">${t("nameSave")}</button></div></label>
+      ${ME && ME.email ? `<div class="kv"><span>${t("emailL")}</span><b>${esc(ME.email)}</b></div>` : ""}
+    </div>
+    <div class="pcard"><h3>${t("avatarH")}</h3>
+      <div class="ob-sec"><span class="ob-l">${t("obEmoji")}</span><div class="em-grid sm">${CAT.emoji.filter(x=>owns("emoji", x.id)).map(x=>`<button type="button" class="em${x.v===S.prof.emoji?" on":""}" data-pem="${x.v}">${x.v}</button>`).join("")}</div></div>
+      <div class="ob-sec"><span class="ob-l">${t("obBg")}</span><div class="sw-row">${CAT.bg.filter(x=>owns("bg", x.id)).map(x=>`<button type="button" class="sw${x.id===S.prof.bg?" on":""}" data-pbg="${x.id}" style="--sw:${x.css}" aria-label="${esc(itemName("bg", x.id))}"></button>`).join("")}</div></div>
+      <a class="lnk" href="#shop">${t("toShop")}</a>
+    </div>
+    ${isSupa && ME ? `<div class="pcard"><h3>${t("securityH")}</h3><div class="cb-btns"><button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button></div></div>` : ""}
+  </div>`;
+  const save = () => { const v = $("#accNameIn").value.trim().replace(/\s+/g, " "); if (!v) return; setProf({name: v}, true); renderAccount(); toast(t("nameSaved")); };
+  $("#accNameSave").addEventListener("click", save);
+  $("#accNameIn").addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); save(); } });
+  $$("[data-pem]", p).forEach(b=>b.addEventListener("click", ()=>{ setProf({emoji: b.dataset.pem}, true); renderAccount(); }));
+  $$("[data-pbg]", p).forEach(b=>b.addEventListener("click", ()=>{ setProf({bg: b.dataset.pbg}, true); renderAccount(); }));
+  const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
+  const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
+}
+function panelSet(p){
+  let armed = "";
+  p.innerHTML = `<div class="panel-grid">
+    <div class="pcard"><h3>${t("langH")}</h3><div class="seg big">${[["ru","Русский"],["en","English"]].map(([k,n])=>`<button type="button" data-lang2="${k}" class="${LANG===k?"on":""}">${n}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("fxH")}</h3><div class="seg big"><button type="button" data-fx="1" class="${S.prof.fx?"on":""}">${t("fxOn")}</button><button type="button" data-fx="0" class="${S.prof.fx?"":"on"}">${t("fxOff")}</button></div></div>
+    <div class="pcard"><h3>${t("newWordsH")}</h3><div class="seg big">${[5,10,15,20,30].map(n=>`<button type="button" data-nw="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
+  </div>`;
+  $$("[data-lang2]", p).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
+  $$("[data-course2]", p).forEach(b=>b.addEventListener("click", ()=>{ setCourse(b.dataset.course2, true); renderAccount(); }));
+  $$("[data-fx]", p).forEach(b=>b.addEventListener("click", ()=>{ setProf({fx: b.dataset.fx === "1"}, true); panelSet(p); }));
+  $$("[data-nw]", p).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.nw; saveQZ(); panelSet(p); }));
+  $$("[data-reset]", p).forEach(b=>b.addEventListener("click", ()=>{
+    const c = b.dataset.reset;
+    if (armed !== c) { armed = c; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed === c) { armed = ""; b.textContent = t("resetCourse", COURSES[c].name); b.classList.remove("armed"); } }, 5000); return; }
+    resetCourse(c); armed = ""; panelSet(p); toast(t("resetDone"));
+  }));
+}
+function resetCourse(c){
+  const ids = c === "es" ? ES_BUILD(LANG).map(x=>x.id) : TOPICS.map(x=>x.id);
+  ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
+  S.tests = S.tests.filter(x=>(x.c||"fr") !== c);
+  if (c === "fr") { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
+  touch("progress"); paintNavProgress();
+}
+function panelProg(p){
+  const c = PROG_C || COURSE, top = c === COURSE ? TOP : (c === "es" ? ES_BUILD(LANG) : (LANG === "en" ? TOPICS_EN : TOPICS));
+  const tests = S.tests.filter(x=>(x.c||"fr") === c), L = lvlOf(S.game.xp);
+  let ex = 0, done = 0, sum = 0, full = 0; top.forEach(tp=>{ const q = topicPct(tp); ex += q.n; done += q.done; sum += q.pct*q.n; if (q.pct >= .995) full++; });
+  const best = tests.reduce((m,x)=>Math.max(m, x.got/(x.total||1)), 0);
+  const today = gDay(), cells = [];
+  const start = dayShift(today, -55 - ((new Date().getDay() + 6) % 7));
+  for (let i = 0; i < 56 + ((new Date().getDay() + 6) % 7) + 1 && cells.length < 63; i++) { const k = dayShift(start, i); if (k > today) break; cells.push([k, S.game.hist[k] || 0]); }
+  p.innerHTML = `<div class="seg big prog-sw">${["fr","es"].map(x=>`<button type="button" data-pc="${x}" class="${c===x?"on":""}">${COURSES[x].name}</button>`).join("")}</div>
+  <div class="kpis">
+    <div class="kpi"><b>${done}<small>/${ex}</small></b><span>${t("stSolved")}</span></div>
+    <div class="kpi"><b>${full}<small>/${top.length}</small></b><span>${t("stTopics")}</span></div>
+    <div class="kpi"><b>${ex ? Math.round(sum/ex*100) : 0}%</b><span>${t("stAvg")}</span></div>
+    <div class="kpi"><b>${tests.length}</b><span>${t("stTests")}</span></div>
+    <div class="kpi"><b>${tests.length ? Math.round(best*100) + "%" : "—"}</b><span>${t("stBest")}</span></div>
+    <div class="kpi"><b>${S.game.streak.best}</b><span>${t("bestStreakL")}</span></div>
+  </div>
+  <div class="panel-grid two">
+    <div class="pcard"><h3>${t("levelH")}</h3><div class="lv-big"><b>${L.L}</b><div><span class="me-bar big"><i style="width:${(L.pct*100).toFixed(1)}%"></i></span><small>${t("xpTo", L.cur, L.need)} · ${t("xpN", S.game.xp)}</small></div></div></div>
+    <div class="pcard"><h3>${t("calH")}</h3><div class="cal">${cells.map(([k,n])=>`<i class="c${n>=10?3:n>=5?2:n?1:0}${k===today?" today":""}" title="${k}: ${n}"></i>`).join("")}</div><small class="muted">${t("streakDays", streakNow())} · ${t("bestStreak", S.game.streak.best)}</small></div>
+  </div>
+  <div class="sec-h"><h2>${t("progressByTopic")}</h2></div>
+  <div class="brk">${top.map(tp=>{ const r = topicPct(tp).pct; return `<div class="brk-r"><a href="#${tp.id}">${tp.title}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(r?4:0, r*100)}%"></i></div><span>${Math.round(r*100)}%</span></div>`; }).join("")}</div>
+  <div class="sec-h"><h2>${t("history")}</h2></div>
+  ${tests.length ? `<ul class="hist">${tests.slice().reverse().map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : `<p class="muted">${t("noTests")}</p>`}`;
+  $$("[data-pc]", p).forEach(b=>b.addEventListener("click", ()=>{ PROG_C = b.dataset.pc; panelProg(p); }));
+}
+function paintLook(){ const p = $("#accPanel"); if (p && ACC_TAB === "look") panelLook(p); }
+function panelLook(p){
+  const row = (cat, title) => `<div class="pcard"><h3>${title}</h3><div class="look-row">${CAT[cat].map(it=>{
+    const own = owns(cat, it.id), on = (S.prof.eq[cat] || "") === it.id;
+    return `<button type="button" class="look-i${on?" on":""}${own?"":" lock"}" ${own ? `data-look="${cat}:${it.id}"` : `data-goshop="${cat}"`} title="${esc(itemName(cat, it.id))}${own ? "" : " · " + t("locked")}">${itemPreview(cat, it)}<span>${esc(itemName(cat, it.id))}</span>${own ? "" : `<em>🪙 ${it.p}</em>`}</button>`; }).join("")}</div></div>`;
+  p.innerHTML = `<div class="pcard"><h3>${t("themeH")}</h3><div class="seg big theme-seg">${["light","dark","system"].map(m=>`<button type="button" data-tm="${m}" class="${S.prof.theme===m?"on":""}">${t("themeModes")[m]}</button>`).join("")}</div></div>
+    <div id="accLook">${row("theme", t("paletteH"))}${row("frame", t("frameH"))}${row("pattern", t("patternH"))}${row("cursor", t("cursorH"))}</div>
+    <a class="lnk" href="#shop">${t("toShop")}</a>`;
+  $$("[data-tm]", p).forEach(b=>b.addEventListener("click", ()=>{ const root = document.documentElement; root.classList.add("theme-anim"); setTimeout(()=>root.classList.remove("theme-anim"), 700); setProf({theme: b.dataset.tm}, true); panelLook(p); }));
+  $$("[data-look]", p).forEach(b=>b.addEventListener("click", ()=>{ const root = document.documentElement; root.classList.add("theme-anim"); setTimeout(()=>root.classList.remove("theme-anim"), 700); equip(b.dataset.look); panelLook(p); }));
+  $$("[data-goshop]", p).forEach(b=>b.addEventListener("click", ()=>{ SHOP_CAT = b.dataset.goshop; location.hash = "shop"; }));
+}
+
+/* =========================================================
+   STUDY: банк заданий, карточный режим темы, «?» в пробной
+   ========================================================= */
+Object.assign(I18N.ru, {
+  bank:"Банк заданий", bankSub:"Все задания с выбором ответа и вводом в одном месте. Выбери темы и количество — и тренируйся сколько хочешь.",
+  bankTopics:"Темы", bankAll:"Все", bankNone:"Снять все", bankCount:"Сколько заданий", bankMode:"Порядок", bankByTopic:"По темам", bankMix:"Вперемешку", bankGo:"Начать", bankAvail:n=>`доступно: ${n}`,
+  bankPick:"Выбери хотя бы одну тему.", bankQ:(i,n)=>`Задание ${i} из ${n}`, bankNext:"Дальше", bankEnterHint:"Enter — проверить", bankEnterNext:"Enter — дальше", bankFinish:"Результат",
+  bankDoneH:(g,n)=>`${g} из ${n} верно`, bankRetry:n=>`Повторить ошибки (${n})`, bankNew:"Новый набор", bankBack:"К настройкам", bankFrom:"Из темы",
+  deckOn:"Режим карточек", deckOff:"Обычный режим", deckGo:"К заданиям", deckOf:(i,n)=>`${i} / ${n}`, deckKeys:"← → или свайп — листать · Esc — обычный режим",
+  lexCal:"Календарь", tfEs:["Verdadero — верно","Falso — неверно"], tfLbl:"Verdadero o falso",
+  practiceSub:"Практика по теме. Впиши или выбери ответ — проверка по Enter. После ответа можно открыть «?» с объяснением.",
+  qzSub:"Карточки со словами из юнитов 0–2.",
+  listenHint:"Пиши цифры и нажми Enter"
+});
+Object.assign(I18N.en, {
+  bank:"Exercise bank", bankSub:"All the multiple-choice and type-in tasks in one place. Pick topics and how many — and practise as much as you like.",
+  bankTopics:"Topics", bankAll:"All", bankNone:"Clear", bankCount:"How many", bankMode:"Order", bankByTopic:"By topic", bankMix:"Mixed", bankGo:"Start", bankAvail:n=>`available: ${n}`,
+  bankPick:"Pick at least one topic.", bankQ:(i,n)=>`Task ${i} of ${n}`, bankNext:"Next", bankEnterHint:"Enter — check", bankEnterNext:"Enter — next", bankFinish:"Results",
+  bankDoneH:(g,n)=>`${g} of ${n} correct`, bankRetry:n=>`Retry mistakes (${n})`, bankNew:"New set", bankBack:"Back to settings", bankFrom:"Topic",
+  deckOn:"Card mode", deckOff:"Normal mode", deckGo:"Go to exercises", deckOf:(i,n)=>`${i} / ${n}`, deckKeys:"← → or swipe to browse · Esc — normal mode",
+  lexCal:"Calendar", tfEs:["Verdadero — true","Falso — false"], tfLbl:"Verdadero o falso",
+  practiceSub:"Practice for this topic. Type or pick an answer — press Enter to check. After answering you can open “?” for an explanation.",
+  qzSub:"Flashcards with the words from units 0–2.",
+  listenHint:"Type the digits and press Enter"
+});
+function tfOpts(){ return COURSE === "es" ? t("tfEs") : [t("vrai"), t("faux")]; }
+function exLabel(ex){ return ex.t === "tf" && COURSE === "es" ? t("tfLbl") : t("label")[ex.t]; }
+
+/* правило для вопроса из банка пробной: берём «почему» первого похожего задания темы */
+function poolRule(q){
+  const tp = byId[q.tp]; if (!tp || !WHY[tp.id]) return "";
+  const want = q.o ? ["mc","tf"] : ["fill","conj"];
+  let i = tp.ex.findIndex(x=>want.includes(x.t)); if (i < 0) i = 0;
+  return ruleFor(tp.id, i);
+}
+
+/* ---------- банк заданий ---------- */
+function bankItems(){
+  const out = [];
+  TOP.forEach(tp=>{
+    tp.ex.forEach((ex, ei)=>{
+      if (!["mc","tf","fill","conj"].includes(ex.t)) return;
+      if (/тексту|по тексту|the text|текст[ае]? выше/i.test(ex.h || "")) return;
+      if (ex.t === "mc" || ex.t === "tf") ex.items.forEach((it, k)=>out.push({tid:tp.id, base:tp.id + "|" + ei, k, q:it.q, o: ex.t === "tf" ? tfOpts() : it.o, a: ex.t === "tf" ? (it.a ? 0 : 1) : it.a, keep: ex.t === "tf", e:it.e || "", rule:ruleFor(tp.id, ei), h:ex.h}));
+      else if (ex.t === "fill") ex.items.forEach((it, k)=>out.push({tid:tp.id, base:tp.id + "|" + ei, k, q:it.q, a:it.a, e:it.e || "", rule:ruleFor(tp.id, ei), h:ex.h}));
+      else { let k = 0; ex.items.forEach(it=>it.f.forEach((f, j)=>{ out.push({tid:tp.id, base:tp.id + "|" + ei, k:k++, q:`<span class="fr">${it.v}</span> · ${it.p[j]} ___`, a:[f], e:"", rule:ruleFor(tp.id, ei), h:ex.h, conj:1}); })); }
+    });
+  });
+  POOLX.forEach((q, k)=>{ if (byId[q.tp]) out.push({tid:q.tp, base:"P|" + COURSE, k, q:q.q, o:q.o, a:q.a, e:q.e || "", rule:poolRule(q)}); });
+  return out;
+}
+const BK = (() => { let o = {}; try { o = JSON.parse(ls.get("edito-bank") || "{}") || {}; } catch(e) {} return o; })();
+function bankCfg(){ const c = BK[COURSE] || (BK[COURSE] = {sel:null, n:20, mix:true}); return c; }
+const bankSave = () => ls.set("edito-bank", JSON.stringify(BK));
+let BANK = null;
+function renderBank(){
+  const cfg = bankCfg(), items = bankItems(), cnt = {};
+  items.forEach(x=>{ cnt[x.tid] = (cnt[x.tid] || 0) + 1; });
+  const tops = ORDER.filter(tp=>cnt[tp.id]);
+  if (!cfg.sel) cfg.sel = tops.map(x=>x.id);
+  const es = COURSE === "es";
+  const groups = [];
+  const units = es ? ["1","2","3"] : ["0","1","2"];
+  units.forEach(u=>{ const g = tops.filter(x=>x.sec === "book" && x.unit === u); if (g.length) groups.push([`${es ? t("unitWes") : t("unitW")} ${u}`, g]); });
+  const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
+  const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);
+  main.innerHTML = `<div class="col" style="max-width:980px">
+  <header class="t-head seyes"><p class="eyebrow">${COURSES[COURSE].name} · ${COURSES[COURSE].book}</p><h1>${t("bank")}</h1><p class="t-ru">${t("bankSub")}</p></header>
+  <div class="bank-set">
+    <div class="pcard"><div class="bank-h"><h3>${t("bankTopics")}</h3><span><button type="button" class="chip-t" id="bkAll">${t("bankAll")}</button><button type="button" class="chip-t" id="bkNone">${t("bankNone")}</button></span></div>
+      ${groups.map(([name, g])=>`<div class="bank-g"><button type="button" class="bank-gh" data-grp="${esc(g.map(x=>x.id).join(","))}">${name}</button><div class="tchips">${g.map(tp=>`<button type="button" class="tchip${cfg.sel.includes(tp.id) ? " on" : ""}" data-tp="${tp.id}">${tp.title}<small>${cnt[tp.id]}</small></button>`).join("")}</div></div>`).join("")}
+    </div>
+    <div class="bank-row">
+      <div class="pcard"><h3>${t("bankCount")}</h3><div class="seg big">${[10,20,30,50].map(n=>`<button type="button" data-bn="${n}" class="${cfg.n===n?"on":""}">${n}</button>`).join("")}</div></div>
+      <div class="pcard"><h3>${t("bankMode")}</h3><div class="seg big"><button type="button" data-mix="0" class="${cfg.mix?"":"on"}">${t("bankByTopic")}</button><button type="button" data-mix="1" class="${cfg.mix?"on":""}">${t("bankMix")}</button></div></div>
+    </div>
+    <div class="bank-go"><span class="muted" id="bkAvail"></span><p class="auth-msg" id="bkMsg" data-k="err"></p><button type="button" class="btn pri" id="bkGo">${t("bankGo")} →</button></div>
+  </div></div>`;
+  const avail = () => { const n = cfg.sel.reduce((s, id)=>s + (cnt[id] || 0), 0); $("#bkAvail").textContent = t("bankAvail", n); $("#bkGo").disabled = !n; };
+  const paint = () => { $$("[data-tp]", main).forEach(b=>b.classList.toggle("on", cfg.sel.includes(b.dataset.tp))); avail(); bankSave(); };
+  $$("[data-tp]", main).forEach(b=>b.addEventListener("click", ()=>{ const id = b.dataset.tp; cfg.sel = cfg.sel.includes(id) ? cfg.sel.filter(x=>x!==id) : [...cfg.sel, id]; paint(); }));
+  $$("[data-grp]", main).forEach(b=>b.addEventListener("click", ()=>{ const ids = b.dataset.grp.split(","); const all = ids.every(id=>cfg.sel.includes(id)); cfg.sel = all ? cfg.sel.filter(x=>!ids.includes(x)) : [...new Set([...cfg.sel, ...ids])]; paint(); }));
+  $("#bkAll").addEventListener("click", ()=>{ cfg.sel = tops.map(x=>x.id); paint(); });
+  $("#bkNone").addEventListener("click", ()=>{ cfg.sel = []; paint(); });
+  $$("[data-bn]", main).forEach(b=>b.addEventListener("click", ()=>{ cfg.n = +b.dataset.bn; $$("[data-bn]", main).forEach(x=>x.classList.toggle("on", x===b)); bankSave(); }));
+  $$("[data-mix]", main).forEach(b=>b.addEventListener("click", ()=>{ cfg.mix = b.dataset.mix === "1"; $$("[data-mix]", main).forEach(x=>x.classList.toggle("on", x===b)); bankSave(); }));
+  $("#bkGo").addEventListener("click", ()=>{
+    if (!cfg.sel.length) { $("#bkMsg").textContent = t("bankPick"); return; }
+    const pool = items.filter(x=>cfg.sel.includes(x.tid));
+    /* поровну из каждой темы, потом добираем */
+    const by = {}; pool.forEach(x=>(by[x.tid] = by[x.tid] || []).push(x)); Object.values(by).forEach(shuffle);
+    const ids = shuffle(Object.keys(by)), pick = [];
+    while (pick.length < Math.min(cfg.n, pool.length)) { let add = false; for (const id of ids) if (by[id].length && pick.length < cfg.n) { pick.push(by[id].pop()); add = true; } if (!add) break; }
+    const ord = id => ORDER.findIndex(x=>x.id === id);
+    if (cfg.mix) shuffle(pick); else pick.sort((a, b)=>ord(a.tid) - ord(b.tid));
+    bankRun(pick);
+  });
+  avail();
+}
+function bankRun(list){
+  BANK = {list: list.map(x=>x.o ? Object.assign({}, x, {oo: x.keep ? x.o.map((o, j)=>({o, j})) : shuffle(x.o.map((o, j)=>({o, j})))}) : x), i:0, res:[]};
+  main.innerHTML = `<div class="col bank-run" style="max-width:760px">
+    <div class="bank-top"><button type="button" class="chip-t" id="bkBack">← ${t("bankBack")}</button><span class="bank-ctr" id="bkCtr"></span></div>
+    <div class="bank-prog"><i id="bkBar"></i></div>
+    <section class="exb bank-card" id="bkCard"></section></div>`;
+  $("#bkBack").addEventListener("click", ()=>renderBank());
+  bankStep();
+}
+function bankStep(){
+  const B = BANK, card = $("#bkCard"); if (!card) return;
+  if (B.i >= B.list.length) return bankDone();
+  const it = B.list[B.i], tp = byId[it.tid], n = B.list.length;
+  $("#bkCtr").textContent = t("bankQ", B.i + 1, n);
+  $("#bkBar").style.width = (B.i / n * 100) + "%";
+  const inp = `<input class="ans${it.conj ? "" : " wide"}" ${inputAttrs} aria-label="answer">`;
+  const qh = it.o ? `<p class="q">${qhtml(it.q)}</p><div class="opts">${it.oo.map(x=>`<button type="button" class="opt" data-j="${x.j}">${x.o}</button>`).join("")}</div>` : `<p class="fillq">${it.q.includes("___") ? it.q.replace("___", inp).replace(/___/g, "…") : `${it.q} ${inp}`}</p>`;
+  card.innerHTML = `<header class="exb-h"><span class="exb-n">${B.i + 1}</span><div><span class="exb-k">${t("bankFrom")}: <a href="#${tp.id}">${tp.title}</a></span>${it.h ? `<h4>${it.h}</h4>` : ""}</div></header>
+    <div class="exb-b">${it.o ? "" : accBar()}<div class="it">${qh}<div class="fb" hidden></div></div></div>
+    <footer class="exb-f"><span class="exb-score muted" id="bkHint">${it.o ? "" : t("bankEnterHint")}</span><div class="exb-btns"><button type="button" class="btn pri" id="bkNext" hidden>${B.i + 1 < n ? t("bankNext") : t("bankFinish")} →</button></div></footer>`;
+  card.classList.remove("in"); void card.offsetWidth; card.classList.add("in");
+  const fb = $(".fb", card), nextB = $("#bkNext");
+  let done = false;
+  const finish = (st, answer) => {
+    done = true; B.res[B.i] = st === "ok" || st === "acc";
+    gameAnswer(it.base, it.k, st === "empty" ? "bad" : st);
+    fb.hidden = false;
+    fb.innerHTML = (it.o ? (st === "ok" ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${it.o[it.a]}</span>`) : fbHtml(st, it.a)) + whyHTML(answer, it.e, it.rule);
+    nextB.hidden = false; $("#bkHint").textContent = t("bankEnterNext");
+    setTimeout(()=>nextB.focus({preventScroll:true}), 30);
+  };
+  nextB.addEventListener("click", ()=>{ B.i++; bankStep(); });
+  if (it.o) {
+    $$(".opt", card).forEach(b=>b.addEventListener("click", ()=>{
+      if (done) return; const j = +b.dataset.j, ok = j === it.a;
+      $$(".opt", card).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
+      finish(ok ? "ok" : "bad", it.o[it.a]);
+    }));
+  } else {
+    const el = $(".ans", card);
+    el.setAttribute("enterkeyhint", "done");
+    el.addEventListener("keydown", e=>{
+      if (e.key !== "Enter") return; e.preventDefault();
+      if (done) { nextB.click(); return; }
+      const st = judge(el.value, it.a); if (st === "empty") return;
+      el.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad"); el.readOnly = true;
+      finish(st, it.a[0]);
+    });
+    setTimeout(()=>el.focus({preventScroll:true}), 60);
+  }
+}
+function bankDone(){
+  const B = BANK, got = B.res.filter(Boolean).length, n = B.list.length, wrong = B.list.filter((_, i)=>!B.res[i]);
+  $("#bkBar").style.width = "100%"; $("#bkCtr").textContent = "";
+  const r = n ? got / n : 0;
+  $("#bkCard").innerHTML = `<div class="bank-done"><div class="note20">${Math.round(r * 100)}<small>%</small></div><h2>${praise(r)}</h2><p>${t("bankDoneH", got, n)}</p>
+    <div class="btns">${wrong.length ? `<button type="button" class="btn pri" id="bkRetry">${t("bankRetry", wrong.length)}</button>` : ""}<button type="button" class="btn ${wrong.length ? "sec" : "pri"}" id="bkNew">${t("bankNew")}</button></div></div>`;
+  const rt = $("#bkRetry"); if (rt) rt.addEventListener("click", ()=>bankRun(shuffle(wrong.slice())));
+  $("#bkNew").addEventListener("click", ()=>renderBank());
+}
+
+/* ---------- карточный режим темы ---------- */
+let DECK = null;
+const deckPref = () => ls.get("edito-deck") === "1";
+const ICO_DECK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4.5" y="5" width="11" height="12" rx="2"/><path d="M6.5 3h8a2 2 0 0 1 2 2v9"/></svg>';
+const ICO_LIST = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 5.5h12M4 10h12M4 14.5h8"/></svg>';
+function deckToggleHTML(){ const on = deckPref(); return `<button type="button" class="deck-tg${on ? " on" : ""}" id="deckTg" aria-pressed="${on}" title="${esc(on ? t("deckOff") : t("deckOn"))}" aria-label="${esc(on ? t("deckOff") : t("deckOn"))}">${on ? ICO_LIST : ICO_DECK}</button>`; }
+function deckToggle(){ const on = !deckPref(); ls.set("edito-deck", on ? "1" : "0"); paintDeckTg(); if (on && DECK_TP) openDeck(DECK_TP); else closeDeck(); }
+function paintDeckTg(){ const b = $("#deckTg"); if (!b) return; b.outerHTML = deckToggleHTML(); $("#deckTg").addEventListener("click", deckToggle); }
+function wireDeck(tp){ DECK_TP = tp; paintDeckTg(); if (deckPref()) openDeck(tp); }
+let DECK_TP = null;
+function deckCards(tp){
+  const tmp = document.createElement("div"); tmp.innerHTML = tp.theory;
+  const cards = []; let cur = [];
+  [...tmp.childNodes].forEach(n=>{
+    if (n.nodeType === 1 && /^H[23]$/.test(n.tagName) && cur.some(x=>x.nodeType === 1 || (x.textContent || "").trim())) { cards.push(cur); cur = []; }
+    cur.push(n);
+  });
+  if (cur.length) cards.push(cur);
+  return cards.map(nodes=>{ const d = document.createElement("div"); nodes.forEach(x=>d.appendChild(x)); return d.innerHTML; });
+}
+function openDeck(tp){
+  closeDeck(true);
+  DECK_TP = tp;
+  const parts = deckCards(tp), es = COURSE === "es";
+  const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const cards = [`<div class="dk-intro"><p class="eyebrow">${eb}</p><h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p></div>`, ...parts.map(h=>`<div class="theory">${h}</div>`),
+    `<div class="dk-end"><div class="dk-end-i">✓</div><h2>${tp.title}</h2><p class="muted">${t("toPractice", tp.ex.length).replace(/\s*↓/, "")}</p><button type="button" class="btn pri" data-dk-go>${t("deckGo")} →</button></div>`];
+  const el = document.createElement("div"); el.className = "deck"; el.id = "deck";
+  el.innerHTML = `<div class="dk-top"><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>
+    <div class="dk-stage">${cards.map((c, i)=>`<article class="dk-card" data-i="${i}" ${i ? "hidden" : ""}><div class="dk-in">${c}</div></article>`).join("")}</div>
+    <div class="dk-nav"><button type="button" class="dk-arr" data-dk="-1" aria-label="←">←</button><div class="dk-dots">${cards.map((_, i)=>`<i data-dot="${i}"></i>`).join("")}</div><button type="button" class="dk-arr" data-dk="1" aria-label="→">→</button></div>
+    <p class="dk-keys">${t("deckKeys")}</p>`;
+  document.body.appendChild(el); document.body.classList.add("deck-open");
+  DECK = {el, i:0, n:cards.length};
+  const go = (i, dir) => {
+    if (i < 0 || i >= DECK.n || i === DECK.i && !dir) return;
+    const cs = $$(".dk-card", el), from = cs[DECK.i], to = cs[i], fw = i > DECK.i;
+    if (from !== to) { from.classList.remove("in", "fw", "bw"); from.hidden = true; }
+    to.hidden = false; to.classList.remove("in", "fw", "bw"); void to.offsetWidth; to.classList.add("in", fw ? "fw" : "bw");
+    to.scrollTop = 0; DECK.i = i;
+    $("#dkCtr").textContent = t("deckOf", i + 1, DECK.n);
+    $$("[data-dot]", el).forEach((d, k)=>d.classList.toggle("on", k === i));
+    $('[data-dk="-1"]', el).disabled = i === 0; $('[data-dk="1"]', el).disabled = i === DECK.n - 1;
+  };
+  DECK.go = go;
+  el.addEventListener("click", e=>{
+    const a = e.target.closest("[data-dk]"); if (a) return go(DECK.i + +a.dataset.dk);
+    const d = e.target.closest("[data-dot]"); if (d) return go(+d.dataset.dot);
+    if (e.target.closest("[data-dk-x]")) { ls.set("edito-deck", "0"); paintDeckTg(); return closeDeck(); }
+    if (e.target.closest("[data-dk-go]")) { closeDeck(); const p = $("#practice"); if (p) setTimeout(()=>p.scrollIntoView({behavior:"smooth"}), 60); }
+  });
+  let sx = null, sy = null;
+  el.addEventListener("touchstart", e=>{ const p = e.touches[0]; sx = p.clientX; sy = p.clientY; }, {passive:true});
+  el.addEventListener("touchend", e=>{ if (sx == null) return; const p = e.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy; sx = null; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && !(window.getSelection() + "").trim()) go(DECK.i + (dx < 0 ? 1 : -1)); }, {passive:true});
+  go(0, 1);
+  requestAnimationFrame(()=>el.classList.add("open"));
+}
+function closeDeck(now){
+  if (!DECK) return; const el = DECK.el; DECK = null; document.body.classList.remove("deck-open");
+  if (now) { el.remove(); return; }
+  el.classList.remove("open"); el.classList.add("closing"); setTimeout(()=>el.remove(), 320);
+}
+document.addEventListener("keydown", e=>{
+  if (!DECK) return;
+  if (/INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || "")) return;
+  if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); DECK.go(DECK.i + 1); }
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); DECK.go(DECK.i - 1); }
+  else if (e.key === "Escape") { ls.set("edito-deck", "0"); paintDeckTg(); closeDeck(); }
+});
+
+
+
+/* =========================================================
    router
    ========================================================= */
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico"].includes(h) ? h : "home";
-  $$(".nav a.nl, .nav a.acct").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
+  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank","shop"].includes(h) ? h : "home";
+  $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
 }
 function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
   if (synth) try { synth.cancel(); } catch(e) {}
   if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
-  clearInterval(qzTimer);
+  clearInterval(qzTimer); closeDeck(true);
   /* ссылка ведёт в другой курс — переключаемся */
   let want = null;
   if (h === "quizlet" || h === "shpargalka" || FR_IDS.has(h)) want = "fr";
@@ -8146,6 +9552,8 @@ function route(keepScroll){
   else if (h === "quizlet") renderQuizlet();
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
+  else if (h === "bank") renderBank();
+  else if (h === "shop") renderShop();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
@@ -8154,8 +9562,11 @@ function route(keepScroll){
 function rerender(){ route(true); }
 window.addEventListener("hashchange", ()=>route(false));
 $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav");
-buildNav(); route(false); updSrsBadge(); setInterval(updSrsBadge, 60000);
+applyLook(); buildNav(); route(false); updSrsBadge(); setInterval(updSrsBadge, 60000);
+gateCheck();
 if (Cloud.kind !== "supabase") initCloud();
+else setTimeout(()=>{ if (!Gate.ready) { Gate.ready = true; initCloud(); } }, 12000);
+setInterval(()=>{ if (S.game.day.d && S.game.day.d !== gDay()) paintMe(); }, 60000);
 })();
 
 </script>
