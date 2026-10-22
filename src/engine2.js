@@ -14,6 +14,8 @@ const ICO = {
   cheat:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M10 4v12M3 8.5h14M3 12h14"/></svg>',
   side:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3.5" width="14" height="13" rx="2.5"/><path d="M8 3.5v13"/></svg>',
   star:'<svg viewBox="0 0 20 20"><path d="m10 2.8 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></svg>',
+  lex:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H16v12H5.5A1.5 1.5 0 0 0 4 16.5z"/><path d="M4 16.5A1.5 1.5 0 0 0 5.5 18H16v-3M7.5 7h5M7.5 10h3.5"/></svg>',
+  check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10.5 3.2 3.2L15 6.8"/></svg>',
   cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>'
 };
 
@@ -169,16 +171,69 @@ en:{
   qzMatchHint:"Find the pairs: the French word and its translation. The timer starts on your first click.", qzMatchDone:s=>`Done in ${s} s`, qzBest:s=>`best: ${s} s`, qzPlayAgain:"Play again",
   qzList:"Words in this set", qzStar:"star this word", qzSay:"pronounce", qzLvShort:["new","learning","almost","known"]
 }};
+
+/* --- второй курс (испанский) + упрощённый кабинет --- */
+Object.assign(I18N.ru, {
+  stLex:"слов в лексике", courseLabel:"Язык курса", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
+  lexSearch:"Найти слово…", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
+  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
+  esHow:[["Темы по юнитам","Сначала объяснение, потом задания под ним."],["Спряжение","Окончания -ar, -er, -ir и главные неправильные глаголы."],["Лексика","Все слова с переводом и примерами. Скрой перевод и проверь себя."],["Пробная контрольная","Реши несколько вариантов, пока не будет стабильно 80% и выше."]],
+  esBookSub:"Unidades 1–3, p. 14–56", esStart:"Начать с первой темы",
+  esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
+  esVerdicts:[["¡Excelente!","Ты готов(а) к контрольной."],["¡Muy bien!","Хорошо, но некоторые темы стоит повторить — они внизу."],["Aprobado","Неплохо, но повтори темы с красными полосками."],["A repasar","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
+  practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
+  tipTtsEs:"Нажимай на испанский текст с пунктиром — компьютер прочитает его с испанским произношением.",
+  dirFr:()=>`${COURSE==="es"?"ES":"FR"} → RU`, dirRu:()=>`RU → ${COURSE==="es"?"ES":"FR"}`,
+  cloud:{local:"Только в этом браузере", loading:"Подключаюсь…", saved:"Всё сохранено", saving:"Сохраняю…", error:"Нет связи — сохраню позже", readonly:"Сохраняю в браузере", signedout:"Войди, чтобы сохранять"},
+  authInH:"С возвращением!", authUpH:"Создай аккаунт", authResetH:"Восстановить пароль",
+  authInSub:"Войди — и прогресс будет одинаковым на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль от 6 символов.", authResetSub:"Пришлём на почту ссылку, чтобы задать новый пароль.",
+  authNoAcc:"Нет аккаунта?", authCreate:"Создать", authHaveAcc:"Уже есть аккаунт?", authLogin:"Войти", authForgot:"Забыли пароль?", authBack:"← Назад ко входу",
+  authNote:"Всё, что ты уже сделал без входа, сохранится в аккаунте.",
+  accSaved:"Прогресс сохраняется автоматически — на всех устройствах, где ты вошёл.", accOffline:"Нет связи с сервером. Ничего не потеряется: всё сохранится, когда связь вернётся.", accLocal:"Прогресс сохраняется в этом браузере.", retry:"Повторить",
+  accFor:c=>`Прогресс · ${c}`, resetCourse:c=>`Сбросить прогресс: ${c}`,
+  saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
+});
+Object.assign(I18N.en, {
+  stLex:"words in the vocabulary", courseLabel:"Course language", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
+  lexSearch:"Find a word…", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
+  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
+  esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Mock test","Do a few versions until you consistently get 80% or more."]],
+  esBookSub:"Unidades 1–3, p. 14–56", esStart:"Start with the first topic",
+  esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–3 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
+  esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
+  practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
+  tipTtsEs:"Click Spanish text with a dotted underline and the computer will read it with Spanish pronunciation.",
+  dirFr:()=>`${COURSE==="es"?"ES":"FR"} → EN`, dirRu:()=>`EN → ${COURSE==="es"?"ES":"FR"}`,
+  cloud:{local:"This browser only", loading:"Connecting…", saved:"All saved", saving:"Saving…", error:"Offline — will save later", readonly:"Saving in this browser", signedout:"Sign in to save"},
+  authInH:"Welcome back!", authUpH:"Create an account", authResetH:"Reset your password",
+  authInSub:"Sign in and your progress will be the same on your phone and computer.", authUpSub:"All you need is an e-mail and a password (6+ characters).", authResetSub:"We’ll e-mail you a link to set a new password.",
+  authNoAcc:"No account yet?", authCreate:"Create one", authHaveAcc:"Already have an account?", authLogin:"Sign in", authForgot:"Forgot your password?", authBack:"← Back to sign in",
+  authNote:"Whatever you’ve done without signing in will be kept in your account.",
+  accSaved:"Your progress is saved automatically — on every device where you’re signed in.", accOffline:"Can’t reach the server. Nothing will be lost: everything is saved once the connection is back.", accLocal:"Progress is saved in this browser.", retry:"Try again",
+  accFor:c=>`Progress · ${c}`, resetCourse:c=>`Reset progress: ${c}`,
+  saveNudge:"Sign in to keep your progress on every device", saveNudgeBtn:"Sign in"
+});
+
 let LANG = ls.get("edito-lang") === "en" ? "en" : "ru";
+let COURSE = ls.get("edito-course") === "es" ? "es" : "fr";
+const COURSES = {fr:{code:"FR", name:"Français", book:"Édito A1"}, es:{code:"ES", name:"Español", book:"Aula 1"}};
+const FR_IDS = new Set(TOPICS.map(x=>x.id));
+const ES_CACHE = {};
+const OKW = () => COURSE === "es" ? "¡Correcto!" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
-let TOP, BOOK, REF, ORDER, byId, POOLX, CHEATX;
+let TOP, BOOK, GRAM, REF, ORDER, byId, POOLX, CHEATX;
 function setData(){
-  TOP = LANG === "en" ? TOPICS_EN : TOPICS;
-  BOOK = TOP.filter(x=>x.sec==="book"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...REF];
+  if (COURSE === "es") {
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG)});
+    TOP = c.top; POOLX = c.pool; CHEATX = "";
+  } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
+  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
-  POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT;
   document.documentElement.lang = LANG;
+  document.documentElement.dataset.course = COURSE;
 }
 setData();
 
@@ -230,7 +285,7 @@ async function supaBackend(){
 }
 function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
-  if (key === "settings") return {lang:LANG, ts:S.ts.settings||0};
+  if (key === "settings") return {lang:LANG, course:COURSE, ts:S.ts.settings||0};
   if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
   return null;
@@ -274,7 +329,7 @@ window.addEventListener("pagehide", ()=>{ if (Cloud.dirty.size) flush(); });
 function hasData(k){
   if (k === "progress") return Object.keys(S.p).length || S.tests.length;
   if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length;
-  if (k === "settings") return LANG !== "ru";
+  if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
   if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
   return false;
 }
@@ -310,11 +365,11 @@ async function initCloudRun(){
         const seen = new Set(S.tests.map(x=>x.d + "|" + x.got + "|" + x.total));
         (v.tests || []).forEach(x=>{ const key = x.d + "|" + x.got + "|" + x.total; if (!seen.has(key)) { S.tests.push(x); seen.add(key); changed = true; } });
         if (S.tests.length > (v.tests || []).length) up = true;
-        S.tests.sort((a,b)=>(a.at||0)-(b.at||0)); S.tests = S.tests.slice(-30);
+        S.tests.sort((a,b)=>(a.at||0)-(b.at||0)); S.tests = S.tests.slice(-60);
         if (up) Cloud.dirty.add("progress");
         S.ts.progress = Math.max(lt, ct);
       } else if (ct > lt) {
-        if (k === "settings" && (v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; }
+        if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
         else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
         S.ts[k] = ct; changed = true;
@@ -404,13 +459,15 @@ function topicPct(tp){ const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEa
    speech
    ========================================================= */
 const synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
-let frVoice = null;
-function pickVoice(){ try { const vs = synth.getVoices(); frVoice = vs.find(v=>/^fr[-_]FR/i.test(v.lang) && /Thomas|Amélie|Audrey|Aurélie|Marie|Google/i.test(v.name)) || vs.find(v=>/^fr[-_]FR/i.test(v.lang)) || vs.find(v=>/^fr/i.test(v.lang)) || null; } catch(e) {} }
+let frVoice = null, esVoice = null;
+function pickVoice(){ try { const vs = synth.getVoices();
+  frVoice = vs.find(v=>/^fr[-_]FR/i.test(v.lang) && /Thomas|Amélie|Audrey|Aurélie|Marie|Google/i.test(v.name)) || vs.find(v=>/^fr[-_]FR/i.test(v.lang)) || vs.find(v=>/^fr/i.test(v.lang)) || null;
+  esVoice = vs.find(v=>/^es[-_]ES/i.test(v.lang) && /Mónica|Monica|Jorge|Marisol|Google|Lucía|Lucia|Elvira|Álvaro|Alvaro/i.test(v.name)) || vs.find(v=>/^es[-_]ES/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null; } catch(e) {} }
 if (synth) { pickVoice(); try { synth.addEventListener("voiceschanged", pickVoice); } catch(e) {} }
 const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/\((?:m|f|fam|e|ne|s|es)\.?\)/g,"").replace(/[✗✓→=]/g," ").replace(/\s+\/\s+/g,", ").replace(/\s—\s/g,", ").replace(/\s+/g," ").trim();
 function speak(text, rate){
   if (!synth) return false;
-  try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); u.lang = "fr-FR"; if (frVoice) u.voice = frVoice; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
+  try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); const es = COURSE === "es"; u.lang = es ? "es-ES" : "fr-FR"; const vo = es ? esVoice : frVoice; if (vo) u.voice = vo; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
 }
 if (!synth) document.documentElement.classList.add("no-tts");
 document.addEventListener("click", e=>{
@@ -571,7 +628,7 @@ function spPaintFav(){
   b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label");
   const s = $(".sp-say", SP.el); s.setAttribute("aria-label", t("qzSay")); s.title = t("qzSay");
   s.hidden = !synth;
-  const ready = !!(SP.entry && SP.entry.fr); b.disabled = !ready; s.disabled = !ready;
+  const ready = !!(SP.entry && SP.entry.fr); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
 }
 function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; }
 function spPlace(){
@@ -600,6 +657,56 @@ function spAllowed(sel){
   const a = document.activeElement; if (a && /INPUT|TEXTAREA/.test(a.tagName)) return false;
   return true;
 }
+
+/* --- испанский курс: подсказка по выделению (словарь лексики → автоперевод) --- */
+let ESD = null;
+function esDict(){
+  if (ESD) return ESD;
+  ESD = {es:new Map(), en:new Map()};
+  const add = (m, k, v) => { k = dk(k); if (k && !m.has(k)) m.set(k, v); };
+  ES_LEX.forEach(c=>c.w.forEach(([w, en])=>{
+    const e = {es:w, en};
+    add(ESD.es, w, e);
+    w.split(/\s*(?:→|\/|·)\s*/).forEach(part=>{ part = part.replace(/\([^)]*\)/g, "").trim(); if (!part) return; add(ESD.es, part, e); add(ESD.es, part.replace(/^(el|la|los|las|un|una|unos|unas)\s+/i, ""), e); });
+    en.split(/\s*(?:→|\/|·|,)\s*/).forEach(part=>{ part = part.replace(/\([^)]*\)/g, "").replace(/^(to|a|an|the)\s+/i, "").trim(); if (part) add(ESD.en, part, e); });
+  }));
+  return ESD;
+}
+function esLookup(txt){
+  const D = esDict().es, k = dk(txt); if (!k) return null;
+  if (D.has(k)) return D.get(k);
+  const k2 = k.replace(/^(el|la|los|las|un|una|unos|unas)\s+/, ""); if (D.has(k2)) return D.get(k2);
+  if (!/\s/.test(k2)) for (const c of [k2.replace(/es$/, ""), k2.replace(/s$/, ""), k2.replace(/a$/, "o"), k2.replace(/as$/, "o"), k2.replace(/esa$/, "és"), k2.replace(/ana$/, "án")]) if (c && c !== k2 && D.has(c)) return D.get(c);
+  return null;
+}
+const ES_MARK = /[ñáéíóú¿¡]/i;
+const ES_FN = /(^|\s)(el|la|los|las|un|una|es|son|está|hay|de|del|en|con|por|para|que|qué|muy|mucho|yo|tú|soy|eres|y|o|no|sí|me|te|se)(?=\s|$)/i;
+function esPop(o){
+  const {txt, q, cyr, req, to, el, mEl, nEl, show} = o;
+  el.dataset.dir = "fr";
+  const put = (m, note, say, st) => { SP.entry = {sel:q, say:say || "", fr:"", ru:"", en:""}; mEl.textContent = m; nEl.textContent = note || ""; el.dataset.st = st || "ok"; };
+  const remote = (from, toL, sayOut) => {
+    put(t("spLoading"), "", "", "load"); show();
+    remoteTr(q, toL, from).then(out=>{
+      if (req !== SP.req) return;
+      if (out) put(out, t("spAuto"), sayOut ? out : q, "ok"); else put(t("spNone"), navigator.onLine === false ? t("spOffline") : "", "", "none");
+      spPaintFav(); spPlace();
+    });
+  };
+  if (cyr) { el.dataset.dir = "rev"; return remote("ru", "es", true); }
+  const hit = esLookup(txt);
+  if (hit) { put(hit.en, dk(hit.es) !== dk(txt) ? hit.es : "", q, "ok"); return show(); }
+  const rEn = !ES_MARK.test(txt) && esDict().en.get(dk(txt).replace(/^(to|a|an|the)\s+/, ""));
+  if (rEn) { el.dataset.dir = "rev"; put(rEn.es, rEn.en, rEn.es, "ok"); return show(); }
+  if (!ES_MARK.test(txt) && EN_FN.test(txt) && !ES_FN.test(txt)) {
+    el.dataset.dir = "rev";
+    const r = esDict().en.get(dk(txt));
+    if (r) { put(r.es, r.en, r.es, "ok"); return show(); }
+    return remote("en", "es", true);
+  }
+  remote("es", to, false);
+}
+
 function spCheck(){
   const sel = window.getSelection ? window.getSelection() : null;
   if (!sel || sel.isCollapsed || !sel.rangeCount) { spHide(); return; }
@@ -617,6 +724,8 @@ function spCheck(){
   const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
   $(".sp-fr", el).textContent = q;
   const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
+  el.classList.toggle("no-fav", COURSE === "es");
+  if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
   /* --- французский → ru/en --- */
@@ -681,7 +790,7 @@ window.addEventListener("hashchange", spHide);
 /* =========================================================
    answer checking + accent bar
    ========================================================= */
-const norm = s => (s||"").normalize("NFC").toLowerCase().replace(/[’`´‘ʼ]/g,"'").replace(/[  ]/g," ").replace(/\s*'\s*/g,"'").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").replace(/\s*([?!,;:.…])/g,"$1").replace(/[.!?…]+$/,"").trim();
+const norm = s => (s||"").normalize("NFC").toLowerCase().replace(/[¿¡]/g,"").replace(/[’`´‘ʼ]/g,"'").replace(/[  ]/g," ").replace(/\s*'\s*/g,"'").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").replace(/\s*([?!,;:.…])/g,"$1").replace(/[.!?…]+$/,"").trim();
 const strip = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/œ/g,"oe");
 function judge(input, answers){
   const n = norm(input); if (!n) return "empty";
@@ -704,13 +813,14 @@ document.addEventListener("click", e=>{
   inp.focus(); try { inp.setSelectionRange(s+1, s+1); } catch(_) {}
   inp.dispatchEvent(new Event("input", {bubbles:true}));
 });
-const accBar = () => `<div class="accbar" data-label="${esc(t("insert"))}">${ACC.map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
+const ACC_ES = ["á","é","í","ó","ú","ñ","ü","¿","¡"];
+const accBar = () => `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
 const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
 
 /* =========================================================
    exercise blocks (with saved answers)
    ========================================================= */
-function praise(r){ return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
+function praise(r){ if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
 function makeBlock(tp, ex, i){
   const el = document.createElement("section"); el.className = "exb"; el.dataset.i = i;
   el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${t("label")[ex.t]}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
@@ -729,7 +839,7 @@ function makeBlock(tp, ex, i){
 }
 const fbHtml = (state, answers, e) => {
   const right = esc(answers[0]);
-  if (state === "ok") return `<span class="ok-t">Juste !</span>${e?` <span class="ex-e">${e}</span>`:""}`;
+  if (state === "ok") return `<span class="ok-t">${OKW()}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
   if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>${e?` <span class="ex-e">${e}</span>`:""}`;
   if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b>${e?" · " + e:""}</span>`;
   return `<span class="pen">→ ${right}</span>${e?` <span class="ex-e">${e}</span>`:""}`;
@@ -746,7 +856,7 @@ INIT.mc = (api, ex) => {
     const ok = j === it.a; answered++; if (ok) correct++;
     $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
     const fb = $(".fb", row); fb.hidden = false;
-    fb.innerHTML = ok ? `<span class="ok-t">Juste !</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}` : `<span class="pen">→ ${it.o[it.a]}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}`;
+    fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}` : `<span class="pen">→ ${it.o[it.a]}</span>${it.e?` <span class="ex-e">${it.e}</span>`:""}`;
     sel[k] = j; if (!restoring) api.save({sel});
     if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcProg", answered, items.length, correct));
   };
@@ -853,7 +963,7 @@ INIT.listen = (api, ex) => {
     api.status(t("listenHint"));
     const slots = $$(".it", api.body).map((row,k)=>{ const fb = $(".fb", row), it = items[k];
       return {inp: $(".ans", row), a: it.a, minAdv: 2,
-        show: st => { fb.hidden = false; fb.innerHTML = st === "ok" ? `<span class="ok-t">Juste !</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`; },
+        show: st => { fb.hidden = false; fb.innerHTML = st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`; },
         hide: () => { fb.hidden = true; }}; });
     ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st));
   };
@@ -956,7 +1066,7 @@ INIT.order = (api, ex) => {
       const row = document.createElement("div"); row.className = "it ord";
       row.innerHTML = `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div><div class="fb" hidden></div>`;
       const line = $(".ord-line", row), fb = $(".fb", row), bank = $(".ord-bank", row);
-      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">Juste !</span>`; };
+      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`; };
       for (let p = 0; p < res[k].pos; p++) { const tk = $$(".tok", bank).find(x=>x.textContent === words[p]); if (tk) line.appendChild(tk); }
       if (res[k].done) finishRow();
       row.addEventListener("click", e=>{
@@ -991,7 +1101,7 @@ INIT.cards = (api, ex) => {
   const draw = restoring => {
     if (!queue.length) {
       api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">Bravo !</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
-      api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">Parfait !</span>`, restoring); return;
+      api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">${praise(1)}</span>`, restoring); return;
     }
     const [fr, tr] = ex.items[queue[0]];
     const front = dir === "fr" ? fr : tr, back = dir === "fr" ? tr : fr;
@@ -1034,17 +1144,23 @@ INIT.drill = (api, ex) => {
    ========================================================= */
 function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="ring" data-ring="${tp.id}"></span><span class="nl-t">${tp.title}</span></a>`; }
 function buildNav(){
+  const es = COURSE === "es", unitW = es ? t("unitWes") : t("unitW");
+  const units = es ? ["1","2","3"] : ["0","1","2"], uname = u => es ? t("esUnits")[u] : t("units")[u];
   nav.innerHTML = `
-  <div class="nav-top"><a class="brand" href="#home"><b>Édito A1</b><span>révisions</span></a><button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button></div>
+  <div class="nav-top">
+    <div class="course-sw" role="tablist" aria-label="${esc(t("courseLabel"))}" data-on="${COURSE}">${["fr","es"].map(c=>`<button type="button" role="tab" data-course="${c}" aria-selected="${COURSE===c}" class="${COURSE===c?"on":""}"><span class="cs-badge cs-${c}">${COURSES[c].code}</span><span class="cs-t"><b>${COURSES[c].name}</b><small>${COURSES[c].book}</small></span></button>`).join("")}<span class="cs-ind" aria-hidden="true"></span></div>
+    <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button>
+  </div>
   <div class="nav-scroll">
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
-      <a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
-      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
+      ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
+      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>`}
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
-    ${["0","1","2"].map(u=>`<div class="nav-unit">Unité ${u} <i>· ${t("units")[u]}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
+    ${units.map(u=>`<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
+    ${GRAM.length ? `<div class="nav-sec">${t("gram")}</div>${GRAM.map(navLink).join("")}` : ""}
     <div class="nav-sec">${t("ref")}</div>
     ${REF.map(navLink).join("")}
   </div>
@@ -1054,7 +1170,23 @@ function buildNav(){
   </div>`;
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
+  $$("[data-course]", nav).forEach(b=>b.addEventListener("click", ()=>setCourse(b.dataset.course)));
+  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
   paintNavProgress(); paintAccount(); markActive();
+}
+function setCourse(c, silent){
+  if (c === COURSE || !COURSES[c]) return;
+  const root = document.documentElement; root.classList.add("theme-anim"); clearTimeout(setCourse.tm); setCourse.tm = setTimeout(()=>root.classList.remove("theme-anim"), 700);
+  const sw = $(".course-sw", nav); if (sw) { sw.dataset.on = c; $$("button", sw).forEach(b=>{ const on = b.dataset.course === c; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); }); }
+  COURSE = c; ls.set("edito-course", c); setData(); touch("settings"); spHide();
+  const finish = () => {
+    const keepNav = nav.classList.contains("open");
+    buildNav(); if (keepNav) nav.classList.add("open");
+    if (silent) return;
+    const h = decodeURIComponent((location.hash||"").slice(1));
+    if (["home","test","account",""].includes(h)) route(false); else location.hash = "home";
+  };
+  if (silent) finish(); else setTimeout(finish, 240);
 }
 function avatarHTML(){
   if (ME && ME.avatarUrl) return `<img src="${esc(ME.avatarUrl)}" alt="">`;
@@ -1062,54 +1194,75 @@ function avatarHTML(){
   return ICO.cloud;
 }
 function authHTML(){
-  const m = Auth.mode, up = m === "up", magic = m === "magic", reset = m === "reset";
-  const head = up ? t("authUpH") : magic ? t("authMagicH") : reset ? t("authResetH") : t("authInH");
-  return `<form class="auth" id="authForm" novalidate>
-    <div class="auth-tabs" role="tablist"><button type="button" data-am="in" class="${m==="in"||magic||reset?"on":""}">${t("authIn")}</button><button type="button" data-am="up" class="${up?"on":""}">${t("authUp")}</button></div>
-    <h2>${head}</h2><p class="auth-sub">${up ? t("authUpSub") : magic ? t("authMagicSub") : reset ? t("authResetSub") : t("authInSub")}</p>
-    <label class="fld"><span>${t("email")}</span><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></label>
-    ${magic || reset ? "" : `<label class="fld"><span>${t("password")}</span><input type="password" id="authPw" autocomplete="${up?"new-password":"current-password"}" minlength="6" required></label>`}
+  const m = Auth.mode, up = m === "up", reset = m === "reset";
+  return `<form class="auth" id="authForm" novalidate data-mode="${m}">
+    <div class="auth-ico">${ICO.cloud}</div>
+    <h2 id="authH">${up ? t("authUpH") : reset ? t("authResetH") : t("authInH")}</h2>
+    <p class="auth-sub" id="authSub">${up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub")}</p>
+    <label class="fld"><span>${t("email")}</span><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required placeholder="name@mail.com"></label>
+    <div class="fld-wrap" ${reset ? "hidden" : ""}><label class="fld"><span>${t("password")}</span><input type="password" id="authPw" autocomplete="${up?"new-password":"current-password"}" minlength="6" required></label></div>
     <p class="auth-msg" id="authMsg" data-k="${Auth.msgKind}" aria-live="polite">${esc(Auth.msg)}</p>
-    <button type="submit" class="btn pri" id="authGo">${up ? t("authUpBtn") : magic ? t("authMagicBtn") : reset ? t("authResetBtn") : t("authInBtn")}</button>
-    <div class="auth-links">${m==="in" ? `<button type="button" data-am="magic">${t("authMagicLink")}</button><button type="button" data-am="reset">${t("authForgot")}</button>` : magic || reset ? `<button type="button" data-am="in">${t("authBackPw")}</button>` : ""}</div>
+    <button type="submit" class="btn pri auth-go" id="authGo">${up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn")}</button>
+    <div class="auth-links" id="authLinks">${authLinks(m)}</div>
     <p class="auth-note">${t("authNote")}</p>
   </form>`;
 }
+function authLinks(m){
+  if (m === "up") return `<span>${t("authHaveAcc")} <button type="button" data-am="in">${t("authLogin")}</button></span>`;
+  if (m === "reset") return `<button type="button" data-am="in">${t("authBack")}</button>`;
+  return `<span>${t("authNoAcc")} <button type="button" data-am="up">${t("authCreate")}</button></span><button type="button" data-am="reset">${t("authForgot")}</button>`;
+}
+function setAuthMode(m){
+  const f = $("#authForm"); if (!f) return;
+  Auth.mode = m; Auth.msg = ""; Auth.msgKind = "";
+  f.classList.add("swap");
+  setTimeout(()=>{
+    const up = m === "up", reset = m === "reset";
+    f.dataset.mode = m;
+    $("#authH").textContent = up ? t("authUpH") : reset ? t("authResetH") : t("authInH");
+    $("#authSub").textContent = up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub");
+    $("#authGo").textContent = up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn");
+    $(".fld-wrap", f).hidden = reset; const pw = $("#authPw"); pw.autocomplete = up ? "new-password" : "current-password";
+    $("#authLinks").innerHTML = authLinks(m); authSay("", "");
+    f.classList.remove("swap");
+    const e = $("#authEmail"); (e.value ? (reset ? e : pw) : e).focus();
+  }, 160);
+}
 function recoveryHTML(){
-  return `<form class="auth" id="pwForm" novalidate><h2>${t("pwNewH")}</h2>
+  return `<form class="auth" id="pwForm" novalidate><div class="auth-ico">${ICO.cloud}</div><h2>${t("pwNewH")}</h2>
     <label class="fld"><span>${t("pwNew")}</span><input type="password" id="newPw" autocomplete="new-password" minlength="6" required></label>
     <p class="auth-msg" id="pwMsg" aria-live="polite"></p>
     <div class="cb-btns"><button type="submit" class="btn pri">${t("pwSave")}</button><button type="button" class="btn sec" id="pwCancel">${t("cancel")}</button></div></form>`;
 }
 function wireAuth(){
-  $$("[data-am]", main).forEach(b=>b.addEventListener("click", ()=>{ const keep = ($("#authEmail")||{}).value || ""; Auth.mode = b.dataset.am; Auth.msg = ""; Auth.msgKind = ""; renderAccount(); const e = $("#authEmail"); if (e) { e.value = keep; (keep ? ($("#authPw") || e) : e).focus(); } }));
   const f = $("#authForm");
-  if (f) f.addEventListener("submit", async ev=>{
-    ev.preventDefault();
-    const email = $("#authEmail").value.trim(), pwEl = $("#authPw"), pw = pwEl ? pwEl.value : "";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { authSay(t("aeEmail"), "err"); $("#authEmail").focus(); return; }
-    if (pwEl && pw.length < 6) { authSay(t("aeShort"), "err"); pwEl.focus(); return; }
-    const go = $("#authGo"); go.disabled = true; authSay(t("authWait"), "");
-    try {
-      let r;
-      if (Auth.mode === "up") {
-        r = await sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}});
-        if (r.error) throw r.error;
-        if (r.data && r.data.user && Array.isArray(r.data.user.identities) && !r.data.user.identities.length) throw {message:"already registered"};
-        if (!r.data.session) { authSay(t("authCheckMail", email), "ok"); go.disabled = false; return; }
-      } else if (Auth.mode === "magic") {
-        r = await sb.auth.signInWithOtp({email, options:{emailRedirectTo:authRedirectTo(), shouldCreateUser:true}});
-        if (r.error) throw r.error; authSay(t("authMagicSent", email), "ok"); go.disabled = false; return;
-      } else if (Auth.mode === "reset") {
-        r = await sb.auth.resetPasswordForEmail(email, {redirectTo:authRedirectTo()});
-        if (r.error) throw r.error; authSay(t("authResetSent", email), "ok"); go.disabled = false; return;
-      } else {
-        r = await sb.auth.signInWithPassword({email, password:pw});
-        if (r.error) throw r.error;
-      }
-      Auth.msg = ""; Auth.mode = "in";
-    } catch(e) { authSay(authErrText(e), "err"); go.disabled = false; }
-  });
+  if (f) {
+    f.addEventListener("click", e=>{ const b = e.target.closest("[data-am]"); if (b) setAuthMode(b.dataset.am); });
+    f.addEventListener("submit", async ev=>{
+      ev.preventDefault();
+      const email = $("#authEmail").value.trim(), pwEl = $("#authPw"), pw = Auth.mode === "reset" ? "" : pwEl.value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { authSay(t("aeEmail"), "err"); $("#authEmail").focus(); return; }
+      if (Auth.mode !== "reset" && pw.length < 6) { authSay(t("aeShort"), "err"); pwEl.focus(); return; }
+      const go = $("#authGo"); go.disabled = true; go.classList.add("busy"); authSay("", "");
+      const done = () => { go.disabled = false; go.classList.remove("busy"); };
+      try {
+        let r;
+        if (Auth.mode === "up") {
+          r = await sb.auth.signUp({email, password:pw, options:{emailRedirectTo:authRedirectTo()}});
+          if (r.error) throw r.error;
+          if (r.data && r.data.user && Array.isArray(r.data.user.identities) && !r.data.user.identities.length) throw {message:"already registered"};
+          if (!r.data.session) { authSay(t("authCheckMail", email), "ok"); done(); return; }
+        } else if (Auth.mode === "reset") {
+          r = await sb.auth.resetPasswordForEmail(email, {redirectTo:authRedirectTo()});
+          if (r.error) throw r.error; authSay(t("authResetSent", email), "ok"); done(); return;
+        } else {
+          r = await sb.auth.signInWithPassword({email, password:pw});
+          if (r.error) throw r.error;
+        }
+        Auth.msg = ""; Auth.mode = "in";
+      } catch(e) { authSay(authErrText(e), "err"); done(); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake"); }
+    });
+  }
   const pf = $("#pwForm");
   if (pf) {
     $("#pwCancel").addEventListener("click", ()=>{ Auth.recovery = false; renderAccount(); });
@@ -1152,34 +1305,46 @@ window.matchMedia("(max-width:979px)").addEventListener("change", ()=>closeNav()
    ========================================================= */
 function totals(){ let ex = 0, done = 0, full = 0, sum = 0; TOP.forEach(tp=>{ const p = topicPct(tp); ex += p.n; done += p.done; sum += p.pct*p.n; if (p.pct >= .995) full++; }); return {ex, done, full, avg: ex ? sum/ex : 0}; }
 function card(tp){ const p = topicPct(tp); return `<a class="tc" href="#${tp.id}"><span class="k">${tp.kind}</span><h3>${tp.title}</h3><p>${tp.ru}</p><div class="bar"><i style="width:${(p.pct*100).toFixed(0)}%"></i></div><span class="pc">${t("doneOf", p.done, p.n, (p.pct*100).toFixed(0))}</span></a>`; }
+function testsOf(){ return S.tests.filter(x=>(x.c||"fr") === COURSE); }
+const scoreTxt = h => (h.c === "es") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
+function saveNudge(){
+  if (Cloud.kind !== "supabase" || ME || Cloud.state === "loading") return "";
+  return `<a class="nudge" href="#account"><span class="nudge-i">${ICO.cloud}</span><span>${t("saveNudge")}</span><b>${t("saveNudgeBtn")} →</b></a>`;
+}
 function renderHome(){
-  const tt = totals(); const last = S.tests[S.tests.length-1];
+  const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
+  const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
+  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2"];
+  const how = es ? t("esHow") : t("how");
   main.innerHTML = `<div class="col">
   <header class="hero seyes">
-    <p class="eyebrow">${t("heroEyebrow")}</p>
-    <h1>Révisions <em>pour le contrôle</em></h1>
-    <p class="lead">${t("heroLead", TOP.reduce((s,x)=>s+x.ex.length,0))}</p>
-    <p class="annot">Bon courage, tu vas réussir !</p>
-    <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${t("startFirst")}</a><a class="btn sec" href="#quizlet">${t("quizlet")}</a><a class="btn sec" href="#test">${t("test")}</a></div>
-    <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span><span><b>${REF.length}</b>${t("refTopics")}</span>${last ? `<span><b>${last.n20}/20</b>${t("lastTest")}</span>` : ""}</div>
+    <p class="eyebrow">${es ? t("esHeroEyebrow") : t("heroEyebrow")}</p>
+    <h1>${es ? `Repaso <em>para el examen</em>` : `Révisions <em>pour le contrôle</em>`}</h1>
+    <p class="lead">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
+    <p class="annot">${es ? "¡Ánimo, tú puedes!" : "Bon courage, tu vas réussir !"}</p>
+    <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${es ? t("esStart") : t("startFirst")}</a>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#quizlet">${t("quizlet")}</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
+    <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
-  <ol class="how">${t("how").map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
-  <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? t("tipTts") : t("tipNoTts")} ${Cloud.be ? t(Cloud.kind === "supabase" ? "tipCloudS" : "tipCloud") : t(Cloud.kind === "supabase" ? "tipSignIn" : "tipLocal")}</span></p>
-  <div class="sec-h"><h2>${t("fromBook")}</h2><p>${t("bookSub")}</p></div>
-  ${["0","1","2"].map(u=>`<h3 class="unit-h">Unité ${u} <small>${t("units")[u]}${u==="0" ? t("unit0note") : ""}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
+  ${saveNudge()}
+  <ol class="how">${how.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
+  <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
+  <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
+  ${units.map(u=>`<h3 class="unit-h">${unitW} ${u} <small>${es ? t("esUnits")[u] : t("units")[u] + (u==="0" ? t("unit0note") : "")}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
+  ${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
   <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>
   </div>`;
 }
 function renderTopic(tp){
-  const idx = ORDER.indexOf(tp), prev = ORDER[idx-1], next = ORDER[idx+1];
+  const idx = ORDER.indexOf(tp), prev = ORDER[idx-1], next = ORDER[idx+1], es = COURSE === "es";
+  const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
-    <p class="eyebrow">${tp.sec==="book" ? `Unité ${tp.unit} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
+    <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
     <h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
     <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
   </header>
   <section class="theory">${tp.theory}</section>
-  <section class="practice" id="practice"><h2>Entraînement</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
+  <section class="practice" id="practice"><h2>${es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
   <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${t("back")}</small>${prev.title}</a>` : ""}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}</small>${next.title}</a>` : `<a class="next" href="#test"><small>${t("next")}</small>${t("test")}</a>`}</nav>
   </article></div>`;
   const exs = $(".exs", main);
@@ -1190,66 +1355,94 @@ function renderCheat(){
   main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
 }
 
+/* ---------- léxico (испанский) ---------- */
+let LEX = {u:"all", hide:false, q:""};
+try { const o = JSON.parse(ls.get("edito-lex") || "null"); if (o) LEX = Object.assign(LEX, o, {q:""}); } catch(e) {}
+const fold = s => String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+function renderLexico(){
+  const total = ES_LEX.reduce((n,c)=>n+c.w.length,0);
+  main.innerHTML = `<div class="col" style="max-width:1000px">
+  <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–3</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
+    <div class="lex-tools">
+      <label class="lex-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg><input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
+      <span class="seg lex-units">${["all","1","2","3"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : "Unidad " + u}</button>`).join("")}</span>
+      <button type="button" class="chip-t${LEX.hide?" on":""}" id="lexHide">${LEX.hide ? t("lexShow") : t("lexHide")}</button>
+    </div>
+  </header>
+  <p class="lex-count" id="lexCount"></p>
+  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">U${c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
+  <p class="muted lex-none" id="lexNone" hidden>${t("lexNone")}</p></div>`;
+  const box = $("#lexBox"), save = () => ls.set("edito-lex", JSON.stringify({u:LEX.u, hide:LEX.hide}));
+  const apply = () => {
+    const q = fold(LEX.q.trim()); let n = 0;
+    $$(".lex-cat", box).forEach(sec=>{
+      const unitOk = LEX.u === "all" || sec.dataset.u === LEX.u; let m = 0;
+      $$(".lex-r", sec).forEach(r=>{ const ok = unitOk && (!q || r.dataset.k.includes(q)); r.hidden = !ok; if (ok) m++; });
+      sec.hidden = !m; n += m;
+    });
+    $("#lexCount").textContent = t("lexN", n) + (n !== total ? ` / ${total}` : "");
+    $("#lexNone").hidden = !!n;
+  };
+  $("#lexQ").addEventListener("input", e=>{ LEX.q = e.target.value; apply(); });
+  $$("[data-u]", main).forEach(b=>b.addEventListener("click", ()=>{ LEX.u = b.dataset.u; save(); $$("[data-u]", main).forEach(x=>x.classList.toggle("on", x===b)); apply(); }));
+  $("#lexHide").addEventListener("click", e=>{ LEX.hide = !LEX.hide; save(); box.classList.toggle("lex-hide", LEX.hide); e.currentTarget.classList.toggle("on", LEX.hide); e.currentTarget.textContent = LEX.hide ? t("lexShow") : t("lexHide"); $$(".lex-en.peek", box).forEach(x=>x.classList.remove("peek")); });
+  box.addEventListener("click", e=>{ const en = e.target.closest(".lex-en"); if (en && LEX.hide) en.classList.toggle("peek"); });
+  apply();
+}
+
 /* ---------- account ---------- */
 function renderAccount(){
-  const tt = totals();
+  const es = COURSE === "es", tt = totals(), tests = testsOf();
   const words = QSETS.flatMap(s=>s.w.map(w=>w[0])); const uniq = [...new Set(words)];
   const learned = uniq.filter(w=>qLv(w) >= 3).length;
-  const best = S.tests.reduce((m,x)=>Math.max(m, x.n20||0), 0);
+  const best = tests.reduce((m,x)=>Math.max(m, x.got/(x.total||1)), 0);
   const name = ME && ME.name ? ME.name : (Cloud.be ? t("you") : t("guest"));
   const isSupa = Cloud.kind === "supabase", signedIn = !!(isSupa && ME);
+  const cname = `${COURSES[COURSE].name} · ${COURSES[COURSE].book}`;
   let armed = false;
+  const status = () => {
+    if (isSupa && !signedIn) return Cloud.state === "loading" ? `<div class="acc-card soft"><span class="spin"></span><p>${t("cloud").loading}</p></div>` : authHTML();
+    if (Cloud.kind === "none") return `<div class="acc-card soft"><span class="acc-ic">${ICO.cloud}</span><p>${t("accLocal")}</p></div>`;
+    const ok = !!Cloud.be;
+    return `<div class="acc-card ${ok ? "good" : "warn"}"><span class="acc-ic">${ok ? ICO.check : ICO.cloud}</span><div class="acc-tx"><p>${ok ? t("accSaved") : t("accOffline")}</p>${ME && ME.email ? `<small>${esc(ME.email)}</small>` : ""}</div>
+      <div class="cb-btns">${ok ? "" : `<button type="button" class="btn sm pri" id="syncNow">${t("retry")}</button>`}${isSupa ? `<button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button>` : ""}</div></div>`;
+  };
   main.innerHTML = `<div class="col">
   <header class="t-head seyes acc-head"><div class="acc-big">${avatarHTML()}</div><div><p class="eyebrow">${t("accEyebrow")}</p><h1 id="accName"></h1><p class="t-ru"><span class="cloud-pill" data-cloud data-st="${Cloud.state}">${t("cloud")[Cloud.state]}</span></p></div></header>
   ${Auth.recovery && signedIn ? recoveryHTML() : ""}
-  ${isSupa && !signedIn && Cloud.state === "loading" ? `<div class="cloud-box"><div class="cb-top">${ICO.cloud.replace("<svg","<svg width=22 height=22")}<div><p>${t("cloud").loading}</p></div></div></div>` : isSupa && !signedIn ? authHTML() : Cloud.kind === "none" ? `<div class="cloud-box"><div class="cb-top">${ICO.cloud.replace("<svg","<svg width=22 height=22")}<div><p>${t("accNoCloud")}</p></div></div></div>` : `<div class="cloud-box"><div class="cb-top">${ICO.cloud.replace("<svg","<svg width=22 height=22")}<div><p>${Cloud.be ? t(isSupa ? "accCloudOnS" : "accCloudOn") : t(isSupa ? "accCloudErrS" : "accCloudOff")}</p><p class="cb-diag" id="cloudDiag">${cloudDiag()}</p></div></div>
-  <div class="cb-check"><b>${t("inCloud")}</b><span id="cloudCheck">${Cloud.be ? t("checking") : "—"}</span></div>
-  <div class="cb-btns"><button type="button" class="btn sm sec" id="syncNow">${t("syncNow")}</button>${isSupa ? `<button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button>` : ""}</div></div>`}
+  ${status()}
+  <div class="sec-h"><h2>${t("accFor", cname)}</h2></div>
   <div class="kpis">
     <div class="kpi"><b>${tt.done}<small>/${tt.ex}</small></b><span>${t("stSolved")}</span></div>
     <div class="kpi"><b>${tt.full}<small>/${TOP.length}</small></b><span>${t("stTopics")}</span></div>
     <div class="kpi"><b>${Math.round(tt.avg*100)}%</b><span>${t("stAvg")}</span></div>
-    <div class="kpi"><b>${S.tests.length}</b><span>${t("stTests")}</span></div>
-    <div class="kpi"><b>${best ? String(best).replace(".",",") + "<small>/20</small>" : "—"}</b><span>${t("stBest")}</span></div>
-    <div class="kpi"><b>${learned}<small>/${uniq.length}</small></b><span>${t("stWords")}</span></div>
+    <div class="kpi"><b>${tests.length}</b><span>${t("stTests")}</span></div>
+    <div class="kpi"><b>${tests.length ? (es ? Math.round(best*100) + "%" : String(Math.round(best*40)/2).replace(".",",") + "<small>/20</small>") : "—"}</b><span>${t("stBest")}</span></div>
+    ${es ? `<div class="kpi"><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b><span>${t("stLex")}</span></div>` : `<div class="kpi"><b>${learned}<small>/${uniq.length}</small></b><span>${t("stWords")}</span></div>`}
   </div>
   <div class="sec-h"><h2>${t("progressByTopic")}</h2></div>
   <div class="brk">${ORDER.map(tp=>{ const p = topicPct(tp), r = p.pct; return `<div class="brk-r"><a href="#${tp.id}">${tp.title}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(r?4:0, r*100)}%"></i></div><span>${Math.round(r*100)}%</span></div>`; }).join("")}</div>
   <div class="sec-h"><h2>${t("history")}</h2></div>
-  ${S.tests.length ? `<ul class="hist">${S.tests.slice().reverse().map(h=>`<li>${esc(h.d)} — <b>${String(h.n20).replace(".",",")}/20</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : `<p class="muted">${t("noTests")}</p>`}
+  ${tests.length ? `<ul class="hist">${tests.slice().reverse().map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : `<p class="muted">${t("noTests")}</p>`}
   <div class="sec-h"><h2>${t("settings")}</h2></div>
   <div class="settings-row"><span>${t("lang")}</span><div class="lang-sw big"><button type="button" data-lang2="ru" class="${LANG==="ru"?"on":""}">Русский</button><button type="button" data-lang2="en" class="${LANG==="en"?"on":""}">English</button></div></div>
-  <div class="settings-row"><span></span><button type="button" class="btn sec danger" id="resetAll">${t("reset")}</button></div>
+  <div class="settings-row"><span></span><button type="button" class="btn sec danger" id="resetAll">${t("resetCourse", COURSES[COURSE].name)}</button></div>
   </div>`;
   $("#accName").textContent = name;
-  const sn = $("#syncNow"); if (sn) sn.addEventListener("click", async e=>{ const b = e.currentTarget; b.disabled = true; await syncNow(); b.disabled = false; checkCloud(); });
+  const sn = $("#syncNow"); if (sn) sn.addEventListener("click", async e=>{ const b = e.currentTarget; b.disabled = true; await syncNow(); renderAccount(); });
   const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
   const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
   wireAuth();
-  checkCloud();
   $$("[data-lang2]", main).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
   $("#resetAll").addEventListener("click", e=>{
     const b = e.currentTarget;
-    if (!armed) { armed = true; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed) { armed = false; b.textContent = t("reset"); b.classList.remove("armed"); } }, 5000); return; }
-    const ansKeys = Object.keys(S.ans);
-    S.p = {}; S.tests = []; S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; S.ans = {};
-    touch("progress"); touch("quiz"); ansKeys.forEach(id=>touch("ans-" + id));
-    paintNavProgress(); renderAccount(); toast(t("resetDone"));
+    if (!armed) { armed = true; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed) { armed = false; b.textContent = t("resetCourse", COURSES[COURSE].name); b.classList.remove("armed"); } }, 5000); return; }
+    const ids = TOP.map(x=>x.id);
+    ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
+    S.tests = S.tests.filter(x=>(x.c||"fr") !== COURSE);
+    if (!es) { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
+    touch("progress"); paintNavProgress(); renderAccount(); toast(t("resetDone"));
   });
-}
-async function checkCloud(){
-  const el = $("#cloudCheck"); if (!el || !Cloud.be) return;
-  try {
-    const docs = await withTimeout(Cloud.be.list(), 15000);
-    if (!$("#cloudCheck")) return;
-    if (!docs.length) { el.textContent = t("cloudEmpty"); return; }
-    let ex = 0, topics = 0, words = 0, tests = 0, last = 0;
-    docs.forEach(d=>{ const v = d.data || {}; last = Math.max(last, v.ts || 0);
-      if (d.id === "progress") { for (const tid in (v.p||{})) ex += Object.keys(v.p[tid]).length; tests = (v.tests||[]).length; }
-      else if (d.id === "quiz") words = Object.keys(v.c||{}).length;
-      else if (d.id.startsWith("ans-") && v.ex && Object.keys(v.ex).length) topics++; });
-    el.textContent = t("cloudSummary", ex, topics, words, tests) + (last ? " · " + t("updatedAt", new Date(last).toLocaleString(LANG==="en"?"en-GB":"ru-RU",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})) : "");
-  } catch(e) { if ($("#cloudCheck")) el.textContent = t("cloudUnreach") + " " + ((e && e.code) || ""); }
 }
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.classList.add("out"), 1800); setTimeout(()=>el.remove(), 2300); }
 
@@ -1265,18 +1458,18 @@ function genTest(n){
   return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q}; });
 }
 function renderTest(){
-  const hist = S.tests.slice(-5).reverse();
-  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${t("testSub", POOLX.length)}</p>
+  const hist = testsOf().slice(-5).reverse(), es = COURSE === "es";
+  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${es ? t("esTestEyebrow") : t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${es ? t("esTestSub", POOLX.length) : t("testSub", POOLX.length)}</p>
   <div class="mode" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div>
   <div class="len-pick"><button type="button" class="btn pri" data-n="20">${t("qN", 20)}</button><button type="button" class="btn sec" data-n="30">${t("qN", 30)}</button><button type="button" class="btn sec" data-n="45">${t("qN", 45)}</button></div></header>
-  ${hist.length ? `<div class="sec-h"><h2>${t("myTries")}</h2></div><ul class="hist">${hist.map(h=>`<li>${esc(h.d)} — <b>${String(h.n20).replace(".",",")}/20</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : ""}</div>`;
+  ${hist.length ? `<div class="sec-h"><h2>${t("myTries")}</h2></div><ul class="hist">${hist.map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : ""}</div>`;
   $$("[data-m]", main).forEach(b=>b.addEventListener("click", ()=>{ TMODE = b.dataset.m; $$("[data-m]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
   $$("[data-n]", main).forEach(b=>b.addEventListener("click", ()=>startTest(+b.dataset.n)));
 }
 function startTest(n){
   TEST = genTest(n);
   const now = TMODE === "now", res = TEST.map(()=>null);
-  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${t("testRunEyebrow", TEST.length, now)}</p><h1>${t("test")}</h1><p class="t-ru">${t("testRunSub", now)}</p></header>
+  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${COURSE === "es" ? t("testRunEyebrow", TEST.length, now).replace("Contrôle blanc", "Prueba") : t("testRunEyebrow", TEST.length, now)}</p><h1>${t("test")}</h1><p class="t-ru">${t("testRunSub", now)}</p></header>
   <section class="exb"><div class="exb-b">${accBar()}<div id="tq"></div></div><footer class="exb-f"><span class="exb-score" id="tstat"></span><div class="exb-btns"><button type="button" class="btn pri" id="submit">${now ? t("getGrade") : t("submit")}</button></div></footer></section></div>`;
   const box = $("#tq");
   function stat(){
@@ -1295,7 +1488,7 @@ function startTest(n){
       if (now) {
         row.dataset.locked = "1"; const j = +b.dataset.j, ok = j === q.a; q.sel = j; res[k] = ok;
         $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === q.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
-        fb.hidden = false; fb.innerHTML = ok ? `<span class="ok-t">Juste !</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+        fb.hidden = false; fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
       } else { $$(".opt", row).forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); q.sel = +b.dataset.j; }
       stat();
     }));
@@ -1318,7 +1511,7 @@ function gradeTest(box, now, res){
     if (q.o) {
       ok = q.sel === q.a;
       $$(".opt", row).forEach(b=>{ b.disabled = true; const j = +b.dataset.j; if (j === q.a) b.classList.add("is-ok"); else if (j === q.sel) b.classList.add("is-bad"); b.classList.remove("sel"); });
-      fb.innerHTML = ok ? `<span class="ok-t">Juste !</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
+      fb.innerHTML = ok ? `<span class="ok-t">${OKW()}</span>${q.e?` <span class="ex-e">${q.e}</span>`:""}` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}${q.e?` <span class="ex-e">${q.e}</span>`:""}`;
     } else {
       const inp = $(".ans", row), st = judge(inp.value, q.a);
       ok = now ? res[k] === true : st === "ok"; inp.disabled = true;
@@ -1328,14 +1521,14 @@ function gradeTest(box, now, res){
     if (ok) got++;
     const p = per[q.tp] || (per[q.tp] = {g:0, n:0}); p.n++; if (ok) p.g++;
   });
-  const n20 = Math.round(got / TEST.length * 20 * 2) / 2;
-  const V = t("verdicts"), verdict = n20 >= 16 ? V[0] : n20 >= 12 ? V[1] : n20 >= 10 ? V[2] : V[3];
+  const n20 = Math.round(got / TEST.length * 20 * 2) / 2, es = COURSE === "es", pct = Math.round(got / TEST.length * 100);
+  const V = es ? t("esVerdicts") : t("verdicts"), verdict = n20 >= 16 ? V[0] : n20 >= 12 ? V[1] : n20 >= 10 ? V[2] : V[3];
   const d = new Date();
-  S.tests.push({d: d.toLocaleDateString(LANG==="en"?"en-GB":"ru-RU") + " " + d.toLocaleTimeString(LANG==="en"?"en-GB":"ru-RU",{hour:"2-digit",minute:"2-digit"}), at: d.getTime(), got, total: TEST.length, n20});
-  S.tests = S.tests.slice(-30); touch("progress");
+  S.tests.push({d: d.toLocaleDateString(LANG==="en"?"en-GB":"ru-RU") + " " + d.toLocaleTimeString(LANG==="en"?"en-GB":"ru-RU",{hour:"2-digit",minute:"2-digit"}), at: d.getTime(), got, total: TEST.length, n20, c: COURSE});
+  S.tests = S.tests.slice(-60); touch("progress");
   const rows = Object.entries(per).sort((a,b)=>a[1].g/a[1].n - b[1].g/b[1].n).map(([tp,p])=>{ const r = p.g/p.n, x = byId[tp]; return `<div class="brk-r"><a href="#${tp}">${x ? x.title : tp}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(4, r*100)}%"></i></div><span>${p.g}/${p.n}</span></div>`; }).join("");
   const resEl = document.createElement("div");
-  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${String(n20).replace(".",",")}<small>/20</small></div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button><a class="btn sec" href="#shpargalka">${t("cheat")}</a></div></div></header>
+  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${es ? pct + "<small>%</small>" : String(n20).replace(".",",") + "<small>/20</small>"}</div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>`}</div></div></header>
   <div class="sec-h"><h2>${t("byTopic")}</h2><p>${t("byTopicSub")}</p></div><div class="brk">${rows}</div><div class="sec-h"><h2>${t("review")}</h2></div>`;
   const col = $(".col", main); col.insertBefore(resEl, col.children[1]);
   $(".t-head", main).remove();
@@ -1412,7 +1605,7 @@ function srsWhenTxt(due, now = Date.now()){
 const srsDueCount = (setId, now = Date.now()) => qWords(setId).filter(w=>{ const r = qR(w.fr); return r && r.due <= now; }).length;
 function sdToday(){ const k = dayKey(), sd = S.quiz.sd || {}; return sd.d === k ? Object.assign({n:0, a:0, x:0}, sd) : {d:k, n:0, a:0, x:0}; }
 function updSrsBadge(){
-  const b = document.getElementById("srsBadge"); if (!b) return;
+  const b = document.getElementById("srsBadge"); if (!b || COURSE !== "fr") return;
   const n = srsDueCount("all"); b.hidden = !n; b.textContent = n > 99 ? "99+" : String(n); b.title = `${n} ${t("srsBadge")}`;
 }
 
@@ -1678,7 +1871,7 @@ function qzWrite(stage){
       inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
       const fb = $(".qz-fb", stage), lv = qLv(w.fr);
       speak(w.fr);
-      if (st === "ok") { got++; qSet(w.fr, {lv: Math.min(3, lv+1)}); fb.innerHTML = `<span class="ok-t">Juste !</span>`; setTimeout(()=>{ if (done && round[i] === w) { i++; step(); } }, 800); }
+      if (st === "ok") { got++; qSet(w.fr, {lv: Math.min(3, lv+1)}); fb.innerHTML = `<span class="ok-t">${OKW()}</span>`; setTimeout(()=>{ if (done && round[i] === w) { i++; step(); } }, 800); }
       else { wrong.push(w); qSet(w.fr, {lv: Math.max(0, lv-1)}); fb.innerHTML = `${st === "acc" ? `<span class="acc-t">${t("almost")}</span>` : `<span class="pen">${t("qzWrongIs")}</span>`} <b>${esc(w.fr)}</b> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; $("#qzGo", stage).addEventListener("click", ()=>{ i++; step(); }); $("#qzGo", stage).focus(); }
       qzRefreshList();
     };
@@ -1725,7 +1918,7 @@ function qzMatch(stage){
    ========================================================= */
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = byId[h] || ["test","shpargalka","quizlet","account"].includes(h) ? h : "home";
+  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.acct").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
 }
 function route(keepScroll){
@@ -1733,14 +1926,21 @@ function route(keepScroll){
   if (synth) try { synth.cancel(); } catch(e) {}
   if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
   clearInterval(qzTimer);
+  /* ссылка ведёт в другой курс — переключаемся */
+  let want = null;
+  if (h === "quizlet" || h === "shpargalka" || FR_IDS.has(h)) want = "fr";
+  else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
+  if (want && want !== COURSE) setCourse(want, true);
   const y = window.scrollY;
   if (byId[h]) renderTopic(byId[h]);
   else if (h === "test") renderTest();
   else if (h === "shpargalka") renderCheat();
   else if (h === "quizlet") renderQuizlet();
+  else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
+  if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
   window.scrollTo(0, keepScroll ? y : 0);
 }
 function rerender(){ route(true); }
