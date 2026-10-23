@@ -1522,6 +1522,12 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .cdd-opt{border:0;background:transparent;border-radius:11px;padding:11px 14px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer;transition:background .15s}
 .cdd-opt:hover,.cdd-opt:focus-visible{background:var(--tint);outline:none}
 .cdd-opt.on{background:var(--encre);color:var(--on-encre)}
+
+.promo{display:flex;gap:8px;align-items:center}
+.promo .ans{flex:1;min-width:0;margin:0}
+.promo-m{margin:8px 0 0;font-size:13.5px;font-weight:600;min-height:1.2em}
+.promo-m[data-k="ok"]{color:var(--ok)}
+.promo-m[data-k="err"]{color:var(--marge)}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -7296,7 +7302,7 @@ setData();
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
 const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, at: o.at || 0}; };
-const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}}; };
+const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}, promo: Array.isArray(o.promo) ? o.promo : []}; };
 let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
   try {
@@ -9114,6 +9120,7 @@ Object.assign(I18N.ru, {
   obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.", obBonus:"Добро пожаловать! Держи 50 🪙 на первые покупки.",
   accTabs:{acc:["Аккаунт","Имя, аватар, почта и пароль"], set:["Настройки","Язык, обучение и сброс"], prog:["Прогресс","Темы, уровни и контрольные"], look:["Оформление","Тема, цвета и украшения"]},
   profileH:"Профиль", nameSave:"Сохранить", nameSaved:"Имя сохранено", avatarH:"Аватар", emailL:"Почта", securityH:"Безопасность",
+  promoH:"Промокод", promoPh:"Введи промокод", promoGo:"Применить", promoOk:n=>`Промокод активирован: +${n} 🪙`, promoUsed:"Этот промокод уже использован.", promoBad:"Такого промокода нет.",
   langH:"Язык интерфейса", courseH:"Курс по умолчанию", fxH:"Анимации начисления очков", fxOn:"Показывать", fxOff:"Не показывать", newWordsH:"Новых слов в день (Quizlet)", resetH:"Сброс прогресса",
   themeH:"Тема", themeModes:{light:"Светлая", dark:"Тёмная", system:"Системная"}, paletteH:"Цветовая тема", frameH:"Рамка аватарки", patternH:"Фон страницы", cursorH:"Курсор", toShop:"Больше — в магазине →", locked:"в магазине",
   levelH:"Уровень и опыт", streakH:"Стрик", bestStreak:n=>`рекорд: ${n}`, bestStreakL:"рекорд стрика", calH:"Активность за 8 недель", courseSw:"Курс",
@@ -9128,6 +9135,7 @@ Object.assign(I18N.en, {
   obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.", obBonus:"Welcome! Here are 50 🪙 for your first purchases.",
   accTabs:{acc:["Account","Name, avatar, e-mail and password"], set:["Settings","Language, learning and reset"], prog:["Progress","Topics, levels and tests"], look:["Appearance","Theme, colours and extras"]},
   profileH:"Profile", nameSave:"Save", nameSaved:"Name saved", avatarH:"Avatar", emailL:"E-mail", securityH:"Security",
+  promoH:"Promo code", promoPh:"Enter a promo code", promoGo:"Apply", promoOk:n=>`Promo code applied: +${n} 🪙`, promoUsed:"This promo code has already been used.", promoBad:"No such promo code.",
   langH:"Interface language", courseH:"Default course", fxH:"Points animations", fxOn:"Show", fxOff:"Hide", newWordsH:"New words per day (Quizlet)", resetH:"Reset progress",
   themeH:"Theme", themeModes:{light:"Light", dark:"Dark", system:"System"}, paletteH:"Colour theme", frameH:"Avatar frame", patternH:"Page background", cursorH:"Cursor", toShop:"More in the shop →", locked:"in the shop",
   levelH:"Level and XP", streakH:"Streak", bestStreak:n=>`best: ${n}`, bestStreakL:"best streak", calH:"Activity over 8 weeks", courseSw:"Course",
@@ -9379,6 +9387,17 @@ function panelAcc(p){
   const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
   const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
 }
+/* промокоды хранятся хэшем, чтобы не светить их в исходнике */
+const PROMO = {"1grgshw": 1000};
+const promoKey = code => { let h = 0x811c9dc5; for (const ch of code.trim().toLowerCase()) { h ^= ch.charCodeAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
+function applyPromo(code){
+  const k = promoKey(code), n = PROMO[k];
+  if (!n) return {err:t("promoBad")};
+  if (S.game.promo.includes(k)) return {err:t("promoUsed")};
+  S.game.promo.push(k); S.game.coins += n; touch("game"); paintMe();
+  $$("[data-coins]").forEach(x=>x.textContent = S.game.coins);
+  return {ok:t("promoOk", n)};
+}
 function panelSet(p){
   let armed = "";
   p.innerHTML = `<div class="panel-grid">
@@ -9386,8 +9405,16 @@ function panelSet(p){
     <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("fxH")}</h3><div class="seg big"><button type="button" data-fx="1" class="${S.prof.fx?"on":""}">${t("fxOn")}</button><button type="button" data-fx="0" class="${S.prof.fx?"":"on"}">${t("fxOff")}</button></div></div>
     <div class="pcard"><h3>${t("newWordsH")}</h3><div class="seg big">${[5,10,15,20,30].map(n=>`<button type="button" data-nw="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("promoH")}</h3><form class="promo" id="promoF" autocomplete="off"><input class="ans wide" id="promoIn" placeholder="${esc(t("promoPh"))}" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="${esc(t("promoH"))}"><button type="submit" class="btn pri sm">${t("promoGo")}</button></form><p class="promo-m" id="promoM" role="status"></p></div>
     <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
   </div>`;
+  $("#promoF", p).addEventListener("submit", e=>{
+    e.preventDefault(); const inp = $("#promoIn", p), m = $("#promoM", p);
+    if (!inp.value.trim()) return;
+    const r = applyPromo(inp.value);
+    m.textContent = r.ok || r.err; m.dataset.k = r.ok ? "ok" : "err";
+    if (r.ok) inp.value = "";
+  });
   $$("[data-lang2]", p).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
   $$("[data-course2]", p).forEach(b=>b.addEventListener("click", ()=>{ setCourse(b.dataset.course2, true); renderAccount(); }));
   $$("[data-fx]", p).forEach(b=>b.addEventListener("click", ()=>{ setProf({fx: b.dataset.fx === "1"}, true); panelSet(p); }));

@@ -244,7 +244,7 @@ setData();
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
 const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, at: o.at || 0}; };
-const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}}; };
+const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}, promo: Array.isArray(o.promo) ? o.promo : []}; };
 let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
   try {
