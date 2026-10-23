@@ -10,10 +10,11 @@ Object.assign(I18N.ru, {
   deckPlan:(a,b)=>`${a} ${plural(a,["карточка","карточки","карточек"])} теории и ${b} ${plural(b,["задание","задания","заданий"])}`, deckPracticeH:"Теперь — практика", deckPracticeP:n=>`${n} ${plural(n,["задание","задания","заданий"])} по теме. Ответ проверяется по Enter, после ответа можно открыть «?».`, deckStart:"Начать", deckExOf:(i,n)=>`Задание ${i} / ${n}`, deckFinLeft:n=>`Осталось ${n} ${plural(n,["задание","задания","заданий"])}`, deckNext:"Дальше", deckFinRead:"Теория прочитана.", deckToTodo:"К нерешённому",
   lexCal:"Календарь", tfEs:["Verdadero — верно","Falso — неверно"], tfLbl:"Verdadero o falso",
   practiceSub:"Практика по теме. Впиши или выбери ответ — проверка по Enter. После ответа можно открыть «?» с объяснением.",
-  qzSub:"Карточки со словами из юнитов 0–2.",
+  qzSub:"Карточки со словами из юнитов 0–3.",
   listenHint:"Пиши цифры и нажми Enter",
   bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
-  heroLead:n=>`Теория, ${n} упражнений, карточки Quizlet и пробная контрольная по юнитам 0–2.`,
+  heroLead:n=>`Теория из учебника, задания рабочей тетради, ${n} упражнений, карточки Quizlet и пробная контрольная по юнитам 0–3.`,
+  frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
   esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–3.`,
   homeCont:"Продолжить", homeStart:"Начать с первой темы",
   testSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Оценка — из 20 баллов.`, esTestSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Результат — в процентах.`,
@@ -29,10 +30,11 @@ Object.assign(I18N.en, {
   deckPlan:(a,b)=>`${a} theory ${a===1?"card":"cards"} and ${b} ${b===1?"exercise":"exercises"}`, deckPracticeH:"Now — practice", deckPracticeP:n=>`${n} ${n===1?"exercise":"exercises"} on this topic. Press Enter to check; after answering you can open “?”.`, deckStart:"Start", deckExOf:(i,n)=>`Exercise ${i} / ${n}`, deckFinLeft:n=>`${n} ${n===1?"exercise":"exercises"} left`, deckNext:"Next", deckFinRead:"Theory done.", deckToTodo:"To unsolved",
   lexCal:"Calendar", tfEs:["Verdadero — true","Falso — false"], tfLbl:"Verdadero o falso",
   practiceSub:"Practice for this topic. Type or pick an answer — press Enter to check. After answering you can open “?” for an explanation.",
-  qzSub:"Flashcards with the words from units 0–2.",
+  qzSub:"Flashcards with the words from units 0–3.",
   listenHint:"Type the digits and press Enter",
   bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
-  heroLead:n=>`Theory, ${n} exercises, Quizlet flashcards and a mock test for units 0–2.`,
+  heroLead:n=>`Textbook theory, workbook exercises, ${n} tasks, Quizlet flashcards and a mock test for units 0–3.`,
+  frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
   esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–3.`,
   homeCont:"Continue", homeStart:"Start with the first topic",
   testSub:n=>`Random questions from the bank (${n}) across all topics. Graded out of 20.`, esTestSub:n=>`Random questions from the bank (${n}) across all topics. Scored in percent.`,
@@ -55,7 +57,7 @@ function bankItems(){
   const out = [];
   TOP.forEach(tp=>{
     tp.ex.forEach((ex, ei)=>{
-      if (!["mc","tf","fill","conj"].includes(ex.t)) return;
+      if (!["mc","tf","fill","conj"].includes(ex.t) || ex.ctx) return;
       if (/тексту|по тексту|the text|текст[ае]? выше/i.test(ex.h || "")) return;
       if (ex.t === "mc" || ex.t === "tf") ex.items.forEach((it, k)=>out.push({tid:tp.id, base:tp.id + "|" + ei, k, q:it.q, o: ex.t === "tf" ? tfOpts() : it.o, a: ex.t === "tf" ? (it.a ? 0 : 1) : it.a, keep: ex.t === "tf", e:it.e || "", rule:ruleFor(tp.id, ei), h:ex.h}));
       else if (ex.t === "fill") ex.items.forEach((it, k)=>out.push({tid:tp.id, base:tp.id + "|" + ei, k, q:it.q, a:it.a, e:it.e || "", rule:ruleFor(tp.id, ei), h:ex.h}));
@@ -72,14 +74,18 @@ let BANK = null;
 function renderBank(){
   const cfg = bankCfg(), items = bankItems(), cnt = {};
   items.forEach(x=>{ cnt[x.tid] = (cnt[x.tid] || 0) + 1; });
-  const tops = ORDER.filter(tp=>cnt[tp.id]);
+  const tops = [...ORDER, ...CAH].filter(tp=>cnt[tp.id]);
   if (!cfg.sel) cfg.sel = tops.map(x=>x.id);
+  /* новые темы (например, добавленный юнит) включаем по умолчанию */
+  if (!cfg.seen) cfg.seen = cfg.sel.slice();
+  tops.forEach(x=>{ if (!cfg.seen.includes(x.id)) { cfg.seen.push(x.id); if (!cfg.sel.includes(x.id)) cfg.sel.push(x.id); } });
   const es = COURSE === "es";
   const groups = [];
-  const units = es ? ["1","2","3"] : ["0","1","2"];
+  const units = es ? ["1","2","3"] : ["0","1","2","3"];
   units.forEach(u=>{ const g = tops.filter(x=>x.sec === "book" && x.unit === u); if (g.length) groups.push([`${es ? t("unitWes") : t("unitW")} ${u}`, g]); });
   const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
   const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);
+  units.forEach(u=>{ const g = tops.filter(x=>x.sec === "cahier" && x.unit === u); if (g.length) groups.push([`Cahier · ${t("unitW")} ${u}`, g]); });
   main.innerHTML = `<div class="col" style="max-width:980px">
   <header class="t-head seyes"><p class="eyebrow">${COURSES[COURSE].name} · ${COURSES[COURSE].book}</p><h1>${t("bank")}</h1><p class="t-ru">${t("bankSub")}</p></header>
   <div class="bank-set">
@@ -106,7 +112,7 @@ function renderBank(){
     const by = {}; pool.forEach(x=>(by[x.tid] = by[x.tid] || []).push(x)); Object.values(by).forEach(shuffle);
     const ids = shuffle(Object.keys(by)), pick = [];
     while (pick.length < Math.min(cfg.n, pool.length)) { let add = false; for (const id of ids) if (by[id].length && pick.length < cfg.n) { pick.push(by[id].pop()); add = true; } if (!add) break; }
-    const ord = id => ORDER.findIndex(x=>x.id === id);
+    const all = [...ORDER, ...CAH], ord = id => all.findIndex(x=>x.id === id);
     if (cfg.mix) shuffle(pick); else pick.sort((a, b)=>ord(a.tid) - ord(b.tid));
     bankRun(pick);
   });
@@ -198,7 +204,7 @@ function openDeck(tp, start){
   if (CLOSING) { const c = CLOSING; CLOSING = null; deckRestore(c); c.el.remove(); }
   DECK_TP = tp;
   const parts = deckCards(tp), es = COURSE === "es";
-  const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   /* настоящие блоки заданий переезжают из страницы в карточки и возвращаются при закрытии */
   const exEls = $$(".exs > .exb", main), moved = exEls.map(el=>{ const ph = document.createComment("dk"); el.before(ph); return {el, ph}; });
   const nT = 1 + parts.length, hasEx = moved.length > 0;
@@ -208,7 +214,7 @@ function openDeck(tp, start){
     cards.push({h:`<div class="dk-end dk-mid"><div class="dk-end-i">✎</div><h2>${t("deckPracticeH")}</h2><p class="muted">${t("deckPracticeP", moved.length)}</p><button type="button" class="btn pri" data-dk="1">${t("deckStart")} →</button></div>`});
     moved.forEach((m, k)=>cards.push({ex:k}));
   }
-  const idx = ORDER.indexOf(tp), next = ORDER[idx + 1];
+  const sq = seqOf(tp), idx = sq.indexOf(tp), next = sq[idx + 1];
   cards.push({h:`<div class="dk-end" id="dkFin"></div>`, fin:true});
   const el = document.createElement("div"); el.className = "deck"; el.id = "deck";
   el.innerHTML = `<div class="dk-top"><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>

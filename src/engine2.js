@@ -26,7 +26,7 @@ const ICO = {
    ========================================================= */
 const I18N = {
 ru:{
-  units:{"0":"Bienvenue ! (база)","1":"Je suis…","2":"Près de moi"},
+  units:{"0":"Bienvenue ! (база)","1":"Je suis…","2":"Près de moi","3":"Qu’est-ce qu’on mange ?"},
   topics:"Темы", home:"Главная", test:"Пробная контрольная", quizlet:"Quizlet", cheat:"Шпаргалка", account:"Личный кабинет",
   fromBook:"Из учебника", ref:"Для справки", hideNav:"Скрыть меню", showNav:"Меню", lang:"Язык",
   you:"Ты", guest:"Гость",
@@ -42,7 +42,7 @@ ru:{
   spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
   qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
-  heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 1 et 2",
+  heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
   heroLead:n=>`Вся грамматика и лексика первых двух юнитов: объяснения на русском с параллелями из английского, ${n} упражнений с мгновенной проверкой, карточки Quizlet и пробная контрольная с оценкой по 20-балльной шкале.`,
   startFirst:"Начать с первой темы", solved:"из {n} заданий решено", bookTopics:"тем из учебника", refTopics:"тем для справки", lastTest:"последняя пробная",
   how:[["Темы из учебника","Иди по порядку: сначала теория, потом задания под ней."],["Quizlet","Учи слова карточками, режимами «Заучивание», «Письмо» и «Подбор»."],["Шпаргалка","Все таблицы на одной странице. Повтори вечером и утром."],["Пробная контрольная","Реши 2–3 варианта, пока не будет стабильно 16/20 и выше."]],
@@ -50,7 +50,7 @@ ru:{
   tipNoTts:"Твой браузер не умеет озвучивать текст, поэтому аудио-кнопки скрыты.",
   tipCloud:"Ответы и прогресс сохраняются в облаке и видны с любого устройства, где ты вошёл в Claude.",
   tipLocal:"Ответы и прогресс сохраняются в этом браузере.",
-  bookSub:"Unités 0–2, с. 11–44", refSub:"Объяснения с нуля и то, что просто полезно знать", unit0note:" — основа, на которую опираются юниты 1–2",
+  bookSub:"Unités 0–3, с. 11–58", refSub:"Объяснения с нуля и то, что просто полезно знать", unit0note:" — основа, на которую опираются юниты 1–3",
   refEyebrow:"Для справки", toPractice:n=>`К заданиям ↓ (${n})`, practiceSub:"Практика по теме. Ответы проверяются сразу и сохраняются — можно вернуться позже.",
   back:"← назад", next:"дальше →",
   doneOf:(d,n,p)=>`${d} / ${n} заданий · ${p}%`,
@@ -68,8 +68,8 @@ ru:{
   listenNoTts:"Синтез речи в этом браузере недоступен — прочитай число и напиши его цифрами.", listen:"Слушать", slow:"медленно", listenHint:"Пиши цифры — ответ проверяется сразу", numberN:n=>`число ${n}`,
   cardsLeft:(q,k)=>`Осталось: <b>${q}</b> · знаю: ${k}`, flip:"нажми, чтобы перевернуть", flipA:"перевернуть карточку", knowIt:"Знаю", againCard:"Ещё раз", cardsHint:"«Знаю» убирает карточку, «Ещё раз» — отправляет в конец", deckDone:"Колода пройдена", deckDoneN:n=>`Все ${n} карточек пройдены.`, dirFr:"FR → RU", dirRu:"RU → FR",
   check:"Проверить", readN:(s,n)=>`Прочитано: ${s} / ${n}`, allRead:"<b>Все слова прочитаны</b>",
-  cheatEyebrow:"Unités 1–2 · всё самое важное", cheatSub:"Все таблицы на одном экране. Перечитай перед контрольной.",
-  testEyebrow:"Contrôle blanc · unités 1 et 2", testSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–2. Каждый раз — новый вариант. В конце — оценка из 20 и разбор по темам.`,
+  cheatEyebrow:"Unités 1–3 · всё самое важное", cheatSub:"Все таблицы на одном экране. Перечитай перед контрольной.",
+  testEyebrow:"Contrôle blanc · unités 1–3", testSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–2. Каждый раз — новый вариант. В конце — оценка из 20 и разбор по темам.`,
   modeNow:"Проверять сразу", modeEnd:"Как на экзамене — в конце", modeGroup:"Режим проверки", qN:n=>`${n} вопросов`, myTries:"Мои попытки",
   testRunEyebrow:(n,now)=>`Contrôle blanc · ${n} questions · ${now?"проверка сразу":"проверка в конце"}`,
   testRunSub:now=>now?"Каждый ответ проверяется сразу. Засчитывается первая попытка. В конце нажми «Узнать оценку».":"Отвечай на всё, потом нажми «Сдать работу» внизу.",
@@ -101,7 +101,7 @@ ru:{
   qzList:"Слова набора", qzStar:"отметить звёздочкой", qzSay:"произнести", qzLvShort:["новое","учу","почти","знаю"]
 },
 en:{
-  units:{"0":"Bienvenue ! (basics)","1":"Je suis…","2":"Près de moi"},
+  units:{"0":"Bienvenue ! (basics)","1":"Je suis…","2":"Près de moi","3":"Qu’est-ce qu’on mange ?"},
   topics:"Topics", home:"Home", test:"Mock test", quizlet:"Quizlet", cheat:"Cheat sheet", account:"My account",
   fromBook:"From the textbook", ref:"Reference", hideNav:"Hide menu", showNav:"Menu", lang:"Language",
   you:"You", guest:"Guest",
@@ -117,7 +117,7 @@ en:{
   spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
   qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
-  heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 1 et 2",
+  heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
   heroLead:n=>`All the grammar and vocabulary of the first two units: explanations in English with parallels from Russian, ${n} exercises with instant checking, Quizlet flashcards and a mock test graded out of 20.`,
   startFirst:"Start with the first topic", solved:"of {n} exercises done", bookTopics:"textbook topics", refTopics:"reference topics", lastTest:"last mock test",
   how:[["Textbook topics","Go in order: first the explanation, then the exercises below it."],["Quizlet","Learn words with flashcards, Learn, Write and Match modes."],["Cheat sheet","All the tables on one page. Review in the evening and in the morning."],["Mock test","Do 2–3 versions until you consistently get 16/20 or more."]],
@@ -125,7 +125,7 @@ en:{
   tipNoTts:"Your browser can’t read text aloud, so the audio buttons are hidden.",
   tipCloud:"Your answers and progress are saved in the cloud and available on any device where you’re signed in to Claude.",
   tipLocal:"Your answers and progress are saved in this browser.",
-  bookSub:"Unités 0–2, p. 11–44", refSub:"Explanations from scratch and things that are good to know", unit0note:" — the basics units 1–2 build on",
+  bookSub:"Unités 0–3, p. 11–58", refSub:"Explanations from scratch and things that are good to know", unit0note:" — the basics units 1–3 build on",
   refEyebrow:"Reference", toPractice:n=>`Go to exercises ↓ (${n})`, practiceSub:"Practice for this topic. Answers are checked instantly and saved — you can come back later.",
   back:"← back", next:"next →",
   doneOf:(d,n,p)=>`${d} / ${n} exercises · ${p}%`,
@@ -143,8 +143,8 @@ en:{
   listenNoTts:"Speech isn’t available in this browser — read the number and write it in digits.", listen:"Listen", slow:"slowly", listenHint:"Type the digits — checked instantly", numberN:n=>`number ${n}`,
   cardsLeft:(q,k)=>`Left: <b>${q}</b> · known: ${k}`, flip:"click to flip", flipA:"flip the card", knowIt:"I know it", againCard:"Again", cardsHint:"«I know it» removes the card, «Again» sends it to the end", deckDone:"Deck finished", deckDoneN:n=>`All ${n} cards done.`, dirFr:"FR → EN", dirRu:"EN → FR",
   check:"Check", readN:(s,n)=>`Read: ${s} / ${n}`, allRead:"<b>All words read</b>",
-  cheatEyebrow:"Unités 1–2 · the essentials", cheatSub:"All the tables on one screen. Review before the test.",
-  testEyebrow:"Contrôle blanc · unités 1 et 2", testSub:n=>`Questions are drawn at random from a bank of ${n} covering every topic of units 1–2. A new version every time. At the end you get a grade out of 20 and a breakdown by topic.`,
+  cheatEyebrow:"Unités 1–3 · the essentials", cheatSub:"All the tables on one screen. Review before the test.",
+  testEyebrow:"Contrôle blanc · unités 1–3", testSub:n=>`Questions are drawn at random from a bank of ${n} covering every topic of units 1–2. A new version every time. At the end you get a grade out of 20 and a breakdown by topic.`,
   modeNow:"Check instantly", modeEnd:"Exam mode — check at the end", modeGroup:"Checking mode", qN:n=>`${n} questions`, myTries:"My attempts",
   testRunEyebrow:(n,now)=>`Contrôle blanc · ${n} questions · ${now?"instant checking":"checked at the end"}`,
   testRunSub:now=>now?"Each answer is checked instantly. Your first attempt counts. At the end click «Get my grade».":"Answer everything, then click «Hand in» at the bottom.",
@@ -226,18 +226,21 @@ const ES_CACHE = {};
 const OKW = () => COURSE === "es" ? "¡Correcto!" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
-let TOP, BOOK, GRAM, REF, ORDER, byId, POOLX, CHEATX;
+let TOP, BOOK, GRAM, REF, CAH, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
     const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG)), cheat: ES_CHEAT(LANG)});
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
-  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...GRAM, ...REF];
+  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
   document.documentElement.lang = LANG;
   document.documentElement.dataset.course = COURSE;
 }
 setData();
+/* французский: Livre / Cahier / Tutor */
+let FRMODE = ["livre","cahier","tutor"].includes(ls.get("edito-frmode")) ? ls.get("edito-frmode") : "livre";
+const seqOf = tp => tp && tp.sec === "cahier" ? CAH : ORDER;
 
 /* =========================================================
    STORE: local cache + cloud (db) under data/users/<id>/
@@ -1083,13 +1086,13 @@ INIT.order = (api, ex) => {
   const build = restore => {
     api.body.innerHTML = ""; res = ex.items.map((_,k)=> restore && restore.r && restore.r[k] ? {...restore.r[k]} : {pos:0, mis:0, done:false});
     ex.items.forEach((it,k)=>{
-      const words = it.s.split(" ");
+      const words = it.sep ? it.s.split(it.sep) : it.s.split(" "), said = it.sep ? words.join(", ") : it.s;
       let toks = shuffle(words.slice()); let guard = 0;
-      while (words.length > 2 && toks.join(" ") === it.s && guard++ < 10) toks = shuffle(toks);
-      const row = document.createElement("div"); row.className = "it ord";
+      while (words.length > 2 && toks.join("\u0001") === words.join("\u0001") && guard++ < 10) toks = shuffle(toks);
+      const row = document.createElement("div"); row.className = "it ord" + (it.sep ? " ord-seq" : "");
       row.innerHTML = `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div><div class="fb" hidden></div>`;
       const line = $(".ord-line", row), fb = $(".fb", row), bank = $(".ord-bank", row);
-      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = (r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`) + api.whyItem(it.s, it.ru); };
+      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = (r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`) + api.whyItem(said, it.ru); };
       for (let p = 0; p < res[k].pos; p++) { const tk = $$(".tok", bank).find(x=>x.textContent === words[p]); if (tk) line.appendChild(tk); }
       if (res[k].done) finishRow();
       row.addEventListener("click", e=>{
@@ -1097,7 +1100,7 @@ INIT.order = (api, ex) => {
         if (!tk || r.done) return;
         if (tk.textContent === words[r.pos]) {
           line.appendChild(tk); r.pos++;
-          if (r.pos === words.length) { r.done = true; finishRow(); speak(it.s); api.ans(k, r.mis ? "bad" : "ok"); }
+          if (r.pos === words.length) { r.done = true; finishRow(); speak(said); api.ans(k, r.mis ? "bad" : "ok"); }
         } else {
           r.mis++; tk.classList.add("is-bad","flash"); setTimeout(()=>tk.classList.remove("is-bad","flash"), 550);
           fb.hidden = false; fb.innerHTML = `<span class="pen">${t("wrongWord")}</span> <span class="ex-e">${t("errorsN", r.mis)}</span>`;
@@ -1201,9 +1204,29 @@ function wireCourseDD(){
 }
 document.addEventListener("click", e=>{ const dd = $("#cdd"); if (dd && dd.classList.contains("open") && !dd.contains(e.target)) cddOpen(false); });
 document.addEventListener("keydown", e=>{ if (e.key === "Escape") { const dd = $("#cdd"); if (dd && dd.classList.contains("open")) { cddOpen(false); $("#cddBtn").focus(); } } });
+/* сегменты Livre / Cahier / Tutor (только французский) */
+function frModeHTML(where){
+  return `<div class="seg frmode${where === "nav" ? " frmode-nav" : ""}" role="tablist" aria-label="${esc(t("frModeL"))}">${["livre","cahier","tutor"].map(m=>`<button type="button" role="tab" data-frmode="${m}" aria-selected="${FRMODE===m}" class="${FRMODE===m?"on":""}">${t("frModes")[m]}</button>`).join("")}</div>`;
+}
+function navTopics(units, unitW, uname){
+  const es = COURSE === "es";
+  if (!es && FRMODE === "tutor") return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
+  const list = !es && FRMODE === "cahier" ? CAH : BOOK;
+  return units.map(u=>{ const g = list.filter(x=>x.unit===u); return g.length ? `<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + g.map(navLink).join("") : ""; }).join("")
+    + (!es && FRMODE === "cahier" ? "" : `${GRAM.length ? `<div class="nav-sec">${t("gram")}</div>${GRAM.map(navLink).join("")}` : ""}<div class="nav-sec">${t("ref")}</div>${REF.map(navLink).join("")}`);
+}
+function setFrMode(m, quiet){
+  if (!["livre","cahier","tutor"].includes(m) || m === FRMODE) return;
+  FRMODE = m; ls.set("edito-frmode", m);
+  const keepNav = nav.classList.contains("open"), sc = $(".nav-scroll", nav), y = sc ? sc.scrollTop : 0;
+  buildNav(); if (keepNav) nav.classList.add("open");
+  const sc2 = $(".nav-scroll", nav); if (sc2) sc2.scrollTop = Math.min(y, 0);
+  if (!quiet) { const h = decodeURIComponent((location.hash||"").slice(1)); if (!h || h === "home") { renderHome(); markActive(); } }
+}
+document.addEventListener("click", e=>{ const b = e.target.closest("[data-frmode]"); if (b) setFrMode(b.dataset.frmode); });
 function buildNav(){
   const es = COURSE === "es", unitW = es ? t("unitWes") : t("unitW");
-  const units = es ? ["1","2","3"] : ["0","1","2"], uname = u => es ? t("esUnits")[u] : t("units")[u];
+  const units = es ? ["1","2","3"] : ["0","1","2","3"], uname = u => es ? t("esUnits")[u] : t("units")[u];
   nav.innerHTML = `
   <div class="nav-top">
     ${courseDDHTML()}
@@ -1217,11 +1240,8 @@ function buildNav(){
       ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>`}
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
     </div>
-    <div class="nav-sec">${t("fromBook")}</div>
-    ${units.map(u=>`<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
-    ${GRAM.length ? `<div class="nav-sec">${t("gram")}</div>${GRAM.map(navLink).join("")}` : ""}
-    <div class="nav-sec">${t("ref")}</div>
-    ${REF.map(navLink).join("")}
+    ${es ? `<div class="nav-sec">${t("fromBook")}</div>` : frModeHTML("nav")}
+    ${navTopics(units, unitW, uname)}
   </div>
   <div class="nav-foot">
     ${meHTML()}
@@ -1370,26 +1390,31 @@ function saveNudge(){
 function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
-  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2"];
-  const cont = tt.done ? ORDER.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
+  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2","3"];
+  const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
+  const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
   main.innerHTML = `<div class="col">
   <header class="hero seyes">
     <p class="eyebrow">${es ? t("esHeroEyebrow") : t("heroEyebrow")}</p>
     <h1>${es ? `Repaso <em>para el examen</em>` : `Révisions <em>pour le contrôle</em>`}</h1>
     <p class="lead">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
-    <div class="btns">${cont ? `<a class="btn pri" href="#${cont.id}">${t("homeCont")}: ${cont.title} →</a>` : `<a class="btn pri" href="#${BOOK[0].id}">${t("homeStart")} →</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
+    <div class="btns">${cont ? `<a class="btn pri" href="#${cont.id}">${t("homeCont")}: ${cont.title} →</a>` : `<a class="btn pri" href="#${seq[0].id}">${t("homeStart")} →</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
+  ${es ? "" : `<div class="home-mode">${frModeHTML("home")}</div>`}
+  ${!es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
+  <div class="sec-h"><h2>Cahier d’activités</h2><p>${t("cahierSub")}</p></div>
+  ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `<h3 class="unit-h">${unitW} ${u} <small>${t("units")[u]}</small></h3><div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
   <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
   ${units.map(u=>`<h3 class="unit-h">${unitW} ${u} <small>${es ? t("esUnits")[u] : t("units")[u] + (u==="0" ? t("unit0note") : "")}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
   ${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
-  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>
+  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>`}
   </div>`;
 }
 function renderTopic(tp){
-  const idx = ORDER.indexOf(tp), prev = ORDER[idx-1], next = ORDER[idx+1], es = COURSE === "es";
-  const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const seq = seqOf(tp), idx = seq.indexOf(tp), prev = seq[idx-1], next = seq[idx+1], es = COURSE === "es";
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
@@ -1621,7 +1646,7 @@ function renderQuizlet(){
   if (!QSETS.some(s=>s.id===QZ.set) && QZ.set !== "all" && QZ.set !== "fav") QZ.set = "all";
   const all = qSetStats("all");
   main.innerHTML = `<div class="col" style="max-width:980px">
-  <header class="t-head seyes"><p class="eyebrow">Quizlet · Unités 0–2</p><h1>Quizlet</h1><p class="t-ru">${t("qzSub")}</p>
+  <header class="t-head seyes"><p class="eyebrow">Quizlet · Unités 0–3</p><h1>Quizlet</h1><p class="t-ru">${t("qzSub")}</p>
     <div class="stats"><span><b>${all.n}</b>${t("qzWords")}</span><span><b>${all.learned}</b>${t("qzLearned")}</span><span><b>${all.starred}</b>${t("qzStarred")}</span></div></header>
   <div class="qz-sets">${[{id:"all", t:t("qzAll"), sub:""}, {id:"fav", t:t("qzFav"), sub:t("qzFavSub"), fav:true}].concat(QSETS.map(s=>({id:s.id, t:s.t, sub: LANG==="en" ? s.en : s.ru}))).map(s=>{ const st = qSetStats(s.id); return `<button type="button" class="qz-set${QZ.set===s.id?" on":""}${s.fav?" is-fav":""}" data-set="${s.id}"><b>${s.fav ? ICO_HEART : ""}${s.t}</b>${s.sub?`<small>${s.sub}</small>`:""}<span class="qz-meta">${qMeta(s.id)}</span><span class="bar"><i style="width:${(st.pct*100).toFixed(0)}%"></i></span></button>`; }).join("")}</div>
   <div class="qz-modes" role="tablist">${["review","cards","learn","write","match"].map(m=>`<button type="button" role="tab" class="${QZ.mode===m?"on":""}" data-mode="${m}"><span class="m-l">${t("qzModes")[m]}</span><span class="m-s">${t("qzModesS")[m]}</span></button>`).join("")}</div>
@@ -1944,6 +1969,7 @@ function route(keepScroll){
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
   if (want && want !== COURSE) setCourse(want, true);
   const y = window.scrollY;
+  if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
   if (byId[h]) renderTopic(byId[h]);
   else if (h === "test") renderTest();
   else if (h === "shpargalka") renderCheat();

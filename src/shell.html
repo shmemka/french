@@ -1520,6 +1520,38 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .promo-m{margin:8px 0 0;font-size:13.5px;font-weight:600;min-height:1.2em}
 .promo-m[data-k="ok"]{color:var(--ok)}
 .promo-m[data-k="err"]{color:var(--marge)}
+
+/* ---- Livre / Cahier / Tutor ---- */
+.frmode{display:flex;gap:2px}
+.frmode button{flex:1;font:inherit;font-size:13px;font-weight:600;color:var(--ink-2);padding:7px 6px;transition:background .2s,color .2s}
+.frmode button.on{color:var(--encre-2);font-weight:800}
+.frmode-nav{margin:20px 4px 4px}
+.home-mode{margin:6px 0 -6px}
+.home-mode .frmode{max-width:380px}
+.home-mode .frmode button{font-size:14.5px;padding:9px 10px}
+.nav-empty{margin:14px 12px;font-size:13.5px;color:var(--ink-3)}
+.empty-st{display:grid;justify-items:center;text-align:center;gap:8px;padding:56px 20px;margin-top:22px;background:var(--sheet);border-radius:var(--r-xl);box-shadow:var(--sh-1)}
+.empty-st h2{margin:0}
+.empty-st p{margin:0;color:var(--ink-3);max-width:36ch}
+.empty-i{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--encre-soft);color:var(--encre-2);font-size:26px;font-weight:800}
+.cah-links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.doc-card{background:var(--sheet);border-radius:var(--r-lg);box-shadow:var(--sh-1);padding:18px 20px;line-height:1.65;font-size:15.5px;margin:0 0 16px}
+.doc-card.fr,.doc-grid .doc-card{border-left:4px solid var(--encre)}
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:0 0 16px}
+.doc-grid .doc-card{margin:0;font-size:14.5px}
+.ord-seq .tok{font-size:14px}
+
+/* ---- «Частые ошибки» ---- */
+.mist{background:var(--sheet);border-radius:var(--r-lg);box-shadow:var(--sh-1);padding:16px 18px 6px;margin:26px 0 8px}
+.mist-t{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--marge);margin-bottom:8px}
+.mist-r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 16px;padding:10px 0;border-top:1px solid var(--tint)}
+.mist-r:first-of-type{border-top:0}
+.mist-bad{color:var(--ink-3)}
+.mist-bad s{text-decoration-color:var(--marge);text-decoration-thickness:2px}
+.mist-good{color:var(--ok);font-weight:600}
+.mist-good .fr{color:var(--ok)}
+.mist-why{grid-column:1/-1;font-size:13.5px;color:var(--ink-2)}
+@media (max-width:600px){.mist-r{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 <header class="topbar">
