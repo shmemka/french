@@ -1457,6 +1457,53 @@ body.deck-open{overflow:hidden}
 .dk-dots i.on{width:22px;background:var(--encre)}
 .dk-keys{text-align:center;font-size:12px;color:var(--ink-3);margin:8px 0 0}
 @media (pointer:coarse){.dk-keys{display:none}}
+.dk-me{flex:none;display:grid}
+.deck,.dk-stage{grid-template-columns:minmax(0,1fr)}
+.dk-card{min-width:0}
+
+.dk-end-i.todo{background:var(--encre-soft);color:var(--encre-2)}
+.dk-me .av{--s:28px}
+.dk-plan{margin:18px 0 0;display:inline-flex;align-self:flex-start;font-size:13.5px;font-weight:700;color:var(--encre-2);background:var(--encre-soft);border-radius:999px;padding:6px 14px}
+.dk-end .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.dk-mid .dk-end-i{background:var(--encre-soft);color:var(--encre-2)}
+.dk-exc .dk-in{justify-content:flex-start;padding:clamp(6px,1.6vw,14px)}
+.dk-exc .exb{background:transparent;box-shadow:none;border-radius:0}
+.dk-dots i.x{border-radius:3px;background:color-mix(in srgb,var(--encre) 22%,var(--tint-2))}
+.dk-dots i.x.done{background:var(--ok)}
+.dk-dots i.x.on{background:var(--encre)}
+
+
+/* ---- упрощение интерфейса ---- */
+button.si{font:inherit;color:inherit;border:0;cursor:pointer}
+.si-st{font-size:13px;font-weight:700;color:var(--ink-3);padding:6px 0 2px}
+.si.on .si-st{color:var(--encre-2)}
+.si.own:not(.on) .si-st{opacity:0;transition:opacity .2s}
+.si.own:not(.on):hover .si-st,.si.own:not(.on):focus-visible .si-st{opacity:1;color:var(--encre-2)}
+@media (min-width:980px){.dg-st{display:none}}
+.tset{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 18px;margin-top:20px}
+.bank-opt{display:grid;gap:6px}
+.bank-l{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.bank-sp{flex:1}
+.bank-go{position:sticky;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;background:var(--sheet);box-shadow:var(--sh-2);border-radius:var(--r-xl);padding:14px 16px;align-items:flex-end;justify-content:flex-start;gap:14px 18px}
+.bank-go #bkAvail{align-self:center;font-size:13px}
+.tchip{background:transparent;box-shadow:inset 0 0 0 1.5px var(--tint-2);color:var(--ink-3)}
+.tchip.on{background:var(--encre-soft);color:var(--encre-2);box-shadow:none}
+.tchip.on::before{content:"✓";font-weight:800}
+@media (max-width:600px){.tset .btn{width:100%;justify-content:center}.bank-go{padding:14px;position:static;order:-1;box-shadow:var(--sh-1)}.bank-go .btn{width:100%;justify-content:center}.bank-go .bank-sp,.bank-go #bkAvail{display:none}.bank-opt .seg{display:flex}.bank-opt .seg button{flex:1}.tset .bank-opt,.bank-go .bank-opt{width:100%}}
+.shop-grid[data-cat="emoji"]{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+.shop-grid[data-cat="emoji"] .si{padding:14px 10px 10px}
+@media (max-width:600px){
+  .shop-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:-8px -16px 18px;padding:4px 16px 8px}
+  .shop-tabs::-webkit-scrollbar{display:none}
+  .shop-tabs button{flex:none}
+  .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .shop-grid[data-cat="emoji"]{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .shop-grid[data-cat="emoji"] .si{padding:10px 4px 6px;gap:2px}
+  .shop-grid[data-cat="emoji"] .si .av{--s:44px}
+  .shop-grid[data-cat="emoji"] .si-prev{height:48px}
+  .shop-grid[data-cat="emoji"] .si.own .si-st{display:none}
+  .shop-head .bal{padding:8px 14px}
+}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -5033,6 +5080,52 @@ return [
 }
 
 /* =========================================================
+   ESPAÑOL — шпаргалка: все главные таблицы юнитов 1–3
+   ES_CHEAT("ru") / ES_CHEAT("en"). Примечания не сравнивают
+   испанский с русским.
+   ========================================================= */
+function ES_CHEAT(L) {
+  const keep = ESL; ESL = L;
+  try {
+    const C = (h, tbl, note) => `<section class="ch"><h3>${h}</h3>${tbl}${note ? `<p class="ch-n">${note}</p>` : ""}</section>`;
+    const P = ["yo", "tú", T("él, ella, Ud.", "él, ella, Ud."), "nosotros", "vosotros", T("ellos, Uds.", "ellos, Uds.")];
+    const V = (verbs, rows) => TBL(["", ...verbs], P.map((p, k) => [p, ...rows.map(r => r[k])]));
+    return `<div class="cheat">
+${C("ser · tener", V(["ser", "tener"], [["soy", "eres", "es", "somos", "sois", "son"], ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]]),
+  T("Возраст — <b>tener</b>: tengo 20 años. Профессия — <b>ser</b> без артикля: soy profesora.", "Age uses <b>tener</b>: tengo 20 años. Jobs use <b>ser</b> with no article: soy profesora."))}
+${C(T("Presente: окончания", "Presente: endings"), V(["habl-ar", "com-er", "viv-ir"], [["-o", "-as", "-a", "-amos", "-áis", "-an"], ["-o", "-es", "-e", "-emos", "-éis", "-en"], ["-o", "-es", "-e", "-imos", "-ís", "-en"]]),
+  T("-er и -ir отличаются только в nosotros и vosotros: comemos / vivimos, coméis / vivís.", "-er and -ir differ only in nosotros and vosotros: comemos / vivimos, coméis / vivís."))}
+${C("estar · ir", V(["estar", "ir"], [["estoy", "estás", "está", "estamos", "estáis", "están"], ["voy", "vas", "va", "vamos", "vais", "van"]]),
+  T("<b>ir a</b> + место: voy a Madrid (a + el = <b>al</b>: voy al cine).", "<b>ir a</b> + place: voy a Madrid (a + el = <b>al</b>: voy al cine)."))}
+${C("llamarse · hacer", V(["llamarse", "hacer"], [["me llamo", "te llamas", "se llama", "nos llamamos", "os llamáis", "se llaman"], ["hago", "haces", "hace", "hacemos", "hacéis", "hacen"]]),
+  T("¿Cómo te llamas? — Me llamo Ana. ¿Qué haces? — Estudio.", "¿Cómo te llamas? — Me llamo Ana. ¿Qué haces? — Estudio."))}
+${C(T("«Ботинок»: querer · poder", "The “boot”: querer · poder"), V(["querer", "poder"], [["quiero", "quieres", "quiere", "queremos", "queréis", "quieren"], ["puedo", "puedes", "puede", "podemos", "podéis", "pueden"]]),
+  T("Гласная корня меняется везде, кроме nosotros и vosotros. <b>querer + инфинитив</b>: quiero viajar.", "The stem vowel changes everywhere except nosotros and vosotros. <b>querer + infinitive</b>: quiero viajar."))}
+${C(T("Артикли", "Articles"), TBL(["", T("м. р.", "masc."), T("ж. р.", "fem.")], [[T("опред. ед.", "def. sing."), "el", "la"], [T("опред. мн.", "def. pl."), "los", "las"], [T("неопред. ед.", "indef. sing."), "un", "una"], [T("неопред. мн.", "indef. pl."), "unos", "unas"]]),
+  T("a + el = <b>al</b>, de + el = <b>del</b>. С <b>la</b> не сливаются: a la, de la.", "a + el = <b>al</b>, de + el = <b>del</b>. No merging with <b>la</b>: a la, de la."))}
+${C(T("Род и число", "Gender and number"), TBL([T("Окончание", "Ending"), T("Род", "Gender"), T("Пример", "Example")], [["-o", T("м.", "m."), "el libro"], ["-a", T("ж.", "f."), "la playa"], ["-ción, -dad", T("ж.", "f."), "la canción, la ciudad"], ["-aje", T("м.", "m."), "el viaje"], ["-e", T("любой", "either"), "el coche, la noche"]]),
+  T("Исключения: <b>el</b> día, idioma, problema, mapa · <b>la</b> mano, foto, moto, radio. Мн. ч.: гласная + <b>s</b> (libros), согласная + <b>es</b> (ciudades), z → <b>ces</b> (lápices).", "Exceptions: <b>el</b> día, idioma, problema, mapa · <b>la</b> mano, foto, moto, radio. Plural: vowel + <b>s</b> (libros), consonant + <b>es</b> (ciudades), z → <b>ces</b> (lápices)."))}
+${C(T("Национальности", "Nationalities"), TBL([T("Тип", "Type"), T("он", "he"), T("она", "she")], [["-o → -a", "italiano", "italiana"], [T("согл. + a", "cons. + a"), "francés", "francesa"], ["", "español", "española"], [T("одна форма", "one form"), "belga, marroquí", "belga, marroquí"], ["-ense", "canadiense", "canadiense"]]),
+  T("Тильда исчезает в женском роде: alemán → alemana, inglés → inglesa. Пишутся со строчной буквы.", "The accent disappears in the feminine: alemán → alemana, inglés → inglesa. Written in lower case."))}
+${C("ser · estar · hay", TBL(["", T("Вопрос", "Question"), T("Пример", "Example")], [["ser", T("какой? что это?", "what like? what is it?"), "Perú es muy bonito."], ["estar", T("где находится?", "where is it?"), "Tikal está en Guatemala."], ["hay", T("что там есть?", "what is there?"), "En Chile hay muchas montañas."]]),
+  T("<b>hay</b> + un / una / число / без артикля. <b>el / la</b> + está: El museo está en Bilbao. ✗ hay el…", "<b>hay</b> + un / una / a number / no article. <b>el / la</b> + está: El museo está en Bilbao. ✗ hay el…"))}
+${C("muy · mucho", TBL(["", "", T("Пример", "Example")], [[T("+ прилаг.", "+ adj."), "muy", "muy grande"], [T("+ сущ.", "+ noun"), "mucho / -a / -os / -as", "muchas montañas"], [T("глагол +", "verb +"), "mucho", "llueve mucho"]]),
+  T("Превосходная: <b>el / la + сущ. + más + прилаг. + de</b>: la ciudad más grande de Paraguay.", "Superlative: <b>el / la + noun + más + adj. + de</b>: la ciudad más grande de Paraguay."))}
+${C(T("Вопросительные слова", "Question words"), TBL(["", ""], [["¿Qué?", T("что? / какой + сущ.", "what? / which + noun")], ["¿Cuál? ¿Cuáles?", T("какой из (с ser)", "which one (with ser)")], ["¿Quién? ¿Quiénes?", T("кто?", "who?")], ["¿Dónde?", T("где?", "where?")], ["¿Cómo?", T("как? какой?", "how? what like?")], ["¿Cuándo?", T("когда?", "when?")], ["¿Cuántos? ¿Cuántas?", T("сколько?", "how many?")], ["¿Por qué?", T("почему?", "why?")]]),
+  T("Всегда с тильдой. ¿<b>Cuál</b> es la capital…? — не ¿Qué es…? (это просьба дать определение).", "Always with an accent. ¿<b>Cuál</b> es la capital…? — not ¿Qué es…? (that asks for a definition)."))}
+${C(T("Причина и цель", "Reason and goal"), TBL(["", T("После", "Followed by"), T("Пример", "Example")], [["por", T("сущ.", "noun"), "por mi trabajo"], ["para", T("инфинитив", "infinitive"), "para viajar"], ["porque", T("глагол", "verb"), "porque trabajo aquí"]]),
+  T("Вопрос — <b>¿Por qué?</b> (два слова, тильда), ответ — <b>porque</b> (одно слово).", "Question: <b>¿Por qué?</b> (two words, accent); answer: <b>porque</b> (one word)."))}
+${C(T("Числа", "Numbers"), TBL(["", ""], [["11–15", "once, doce, trece, catorce, quince"], ["16–19", "dieciséis, diecisiete, dieciocho, diecinueve"], ["21–29", "veintiuno, veintidós, veintitrés…"], ["30, 31", "treinta, treinta y uno"], ["40–90", "cuarenta, cincuenta, sesenta, setenta, ochenta, noventa"], ["100", "cien"]]),
+  T("16–29 — одним словом, с 31 — через <b>y</b>: cuarenta y cinco. Тильда: dieciséis, veintidós, veintitrés, veintiséis.", "16–29 are one word; from 31 use <b>y</b>: cuarenta y cinco. Accents: dieciséis, veintidós, veintitrés, veintiséis."))}
+${C(T("Дата", "Dates"), TBL(["", ""], [["¿Qué fecha es hoy?", "Hoy es 5 de mayo. / Estamos a 5 de mayo."], ["¿Qué día es hoy?", "Hoy es lunes."], ["¿Cuándo es tu cumpleaños?", "Es el 12 de octubre."], [T("дни", "days"), "lunes, martes, miércoles, jueves, viernes, sábado, domingo"], [T("сезоны", "seasons"), "la primavera, el verano, el otoño, el invierno"]]),
+  T("Дни и месяцы — со строчной буквы. <b>el lunes</b> = в понедельник, <b>los lunes</b> = по понедельникам.", "Days and months are lower case. <b>el lunes</b> = on Monday, <b>los lunes</b> = on Mondays."))}
+${C(T("Произношение", "Pronunciation"), TBL(["", ""], [["c + e, i · z", "[θ] cine, zapato"], ["c + a, o, u · qu", "[k] casa, queso"], ["g + e, i · j", T("[x] — хриплое «х»: gente, jamón", "[x] — a rasping h: gente, jamón")], ["gu + e, i", "[g] guitarra"], ["h", T("не читается: hola", "silent: hola")], ["ll · y", T("[j]: llamar, yo", "[j]: llamar, yo")], ["ñ", "[ɲ] España"], ["r- · rr", T("раскатистое: rosa, perro", "rolled: rosa, perro")]]),
+  T("Ударение: на -a/-e/-o/-n/-s — предпоследний слог, иначе последний. Всё остальное — тильда: café, inglés.", "Stress: words ending in a vowel, -n or -s stress the second-to-last syllable, others the last. Anything else gets an accent: café, inglés."))}
+</div>`;
+  } finally { ESL = keep; }
+}
+
+/* =========================================================
    ENGLISH VERSION — textbook topics (part 1)
    ========================================================= */
 HL = "en";
@@ -7122,7 +7215,7 @@ Object.assign(I18N.ru, {
   lexSearch:"Найти слово…", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
   esHow:[["Темы по юнитам","Сначала объяснение, потом задания под ним."],["Спряжение","Окончания -ar, -er, -ir и главные неправильные глаголы."],["Лексика","Все слова с переводом и примерами. Скрой перевод и проверь себя."],["Пробная контрольная","Реши несколько вариантов, пока не будет стабильно 80% и выше."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esStart:"Начать с первой темы",
+  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · всё самое важное", esStart:"Начать с первой темы",
   esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
   esVerdicts:[["¡Excelente!","Ты готов(а) к контрольной."],["¡Muy bien!","Хорошо, но некоторые темы стоит повторить — они внизу."],["Aprobado","Неплохо, но повтори темы с красными полосками."],["A repasar","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
@@ -7143,7 +7236,7 @@ Object.assign(I18N.en, {
   lexSearch:"Find a word…", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Mock test","Do a few versions until you consistently get 80% or more."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esStart:"Start with the first topic",
+  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · the essentials", esStart:"Start with the first topic",
   esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–3 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
   esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
@@ -7170,8 +7263,8 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG))});
-    TOP = c.top; POOLX = c.pool; CHEATX = "";
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG)), cheat: ES_CHEAT(LANG)});
+    TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
@@ -8064,7 +8157,7 @@ INIT.cards = (api, ex) => {
   };
   const draw = restoring => {
     if (!queue.length) {
-      api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">Bravo !</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
+      api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
       api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">${praise(1)}</span>`, restoring); return;
     }
     const [fr, tr] = ex.items[queue[0]];
@@ -8092,7 +8185,7 @@ INIT.drill = (api, ex) => {
   const build = restore => {
     seen = restore && restore.seen ? restore.seen.slice() : [];
     api.body.innerHTML = `<div class="drill">${ex.items.map(([w,tx],k)=>`<div class="dr"><b>${esc(w)}</b><span class="tx" ${seen.includes(k)?"":"hidden"}>${esc(tx)}</span><button type="button" class="play" data-k="${k}" ${seen.includes(k)?"data-seen":""}>${ICON_PLAY} ${t("check")}</button></div>`).join("")}</div>`;
-    const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">Bravo !</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
+    const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
     $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>{
       const k = +b.dataset.k; b.previousElementSibling.hidden = false; b.dataset.seen = "1"; speak(ex.items[k][0], .8);
       if (!seen.includes(k)) { seen.push(k); api.save({seen}); api.ans(k, "self"); api.whyFoot(); upd(false); }
@@ -8120,8 +8213,8 @@ function buildNav(){
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
       <a class="nl big" href="#bank" data-id="bank">${ICO.bank}<span class="nl-t">${t("bank")}</span></a>
-      ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
-      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>`}
+      ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>`}
+      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
       <a class="nl big" href="#shop" data-id="shop">${ICO.shop}<span class="nl-t">${t("shop")}</span><span class="nl-coin">🪙 <b data-coins>${S.game.coins}</b></span></a>
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
@@ -8150,7 +8243,7 @@ function setCourse(c, silent){
     buildNav(); if (keepNav) nav.classList.add("open");
     if (silent) return;
     const h = decodeURIComponent((location.hash||"").slice(1));
-    if (["home","test","account",""].includes(h)) route(false); else location.hash = "home";
+    if (["home","test","account","bank","shop","shpargalka",""].includes(h)) route(false); else location.hash = "home";
   };
   if (silent) finish(); else setTimeout(finish, 240);
 }
@@ -8277,18 +8370,16 @@ function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
   const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2"];
-  const how = es ? t("esHow") : t("how");
+  const cont = tt.done ? ORDER.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
   main.innerHTML = `<div class="col">
   <header class="hero seyes">
     <p class="eyebrow">${es ? t("esHeroEyebrow") : t("heroEyebrow")}</p>
     <h1>${es ? `Repaso <em>para el examen</em>` : `Révisions <em>pour le contrôle</em>`}</h1>
     <p class="lead">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
-    <p class="annot">${es ? "¡Ánimo, tú puedes!" : "Bon courage, tu vas réussir !"}</p>
-    <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${es ? t("esStart") : t("startFirst")}</a>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#quizlet">${t("quizlet")}</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
+    <div class="btns">${cont ? `<a class="btn pri" href="#${cont.id}">${t("homeCont")}: ${cont.title} →</a>` : `<a class="btn pri" href="#${BOOK[0].id}">${t("homeStart")} →</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
   ${dailyHTML()}
-  <ol class="how">${how.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
   <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
   ${units.map(u=>`<h3 class="unit-h">${unitW} ${u} <small>${es ? t("esUnits")[u] : t("units")[u] + (u==="0" ? t("unit0note") : "")}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
@@ -8301,7 +8392,7 @@ function renderTopic(tp){
   const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
-    <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
+    <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
     ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
     <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
   </header>
@@ -8315,7 +8406,8 @@ function renderTopic(tp){
   wireDeck(tp);
 }
 function renderCheat(){
-  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
+  const es = COURSE === "es";
+  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${es ? t("esCheatEyebrow") : t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
 }
 
 /* ---------- léxico (испанский) ---------- */
@@ -8356,7 +8448,7 @@ function renderLexico(){
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.classList.add("out"), 1800); setTimeout(()=>el.remove(), 2300); }
 
 /* ---------- mock test ---------- */
-let TEST = null, TMODE = "now";
+let TEST = null, TMODE = "now", TLEN = 20;
 function genTest(n){
   const groups = {}; POOLX.forEach((q,k)=>{ (groups[q.tp] = groups[q.tp] || []).push(k); });
   Object.values(groups).forEach(shuffle);
@@ -8369,11 +8461,15 @@ function genTest(n){
 function renderTest(){
   const hist = testsOf().slice(-5).reverse(), es = COURSE === "es";
   main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${es ? t("esTestEyebrow") : t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${es ? t("esTestSub", POOLX.length) : t("testSub", POOLX.length)}</p>
-  <div class="mode" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div>
-  <div class="len-pick"><button type="button" class="btn pri" data-n="20">${t("qN", 20)}</button><button type="button" class="btn sec" data-n="30">${t("qN", 30)}</button><button type="button" class="btn sec" data-n="45">${t("qN", 45)}</button></div></header>
+  <div class="tset">
+    <div class="bank-opt"><span class="bank-l">${t("tCheckL")}</span><div class="seg big" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div></div>
+    <div class="bank-opt"><span class="bank-l">${t("tLenL")}</span><div class="seg big">${[20,30,45].map(n=>`<button type="button" data-n="${n}" class="${TLEN===n?"on":""}">${n}</button>`).join("")}</div></div>
+    <button type="button" class="btn pri" id="tGo">${t("tGo")} →</button>
+  </div></header>
   ${hist.length ? `<div class="sec-h"><h2>${t("myTries")}</h2></div><ul class="hist">${hist.map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : ""}</div>`;
   $$("[data-m]", main).forEach(b=>b.addEventListener("click", ()=>{ TMODE = b.dataset.m; $$("[data-m]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
-  $$("[data-n]", main).forEach(b=>b.addEventListener("click", ()=>startTest(+b.dataset.n)));
+  $$("[data-n]", main).forEach(b=>b.addEventListener("click", ()=>{ TLEN = +b.dataset.n; $$("[data-n]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
+  $("#tGo").addEventListener("click", ()=>startTest(TLEN));
 }
 function startTest(n){
   TEST = genTest(n);
@@ -8440,7 +8536,7 @@ function gradeTest(box, now, res){
   S.tests = S.tests.slice(-60); touch("progress");
   const rows = Object.entries(per).sort((a,b)=>a[1].g/a[1].n - b[1].g/b[1].n).map(([tp,p])=>{ const r = p.g/p.n, x = byId[tp]; return `<div class="brk-r"><a href="#${tp}">${x ? x.title : tp}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(4, r*100)}%"></i></div><span>${p.g}/${p.n}</span></div>`; }).join("");
   const resEl = document.createElement("div");
-  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${es ? pct + "<small>%</small>" : String(n20).replace(".",",") + "<small>/20</small>"}</div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>`}</div></div></header>
+  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${es ? pct + "<small>%</small>" : String(n20).replace(".",",") + "<small>/20</small>"}</div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button>${es ? `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>` : `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>`}</div></div></header>
   <div class="sec-h"><h2>${t("byTopic")}</h2><p>${t("byTopicSub")}</p></div><div class="brk">${rows}</div><div class="sec-h"><h2>${t("review")}</h2></div>`;
   const col = $(".col", main); col.insertBefore(resEl, col.children[1]);
   $(".t-head", main).remove();
@@ -9129,7 +9225,7 @@ let SHOP_CAT = "emoji", ARMED = "";
 function renderShop(){
   const cats = Object.keys(CAT);
   main.innerHTML = `<div class="col" style="max-width:1000px">
-    <header class="t-head seyes shop-head"><div><p class="eyebrow">${t("shop")}</p><h1>${t("shop")}</h1><p class="t-ru">${t("shopSub")}</p></div>
+    <header class="t-head seyes shop-head"><div><h1>${t("shop")}</h1><p class="t-ru">${t("shopSub")}</p></div>
       <div class="bal"><span class="bal-l">${t("balance")}</span><b>🪙 <span data-coins>${S.game.coins}</span></b></div></header>
     <div class="shop-tabs" role="tablist">${cats.map(c=>`<button type="button" role="tab" data-scat="${c}" class="${SHOP_CAT===c?"on":""}">${t("shopCats")[c]}</button>`).join("")}</div>
     <div class="shop-grid" id="shopGrid"></div></div>`;
@@ -9148,15 +9244,16 @@ function itemPreview(cat, it){
 }
 function paintShop(){
   const g = $("#shopGrid"); if (!g) return;
-  const cat = SHOP_CAT, eq = equippedId(cat);
+  const cat = SHOP_CAT, eq = equippedId(cat); g.dataset.cat = cat;
   g.innerHTML = CAT[cat].map(it=>{
     const id = cat === "emoji" ? it.v : it.id, own = owns(cat, it.id), on = eq === id || (!eq && !id && cat !== "emoji" && cat !== "bg"), key = cat + ":" + it.id;
     let btn;
-    if (on) btn = `<button type="button" class="btn sm sec on" disabled>✓ ${t("equipped")}</button>`;
-    else if (own) btn = `<button type="button" class="btn sm sec" data-use="${esc(key)}">${t("owned")}</button>`;
+    if (on) btn = `<span class="si-st">✓ ${t("equipped")}</span>`;
+    else if (own) btn = `<span class="si-st">${t("owned")}</span>`;
     else if (S.game.coins < it.p) btn = `<button type="button" class="btn sm sec poor" disabled>🪙 ${it.p}<small>${t("needMore", it.p - S.game.coins)}</small></button>`;
     else btn = `<button type="button" class="btn sm pri${ARMED === key ? " armed" : ""}" data-buy="${esc(key)}">${ARMED === key ? t("buyQ", it.p) : "🪙 " + it.p}</button>`;
-    return `<div class="si${on ? " on" : ""}${own ? " own" : ""}"><div class="si-prev">${itemPreview(cat, it)}</div><span class="si-n">${esc(itemName(cat, it.id))}</span>${it.p === 0 ? `<span class="si-free">${t("free")}</span>` : ""}${btn}</div>`;
+    const tag = own && !on ? "button" : "div";
+    return `<${tag} ${tag === "button" ? `type="button" data-use="${esc(key)}" aria-label="${esc(t("owned") + ": " + itemName(cat, it.id))}"` : ""} class="si${on ? " on" : ""}${own ? " own" : ""}"><div class="si-prev">${itemPreview(cat, it)}</div>${cat === "emoji" ? "" : `<span class="si-n">${esc(itemName(cat, it.id))}</span>`}${btn}</${tag}>`;
   }).join("");
   $$("[data-use]", g).forEach(b=>b.addEventListener("click", ()=>equip(b.dataset.use)));
   $$("[data-buy]", g).forEach(b=>b.addEventListener("click", ()=>{
@@ -9304,10 +9401,19 @@ Object.assign(I18N.ru, {
   bankPick:"Выбери хотя бы одну тему.", bankQ:(i,n)=>`Задание ${i} из ${n}`, bankNext:"Дальше", bankEnterHint:"Enter — проверить", bankEnterNext:"Enter — дальше", bankFinish:"Результат",
   bankDoneH:(g,n)=>`${g} из ${n} верно`, bankRetry:n=>`Повторить ошибки (${n})`, bankNew:"Новый набор", bankBack:"К настройкам", bankFrom:"Из темы",
   deckOn:"Режим карточек", deckOff:"Обычный режим", deckGo:"К заданиям", deckOf:(i,n)=>`${i} / ${n}`, deckKeys:"← → или свайп — листать · Esc — обычный режим",
+  deckPlan:(a,b)=>`${a} ${plural(a,["карточка","карточки","карточек"])} теории и ${b} ${plural(b,["задание","задания","заданий"])}`, deckPracticeH:"Теперь — практика", deckPracticeP:n=>`${n} ${plural(n,["задание","задания","заданий"])} по теме. Ответ проверяется по Enter, после ответа можно открыть «?».`, deckStart:"Начать", deckExOf:(i,n)=>`Задание ${i} / ${n}`, deckFinLeft:n=>`Осталось ${n} ${plural(n,["задание","задания","заданий"])}`, deckNext:"Дальше", deckFinRead:"Теория прочитана.", deckToTodo:"К нерешённому",
   lexCal:"Календарь", tfEs:["Verdadero — верно","Falso — неверно"], tfLbl:"Verdadero o falso",
   practiceSub:"Практика по теме. Впиши или выбери ответ — проверка по Enter. После ответа можно открыть «?» с объяснением.",
   qzSub:"Карточки со словами из юнитов 0–2.",
-  listenHint:"Пиши цифры и нажми Enter"
+  listenHint:"Пиши цифры и нажми Enter",
+  bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
+  shopSub:"Монеты дают за верные ответы, новые уровни и стрик.",
+  heroLead:n=>`Теория, ${n} упражнений, карточки Quizlet и пробная контрольная по юнитам 0–2.`,
+  esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–3.`,
+  homeCont:"Продолжить", homeStart:"Начать с первой темы",
+  testSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Оценка — из 20 баллов.`, esTestSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Результат — в процентах.`,
+  tCheckL:"Проверка", tLenL:"Вопросов", modeNow:"Сразу", modeEnd:"В конце", tGo:"Начать",
+  lexicoSub:"Слово — перевод — пример. Нажми на испанское слово, чтобы послушать."
 });
 Object.assign(I18N.en, {
   bank:"Exercise bank", bankSub:"All the multiple-choice and type-in tasks in one place. Pick topics and how many — and practise as much as you like.",
@@ -9315,10 +9421,19 @@ Object.assign(I18N.en, {
   bankPick:"Pick at least one topic.", bankQ:(i,n)=>`Task ${i} of ${n}`, bankNext:"Next", bankEnterHint:"Enter — check", bankEnterNext:"Enter — next", bankFinish:"Results",
   bankDoneH:(g,n)=>`${g} of ${n} correct`, bankRetry:n=>`Retry mistakes (${n})`, bankNew:"New set", bankBack:"Back to settings", bankFrom:"Topic",
   deckOn:"Card mode", deckOff:"Normal mode", deckGo:"Go to exercises", deckOf:(i,n)=>`${i} / ${n}`, deckKeys:"← → or swipe to browse · Esc — normal mode",
+  deckPlan:(a,b)=>`${a} theory ${a===1?"card":"cards"} and ${b} ${b===1?"exercise":"exercises"}`, deckPracticeH:"Now — practice", deckPracticeP:n=>`${n} ${n===1?"exercise":"exercises"} on this topic. Press Enter to check; after answering you can open “?”.`, deckStart:"Start", deckExOf:(i,n)=>`Exercise ${i} / ${n}`, deckFinLeft:n=>`${n} ${n===1?"exercise":"exercises"} left`, deckNext:"Next", deckFinRead:"Theory done.", deckToTodo:"To unsolved",
   lexCal:"Calendar", tfEs:["Verdadero — true","Falso — false"], tfLbl:"Verdadero o falso",
   practiceSub:"Practice for this topic. Type or pick an answer — press Enter to check. After answering you can open “?” for an explanation.",
   qzSub:"Flashcards with the words from units 0–2.",
-  listenHint:"Type the digits and press Enter"
+  listenHint:"Type the digits and press Enter",
+  bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
+  shopSub:"You earn coins for correct answers, new levels and your streak.",
+  heroLead:n=>`Theory, ${n} exercises, Quizlet flashcards and a mock test for units 0–2.`,
+  esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–3.`,
+  homeCont:"Continue", homeStart:"Start with the first topic",
+  testSub:n=>`Random questions from the bank (${n}) across all topics. Graded out of 20.`, esTestSub:n=>`Random questions from the bank (${n}) across all topics. Scored in percent.`,
+  tCheckL:"Checking", tLenL:"Questions", modeNow:"Instantly", modeEnd:"At the end", tGo:"Start",
+  lexicoSub:"Word — translation — example. Click a Spanish word to hear it."
 });
 function tfOpts(){ return COURSE === "es" ? t("tfEs") : [t("vrai"), t("faux")]; }
 function exLabel(ex){ return ex.t === "tf" && COURSE === "es" ? t("tfLbl") : t("label")[ex.t]; }
@@ -9367,11 +9482,10 @@ function renderBank(){
     <div class="pcard"><div class="bank-h"><h3>${t("bankTopics")}</h3><span><button type="button" class="chip-t" id="bkAll">${t("bankAll")}</button><button type="button" class="chip-t" id="bkNone">${t("bankNone")}</button></span></div>
       ${groups.map(([name, g])=>`<div class="bank-g"><button type="button" class="bank-gh" data-grp="${esc(g.map(x=>x.id).join(","))}">${name}</button><div class="tchips">${g.map(tp=>`<button type="button" class="tchip${cfg.sel.includes(tp.id) ? " on" : ""}" data-tp="${tp.id}">${tp.title}<small>${cnt[tp.id]}</small></button>`).join("")}</div></div>`).join("")}
     </div>
-    <div class="bank-row">
-      <div class="pcard"><h3>${t("bankCount")}</h3><div class="seg big">${[10,20,30,50].map(n=>`<button type="button" data-bn="${n}" class="${cfg.n===n?"on":""}">${n}</button>`).join("")}</div></div>
-      <div class="pcard"><h3>${t("bankMode")}</h3><div class="seg big"><button type="button" data-mix="0" class="${cfg.mix?"":"on"}">${t("bankByTopic")}</button><button type="button" data-mix="1" class="${cfg.mix?"on":""}">${t("bankMix")}</button></div></div>
-    </div>
-    <div class="bank-go"><span class="muted" id="bkAvail"></span><p class="auth-msg" id="bkMsg" data-k="err"></p><button type="button" class="btn pri" id="bkGo">${t("bankGo")} →</button></div>
+    <div class="bank-go">
+      <div class="bank-opt"><span class="bank-l">${t("bankCount")}</span><div class="seg big">${[10,20,30,50].map(n=>`<button type="button" data-bn="${n}" class="${cfg.n===n?"on":""}">${n}</button>`).join("")}</div></div>
+      <div class="bank-opt"><span class="bank-l">${t("bankMode")}</span><div class="seg big"><button type="button" data-mix="0" class="${cfg.mix?"":"on"}">${t("bankByTopic")}</button><button type="button" data-mix="1" class="${cfg.mix?"on":""}">${t("bankMix")}</button></div></div>
+      <span class="bank-sp"></span><span class="muted" id="bkAvail"></span><p class="auth-msg" id="bkMsg" data-k="err"></p><button type="button" class="btn pri" id="bkGo">${t("bankGo")} →</button></div>
   </div></div>`;
   const avail = () => { const n = cfg.sel.reduce((s, id)=>s + (cnt[id] || 0), 0); $("#bkAvail").textContent = t("bankAvail", n); $("#bkGo").disabled = !n; };
   const paint = () => { $$("[data-tp]", main).forEach(b=>b.classList.toggle("on", cfg.sel.includes(b.dataset.tp))); avail(); bankSave(); };
@@ -9463,7 +9577,7 @@ const ICO_LIST = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" str
 function deckToggleHTML(){ const on = deckPref(); return `<button type="button" class="deck-tg${on ? " on" : ""}" id="deckTg" aria-pressed="${on}" title="${esc(on ? t("deckOff") : t("deckOn"))}" aria-label="${esc(on ? t("deckOff") : t("deckOn"))}">${on ? ICO_LIST : ICO_DECK}</button>`; }
 function deckToggle(){ const on = !deckPref(); ls.set("edito-deck", on ? "1" : "0"); paintDeckTg(); if (on && DECK_TP) openDeck(DECK_TP); else closeDeck(); }
 function paintDeckTg(){ const b = $("#deckTg"); if (!b) return; b.outerHTML = deckToggleHTML(); $("#deckTg").addEventListener("click", deckToggle); }
-function wireDeck(tp){ DECK_TP = tp; paintDeckTg(); if (deckPref()) openDeck(tp); }
+function wireDeck(tp){ DECK_TP = tp; paintDeckTg(); if (deckPref()) { const L = DECK_LAST; openDeck(tp, L && L.tid === tp.id && Date.now() - L.at < 1500 ? L.i : 0); } }
 let DECK_TP = null;
 function deckCards(tp){
   const tmp = document.createElement("div"); tmp.innerHTML = tp.theory;
@@ -9475,51 +9589,81 @@ function deckCards(tp){
   if (cur.length) cards.push(cur);
   return cards.map(nodes=>{ const d = document.createElement("div"); nodes.forEach(x=>d.appendChild(x)); return d.innerHTML; });
 }
-function openDeck(tp){
+function openDeck(tp, start){
   closeDeck(true);
+  if (CLOSING) { const c = CLOSING; CLOSING = null; deckRestore(c); c.el.remove(); }
   DECK_TP = tp;
   const parts = deckCards(tp), es = COURSE === "es";
   const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
-  const cards = [`<div class="dk-intro"><p class="eyebrow">${eb}</p><h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p></div>`, ...parts.map(h=>`<div class="theory">${h}</div>`),
-    `<div class="dk-end"><div class="dk-end-i">✓</div><h2>${tp.title}</h2><p class="muted">${t("toPractice", tp.ex.length).replace(/\s*↓/, "")}</p><button type="button" class="btn pri" data-dk-go>${t("deckGo")} →</button></div>`];
+  /* настоящие блоки заданий переезжают из страницы в карточки и возвращаются при закрытии */
+  const exEls = $$(".exs > .exb", main), moved = exEls.map(el=>{ const ph = document.createComment("dk"); el.before(ph); return {el, ph}; });
+  const nT = 1 + parts.length, hasEx = moved.length > 0;
+  const cards = [{h:`<div class="dk-intro"><p class="eyebrow">${eb}</p><h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>${hasEx ? `<p class="dk-plan">${t("deckPlan", parts.length, moved.length)}</p>` : ""}</div>`},
+    ...parts.map(h=>({h:`<div class="theory">${h}</div>`}))];
+  if (hasEx) {
+    cards.push({h:`<div class="dk-end dk-mid"><div class="dk-end-i">✎</div><h2>${t("deckPracticeH")}</h2><p class="muted">${t("deckPracticeP", moved.length)}</p><button type="button" class="btn pri" data-dk="1">${t("deckStart")} →</button></div>`});
+    moved.forEach((m, k)=>cards.push({ex:k}));
+  }
+  const idx = ORDER.indexOf(tp), next = ORDER[idx + 1];
+  cards.push({h:`<div class="dk-end" id="dkFin"></div>`, fin:true});
   const el = document.createElement("div"); el.className = "deck"; el.id = "deck";
-  el.innerHTML = `<div class="dk-top"><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>
-    <div class="dk-stage">${cards.map((c, i)=>`<article class="dk-card" data-i="${i}" ${i ? "hidden" : ""}><div class="dk-in">${c}</div></article>`).join("")}</div>
-    <div class="dk-nav"><button type="button" class="dk-arr" data-dk="-1" aria-label="←">←</button><div class="dk-dots">${cards.map((_, i)=>`<i data-dot="${i}"></i>`).join("")}</div><button type="button" class="dk-arr" data-dk="1" aria-label="→">→</button></div>
+  el.innerHTML = `<div class="dk-top"><span class="dk-me" id="dkMe">${avHTML(S.prof, "s")}</span><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>
+    <div class="dk-stage">${cards.map((c, i)=>`<article class="dk-card${c.ex != null ? " dk-exc" : ""}" data-i="${i}" ${i ? "hidden" : ""}><div class="dk-in">${c.h || ""}</div></article>`).join("")}</div>
+    <div class="dk-nav"><button type="button" class="dk-arr" data-dk="-1" aria-label="←">←</button><div class="dk-dots">${cards.map((c, i)=>`<i data-dot="${i}" class="${c.ex != null ? "x" : ""}"></i>`).join("")}</div><button type="button" class="dk-arr" data-dk="1" aria-label="→">→</button></div>
     <p class="dk-keys">${t("deckKeys")}</p>`;
+  const cardEls = $$(".dk-card", el);
+  cards.forEach((c, i)=>{ if (c.ex != null) $(".dk-in", cardEls[i]).appendChild(moved[c.ex].el); });
   document.body.appendChild(el); document.body.classList.add("deck-open");
-  DECK = {el, i:0, n:cards.length};
+  DECK = {el, i:0, n:cards.length, moved, tid:tp.id};
+  const fin = () => {
+    const pc = topicPct(tp), pct = Math.round(pc.pct * 100);
+    $("#dkFin").innerHTML = `<div class="dk-end-i${hasEx && pc.done < pc.n ? " todo" : ""}">${hasEx && pc.done < pc.n ? "✎" : "✓"}</div><h2>${hasEx ? (pc.done === pc.n ? praise(pc.pct) : t("deckFinLeft", pc.n - pc.done)) : tp.title}</h2>
+      <p class="muted">${hasEx ? t("doneOf", pc.done, pc.n, pct) : t("deckFinRead")}</p>
+      <div class="btns">${hasEx && pc.done < pc.n ? `<button type="button" class="btn sec" data-dot-go="${nT + 1 + moved.findIndex((_, k)=>!(S.p[tp.id] || {})[k])}">${t("deckToTodo")}</button>` : ""}${next ? `<a class="btn pri" href="#${next.id}">${t("deckNext")}: ${next.title} →</a>` : `<a class="btn pri" href="#test">${t("test")} →</a>`}</div>`;
+  };
+  const paintDots = () => { const p = S.p[tp.id] || {}; $$("[data-dot]", el).forEach((d, k)=>{ const c = cards[k]; d.classList.toggle("on", k === DECK.i); if (c.ex != null) d.classList.toggle("done", !!p[c.ex]); }); };
   const go = (i, dir) => {
-    if (i < 0 || i >= DECK.n || i === DECK.i && !dir) return;
-    const cs = $$(".dk-card", el), from = cs[DECK.i], to = cs[i], fw = i > DECK.i;
+    if (!DECK || i < 0 || i >= DECK.n || i === DECK.i && !dir) return;
+    const from = cardEls[DECK.i], to = cardEls[i], fw = i > DECK.i;
     if (from !== to) { from.classList.remove("in", "fw", "bw"); from.hidden = true; }
+    if (cards[i].fin) fin();
     to.hidden = false; to.classList.remove("in", "fw", "bw"); void to.offsetWidth; to.classList.add("in", fw ? "fw" : "bw");
     to.scrollTop = 0; DECK.i = i;
-    $("#dkCtr").textContent = t("deckOf", i + 1, DECK.n);
-    $$("[data-dot]", el).forEach((d, k)=>d.classList.toggle("on", k === i));
+    const c = cards[i];
+    $("#dkCtr").textContent = c.ex != null ? t("deckExOf", c.ex + 1, moved.length) : t("deckOf", i + 1, DECK.n);
+    paintDots();
     $('[data-dk="-1"]', el).disabled = i === 0; $('[data-dk="1"]', el).disabled = i === DECK.n - 1;
+    if (c.ex != null && !matchMedia("(pointer:coarse)").matches) { const inp = $("input.ans:not(:disabled), .opt:not(:disabled)", to); if (inp && inp.tagName === "INPUT") setTimeout(()=>{ try { inp.focus({preventScroll:true}); } catch(e) {} }, 380); }
   };
-  DECK.go = go;
+  DECK.go = go; DECK.paint = paintDots;
   el.addEventListener("click", e=>{
     const a = e.target.closest("[data-dk]"); if (a) return go(DECK.i + +a.dataset.dk);
     const d = e.target.closest("[data-dot]"); if (d) return go(+d.dataset.dot);
+    const g = e.target.closest("[data-dot-go]"); if (g) return go(+g.dataset.dotGo);
     if (e.target.closest("[data-dk-x]")) { ls.set("edito-deck", "0"); paintDeckTg(); return closeDeck(); }
-    if (e.target.closest("[data-dk-go]")) { closeDeck(); const p = $("#practice"); if (p) setTimeout(()=>p.scrollIntoView({behavior:"smooth"}), 60); }
+    setTimeout(()=>DECK && DECK.paint(), 0);
   });
+  el.addEventListener("keyup", ()=>setTimeout(()=>DECK && DECK.paint(), 0));
   let sx = null, sy = null;
-  el.addEventListener("touchstart", e=>{ const p = e.touches[0]; sx = p.clientX; sy = p.clientY; }, {passive:true});
+  el.addEventListener("touchstart", e=>{ if (e.target.closest(".exb .sort, .exb .order, .exb .match, .exb input, .tblw")) { sx = null; return; } const p = e.touches[0]; sx = p.clientX; sy = p.clientY; }, {passive:true});
   el.addEventListener("touchend", e=>{ if (sx == null) return; const p = e.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy; sx = null; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && !(window.getSelection() + "").trim()) go(DECK.i + (dx < 0 ? 1 : -1)); }, {passive:true});
-  go(0, 1);
+  go(Math.max(0, Math.min(cards.length - 1, start || 0)), 1);
   requestAnimationFrame(()=>el.classList.add("open"));
 }
+/* вернуть блоки заданий на страницу */
+function deckRestore(d){ if (!d || !d.moved) return; d.moved.forEach(({el, ph})=>{ if (ph.parentNode) ph.replaceWith(el); }); d.moved = null; }
+let DECK_LAST = null;
 function closeDeck(now){
-  if (!DECK) return; const el = DECK.el; DECK = null; document.body.classList.remove("deck-open");
-  if (now) { el.remove(); return; }
-  el.classList.remove("open"); el.classList.add("closing"); setTimeout(()=>el.remove(), 320);
+  if (!DECK) return; const d = DECK, el = d.el; DECK = null; document.body.classList.remove("deck-open");
+  DECK_LAST = {tid:d.tid, i:d.i, at:Date.now()};
+  if (now) { deckRestore(d); el.remove(); return; }
+  el.classList.remove("open"); el.classList.add("closing");
+  CLOSING = d; setTimeout(()=>{ if (CLOSING === d) CLOSING = null; deckRestore(d); el.remove(); }, 320);
 }
+let CLOSING = null;
 document.addEventListener("keydown", e=>{
   if (!DECK) return;
-  if (/INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || "")) return;
+  if (/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || "")) return;
   if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); DECK.go(DECK.i + 1); }
   else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); DECK.go(DECK.i - 1); }
   else if (e.key === "Escape") { ls.set("edito-deck", "0"); paintDeckTg(); closeDeck(); }
@@ -9542,7 +9686,7 @@ function route(keepScroll){
   clearInterval(qzTimer); closeDeck(true);
   /* ссылка ведёт в другой курс — переключаемся */
   let want = null;
-  if (h === "quizlet" || h === "shpargalka" || FR_IDS.has(h)) want = "fr";
+  if (h === "quizlet" || FR_IDS.has(h)) want = "fr";
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
   if (want && want !== COURSE) setCourse(want, true);
   const y = window.scrollY;

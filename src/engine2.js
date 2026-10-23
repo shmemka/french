@@ -181,7 +181,7 @@ Object.assign(I18N.ru, {
   lexSearch:"Найти слово…", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
   esHow:[["Темы по юнитам","Сначала объяснение, потом задания под ним."],["Спряжение","Окончания -ar, -er, -ir и главные неправильные глаголы."],["Лексика","Все слова с переводом и примерами. Скрой перевод и проверь себя."],["Пробная контрольная","Реши несколько вариантов, пока не будет стабильно 80% и выше."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esStart:"Начать с первой темы",
+  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · всё самое важное", esStart:"Начать с первой темы",
   esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
   esVerdicts:[["¡Excelente!","Ты готов(а) к контрольной."],["¡Muy bien!","Хорошо, но некоторые темы стоит повторить — они внизу."],["Aprobado","Неплохо, но повтори темы с красными полосками."],["A repasar","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
@@ -202,7 +202,7 @@ Object.assign(I18N.en, {
   lexSearch:"Find a word…", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Mock test","Do a few versions until you consistently get 80% or more."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esStart:"Start with the first topic",
+  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · the essentials", esStart:"Start with the first topic",
   esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–3 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
   esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
@@ -229,8 +229,8 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG))});
-    TOP = c.top; POOLX = c.pool; CHEATX = "";
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG)), cheat: ES_CHEAT(LANG)});
+    TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
@@ -1123,7 +1123,7 @@ INIT.cards = (api, ex) => {
   };
   const draw = restoring => {
     if (!queue.length) {
-      api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">Bravo !</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
+      api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
       api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">${praise(1)}</span>`, restoring); return;
     }
     const [fr, tr] = ex.items[queue[0]];
@@ -1151,7 +1151,7 @@ INIT.drill = (api, ex) => {
   const build = restore => {
     seen = restore && restore.seen ? restore.seen.slice() : [];
     api.body.innerHTML = `<div class="drill">${ex.items.map(([w,tx],k)=>`<div class="dr"><b>${esc(w)}</b><span class="tx" ${seen.includes(k)?"":"hidden"}>${esc(tx)}</span><button type="button" class="play" data-k="${k}" ${seen.includes(k)?"data-seen":""}>${ICON_PLAY} ${t("check")}</button></div>`).join("")}</div>`;
-    const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">Bravo !</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
+    const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
     $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>{
       const k = +b.dataset.k; b.previousElementSibling.hidden = false; b.dataset.seen = "1"; speak(ex.items[k][0], .8);
       if (!seen.includes(k)) { seen.push(k); api.save({seen}); api.ans(k, "self"); api.whyFoot(); upd(false); }
@@ -1179,8 +1179,8 @@ function buildNav(){
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
       <a class="nl big" href="#bank" data-id="bank">${ICO.bank}<span class="nl-t">${t("bank")}</span></a>
-      ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>
-      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>`}
+      ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>`}
+      <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
       <a class="nl big" href="#shop" data-id="shop">${ICO.shop}<span class="nl-t">${t("shop")}</span><span class="nl-coin">🪙 <b data-coins>${S.game.coins}</b></span></a>
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
@@ -1209,7 +1209,7 @@ function setCourse(c, silent){
     buildNav(); if (keepNav) nav.classList.add("open");
     if (silent) return;
     const h = decodeURIComponent((location.hash||"").slice(1));
-    if (["home","test","account",""].includes(h)) route(false); else location.hash = "home";
+    if (["home","test","account","bank","shop","shpargalka",""].includes(h)) route(false); else location.hash = "home";
   };
   if (silent) finish(); else setTimeout(finish, 240);
 }
@@ -1336,18 +1336,16 @@ function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
   const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2"];
-  const how = es ? t("esHow") : t("how");
+  const cont = tt.done ? ORDER.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
   main.innerHTML = `<div class="col">
   <header class="hero seyes">
     <p class="eyebrow">${es ? t("esHeroEyebrow") : t("heroEyebrow")}</p>
     <h1>${es ? `Repaso <em>para el examen</em>` : `Révisions <em>pour le contrôle</em>`}</h1>
     <p class="lead">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
-    <p class="annot">${es ? "¡Ánimo, tú puedes!" : "Bon courage, tu vas réussir !"}</p>
-    <div class="btns"><a class="btn pri" href="#${BOOK[0].id}">${es ? t("esStart") : t("startFirst")}</a>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#quizlet">${t("quizlet")}</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
+    <div class="btns">${cont ? `<a class="btn pri" href="#${cont.id}">${t("homeCont")}: ${cont.title} →</a>` : `<a class="btn pri" href="#${BOOK[0].id}">${t("homeStart")} →</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
   ${dailyHTML()}
-  <ol class="how">${how.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ol>
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
   <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
   ${units.map(u=>`<h3 class="unit-h">${unitW} ${u} <small>${es ? t("esUnits")[u] : t("units")[u] + (u==="0" ? t("unit0note") : "")}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
@@ -1360,7 +1358,7 @@ function renderTopic(tp){
   const eb = tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
-    <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.page}</span>` : ""}</p>
+    <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
     ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
     <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
   </header>
@@ -1374,7 +1372,8 @@ function renderTopic(tp){
   wireDeck(tp);
 }
 function renderCheat(){
-  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
+  const es = COURSE === "es";
+  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${es ? t("esCheatEyebrow") : t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
 }
 
 /* ---------- léxico (испанский) ---------- */
@@ -1415,7 +1414,7 @@ function renderLexico(){
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.classList.add("out"), 1800); setTimeout(()=>el.remove(), 2300); }
 
 /* ---------- mock test ---------- */
-let TEST = null, TMODE = "now";
+let TEST = null, TMODE = "now", TLEN = 20;
 function genTest(n){
   const groups = {}; POOLX.forEach((q,k)=>{ (groups[q.tp] = groups[q.tp] || []).push(k); });
   Object.values(groups).forEach(shuffle);
@@ -1428,11 +1427,15 @@ function genTest(n){
 function renderTest(){
   const hist = testsOf().slice(-5).reverse(), es = COURSE === "es";
   main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${es ? t("esTestEyebrow") : t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${es ? t("esTestSub", POOLX.length) : t("testSub", POOLX.length)}</p>
-  <div class="mode" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div>
-  <div class="len-pick"><button type="button" class="btn pri" data-n="20">${t("qN", 20)}</button><button type="button" class="btn sec" data-n="30">${t("qN", 30)}</button><button type="button" class="btn sec" data-n="45">${t("qN", 45)}</button></div></header>
+  <div class="tset">
+    <div class="bank-opt"><span class="bank-l">${t("tCheckL")}</span><div class="seg big" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div></div>
+    <div class="bank-opt"><span class="bank-l">${t("tLenL")}</span><div class="seg big">${[20,30,45].map(n=>`<button type="button" data-n="${n}" class="${TLEN===n?"on":""}">${n}</button>`).join("")}</div></div>
+    <button type="button" class="btn pri" id="tGo">${t("tGo")} →</button>
+  </div></header>
   ${hist.length ? `<div class="sec-h"><h2>${t("myTries")}</h2></div><ul class="hist">${hist.map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : ""}</div>`;
   $$("[data-m]", main).forEach(b=>b.addEventListener("click", ()=>{ TMODE = b.dataset.m; $$("[data-m]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
-  $$("[data-n]", main).forEach(b=>b.addEventListener("click", ()=>startTest(+b.dataset.n)));
+  $$("[data-n]", main).forEach(b=>b.addEventListener("click", ()=>{ TLEN = +b.dataset.n; $$("[data-n]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
+  $("#tGo").addEventListener("click", ()=>startTest(TLEN));
 }
 function startTest(n){
   TEST = genTest(n);
@@ -1499,7 +1502,7 @@ function gradeTest(box, now, res){
   S.tests = S.tests.slice(-60); touch("progress");
   const rows = Object.entries(per).sort((a,b)=>a[1].g/a[1].n - b[1].g/b[1].n).map(([tp,p])=>{ const r = p.g/p.n, x = byId[tp]; return `<div class="brk-r"><a href="#${tp}">${x ? x.title : tp}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(4, r*100)}%"></i></div><span>${p.g}/${p.n}</span></div>`; }).join("");
   const resEl = document.createElement("div");
-  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${es ? pct + "<small>%</small>" : String(n20).replace(".",",") + "<small>/20</small>"}</div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button>${es ? `<a class="btn sec" href="#lexico">${t("lexico")}</a>` : `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>`}</div></div></header>
+  resEl.innerHTML = `<header class="grade seyes"><div class="note20">${es ? pct + "<small>%</small>" : String(n20).replace(".",",") + "<small>/20</small>"}</div><div><h2>${verdict[0]}</h2><p>${t("gotOf", got, TEST.length)} ${verdict[1]}</p><div class="btns" style="margin-top:12px"><button type="button" class="btn pri" id="again">${t("newVariant")}</button>${es ? `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>` : `<a class="btn sec" href="#shpargalka">${t("cheat")}</a>`}</div></div></header>
   <div class="sec-h"><h2>${t("byTopic")}</h2><p>${t("byTopicSub")}</p></div><div class="brk">${rows}</div><div class="sec-h"><h2>${t("review")}</h2></div>`;
   const col = $(".col", main); col.insertBefore(resEl, col.children[1]);
   $(".t-head", main).remove();
@@ -1903,7 +1906,7 @@ function route(keepScroll){
   clearInterval(qzTimer); closeDeck(true);
   /* ссылка ведёт в другой курс — переключаемся */
   let want = null;
-  if (h === "quizlet" || h === "shpargalka" || FR_IDS.has(h)) want = "fr";
+  if (h === "quizlet" || FR_IDS.has(h)) want = "fr";
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
   if (want && want !== COURSE) setCourse(want, true);
   const y = window.scrollY;

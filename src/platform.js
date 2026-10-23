@@ -175,7 +175,7 @@ let SHOP_CAT = "emoji", ARMED = "";
 function renderShop(){
   const cats = Object.keys(CAT);
   main.innerHTML = `<div class="col" style="max-width:1000px">
-    <header class="t-head seyes shop-head"><div><p class="eyebrow">${t("shop")}</p><h1>${t("shop")}</h1><p class="t-ru">${t("shopSub")}</p></div>
+    <header class="t-head seyes shop-head"><div><h1>${t("shop")}</h1><p class="t-ru">${t("shopSub")}</p></div>
       <div class="bal"><span class="bal-l">${t("balance")}</span><b>🪙 <span data-coins>${S.game.coins}</span></b></div></header>
     <div class="shop-tabs" role="tablist">${cats.map(c=>`<button type="button" role="tab" data-scat="${c}" class="${SHOP_CAT===c?"on":""}">${t("shopCats")[c]}</button>`).join("")}</div>
     <div class="shop-grid" id="shopGrid"></div></div>`;
@@ -194,15 +194,16 @@ function itemPreview(cat, it){
 }
 function paintShop(){
   const g = $("#shopGrid"); if (!g) return;
-  const cat = SHOP_CAT, eq = equippedId(cat);
+  const cat = SHOP_CAT, eq = equippedId(cat); g.dataset.cat = cat;
   g.innerHTML = CAT[cat].map(it=>{
     const id = cat === "emoji" ? it.v : it.id, own = owns(cat, it.id), on = eq === id || (!eq && !id && cat !== "emoji" && cat !== "bg"), key = cat + ":" + it.id;
     let btn;
-    if (on) btn = `<button type="button" class="btn sm sec on" disabled>✓ ${t("equipped")}</button>`;
-    else if (own) btn = `<button type="button" class="btn sm sec" data-use="${esc(key)}">${t("owned")}</button>`;
+    if (on) btn = `<span class="si-st">✓ ${t("equipped")}</span>`;
+    else if (own) btn = `<span class="si-st">${t("owned")}</span>`;
     else if (S.game.coins < it.p) btn = `<button type="button" class="btn sm sec poor" disabled>🪙 ${it.p}<small>${t("needMore", it.p - S.game.coins)}</small></button>`;
     else btn = `<button type="button" class="btn sm pri${ARMED === key ? " armed" : ""}" data-buy="${esc(key)}">${ARMED === key ? t("buyQ", it.p) : "🪙 " + it.p}</button>`;
-    return `<div class="si${on ? " on" : ""}${own ? " own" : ""}"><div class="si-prev">${itemPreview(cat, it)}</div><span class="si-n">${esc(itemName(cat, it.id))}</span>${it.p === 0 ? `<span class="si-free">${t("free")}</span>` : ""}${btn}</div>`;
+    const tag = own && !on ? "button" : "div";
+    return `<${tag} ${tag === "button" ? `type="button" data-use="${esc(key)}" aria-label="${esc(t("owned") + ": " + itemName(cat, it.id))}"` : ""} class="si${on ? " on" : ""}${own ? " own" : ""}"><div class="si-prev">${itemPreview(cat, it)}</div>${cat === "emoji" ? "" : `<span class="si-n">${esc(itemName(cat, it.id))}</span>`}${btn}</${tag}>`;
   }).join("");
   $$("[data-use]", g).forEach(b=>b.addEventListener("click", ()=>equip(b.dataset.use)));
   $$("[data-buy]", g).forEach(b=>b.addEventListener("click", ()=>{

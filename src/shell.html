@@ -1449,6 +1449,53 @@ body.deck-open{overflow:hidden}
 .dk-dots i.on{width:22px;background:var(--encre)}
 .dk-keys{text-align:center;font-size:12px;color:var(--ink-3);margin:8px 0 0}
 @media (pointer:coarse){.dk-keys{display:none}}
+.dk-me{flex:none;display:grid}
+.deck,.dk-stage{grid-template-columns:minmax(0,1fr)}
+.dk-card{min-width:0}
+
+.dk-end-i.todo{background:var(--encre-soft);color:var(--encre-2)}
+.dk-me .av{--s:28px}
+.dk-plan{margin:18px 0 0;display:inline-flex;align-self:flex-start;font-size:13.5px;font-weight:700;color:var(--encre-2);background:var(--encre-soft);border-radius:999px;padding:6px 14px}
+.dk-end .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.dk-mid .dk-end-i{background:var(--encre-soft);color:var(--encre-2)}
+.dk-exc .dk-in{justify-content:flex-start;padding:clamp(6px,1.6vw,14px)}
+.dk-exc .exb{background:transparent;box-shadow:none;border-radius:0}
+.dk-dots i.x{border-radius:3px;background:color-mix(in srgb,var(--encre) 22%,var(--tint-2))}
+.dk-dots i.x.done{background:var(--ok)}
+.dk-dots i.x.on{background:var(--encre)}
+
+
+/* ---- упрощение интерфейса ---- */
+button.si{font:inherit;color:inherit;border:0;cursor:pointer}
+.si-st{font-size:13px;font-weight:700;color:var(--ink-3);padding:6px 0 2px}
+.si.on .si-st{color:var(--encre-2)}
+.si.own:not(.on) .si-st{opacity:0;transition:opacity .2s}
+.si.own:not(.on):hover .si-st,.si.own:not(.on):focus-visible .si-st{opacity:1;color:var(--encre-2)}
+@media (min-width:980px){.dg-st{display:none}}
+.tset{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 18px;margin-top:20px}
+.bank-opt{display:grid;gap:6px}
+.bank-l{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.bank-sp{flex:1}
+.bank-go{position:sticky;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;background:var(--sheet);box-shadow:var(--sh-2);border-radius:var(--r-xl);padding:14px 16px;align-items:flex-end;justify-content:flex-start;gap:14px 18px}
+.bank-go #bkAvail{align-self:center;font-size:13px}
+.tchip{background:transparent;box-shadow:inset 0 0 0 1.5px var(--tint-2);color:var(--ink-3)}
+.tchip.on{background:var(--encre-soft);color:var(--encre-2);box-shadow:none}
+.tchip.on::before{content:"✓";font-weight:800}
+@media (max-width:600px){.tset .btn{width:100%;justify-content:center}.bank-go{padding:14px;position:static;order:-1;box-shadow:var(--sh-1)}.bank-go .btn{width:100%;justify-content:center}.bank-go .bank-sp,.bank-go #bkAvail{display:none}.bank-opt .seg{display:flex}.bank-opt .seg button{flex:1}.tset .bank-opt,.bank-go .bank-opt{width:100%}}
+.shop-grid[data-cat="emoji"]{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+.shop-grid[data-cat="emoji"] .si{padding:14px 10px 10px}
+@media (max-width:600px){
+  .shop-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:-8px -16px 18px;padding:4px 16px 8px}
+  .shop-tabs::-webkit-scrollbar{display:none}
+  .shop-tabs button{flex:none}
+  .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .shop-grid[data-cat="emoji"]{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .shop-grid[data-cat="emoji"] .si{padding:10px 4px 6px;gap:2px}
+  .shop-grid[data-cat="emoji"] .si .av{--s:44px}
+  .shop-grid[data-cat="emoji"] .si-prev{height:48px}
+  .shop-grid[data-cat="emoji"] .si.own .si-st{display:none}
+  .shop-head .bal{padding:8px 14px}
+}
 </style>
 
 <header class="topbar">
