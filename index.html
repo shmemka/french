@@ -1504,6 +1504,24 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
   .shop-grid[data-cat="emoji"] .si.own .si-st{display:none}
   .shop-head .bal{padding:8px 14px}
 }
+
+/* ---- выбор курса: выпадающий список ---- */
+.cdd{position:relative;flex:1;min-width:0}
+.cdd-btn{width:100%;display:flex;align-items:center;gap:10px;border:0;background:var(--tint);border-radius:16px;padding:10px 12px 10px 10px;font:inherit;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;text-align:left;transition:background .2s}
+.cdd-btn:hover{background:var(--tint-2)}
+.cdd-v{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdd-ch{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .25s var(--ease)}
+.cdd.open .cdd-ch{transform:rotate(180deg)}
+.cflag{flex:none;width:24px;height:24px;border-radius:50%;overflow:hidden;display:flex;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.cflag i{flex:1}
+.cf-fr i:nth-child(1){background:#5b8bc2}.cf-fr i:nth-child(2){background:#fff}.cf-fr i:nth-child(3){background:#e05a62}
+.cf-es{flex-direction:column}
+.cf-es i:nth-child(1),.cf-es i:nth-child(3){flex:1;background:#d6453b}.cf-es i:nth-child(2){flex:2;background:#f3c33c}
+.cdd-menu{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);background:var(--sheet);border-radius:16px;border:1px solid color-mix(in srgb,var(--ink) 9%,transparent);box-shadow:0 14px 40px rgba(20,24,60,.18);padding:6px;display:grid;gap:4px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .16s,transform .16s var(--ease),visibility 0s linear .16s}
+.cdd.open .cdd-menu{opacity:1;visibility:visible;transform:none;transition:opacity .16s,transform .16s var(--ease)}
+.cdd-opt{border:0;background:transparent;border-radius:11px;padding:11px 14px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer;transition:background .15s}
+.cdd-opt:hover,.cdd-opt:focus-visible{background:var(--tint);outline:none}
+.cdd-opt.on{background:var(--encre);color:var(--on-encre)}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -7210,7 +7228,7 @@ en:{
 
 /* --- второй курс (испанский) + упрощённый кабинет --- */
 Object.assign(I18N.ru, {
-  stLex:"слов в лексике", courseLabel:"Язык курса", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский"}, esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
   lexSearch:"Найти слово…", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
@@ -7231,7 +7249,7 @@ Object.assign(I18N.ru, {
   saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
 });
 Object.assign(I18N.en, {
-  stLex:"words in the vocabulary", courseLabel:"Course language", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish"}, esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
   lexSearch:"Find a word…", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
@@ -8200,12 +8218,47 @@ INIT.drill = (api, ex) => {
    navigation
    ========================================================= */
 function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="ring" data-ring="${tp.id}"></span><span class="nl-t">${tp.title}</span></a>`; }
+const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>'};
+const cName = c => t("courseNames")[c];
+function courseDDHTML(){
+  return `<div class="cdd" id="cdd">
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[COURSE]}<span class="cdd-v">${cName(COURSE)}</span><svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es"].map(c=>`<button type="button" role="option" class="cdd-opt${c===COURSE?" on":""}" data-course="${c}" aria-selected="${c===COURSE}">${cName(c)}</button>`).join("")}</div>
+  </div>`;
+}
+function paintCourseDD(c){
+  const dd = $("#cdd"); if (!dd) return;
+  $("#cddBtn", dd).innerHTML = `${CFLAG[c]}<span class="cdd-v">${cName(c)}</span>` + $("#cddBtn .cdd-ch", dd).outerHTML;
+  $$(".cdd-opt", dd).forEach(o=>{ const on = o.dataset.course === c; o.classList.toggle("on", on); o.setAttribute("aria-selected", on); });
+}
+function cddOpen(open, focus){
+  const dd = $("#cdd"); if (!dd) return;
+  dd.classList.toggle("open", open); $("#cddBtn", dd).setAttribute("aria-expanded", open);
+  if (open && focus) { const o = $(".cdd-opt.on", dd) || $(".cdd-opt", dd); o.focus(); }
+}
+function wireCourseDD(){
+  const dd = $("#cdd"); if (!dd) return;
+  const btn = $("#cddBtn", dd), opts = () => $$(".cdd-opt", dd);
+  btn.addEventListener("click", e=>{ cddOpen(!dd.classList.contains("open"), e.detail === 0); });
+  btn.addEventListener("keydown", e=>{ if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); cddOpen(true, true); } });
+  opts().forEach(o=>{
+    o.addEventListener("click", ()=>{ cddOpen(false); btn.focus({preventScroll:true}); setCourse(o.dataset.course); });
+    o.addEventListener("keydown", e=>{
+      const list = opts(), k = list.indexOf(o);
+      if (e.key === "ArrowDown") { e.preventDefault(); list[(k + 1) % list.length].focus(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); list[(k - 1 + list.length) % list.length].focus(); }
+      else if (e.key === "Escape" || e.key === "Tab") { cddOpen(false); if (e.key === "Escape") { e.preventDefault(); btn.focus(); } }
+    });
+  });
+}
+document.addEventListener("click", e=>{ const dd = $("#cdd"); if (dd && dd.classList.contains("open") && !dd.contains(e.target)) cddOpen(false); });
+document.addEventListener("keydown", e=>{ if (e.key === "Escape") { const dd = $("#cdd"); if (dd && dd.classList.contains("open")) { cddOpen(false); $("#cddBtn").focus(); } } });
 function buildNav(){
   const es = COURSE === "es", unitW = es ? t("unitWes") : t("unitW");
   const units = es ? ["1","2","3"] : ["0","1","2"], uname = u => es ? t("esUnits")[u] : t("units")[u];
   nav.innerHTML = `
   <div class="nav-top">
-    <div class="course-sw" role="tablist" aria-label="${esc(t("courseLabel"))}" data-on="${COURSE}">${["fr","es"].map(c=>`<button type="button" role="tab" data-course="${c}" aria-selected="${COURSE===c}" class="${COURSE===c?"on":""}"><span class="cs-badge cs-${c}">${COURSES[c].code}</span><span class="cs-t"><b>${COURSES[c].name}</b><small>${COURSES[c].book}</small></span></button>`).join("")}<span class="cs-ind" aria-hidden="true"></span></div>
+    ${courseDDHTML()}
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button>
   </div>
   <div class="nav-scroll">
@@ -8228,7 +8281,7 @@ function buildNav(){
   </div>`;
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
-  $$("[data-course]", nav).forEach(b=>b.addEventListener("click", ()=>setCourse(b.dataset.course)));
+  wireCourseDD();
   const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
   const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
@@ -8236,7 +8289,7 @@ function buildNav(){
 function setCourse(c, silent){
   if (c === COURSE || !COURSES[c]) return;
   const root = document.documentElement; root.classList.add("theme-anim"); clearTimeout(setCourse.tm); setCourse.tm = setTimeout(()=>root.classList.remove("theme-anim"), 700);
-  const sw = $(".course-sw", nav); if (sw) { sw.dataset.on = c; $$("button", sw).forEach(b=>{ const on = b.dataset.course === c; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); }); }
+  paintCourseDD(c);
   COURSE = c; ls.set("edito-course", c); setData(); touch("settings"); spHide();
   const finish = () => {
     const keepNav = nav.classList.contains("open");
