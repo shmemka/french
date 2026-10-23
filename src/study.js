@@ -13,7 +13,6 @@ Object.assign(I18N.ru, {
   qzSub:"Карточки со словами из юнитов 0–2.",
   listenHint:"Пиши цифры и нажми Enter",
   bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
-  shopSub:"Монеты дают за верные ответы, новые уровни и стрик.",
   heroLead:n=>`Теория, ${n} упражнений, карточки Quizlet и пробная контрольная по юнитам 0–2.`,
   esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–3.`,
   homeCont:"Продолжить", homeStart:"Начать с первой темы",
@@ -33,7 +32,6 @@ Object.assign(I18N.en, {
   qzSub:"Flashcards with the words from units 0–2.",
   listenHint:"Type the digits and press Enter",
   bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
-  shopSub:"You earn coins for correct answers, new levels and your streak.",
   heroLead:n=>`Theory, ${n} exercises, Quizlet flashcards and a mock test for units 0–2.`,
   esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–3.`,
   homeCont:"Continue", homeStart:"Start with the first topic",
@@ -213,7 +211,7 @@ function openDeck(tp, start){
   const idx = ORDER.indexOf(tp), next = ORDER[idx + 1];
   cards.push({h:`<div class="dk-end" id="dkFin"></div>`, fin:true});
   const el = document.createElement("div"); el.className = "deck"; el.id = "deck";
-  el.innerHTML = `<div class="dk-top"><span class="dk-me" id="dkMe">${avHTML(S.prof, "s")}</span><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>
+  el.innerHTML = `<div class="dk-top"><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>
     <div class="dk-stage">${cards.map((c, i)=>`<article class="dk-card${c.ex != null ? " dk-exc" : ""}" data-i="${i}" ${i ? "hidden" : ""}><div class="dk-in">${c.h || ""}</div></article>`).join("")}</div>
     <div class="dk-nav"><button type="button" class="dk-arr" data-dk="-1" aria-label="←">←</button><div class="dk-dots">${cards.map((c, i)=>`<i data-dot="${i}" class="${c.ex != null ? "x" : ""}"></i>`).join("")}</div><button type="button" class="dk-arr" data-dk="1" aria-label="→">→</button></div>
     <p class="dk-keys">${t("deckKeys")}</p>`;

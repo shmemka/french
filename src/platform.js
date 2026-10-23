@@ -1,35 +1,27 @@
 /* =========================================================
    PLATFORM: профиль и аватар, вход/регистрация, онбординг,
-   магазин, оформление, личный кабинет
+   оформление, личный кабинет
    ========================================================= */
 Object.assign(I18N.ru, {
-  shop:"Магазин", shopSub:"Трать монеты на аватарки, рамки, фоны, курсоры и цветовые темы. Монеты дают за правильные ответы, новые уровни и стрик.",
-  shopCats:{emoji:"Аватарки", bg:"Фоны аватарки", frame:"Рамки", theme:"Цветовые темы", pattern:"Фоны страницы", cursor:"Курсоры"},
-  buy:"Купить", buyQ:p=>`Купить за ${p}?`, owned:"Выбрать", equipped:"Выбрано", free:"Бесплатно", needMore:n=>`Не хватает ${n} 🪙`, bought:n=>`Куплено: ${n}`, balance:"Баланс",
   gateUpH:"Создай аккаунт", gateUpSub:"Почта и пароль — и можно начинать. Прогресс будет на всех твоих устройствах.", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
   gateLoading:"Загружаем твой прогресс…", gateRetry:"Повторить", gateErr:"Не получилось связаться с сервером. Проверь интернет (и VPN, если он нужен).",
-  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.", obBonus:"Добро пожаловать! Держи 50 🪙 на первые покупки.",
-  accTabs:{acc:["Аккаунт","Имя, аватар, почта и пароль"], set:["Настройки","Язык, обучение и сброс"], prog:["Прогресс","Темы, уровни и контрольные"], look:["Оформление","Тема, цвета и украшения"]},
+  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.",
+  accTabs:{acc:["Аккаунт","Имя, аватар, почта и пароль"], set:["Настройки","Язык, обучение и сброс"], prog:["Прогресс","Темы, активность и контрольные"], look:["Оформление","Тема, цвета, аватар и курсор"]},
   profileH:"Профиль", nameSave:"Сохранить", nameSaved:"Имя сохранено", avatarH:"Аватар", emailL:"Почта", securityH:"Безопасность",
-  promoH:"Промокод", promoPh:"Введи промокод", promoGo:"Применить", promoOk:n=>`Промокод активирован: +${n} 🪙`, promoUsed:"Этот промокод уже использован.", promoBad:"Такого промокода нет.",
-  langH:"Язык интерфейса", courseH:"Курс по умолчанию", fxH:"Анимации начисления очков", fxOn:"Показывать", fxOff:"Не показывать", newWordsH:"Новых слов в день (Quizlet)", resetH:"Сброс прогресса",
-  themeH:"Тема", themeModes:{light:"Светлая", dark:"Тёмная", system:"Системная"}, paletteH:"Цветовая тема", frameH:"Рамка аватарки", patternH:"Фон страницы", cursorH:"Курсор", toShop:"Больше — в магазине →", locked:"в магазине",
-  levelH:"Уровень и опыт", streakH:"Стрик", bestStreak:n=>`рекорд: ${n}`, bestStreakL:"рекорд стрика", calH:"Активность за 8 недель", courseSw:"Курс",
+  langH:"Язык интерфейса", courseH:"Курс по умолчанию", newWordsH:"Новых слов в день (Quizlet)", resetH:"Сброс прогресса",
+  themeH:"Тема", themeModes:{light:"Светлая", dark:"Тёмная", system:"Системная"}, paletteH:"Цветовая тема", frameH:"Рамка аватарки", patternH:"Фон страницы", cursorH:"Курсор",
+  calH:"Активность за 8 недель", courseSw:"Курс",
   bankL:"Банк заданий"
 });
 Object.assign(I18N.en, {
-  shop:"Shop", shopSub:"Spend coins on avatars, frames, backgrounds, cursors and colour themes. You earn coins for correct answers, new levels and your streak.",
-  shopCats:{emoji:"Avatars", bg:"Avatar backgrounds", frame:"Frames", theme:"Colour themes", pattern:"Page backgrounds", cursor:"Cursors"},
-  buy:"Buy", buyQ:p=>`Buy for ${p}?`, owned:"Use", equipped:"In use", free:"Free", needMore:n=>`${n} 🪙 short`, bought:n=>`Bought: ${n}`, balance:"Balance",
   gateUpH:"Create your account", gateUpSub:"An e-mail and a password — and you're in. Your progress will be on all your devices.", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
   gateLoading:"Loading your progress…", gateRetry:"Try again", gateErr:"Couldn't reach the server. Check your internet connection (and VPN if you need one).",
-  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.", obBonus:"Welcome! Here are 50 🪙 for your first purchases.",
-  accTabs:{acc:["Account","Name, avatar, e-mail and password"], set:["Settings","Language, learning and reset"], prog:["Progress","Topics, levels and tests"], look:["Appearance","Theme, colours and extras"]},
+  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.",
+  accTabs:{acc:["Account","Name, avatar, e-mail and password"], set:["Settings","Language, learning and reset"], prog:["Progress","Topics, activity and tests"], look:["Appearance","Theme, colours, avatar and cursor"]},
   profileH:"Profile", nameSave:"Save", nameSaved:"Name saved", avatarH:"Avatar", emailL:"E-mail", securityH:"Security",
-  promoH:"Promo code", promoPh:"Enter a promo code", promoGo:"Apply", promoOk:n=>`Promo code applied: +${n} 🪙`, promoUsed:"This promo code has already been used.", promoBad:"No such promo code.",
-  langH:"Interface language", courseH:"Default course", fxH:"Points animations", fxOn:"Show", fxOff:"Hide", newWordsH:"New words per day (Quizlet)", resetH:"Reset progress",
-  themeH:"Theme", themeModes:{light:"Light", dark:"Dark", system:"System"}, paletteH:"Colour theme", frameH:"Avatar frame", patternH:"Page background", cursorH:"Cursor", toShop:"More in the shop →", locked:"in the shop",
-  levelH:"Level and XP", streakH:"Streak", bestStreak:n=>`best: ${n}`, bestStreakL:"best streak", calH:"Activity over 8 weeks", courseSw:"Course",
+  langH:"Interface language", courseH:"Default course", newWordsH:"New words per day (Quizlet)", resetH:"Reset progress",
+  themeH:"Theme", themeModes:{light:"Light", dark:"Dark", system:"System"}, paletteH:"Colour theme", frameH:"Avatar frame", patternH:"Page background", cursorH:"Cursor",
+  calH:"Activity over 8 weeks", courseSw:"Course",
   bankL:"Exercise bank"
 });
 
@@ -64,7 +56,7 @@ const NAMES = {
 };
 const itemName = (cat, id) => cat === "emoji" ? id : (NAMES[LANG][cat] || {})[id] || id;
 const catItem = (cat, id) => CAT[cat].find(x=>x.id === id);
-const owns = (cat, id) => { const it = catItem(cat, id); return !!it && (it.p === 0 || S.prof.own.includes(cat + ":" + id)); };
+const owns = (cat, id) => !!catItem(cat, id);
 const bgCss = id => (catItem("bg", id) || CAT.bg[0]).css;
 function avHTML(prof, size, override){
   const p = Object.assign({}, prof, override || {});
@@ -164,26 +156,14 @@ function wireOnboard(){
     e.preventDefault();
     const name = $("#obName").value.trim().replace(/\s+/g, " ");
     if (!name) { $("#obMsg").textContent = t("obNeedName"); $("#obName").focus(); return; }
-    const first = !S.prof.name;
     setProf({name, emoji: st.emoji, bg: st.bg}, true);
     buildNav(); gateCheck();
-    if (first) setTimeout(()=>toast(t("obBonus")), 500);
   });
   setTimeout(()=>$("#obName").focus(), 60);
 }
 
-/* ---------- магазин ---------- */
-let SHOP_CAT = "emoji", ARMED = "";
-function renderShop(){
-  const cats = Object.keys(CAT);
-  main.innerHTML = `<div class="col" style="max-width:1000px">
-    <header class="t-head seyes shop-head"><div><h1>${t("shop")}</h1><p class="t-ru">${t("shopSub")}</p></div>
-      <div class="bal"><span class="bal-l">${t("balance")}</span><b>🪙 <span data-coins>${S.game.coins}</span></b></div></header>
-    <div class="shop-tabs" role="tablist">${cats.map(c=>`<button type="button" role="tab" data-scat="${c}" class="${SHOP_CAT===c?"on":""}">${t("shopCats")[c]}</button>`).join("")}</div>
-    <div class="shop-grid" id="shopGrid"></div></div>`;
-  $$("[data-scat]", main).forEach(b=>b.addEventListener("click", ()=>{ SHOP_CAT = b.dataset.scat; ARMED = ""; $$("[data-scat]", main).forEach(x=>x.classList.toggle("on", x===b)); paintShop(); }));
-  paintShop();
-}
+/* ---------- оформление ---------- */
+
 function equippedId(cat){ return cat === "emoji" ? S.prof.emoji : cat === "bg" ? S.prof.bg : S.prof.eq[cat] || ""; }
 function itemPreview(cat, it){
   if (cat === "emoji") return avHTML(S.prof, "l", {emoji: it.v});
@@ -194,52 +174,25 @@ function itemPreview(cat, it){
   if (cat === "cursor") return `<span class="cur-sw">${it.id ? CUR[it.id][0] : `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 2v16l4-4 3 6 3-1.5-3-6h5z" fill="var(--ink)" stroke="var(--sheet)" stroke-width="1.5"/></svg>`}</span>`;
   return "";
 }
-function paintShop(){
-  const g = $("#shopGrid"); if (!g) return;
-  const cat = SHOP_CAT, eq = equippedId(cat); g.dataset.cat = cat;
-  g.innerHTML = CAT[cat].map(it=>{
-    const id = cat === "emoji" ? it.v : it.id, own = owns(cat, it.id), on = eq === id || (!eq && !id && cat !== "emoji" && cat !== "bg"), key = cat + ":" + it.id;
-    let btn;
-    if (on) btn = `<span class="si-st">✓ ${t("equipped")}</span>`;
-    else if (own) btn = `<span class="si-st">${t("owned")}</span>`;
-    else if (S.game.coins < it.p) btn = `<button type="button" class="btn sm sec poor" disabled>🪙 ${it.p}<small>${t("needMore", it.p - S.game.coins)}</small></button>`;
-    else btn = `<button type="button" class="btn sm pri${ARMED === key ? " armed" : ""}" data-buy="${esc(key)}">${ARMED === key ? t("buyQ", it.p) : "🪙 " + it.p}</button>`;
-    const tag = own && !on ? "button" : "div";
-    return `<${tag} ${tag === "button" ? `type="button" data-use="${esc(key)}" aria-label="${esc(t("owned") + ": " + itemName(cat, it.id))}"` : ""} class="si${on ? " on" : ""}${own ? " own" : ""}"><div class="si-prev">${itemPreview(cat, it)}</div>${cat === "emoji" ? "" : `<span class="si-n">${esc(itemName(cat, it.id))}</span>`}${btn}</${tag}>`;
-  }).join("");
-  $$("[data-use]", g).forEach(b=>b.addEventListener("click", ()=>equip(b.dataset.use)));
-  $$("[data-buy]", g).forEach(b=>b.addEventListener("click", ()=>{
-    const key = b.dataset.buy;
-    if (ARMED !== key) { ARMED = key; paintShop(); clearTimeout(paintShop.tm); paintShop.tm = setTimeout(()=>{ if (ARMED === key) { ARMED = ""; paintShop(); } }, 4000); return; }
-    const [cat, id] = [key.slice(0, key.indexOf(":")), key.slice(key.indexOf(":") + 1)], it = catItem(cat, id);
-    if (!it || S.game.coins < it.p) return;
-    S.game.coins -= it.p; touch("game"); ARMED = "";
-    if (!S.prof.own.includes(key)) S.prof.own.push(key);
-    equip(key, true);
-    toast(t("bought", itemName(cat, id)));
-    const card = b.closest(".si"); if (card) { card.classList.add("pop"); }
-  }));
-}
 function equip(key, silent){
   const cat = key.slice(0, key.indexOf(":")), id = key.slice(key.indexOf(":") + 1), it = catItem(cat, id);
   if (cat === "emoji") setProf({emoji: it.v}, true);
   else if (cat === "bg") setProf({bg: id}, true);
   else setProf({eq: Object.assign({}, S.prof.eq, {[cat]: id})}, true);
-  paintShop(); if ($("#accLook")) paintLook();
+  if ($("#accLook")) paintLook();
 }
 
 /* ---------- личный кабинет ---------- */
 let ACC_TAB = ls.get("edito-acctab") || "acc", PROG_C = null;
 function renderAccount(){
-  const isSupa = Cloud.kind === "supabase", L = lvlOf(S.game.xp);
+  const isSupa = Cloud.kind === "supabase";
   const tabs = I18N[LANG].accTabs;
   const ico = {acc:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="7" r="3.5"/><path d="M3.5 17c1.2-3.2 3.6-4.6 6.5-4.6s5.3 1.4 6.5 4.6"/></svg>', set:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h8M15 6h1M4 14h2M9 14h7"/><circle cx="13.5" cy="6" r="1.8"/><circle cx="7.5" cy="14" r="1.8"/></svg>', prog:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 16.5h14M5.5 13V9.5M10 13V5.5M14.5 13V8"/></svg>', look:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3a7 7 0 1 0 0 14c1 0 1.5-.7 1.5-1.4 0-1-.9-1.3-.9-2.2 0-.8.7-1.4 1.6-1.4H14a3 3 0 0 0 3-3C17 5.6 13.9 3 10 3z"/><circle cx="6.5" cy="9" r="1"/><circle cx="9" cy="6.3" r="1"/><circle cx="12.5" cy="6.6" r="1"/></svg>'};
   main.innerHTML = `<div class="col">
   <header class="t-head seyes acc-hero">
     <div class="acc-av">${avHTML(S.prof, "xl")}</div>
     <div class="acc-id"><p class="eyebrow">${t("accEyebrow")}</p><h1>${esc(S.prof.name || t("guest"))}</h1>
-      <div class="acc-stats"><span class="pill">${t("lvl", L.L)}</span><span class="pill">🔥 ${streakNow()}</span><span class="pill">🪙 <b data-coins>${S.game.coins}</b></span></div>
-      <div class="acc-xp"><span class="me-bar big"><i style="width:${(L.pct*100).toFixed(1)}%"></i></span><small>${t("xpTo", L.cur, L.need)}</small></div></div>
+</div>
   </header>
   ${Auth.recovery && ME ? recoveryHTML() : ""}
   <div class="acc-tiles" role="tablist">${["acc","set","prog","look"].map(k=>`<button type="button" role="tab" class="acc-tile${ACC_TAB===k?" on":""}" data-tab="${k}" aria-selected="${ACC_TAB===k}"><span class="at-ico">${ico[k]}</span><b>${tabs[k][0]}</b><small>${tabs[k][1]}</small></button>`).join("")}</div>
@@ -266,7 +219,6 @@ function panelAcc(p){
     <div class="pcard"><h3>${t("avatarH")}</h3>
       <div class="ob-sec"><span class="ob-l">${t("obEmoji")}</span><div class="em-grid sm">${CAT.emoji.filter(x=>owns("emoji", x.id)).map(x=>`<button type="button" class="em${x.v===S.prof.emoji?" on":""}" data-pem="${x.v}">${x.v}</button>`).join("")}</div></div>
       <div class="ob-sec"><span class="ob-l">${t("obBg")}</span><div class="sw-row">${CAT.bg.filter(x=>owns("bg", x.id)).map(x=>`<button type="button" class="sw${x.id===S.prof.bg?" on":""}" data-pbg="${x.id}" style="--sw:${x.css}" aria-label="${esc(itemName("bg", x.id))}"></button>`).join("")}</div></div>
-      <a class="lnk" href="#shop">${t("toShop")}</a>
     </div>
     ${isSupa && ME ? `<div class="pcard"><h3>${t("securityH")}</h3><div class="cb-btns"><button type="button" class="btn sm sec" id="pwChange">${t("pwChange")}</button><button type="button" class="btn sm sec" id="signOut">${t("signOut")}</button></div></div>` : ""}
   </div>`;
@@ -278,37 +230,16 @@ function panelAcc(p){
   const so = $("#signOut"); if (so) so.addEventListener("click", async e=>{ e.currentTarget.disabled = true; await signOut(); });
   const pc = $("#pwChange"); if (pc) pc.addEventListener("click", ()=>{ Auth.recovery = true; renderAccount(); const i = $("#newPw"); if (i) i.focus(); });
 }
-/* промокоды хранятся хэшем, чтобы не светить их в исходнике */
-const PROMO = {"1grgshw": 1000};
-const promoKey = code => { let h = 0x811c9dc5; for (const ch of code.trim().toLowerCase()) { h ^= ch.charCodeAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
-function applyPromo(code){
-  const k = promoKey(code), n = PROMO[k];
-  if (!n) return {err:t("promoBad")};
-  if (S.game.promo.includes(k)) return {err:t("promoUsed")};
-  S.game.promo.push(k); S.game.coins += n; touch("game"); paintMe();
-  $$("[data-coins]").forEach(x=>x.textContent = S.game.coins);
-  return {ok:t("promoOk", n)};
-}
 function panelSet(p){
   let armed = "";
   p.innerHTML = `<div class="panel-grid">
     <div class="pcard"><h3>${t("langH")}</h3><div class="seg big">${[["ru","Русский"],["en","English"]].map(([k,n])=>`<button type="button" data-lang2="${k}" class="${LANG===k?"on":""}">${n}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
-    <div class="pcard"><h3>${t("fxH")}</h3><div class="seg big"><button type="button" data-fx="1" class="${S.prof.fx?"on":""}">${t("fxOn")}</button><button type="button" data-fx="0" class="${S.prof.fx?"":"on"}">${t("fxOff")}</button></div></div>
     <div class="pcard"><h3>${t("newWordsH")}</h3><div class="seg big">${[5,10,15,20,30].map(n=>`<button type="button" data-nw="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</div></div>
-    <div class="pcard"><h3>${t("promoH")}</h3><form class="promo" id="promoF" autocomplete="off"><input class="ans wide" id="promoIn" placeholder="${esc(t("promoPh"))}" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="${esc(t("promoH"))}"><button type="submit" class="btn pri sm">${t("promoGo")}</button></form><p class="promo-m" id="promoM" role="status"></p></div>
     <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
   </div>`;
-  $("#promoF", p).addEventListener("submit", e=>{
-    e.preventDefault(); const inp = $("#promoIn", p), m = $("#promoM", p);
-    if (!inp.value.trim()) return;
-    const r = applyPromo(inp.value);
-    m.textContent = r.ok || r.err; m.dataset.k = r.ok ? "ok" : "err";
-    if (r.ok) inp.value = "";
-  });
   $$("[data-lang2]", p).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
   $$("[data-course2]", p).forEach(b=>b.addEventListener("click", ()=>{ setCourse(b.dataset.course2, true); renderAccount(); }));
-  $$("[data-fx]", p).forEach(b=>b.addEventListener("click", ()=>{ setProf({fx: b.dataset.fx === "1"}, true); panelSet(p); }));
   $$("[data-nw]", p).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.nw; saveQZ(); panelSet(p); }));
   $$("[data-reset]", p).forEach(b=>b.addEventListener("click", ()=>{
     const c = b.dataset.reset;
@@ -325,7 +256,7 @@ function resetCourse(c){
 }
 function panelProg(p){
   const c = PROG_C || COURSE, top = c === COURSE ? TOP : (c === "es" ? ES_BUILD(LANG) : (LANG === "en" ? TOPICS_EN : TOPICS));
-  const tests = S.tests.filter(x=>(x.c||"fr") === c), L = lvlOf(S.game.xp);
+  const tests = S.tests.filter(x=>(x.c||"fr") === c);
   let ex = 0, done = 0, sum = 0, full = 0; top.forEach(tp=>{ const q = topicPct(tp); ex += q.n; done += q.done; sum += q.pct*q.n; if (q.pct >= .995) full++; });
   const best = tests.reduce((m,x)=>Math.max(m, x.got/(x.total||1)), 0);
   const today = gDay(), cells = [];
@@ -338,11 +269,9 @@ function panelProg(p){
     <div class="kpi"><b>${ex ? Math.round(sum/ex*100) : 0}%</b><span>${t("stAvg")}</span></div>
     <div class="kpi"><b>${tests.length}</b><span>${t("stTests")}</span></div>
     <div class="kpi"><b>${tests.length ? Math.round(best*100) + "%" : "—"}</b><span>${t("stBest")}</span></div>
-    <div class="kpi"><b>${S.game.streak.best}</b><span>${t("bestStreakL")}</span></div>
   </div>
-  <div class="panel-grid two">
-    <div class="pcard"><h3>${t("levelH")}</h3><div class="lv-big"><b>${L.L}</b><div><span class="me-bar big"><i style="width:${(L.pct*100).toFixed(1)}%"></i></span><small>${t("xpTo", L.cur, L.need)} · ${t("xpN", S.game.xp)}</small></div></div></div>
-    <div class="pcard"><h3>${t("calH")}</h3><div class="cal">${cells.map(([k,n])=>`<i class="c${n>=10?3:n>=5?2:n?1:0}${k===today?" today":""}" title="${k}: ${n}"></i>`).join("")}</div><small class="muted">${t("streakDays", streakNow())} · ${t("bestStreak", S.game.streak.best)}</small></div>
+  <div class="panel-grid">
+    <div class="pcard"><h3>${t("calH")}</h3><div class="cal">${cells.map(([k,n])=>`<i class="c${n>=10?3:n>=5?2:n?1:0}${k===today?" today":""}" title="${k}: ${n}"></i>`).join("")}</div><small class="muted">${t("todayN", S.game.hist[today] || 0)}</small></div>
   </div>
   <div class="sec-h"><h2>${t("progressByTopic")}</h2></div>
   <div class="brk">${top.map(tp=>{ const r = topicPct(tp).pct; return `<div class="brk-r"><a href="#${tp.id}">${tp.title}</a><div class="bar"><i class="${r>=.8?"":r>=.5?"mid":"low"}" style="width:${Math.max(r?4:0, r*100)}%"></i></div><span>${Math.round(r*100)}%</span></div>`; }).join("")}</div>
@@ -353,12 +282,10 @@ function panelProg(p){
 function paintLook(){ const p = $("#accPanel"); if (p && ACC_TAB === "look") panelLook(p); }
 function panelLook(p){
   const row = (cat, title) => `<div class="pcard"><h3>${title}</h3><div class="look-row">${CAT[cat].map(it=>{
-    const own = owns(cat, it.id), on = (S.prof.eq[cat] || "") === it.id;
-    return `<button type="button" class="look-i${on?" on":""}${own?"":" lock"}" ${own ? `data-look="${cat}:${it.id}"` : `data-goshop="${cat}"`} title="${esc(itemName(cat, it.id))}${own ? "" : " · " + t("locked")}">${itemPreview(cat, it)}<span>${esc(itemName(cat, it.id))}</span>${own ? "" : `<em>🪙 ${it.p}</em>`}</button>`; }).join("")}</div></div>`;
+    const on = (S.prof.eq[cat] || "") === it.id;
+    return `<button type="button" class="look-i${on?" on":""}" data-look="${cat}:${it.id}" title="${esc(itemName(cat, it.id))}">${itemPreview(cat, it)}<span>${esc(itemName(cat, it.id))}</span></button>`; }).join("")}</div></div>`;
   p.innerHTML = `<div class="pcard"><h3>${t("themeH")}</h3><div class="seg big theme-seg">${["light","dark","system"].map(m=>`<button type="button" data-tm="${m}" class="${S.prof.theme===m?"on":""}">${t("themeModes")[m]}</button>`).join("")}</div></div>
-    <div id="accLook">${row("theme", t("paletteH"))}${row("frame", t("frameH"))}${row("pattern", t("patternH"))}${row("cursor", t("cursorH"))}</div>
-    <a class="lnk" href="#shop">${t("toShop")}</a>`;
+    <div id="accLook">${row("theme", t("paletteH"))}${row("frame", t("frameH"))}${row("pattern", t("patternH"))}${row("cursor", t("cursorH"))}</div>`;
   $$("[data-tm]", p).forEach(b=>b.addEventListener("click", ()=>{ const root = document.documentElement; root.classList.add("theme-anim"); setTimeout(()=>root.classList.remove("theme-anim"), 700); setProf({theme: b.dataset.tm}, true); panelLook(p); }));
   $$("[data-look]", p).forEach(b=>b.addEventListener("click", ()=>{ const root = document.documentElement; root.classList.add("theme-anim"); setTimeout(()=>root.classList.remove("theme-anim"), 700); equip(b.dataset.look); panelLook(p); }));
-  $$("[data-goshop]", p).forEach(b=>b.addEventListener("click", ()=>{ SHOP_CAT = b.dataset.goshop; location.hash = "shop"; }));
 }

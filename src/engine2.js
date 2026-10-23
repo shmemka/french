@@ -338,7 +338,7 @@ function hasData(k){
   if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length;
   if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
   if (k === "profile") return !!S.prof.name;
-  if (k === "game") return S.game.xp > 0 || S.game.day.n > 0 || S.game.coins !== 50;
+  if (k === "game") return Object.keys(S.game.hist).length > 0;
   if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
   return false;
 }
@@ -1216,7 +1216,6 @@ function buildNav(){
       <a class="nl big" href="#bank" data-id="bank">${ICO.bank}<span class="nl-t">${t("bank")}</span></a>
       ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>`}
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
-      <a class="nl big" href="#shop" data-id="shop">${ICO.shop}<span class="nl-t">${t("shop")}</span><span class="nl-coin">🪙 <b data-coins>${S.game.coins}</b></span></a>
     </div>
     <div class="nav-sec">${t("fromBook")}</div>
     ${units.map(u=>`<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + BOOK.filter(x=>x.unit===u).map(navLink).join("")).join("")}
@@ -1244,7 +1243,7 @@ function setCourse(c, silent){
     buildNav(); if (keepNav) nav.classList.add("open");
     if (silent) return;
     const h = decodeURIComponent((location.hash||"").slice(1));
-    if (["home","test","account","bank","shop","shpargalka",""].includes(h)) route(false); else location.hash = "home";
+    if (["home","test","account","bank","shpargalka",""].includes(h)) route(false); else location.hash = "home";
   };
   if (silent) finish(); else setTimeout(finish, 240);
 }
@@ -1339,6 +1338,7 @@ function wireAuth(){
 function paintAccount(){ paintMe(); }
 function paintNavProgress(){
   $$("[data-ring]").forEach(r=>{ const tp = byId[r.dataset.ring]; if (!tp) return; const p = topicPct(tp).pct*100; r.style.setProperty("--p", p.toFixed(0)); r.classList.toggle("full", p>=99.5); });
+  paintMe();
 }
 function setLang(l){
   if (l === LANG) return;
@@ -1380,7 +1380,6 @@ function renderHome(){
     <div class="btns">${cont ? `<a class="btn pri" href="#${cont.id}">${t("homeCont")}: ${cont.title} →</a>` : `<a class="btn pri" href="#${BOOK[0].id}">${t("homeStart")} →</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
-  ${dailyHTML()}
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
   <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
   ${units.map(u=>`<h3 class="unit-h">${unitW} ${u} <small>${es ? t("esUnits")[u] : t("units")[u] + (u==="0" ? t("unit0note") : "")}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
@@ -1931,7 +1930,7 @@ function qzMatch(stage){
    ========================================================= */
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank","shop"].includes(h) ? h : "home";
+  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
 }
 function route(keepScroll){
@@ -1952,7 +1951,6 @@ function route(keepScroll){
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
   else if (h === "bank") renderBank();
-  else if (h === "shop") renderShop();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
@@ -1965,5 +1963,4 @@ applyLook(); buildNav(); route(false); updSrsBadge(); setInterval(updSrsBadge, 6
 gateCheck();
 if (Cloud.kind !== "supabase") initCloud();
 else setTimeout(()=>{ if (!Gate.ready) { Gate.ready = true; initCloud(); } }, 12000);
-setInterval(()=>{ if (S.game.day.d && S.game.day.d !== gDay()) paintMe(); }, 60000);
 })();
