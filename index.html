@@ -1560,6 +1560,34 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .mist-good .fr{color:var(--ok)}
 .mist-why{grid-column:1/-1;font-size:13.5px;color:var(--ink-2)}
 @media (max-width:600px){.mist-r{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- китайский (скоро) ---- */
+.cf-zh{background:#de2910;display:grid;place-items:center}
+.cf-zh b{color:#ffde00;font-size:13px;line-height:1;margin:-1px 0 0 -3px}
+.cs-zh{background:linear-gradient(140deg,#b3261e,#e5533b)}
+.cdd-soon{font-size:11px;font-weight:700;color:var(--ink-3);background:var(--tint);border-radius:99px;padding:2px 7px;margin-left:6px;vertical-align:1px}
+.cdd-opt.on .cdd-soon{background:rgba(255,255,255,.2);color:inherit}
+.nav-zh{margin:18px 8px;padding:18px;border-radius:18px;background:var(--tint);text-align:center}
+.nav-zh-h{display:block;font-size:30px;font-weight:800;color:#c8322a;margin-bottom:6px}
+.nav-zh p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.zh-soon{background:var(--sheet);border-radius:var(--r-xl);box-shadow:var(--sh-2);padding:clamp(28px,6vw,64px);text-align:center;display:grid;justify-items:center;gap:6px;margin-top:8px}
+.zh-big{font-size:clamp(56px,12vw,96px);font-weight:800;line-height:1;color:#c8322a;margin-bottom:10px}
+.zh-soon h1{margin:0}
+.zh-soon .t-ru{max-width:44ch}
+.zh-soon .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+/* ---- испанский: цвета, избранное в лексике ---- */
+.es-col{display:inline-block;width:12px;height:12px;border-radius:50%;margin:0 5px 0 0;vertical-align:-1px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.c-w{background:#fff}.c-k{background:#222}.c-r{background:#d23b2f}.c-y{background:#f2c230}.c-g{background:#3e9a52}.c-o{background:#f08a24}.c-p{background:#f3a3c0}.c-l{background:#b49ad8}.c-b{background:#2f6fd0}.c-gr{background:#9a9a9a}.c-br{background:#7a4a24}.c-be{background:#d9c3a0}
+.lex-units{margin-top:12px;max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.lex-units::-webkit-scrollbar{display:none}
+.lex-units small{font-size:11px;opacity:.7}
+.lex-favtab.on{color:#d0335b}
+.lex-r-fav{grid-template-columns:minmax(0,1.05fr) minmax(0,1.6fr) auto}
+.lex-unfav{border:0;background:transparent;color:#d0335b;cursor:pointer;display:grid;place-items:center;padding:4px;border-radius:10px}
+.lex-unfav svg{fill:currentColor}
+.lex-unfav:hover{background:var(--tint)}
+.lex-fav-empty{color:var(--ink-3);margin:6px 2px 12px}
+@media (max-width:640px){.lex-r-fav{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -4323,6 +4351,450 @@ ex:[
 ]);
 
 /* =========================================================
+   ESPAÑOL — Unidad 4 «¿Cuál prefieres?» (Aula internacional Plus 1, p. 56–69)
+   Темы собираются как и остальные части: ES_PARTS.push(() => [...]).
+   У каждого упражнения w:[ru, en] — «почему так» (заносится в WHY).
+   Объяснения не сравнивают испанский с русским; сравнения с английским — через EsEN().
+   ========================================================= */
+ES_UNITS["4"] = {es:"¿Cuál prefieres?", ru:"Покупки и одежда", en:"Shopping and clothes"};
+const ES4_COLOR = (name, cls) => `<span class="es-col ${cls}"></span>${Es(name)}`;
+
+ES_PARTS.push(() => { const L4 = [
+
+/* ---------- 1. En la tienda ---------- */
+{
+id:"es4-tiendas", sec:"book", unit:"4", kind:T("Общение", "Communication"),
+title:"¿Qué desea?", ru:T("Покупки в магазине: спросить цену, выбрать, заплатить", "Shopping: asking the price, choosing, paying"), page:"Unidad 4, p. 57, 63, 65",
+theory:`
+<h3>${T("Где делать покупки", "Where to shop")}</h3>
+${EsEX([["ir de compras", "ходить за покупками", "to go shopping"], ["una tienda · un centro comercial · un supermercado", "магазин · торговый центр · супермаркет", "a shop · a shopping centre · a supermarket"], ["un mercado · un mercadillo", "рынок · барахолка, уличный рынок", "a market · a street market"], ["comprar por internet · ropa de segunda mano", "покупать в интернете · одежда секонд-хенд", "to buy online · second-hand clothes"]])}
+<h3>${T("Диалог в магазине", "A conversation in a shop")}</h3>
+${TBL([T("Продавец", "Shop assistant"), T("Покупатель", "Customer")], [
+[Es("Hola. / Buenos días. / Buenas tardes."), Es("Hola. / Buenos días. / Buenas tardes.")],
+[Es("¿Qué desea? / ¿Qué quería?"), Es("Quería unos zapatos (para hombre / para mujer).") + "<br>" + Es("¿Cuánto cuestan estos (de aquí)?")],
+[Es("45 euros."), Es("Son un poco caros, ¿no? ¿Tiene algo más barato?")],
+[Es("Sí, tenemos estos."), Es("(Pues) me llevo los negros.")],
+[Es("Muy bien. ¿(Desea) alguna cosa más?"), Es("No, gracias.")],
+[Es("Pues (son) 45 euros, por favor."), Es("Aquí tiene.")],
+[Es("Muchas gracias."), Es("Gracias.")]
+])}
+${EsNOTE(T("<b>Quería…</b> — вежливая форма: «я хотел(а) бы…». В магазине продавец и покупатель обычно говорят друг другу <b>usted</b>, поэтому глагол в 3-м лице: <b>¿Qué desea?</b>, <b>¿Tiene algo más barato?</b>", "<b>Quería…</b> is the polite way to say «I’d like…». In a shop the assistant and the customer usually use <b>usted</b>, so the verb is in the 3rd person: <b>¿Qué desea?</b>, <b>¿Tiene algo más barato?</b>"))}
+<h3>${T("Сколько стоит: cuesta или cuestan", "How much: cuesta or cuestan")}</h3>
+${VS({h:T("одна вещь", "one thing"), big:Es("¿Cuánto cuesta este vestido?"), sub:T("ед. ч. → cuesta", "singular → cuesta")}, {h:T("несколько вещей", "several things"), big:Es("¿Cuánto cuestan estos vestidos?"), sub:T("мн. ч. → cuestan", "plural → cuestan")})}
+${EsWARN(T("Глагол <b>costar</b> меняет <b>o → ue</b>: <b>cuesta, cuestan</b>. Согласуется с вещью, а не с покупателем: <b>Las botas cuestan 60 euros.</b>", "The verb <b>costar</b> changes <b>o → ue</b>: <b>cuesta, cuestan</b>. It agrees with the item, not the shopper: <b>Las botas cuestan 60 euros.</b>"))}
+<h3>${T("Цены", "Prices")}</h3>
+${EsEX([["19,39 € — diecinueve euros con treinta y nueve", "в цене запятая; центы часто через «con»", "prices use a comma; cents often follow «con»"], ["10,90 € — diez con noventa", "в разговоре «euros» часто опускают", "in speech «euros» is often dropped"]])}
+<h3>${T("Me llevo… — я беру", "Me llevo… — I’ll take")}</h3>
+<p>${T(`<b>llevarse</b> — «взять, купить» (выбрать одну вещь из нескольких): ${Es("Me llevo este jersey rojo. Es más barato que el verde.")}`, `<b>llevarse</b> means «to take, to buy» (choosing one of several things): ${Es("Me llevo este jersey rojo. Es más barato que el verde.")}`)}</p>
+${EsEN(T("<b>Me llevo…</b> = <i>I’ll take…</i>; <b>¿Tiene algo más barato?</b> = <i>Do you have anything cheaper?</i>", "<b>Me llevo…</b> = <i>I’ll take…</i>; <b>¿Tiene algo más barato?</b> = <i>Do you have anything cheaper?</i>"))}
+`,
+ex:[
+{t:"sort", h:T("Кто это говорит?", "Who says it?"), cats:[T("продавец", "shop assistant"), T("покупатель", "customer")], w:[
+"Продавец спрашивает, что нужно, называет цену и предлагает ещё что-то; покупатель просит (Quería…), спрашивает цену, выбирает (Me llevo…) и платит (Aquí tiene).",
+"The assistant asks what you need, gives the price and offers something else; the customer asks (Quería…), asks the price, chooses (Me llevo…) and pays (Aquí tiene)."], items:[
+["¿Qué desea?", 0], ["¿Desea alguna cosa más?", 0], ["Sí, tenemos estos.", 0], ["Pues son 45 euros, por favor.", 0],
+["Quería una crema solar.", 1], ["¿Cuánto cuestan estos?", 1], ["¿Tiene algo más barato?", 1], ["Me llevo los negros.", 1], ["Aquí tiene.", 1]]},
+{t:"mc", h:T("cuesta или cuestan?", "cuesta or cuestan?"), w:[
+"Одна вещь — cuesta, несколько — cuestan. Смотри на существительное и на este/estos.",
+"One thing — cuesta, several — cuestan. Look at the noun and at este/estos."], items:[
+{q:"¿Cuánto ___ estos zapatos?", o:["cuestan", "cuesta"], a:0},
+{q:"Esta camiseta de aquí, ¿cuánto ___?", o:["cuesta", "cuestan"], a:0},
+{q:"¿Cuánto ___ las gafas de sol?", o:["cuestan", "cuesta"], a:0},
+{q:"El bolso ___ 35 euros.", o:["cuesta", "cuestan"], a:0},
+{q:"Los vaqueros ___ 50 euros.", o:["cuestan", "cuesta"], a:0}
+]},
+{t:"match", h:T("Соедини реплики", "Match the lines"), w:[
+"Типичные пары в магазине: ¿Qué desea? → Quería…; ¿Algo más? → No, gracias; ¿Cuánto cuesta? → цена; Son 20 euros → Aquí tiene.",
+"Typical shop pairs: ¿Qué desea? → Quería…; ¿Algo más? → No, gracias; ¿Cuánto cuesta? → a price; Son 20 euros → Aquí tiene."], pairs:[
+["¿Qué desea?", "Quería una camiseta blanca."], ["¿Cuánto cuesta esta?", "Esta, 19,39 euros."], ["¿Desea alguna cosa más?", "No, gracias."], ["Son 20 euros, por favor.", "Aquí tiene."], ["Son un poco caros, ¿no?", "Tenemos estos más baratos."]]},
+{t:"mc", h:T("Что сказать?", "What do you say?"), w:[
+"Просьба — Quería…; дорого — ¿Tiene algo más barato?; выбор — Me llevo…; отдаёшь деньги — Aquí tiene.",
+"Asking — Quería…; too expensive — ¿Tiene algo más barato?; choosing — Me llevo…; handing over money — Aquí tiene."], items:[
+{q:T("Ты хочешь вежливо попросить солнцезащитный крем.", "You want to politely ask for sun cream."), o:["Quería una crema solar.", "Quiero crema solar, ¡ya!", "¿Qué desea crema solar?"], a:0},
+{q:T("Вещь слишком дорогая.", "The item is too expensive."), o:["¿Tiene algo más barato?", "¿Tiene algo más caro?", "¿Cuánto cuestan?"], a:0},
+{q:T("Ты выбрал чёрные ботинки.", "You’ve chosen the black boots."), o:["Me llevo las negras.", "Llevo negras.", "Me lleva las negras."], a:0, e:T("las botas → las negras (ж. р., мн. ч.).", "las botas → las negras (fem. pl.).")},
+{q:T("Ты отдаёшь деньги продавцу.", "You hand the money to the assistant."), o:["Aquí tiene.", "Aquí está usted.", "Tenga gracias."], a:0}
+]},
+{t:"order", h:T("Собери фразу", "Build the sentence"), w:[
+"Вопрос о цене: ¿Cuánto cuesta(n) + указательное + вещь?; просьба: Quería + вещь.",
+"Price question: ¿Cuánto cuesta(n) + demonstrative + item?; request: Quería + item."], items:[
+{s:"¿Cuánto cuestan estos zapatos?", ru:T("Сколько стоят эти туфли?", "How much are these shoes?")},
+{s:"Quería una camiseta de manga corta.", ru:T("Я бы хотел футболку с коротким рукавом.", "I’d like a short-sleeved T-shirt.")},
+{s:"Pues me llevo la azul.", ru:T("Тогда я беру синюю.", "Then I’ll take the blue one.")}
+]}
+]},
+
+/* ---------- 2. Ropa, accesorios y colores ---------- */
+{
+id:"es4-ropa", sec:"book", unit:"4", kind:T("Лексика", "Vocabulary"),
+title:"Ropa, accesorios y colores", ru:T("Одежда, аксессуары, цвета и глагол llevar", "Clothes, accessories, colours and the verb llevar"), page:"Unidad 4, p. 58–60, 64",
+theory:`
+<h3>${T("Одежда и аксессуары", "Clothes and accessories")}</h3>
+${TBL([T("Одежда", "Clothes"), T("Обувь", "Shoes"), T("Аксессуары", "Accessories")], [
+[Es("un jersey, una camiseta, una camisa"), Es("unos zapatos"), Es("un bolso")],
+[Es("unos pantalones, unos vaqueros"), Es("unas zapatillas deportivas"), Es("unas gafas (de sol)")],
+[Es("una falda, un vestido"), Es("unas botas"), Es("un gorro, una bufanda")],
+[Es("una chaqueta, un abrigo"), Es("unas sandalias"), Es("un cinturón, una pulsera")],
+[Es("un bañador, ropa interior"), "", Es("una maleta")]
+])}
+${EsNOTE(T("Многие вещи «парные» и всегда во множественном числе: <b>unos pantalones, unos vaqueros, unas gafas</b> — даже если это одна вещь.", "Many items are «pairs» and always plural: <b>unos pantalones, unos vaqueros, unas gafas</b> — even for a single item."))}
+<h3>${T("Цвета согласуются с вещью", "Colours agree with the item")}</h3>
+${TBL([T("Тип", "Type"), T("Цвета", "Colours"), T("Пример", "Example")], [
+[T("4 формы: -o / -a / -os / -as", "4 forms: -o / -a / -os / -as"), ES4_COLOR("blanco", "c-w") + " " + ES4_COLOR("negro", "c-k") + " " + ES4_COLOR("rojo", "c-r") + " " + ES4_COLOR("amarillo", "c-y"), Es("una chaqueta roja, unos pantalones negros")],
+[T("2 формы: + -s", "2 forms: + -s"), ES4_COLOR("verde", "c-g") + " " + ES4_COLOR("naranja", "c-o") + " " + ES4_COLOR("rosa", "c-p") + " " + ES4_COLOR("lila", "c-l"), Es("una falda verde, unas faldas verdes")],
+[T("2 формы: + -es", "2 forms: + -es"), ES4_COLOR("azul", "c-b") + " " + ES4_COLOR("gris", "c-gr") + " " + ES4_COLOR("marrón", "c-br"), Es("unas sandalias azules, dos jerséis marrones")],
+[T("не меняется", "never changes"), ES4_COLOR("beis", "c-be"), Es("un abrigo beis, unas botas beis")]
+])}
+${EsWARN(T("Цвет стоит <b>после</b> существительного: <b>una camiseta blanca</b>. <b>marrón → marrones</b> (тильда исчезает). Вопрос: <b>¿De qué color es el jersey?</b> — <b>Amarillo.</b>", "The colour goes <b>after</b> the noun: <b>una camiseta blanca</b>. <b>marrón → marrones</b> (the accent goes). The question: <b>¿De qué color es el jersey?</b> — <b>Amarillo.</b>"))}
+${EsEN(T("В английском цвет стоит перед существительным и не меняется: <i>a red jacket, red sandals</i>. В испанском — после и согласуется: <b>una chaqueta roja, unas sandalias rojas</b>.", "In English the colour comes before the noun and never changes: <i>a red jacket, red sandals</i>. In Spanish it comes after and agrees: <b>una chaqueta roja, unas sandalias rojas</b>."))}
+<h3>${T("Как описать вещь", "Describing an item")}</h3>
+${TBL([T("Характеристика", "Feature"), T("Пример", "Example")], [
+[T("рукав", "sleeves"), Es("de manga corta / de manga larga / de tirantes")],
+[T("рисунок", "pattern"), Es("de rayas, de cuadros, estampada")],
+[T("оценка", "opinion"), Es("bonita, fea, elegante, clásica, moderna, práctica, original, informal")],
+[T("цена", "price"), Es("cara, barata")]
+])}
+<h3>${T("llevar и llevarse", "llevar and llevarse")}</h3>
+${TBL([T("Значение", "Meaning"), T("Пример", "Example")], [
+[T("быть одетым во что-то", "to wear"), Es("Hoy llevo un vestido rojo, pero normalmente llevo vaqueros.")],
+[T("иметь при себе, брать с собой", "to carry, to take with you"), Es("¿Llevas dinero? Necesito 10 euros.")],
+[T("llevarse — купить (выбрать)", "llevarse — to buy (choose)"), Es("Me llevo este jersey rojo.")]
+])}
+`,
+ex:[
+{t:"fill", h:T("Согласуй цвет с вещью", "Make the colour agree"), w:[
+"Цвет на -o меняется по роду и числу (roja, negros); на -e и согласную — только по числу (verdes, azules, grises, marrones); beis не меняется.",
+"Colours in -o change for gender and number (roja, negros); in -e or a consonant only for number (verdes, azules, grises, marrones); beis never changes."], items:[
+{q:"una chaqueta ___ (rojo)", a:["roja"]},
+{q:"unos pantalones ___ (negro)", a:["negros"]},
+{q:"unas sandalias ___ (azul)", a:["azules"]},
+{q:"una falda ___ (verde)", a:["verde"]},
+{q:"dos jerséis ___ (marrón)", a:["marrones"]},
+{q:"unas botas ___ (blanco)", a:["blancas"]},
+{q:"unos zapatos ___ (gris)", a:["grises"]},
+{q:"un abrigo ___ (beis)", a:["beis"]}
+]},
+{t:"sort", h:T("Одежда, обувь или аксессуар?", "Clothes, shoes or accessory?"), cats:[T("одежда", "clothes"), T("обувь", "shoes"), T("аксессуары", "accessories")], w:[
+"Обувь: zapatos, botas, sandalias, zapatillas. Аксессуары носят «в дополнение»: bolso, gafas, gorro, bufanda, cinturón, pulsera.",
+"Shoes: zapatos, botas, sandalias, zapatillas. Accessories are «extras»: bolso, gafas, gorro, bufanda, cinturón, pulsera."], items:[
+["el jersey", 0], ["la falda", 0], ["los vaqueros", 0], ["el abrigo", 0], ["las botas", 1], ["las sandalias", 1], ["las zapatillas deportivas", 1], ["el bolso", 2], ["las gafas de sol", 2], ["la bufanda", 2], ["el cinturón", 2]]},
+{t:"mc", h:T("Что значит llevar здесь?", "What does llevar mean here?"), w:[
+"llevar = носить (одежду) или иметь при себе; llevarse = купить, выбрать.",
+"llevar = to wear (clothes) or to carry; llevarse = to buy, to choose."], items:[
+{q:"Hoy llevo un vestido rojo.", o:[T("я одета в…", "I’m wearing…"), T("я покупаю…", "I’m buying…"), T("я несу с собой…", "I’m carrying…")], a:0, keep:true},
+{q:"¿Llevas dinero?", o:[T("у тебя есть с собой…?", "have you got … on you?"), T("ты носишь…?", "are you wearing…?"), T("ты покупаешь…?", "are you buying…?")], a:0, keep:true},
+{q:"Me llevo este jersey.", o:[T("я беру (покупаю)…", "I’ll take (buy)…"), T("я ношу…", "I wear…"), T("я ненавижу…", "I hate…")], a:0, keep:true}
+]},
+{t:"match", h:T("Описание ↔ вещь", "Description ↔ item"), w:[
+"de manga corta / larga — про рукав; de tirantes — на бретелях; de rayas — в полоску; de cuadros — в клетку.",
+"de manga corta / larga — about sleeves; de tirantes — with straps; de rayas — striped; de cuadros — checked."], pairs:[
+["una camiseta de tirantes", T("майка на бретелях", "a strappy top")], ["una camisa de cuadros", T("рубашка в клетку", "a checked shirt")], ["un jersey de rayas", T("свитер в полоску", "a striped jumper")], ["una camisa de manga larga", T("рубашка с длинным рукавом", "a long-sleeved shirt")], ["un vestido estampado", T("платье с принтом", "a patterned dress")]]},
+{t:"cards", h:T("Карточки: одежда", "Flashcards: clothes"), w:[
+"Запоминай вещь с артиклем: род подскажет, как согласовать цвет (la falda roja, el jersey rojo).",
+"Learn each item with its article: the gender tells you how the colour agrees (la falda roja, el jersey rojo)."], items:[
+["el jersey", T("свитер", "jumper")], ["la camiseta", T("футболка", "T-shirt")], ["la camisa", T("рубашка", "shirt")], ["los pantalones", T("брюки", "trousers")], ["los vaqueros", T("джинсы", "jeans")], ["la falda", T("юбка", "skirt")], ["el vestido", T("платье", "dress")], ["la chaqueta", T("куртка, пиджак", "jacket")], ["el abrigo", T("пальто", "coat")], ["los zapatos", T("туфли, обувь", "shoes")], ["las botas", T("сапоги, ботинки", "boots")], ["el bolso", T("сумка", "bag")], ["las gafas", T("очки", "glasses")], ["la bufanda", T("шарф", "scarf")], ["el gorro", T("шапка", "hat")], ["el bañador", T("купальник, плавки", "swimsuit")]]}
+]},
+
+/* ---------- 3. Los números a partir de 100 ---------- */
+{
+id:"es4-numeros", sec:"book", unit:"4", kind:T("Лексика", "Vocabulary"),
+title:"Los números a partir de 100", ru:T("Сотни, тысячи, миллионы и согласование по роду", "Hundreds, thousands, millions and gender agreement"), page:"Unidad 4, p. 63–64",
+theory:`
+${TBL([T("Число", "Number"), "Español", T("Число", "Number"), "Español"], [
+["100", Es("cien"), "1000", Es("mil")],
+["101", Es("ciento uno / una"), "2000", Es("dos mil")],
+["200", Es("doscientos / as"), "10 000", Es("diez mil")],
+["300", Es("trescientos / as"), "100 000", Es("cien mil")],
+["400", Es("cuatrocientos / as"), "200 000", Es("doscientos / as mil")],
+["500", Es("<b>quinientos</b> / as"), "1 000 000", Es("un millón")],
+["600", Es("seiscientos / as"), "2 000 000", Es("dos millones")],
+["700", Es("<b>setecientos</b> / as"), "1 000 000 000", Es("mil millones")],
+["800", Es("ochocientos / as"), "", ""],
+["900", Es("<b>novecientos</b> / as"), "", ""]
+])}
+${FLOW([[T("Ровно 100 или 100 перед <b>mil / millones</b>?", "Exactly 100, or 100 before <b>mil / millones</b>?"), "cien", "cien euros · cien mil"]], [T("Больше 100: 101–199", "Above 100: 101–199"), "ciento…", "ciento veinte · ciento uno"])}
+${EsWARN(T("Сотни согласуются с существительным: <b>doscientos euros</b>, но <b>doscientas personas</b>, <b>quinientas libras</b>. А <b>mil</b> не меняется: <b>dos mil, tres mil</b>.", "Hundreds agree with the noun: <b>doscientos euros</b>, but <b>doscientas personas</b>, <b>quinientas libras</b>. <b>mil</b> never changes: <b>dos mil, tres mil</b>."))}
+${EsNOTE(T("Неправильные формы — запомни: <b>quinientos</b> (500), <b>setecientos</b> (700), <b>novecientos</b> (900). <b>y</b> ставится только между десятками и единицами: <b>ciento veinte</b>, но <b>ciento cuarenta y cinco</b>.", "Irregular forms to learn: <b>quinientos</b> (500), <b>setecientos</b> (700), <b>novecientos</b> (900). <b>y</b> only goes between tens and units: <b>ciento veinte</b>, but <b>ciento cuarenta y cinco</b>."))}
+${EsEX([["3 453 276 = tres millones cuatrocientos cincuenta y tres mil doscientos setenta y seis", "длинное число читается группами: миллионы — тысячи — остальное", "a long number is read in groups: millions — thousands — the rest"], ["un millón de habitantes", "после millón — de", "after millón — de"]])}
+${EsEN(T("В английском <i>one hundred and twenty</i> — с <i>and</i>. В испанском <b>y</b> только между десятками и единицами: <b>ciento veinte</b>, <b>ciento veintitrés</b>.", "English says <i>one hundred and twenty</i>. In Spanish <b>y</b> only goes between tens and units: <b>ciento veinte</b>, <b>ciento veintitrés</b>."))}
+`,
+ex:[
+{t:"mc", h:T("Как это читается?", "How is it read?"), w:[
+"100 = cien, 101–199 = ciento…; 500 quinientos, 700 setecientos, 900 novecientos; y — только между десятками и единицами.",
+"100 = cien, 101–199 = ciento…; 500 quinientos, 700 setecientos, 900 novecientos; y only between tens and units."], items:[
+{q:"100", o:["cien", "ciento", "cientos"], a:0},
+{q:"150", o:["ciento cincuenta", "cien cincuenta", "ciento y cincuenta"], a:0},
+{q:"500", o:["quinientos", "cincocientos", "quiñentos"], a:0},
+{q:"700", o:["setecientos", "sietecientos", "setentacientos"], a:0},
+{q:"900", o:["novecientos", "nuevecientos", "noventacientos"], a:0},
+{q:"2000", o:["dos mil", "dos miles", "doscientos mil"], a:0}
+]},
+{t:"fill", h:T("Напиши словами (обрати внимание на род)", "Write in words (watch the gender)"), w:[
+"Сотни согласуются: doscientos euros, но doscientas libras / personas. mil не меняется.",
+"Hundreds agree: doscientos euros, but doscientas libras / personas. mil never changes."], items:[
+{q:"200 € → ___ euros", a:["doscientos"]},
+{q:"200 £ → ___ libras", a:["doscientas"], e:T("libra — ж. р.", "libra is feminine.")},
+{q:"500 personas → ___ personas", a:["quinientas"]},
+{q:"300 € → ___ euros", a:["trescientos"]},
+{q:"100 000 → ___ mil", a:["cien"]},
+{q:"1 000 000 → un ___", a:["millón"]}
+]},
+{t:"mc", h:T("Выбери правильную запись", "Choose the correct version"), w:[
+"y стоит только между десятками и единицами; cien перед mil и millones; mil без -es.",
+"y only goes between tens and units; cien before mil and millones; mil takes no -es."], items:[
+{q:"245", o:["doscientos cuarenta y cinco", "doscientos y cuarenta y cinco", "dos cientos cuarenta cinco"], a:0},
+{q:"120", o:["ciento veinte", "cien veinte", "ciento y veinte"], a:0},
+{q:"3500", o:["tres mil quinientos", "tres miles quinientos", "tres mil cincocientos"], a:0},
+{q:"100 000", o:["cien mil", "ciento mil", "cientos mil"], a:0},
+{q:"1 200 000", o:["un millón doscientos mil", "un mil doscientos mil", "un millón doscientas mil"], a:0}
+]},
+{t:"listen", h:T("Послушай и запиши цифрами", "Listen and write the number"), w:[
+"Слушай по группам: сначала тысячи (mil), потом сотни, потом десятки и единицы.",
+"Listen in groups: first the thousands (mil), then the hundreds, then tens and units."], items:[
+{say:"ciento treinta", a:["130"]}, {say:"cuatrocientos cincuenta", a:["450"]}, {say:"setecientos ochenta y dos", a:["782"]}, {say:"novecientos noventa", a:["990"]}, {say:"dos mil quinientos", a:["2500"]}, {say:"un millón", a:["1000000","1 000 000"]}]}
+]},
+
+/* ---------- 4. Demostrativos ---------- */
+{
+id:"es4-demostrativos", sec:"book", unit:"4", kind:T("Грамматика", "Grammar"),
+title:"Este, esta, esto · el azul, la de rayas", ru:T("Указательные слова и как не повторять существительное", "Demonstratives and how to avoid repeating the noun"), page:"Unidad 4, p. 61–62, 65",
+theory:`
+<h3>${T("Указательные слова", "Demonstratives")}</h3>
+${GRID(["", T("ед. ч.", "singular"), T("мн. ч.", "plural")], [
+[T("мужской", "masc."), "m:este jersey", "m:estos zapatos"],
+[T("женский", "fem."), "f:esta camiseta", "f:estas sandalias"],
+[T("«это» (неизвестно что)", "«this» (unknown thing)"), "esto", ""]
+])}
+${EsEX([["– Estas botas, ¿cuánto cuestan? – 40 euros. – ¿Y estas?", "существительное понятно — его можно не повторять", "the noun is clear — you can drop it"], ["¡Este jersey es precioso! – Pues yo prefiero este.", "", ""], ["¿Esto qué es: una camiseta o un vestido?", "esto — когда не знаем или не называем, что это", "esto — when we don’t know or don’t name what it is"]])}
+${EsWARN(T("<b>esto</b> не меняется и никогда не стоит перед существительным: ✗ <s>esto jersey</s> → ✓ <b>este jersey</b>.", "<b>esto</b> never changes and never goes before a noun: ✗ <s>esto jersey</s> → ✓ <b>este jersey</b>."))}
+<h3>${T("el / la / los / las + прилагательное или de + сущ.", "el / la / los / las + adjective or de + noun")}</h3>
+<p>${T("Если по контексту понятно, о чём речь, существительное можно опустить — артикль и прилагательное остаются и согласуются с ним:", "If the context makes clear what we mean, we can drop the noun — the article and adjective stay and still agree with it:")}</p>
+${TBL([T("Полная фраза", "Full phrase"), T("Сокращённо", "Short")], [
+[Es("el coche nuevo"), Es("→ <b>el nuevo</b>")],
+[Es("la camiseta azul"), Es("→ <b>la azul</b>")],
+[Es("los zapatos negros"), Es("→ <b>los negros</b>")],
+[Es("las maletas negras"), Es("→ <b>las negras</b>")],
+[Es("la camiseta de tirantes"), Es("→ <b>la de</b> tirantes")]
+])}
+${EsEX([["¿Qué coche usamos: el nuevo o el viejo?", "", ""], ["Luis quiere comprar la camiseta verde y Julia, la azul.", "", ""], ["Para mí, la marrón, de manga corta. Para Julia, la de tirantes.", "", ""]])}
+${EsEN(T("Похоже на английское <i>the blue one</i>, только без <i>one</i>: <b>la azul</b> = <i>the blue one</i>, <b>la de rayas</b> = <i>the striped one</i>.", "Like English <i>the blue one</i>, but without <i>one</i>: <b>la azul</b> = <i>the blue one</i>, <b>la de rayas</b> = <i>the striped one</i>."))}
+`,
+ex:[
+{t:"mc", h:T("este, esta, estos или estas?", "este, esta, estos or estas?"), w:[
+"Согласуй с существительным: jersey, bolso — este; camiseta, falda — esta; zapatos — estos; sandalias, gafas — estas.",
+"Agree with the noun: jersey, bolso — este; camiseta, falda — esta; zapatos — estos; sandalias, gafas — estas."], items:[
+{q:"¿Cuánto cuesta ___ jersey?", o:["este", "esta", "esto"], a:0},
+{q:"___ sandalias son muy bonitas.", o:["Estas", "Estos", "Esta"], a:0},
+{q:"Me llevo ___ camiseta.", o:["esta", "este", "esto"], a:0},
+{q:"___ zapatos son caros.", o:["Estos", "Estas", "Esto"], a:0},
+{q:"¿___ qué es: una falda o un vestido?", o:["Esto", "Este", "Esta"], a:0, e:T("Не знаем, что это → esto.", "We don’t know what it is → esto.")},
+{q:"¿Te gustan ___ gafas?", o:["estas", "estos", "esta"], a:0}
+]},
+{t:"mc", h:T("О чём эта фраза?", "What is this sentence about?"), w:[
+"Артикль и окончание прилагательного показывают род и число: la azul — ж. ед., los verdes — м. мн., las rojas — ж. мн., el negro — м. ед.",
+"The article and adjective ending show gender and number: la azul — fem. sing., los verdes — masc. pl., las rojas — fem. pl., el negro — masc. sing."], items:[
+{q:"La azul es muy pequeña.", o:["una camiseta", "un jersey", "unas sandalias"], a:0},
+{q:"Los verdes son muy bonitos.", o:["unos pantalones", "unas sandalias", "un bañador"], a:0},
+{q:"Las más caras son las rojas.", o:["unas sandalias", "unos zapatos", "unos jerséis"], a:0},
+{q:"¡El negro es precioso!", o:["un bañador", "unas gafas de sol", "una camiseta"], a:0}
+]},
+{t:"fill", h:T("Сократи: убери существительное", "Shorten: drop the noun"), w:[
+"Оставь артикль и прилагательное (или de + сущ.): la camiseta verde → la verde; el bolso de piel → el de piel.",
+"Keep the article and adjective (or de + noun): la camiseta verde → la verde; el bolso de piel → el de piel."], items:[
+{q:"¿Qué falda prefieres? – (la falda azul) → ___", a:["la azul"]},
+{q:"¿Qué zapatos compro? – (los zapatos negros) → ___", a:["los negros"]},
+{q:"¿Qué camiseta? – (la camiseta de rayas) → ___", a:["la de rayas"]},
+{q:"¿Qué coche usamos? – (el coche nuevo) → ___", a:["el nuevo"]},
+{q:"¿Qué maletas llevamos? – (las maletas rojas) → ___", a:["las rojas"]}
+]},
+{t:"fill", h:T("Вставь este, esta, estos, estas или esto", "Fill in este, esta, estos, estas or esto"), w:[
+"Перед существительным или вместо известного — este/esta/estos/estas; esto — когда не знаем, что это.",
+"Before a noun or replacing a known one — este/esta/estos/estas; esto — when we don’t know what it is."], items:[
+{q:"– ¿Cuáles son más bonitas? ¿Estas o ___? – Las verdes.", a:["estas"]},
+{q:"– ¿Cuáles prefieres? ¿Estos o ___? – Los negros.", a:["estos"]},
+{q:"– ¿Cuál es más barato? ¿Este o ___? – El gris.", a:["este"]},
+{q:"– ¿Cuál compro? ¿Esta o ___? – La azul.", a:["esta"]},
+{q:"¿___ qué es? ¿Una camiseta o un vestido?", a:["Esto"]}
+]}
+]},
+
+/* ---------- 5. Qué / cuál ---------- */
+{
+id:"es4-que-cual", sec:"book", unit:"4", kind:T("Грамматика", "Grammar"),
+title:"¿Qué falda? ¿Cuál prefieres?", ru:T("Qué + существительное и cuál / cuáles при выборе", "Qué + noun and cuál / cuáles when choosing"), page:"Unidad 4, p. 61–62, 65",
+theory:`
+${FLOW([[T("Сразу после вопроса идёт <b>существительное</b>?", "Is the question word followed by a <b>noun</b>?"), "¿Qué + sustantivo?", "¿Qué falda prefieres?"]], [T("Тип вещи уже понятен — выбираем <b>одну / несколько</b> из них", "The type of item is already clear — we pick <b>one / several</b>"), "¿Cuál? / ¿Cuáles?", "¿Cuál compro para mi hermana?"])}
+${EsEX([["– ¿Qué falda prefieres? – Esta, la azul.", "qué + существительное", "qué + noun"], ["En esta tienda hay muchas camisas. ¿Cuál compro para mi hermana?", "уже знаем, что речь о рубашках → cuál", "we already know it’s about shirts → cuál"], ["¿Qué zapatos compro? ¿Cuáles crees que son más elegantes?", "мн. ч. → cuáles", "plural → cuáles"]])}
+${EsWARN(T("<b>cuál</b> не ставится перед существительным: ✗ <s>¿Cuál falda prefieres?</s> → ✓ <b>¿Qué falda prefieres?</b> А <b>cuál / cuáles</b> согласуется по числу: <b>¿Cuáles son más bonitas?</b>", "<b>cuál</b> doesn’t go before a noun: ✗ <s>¿Cuál falda prefieres?</s> → ✓ <b>¿Qué falda prefieres?</b> And <b>cuál / cuáles</b> agrees in number: <b>¿Cuáles son más bonitas?</b>"))}
+${EsEN(T("<b>¿Qué falda…?</b> = <i>Which skirt…?</i>; <b>¿Cuál…?</b> = <i>Which one…?</i>, <b>¿Cuáles…?</b> = <i>Which ones…?</i>", "<b>¿Qué falda…?</b> = <i>Which skirt…?</i>; <b>¿Cuál…?</b> = <i>Which one…?</i>, <b>¿Cuáles…?</b> = <i>Which ones…?</i>"))}
+`,
+ex:[
+{t:"mc", h:T("qué, cuál или cuáles?", "qué, cuál or cuáles?"), w:[
+"Перед существительным — qué. Без существительного: одна вещь — cuál, несколько — cuáles.",
+"Before a noun — qué. Without a noun: one thing — cuál, several — cuáles."], items:[
+{q:"¿___ jersey te gusta más?", o:["Qué", "Cuál"], a:0},
+{q:"Hay tres maletas. ¿___ es más práctica?", o:["Cuál", "Qué", "Cuáles"], a:0},
+{q:"¿___ zapatos compro?", o:["Qué", "Cuáles"], a:0},
+{q:"Estas gafas son bonitas. ¿___ prefieres?", o:["Cuáles", "Cuál", "Qué"], a:0},
+{q:"¿___ prefieres, el rojo o el verde?", o:["Cuál", "Qué", "Cuáles"], a:0},
+{q:"¿___ camiseta llevas mañana?", o:["Qué", "Cuál"], a:0}
+]},
+{t:"fill", h:T("Вставь qué, cuál или cuáles", "Fill in qué, cuál or cuáles"), w:[
+"qué + существительное; cuál / cuáles — выбор из уже известных вещей.",
+"qué + noun; cuál / cuáles — choosing among things already mentioned."], items:[
+{q:"¿___ maleta es más moderna?", a:["Qué"]},
+{q:"– ¿___ son más bonitas? – Las verdes.", a:["Cuáles"]},
+{q:"– ¿___ es más barato? – El gris.", a:["Cuál"]},
+{q:"¿___ gafas son más elegantes?", a:["Qué"]},
+{q:"Tengo dos bolsos. ¿___ llevo?", a:["Cuál"]}
+]}
+]},
+
+/* ---------- 6. Tener que ---------- */
+{
+id:"es4-tener-que", sec:"book", unit:"4", kind:T("Грамматика + лексика", "Grammar + vocabulary"),
+title:"Tener que + infinitivo", ru:T("Выразить необходимость и вещи в дорогу", "Expressing necessity and things to pack"), page:"Unidad 4, p. 59–60, 65",
+theory:`
+${FX(["tener", "+", "!que", "+", T("инфинитив", "infinitive")], T("«нужно, надо, должен»", "«have to, need to»"))}
+<div class="cjs">${EsCJ("tener que", T("быть должным", "to have to"), ["ten<b>g</b>o que llevar", "t<b>ie</b>nes que llevar", "t<b>ie</b>ne que llevar", "tenemos que llevar", "tenéis que llevar", "t<b>ie</b>nen que llevar"], 1)}</div>
+${EsEX([["Esta noche voy a una fiesta de cumpleaños. Tengo que llevar un regalo.", "", ""], ["Voy de viaje al extranjero. Tengo que llevar el pasaporte.", "", ""], ["Voy a la playa. Tengo que llevar crema solar.", "", ""]])}
+${EsWARN(T("<b>que</b> обязателен: ✗ <s>Tengo llevar el pasaporte</s> → ✓ <b>Tengo que llevar</b>. Изменяется только <b>tener</b>, инфинитив остаётся.", "<b>que</b> is required: ✗ <s>Tengo llevar el pasaporte</s> → ✓ <b>Tengo que llevar</b>. Only <b>tener</b> changes; the infinitive stays."))}
+${EsEN(T("<b>tener que</b> = <i>have to</i>: <b>Tengo que llevar el pasaporte</b> = <i>I have to take my passport</i>.", "<b>tener que</b> = <i>have to</i>: <b>Tengo que llevar el pasaporte</b> = <i>I have to take my passport</i>."))}
+<h3>${T("Вещи в дорогу", "Things to pack")}</h3>
+${TBL(["Español", T("Перевод", "Translation"), "Español", T("Перевод", "Translation")], [
+[Es("la toalla de playa"), T("пляжное полотенце", "beach towel"), Es("el cargador de móvil"), T("зарядка", "phone charger")],
+[Es("la pasta de dientes"), T("зубная паста", "toothpaste"), Es("el cepillo de dientes"), T("зубная щётка", "toothbrush")],
+[Es("el champú y el gel de baño"), T("шампунь и гель для душа", "shampoo and shower gel"), Es("el secador de pelo"), T("фен", "hairdryer")],
+[Es("la crema solar"), T("солнцезащитный крем", "sun cream"), Es("los medicamentos"), T("лекарства", "medicines")],
+[Es("el carné de identidad"), T("удостоверение личности", "ID card"), Es("el pasaporte"), T("паспорт", "passport")],
+[Es("la tarjeta de crédito"), T("кредитная карта", "credit card"), Es("el dinero"), T("деньги", "money")],
+[Es("el peine"), T("расчёска", "comb"), Es("el libro"), T("книга", "book")]
+])}
+${EsNOTE(T("С частотой: <b>siempre llevo</b> — всегда беру; <b>nunca llevo</b> — никогда не беру: <b>Yo nunca llevo secador de pelo.</b>", "With frequency: <b>siempre llevo</b> — I always take; <b>nunca llevo</b> — I never take: <b>Yo nunca llevo secador de pelo.</b>"))}
+`,
+ex:[
+{t:"conj", h:T("Проспрягай tener que", "Conjugate tener que"), w:[
+"tener: tengo, tienes, tiene, tenemos, tenéis, tienen + que + инфинитив.",
+"tener: tengo, tienes, tiene, tenemos, tenéis, tienen + que + infinitive."], items:[
+{v:"tener (que)", p:ES_P6, f:["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]}
+]},
+{t:"match", h:T("Ситуация → что нужно взять", "Situation → what to take"), w:[
+"За границу — паспорт; за покупками — деньги или карта; на пляж — крем; в спортзал — спортивная одежда; машину напрокат — права.",
+"Abroad — passport; shopping — money or a card; the beach — sun cream; the gym — sports clothes; a hire car — a driving licence."], pairs:[
+["Voy de viaje al extranjero.", "Tengo que llevar el pasaporte."], ["Voy de compras.", "Tengo que llevar dinero o una tarjeta de crédito."], ["Voy a la playa a tomar el sol.", "Tengo que llevar crema solar."], ["Voy al gimnasio.", "Tengo que llevar ropa de deporte."], ["Quiero alquilar un coche.", "Tengo que llevar el carné de conducir."]]},
+{t:"fill", h:T("Поставь tener в нужную форму", "Put tener in the right form"), w:[
+"После подлежащего — нужная форма tener + que: yo tengo, tú tienes, ella tiene, nosotros tenemos, vosotros tenéis, ellos tienen.",
+"After the subject — the right form of tener + que: yo tengo, tú tienes, ella tiene, nosotros tenemos, vosotros tenéis, ellos tienen."], items:[
+{q:"Mañana es el cumpleaños de Clara. ___ que comprar un regalo. (yo)", a:["Tengo"]},
+{q:"¿Vosotros ___ que llevar el pasaporte?", a:["tenéis"]},
+{q:"Ana ___ que estudiar esta tarde.", a:["tiene"]},
+{q:"Nosotros ___ que llevar ropa de deporte.", a:["tenemos"]},
+{q:"Mis padres ___ que ir al aeropuerto.", a:["tienen"]},
+{q:"¿Qué ___ que llevar tú a la playa?", a:["tienes"]}
+]},
+{t:"mc", h:T("Найди правильную фразу", "Find the correct sentence"), w:[
+"Схема: tener (по лицу) + que + инфинитив. Без que и с личной формой второго глагола — ошибка.",
+"The pattern: tener (by person) + que + infinitive. Leaving out que or conjugating the second verb is wrong."], items:[
+{q:T("Мне нужно взять паспорт.", "I have to take my passport."), o:["Tengo que llevar el pasaporte.", "Tengo llevar el pasaporte.", "Tengo que llevo el pasaporte."], a:0},
+{q:T("Нам нужно купить подарок.", "We have to buy a present."), o:["Tenemos que comprar un regalo.", "Tenemos de comprar un regalo.", "Tenemos que compramos un regalo."], a:0},
+{q:T("Тебе нужно взять зарядку.", "You have to take the charger."), o:["Tienes que llevar el cargador.", "Tenes que llevar el cargador.", "Tienes que lleva el cargador."], a:0}
+]},
+{t:"cards", h:T("Карточки: вещи в дорогу", "Flashcards: things to pack"), w:[
+"Это слова из списка вещей Лукаса (с. 59): запоминай вместе с артиклем.",
+"These are the words from Lucas’s packing list (p. 59): learn them with the article."], items:[
+["la toalla de playa", T("пляжное полотенце", "beach towel")], ["la pasta de dientes", T("зубная паста", "toothpaste")], ["el cepillo de dientes", T("зубная щётка", "toothbrush")], ["el cargador de móvil", T("зарядка для телефона", "phone charger")], ["el secador de pelo", T("фен", "hairdryer")], ["la crema solar", T("солнцезащитный крем", "sun cream")], ["el carné de identidad", T("удостоверение личности", "ID card")], ["la tarjeta de crédito", T("кредитная карта", "credit card")], ["los medicamentos", T("лекарства", "medicines")], ["el peine", T("расчёска", "comb")], ["el champú", T("шампунь", "shampoo")], ["el gel de baño", T("гель для душа", "shower gel")]]}
+]},
+
+/* ---------- 7. Preferir e ir ---------- */
+{
+id:"es4-preferir-ir", sec:"book", unit:"4", kind:T("Грамматика", "Grammar"),
+title:"Preferir e ir", ru:T("Два неправильных глагола и сочетания с ir", "Two irregular verbs and combinations with ir"), page:"Unidad 4, p. 64–65",
+theory:`
+<div class="cjs">
+${EsCJ("preferir", T("предпочитать", "to prefer"), ["pref<b>ie</b>ro", "pref<b>ie</b>res", "pref<b>ie</b>re", "preferimos", "preferís", "pref<b>ie</b>ren"], 1)}
+${EsCJ("ir", T("идти, ехать", "to go"), ["<b>voy</b>", "<b>vas</b>", "<b>va</b>", "<b>vamos</b>", "<b>vais</b>", "<b>van</b>"], 1)}
+</div>
+${EsNOTE(T("<b>preferir</b> — «ботинок» <b>e → ie</b>, как <b>querer</b>: меняется везде, кроме nosotros и vosotros. <b>ir</b> полностью неправильный — формы учат наизусть.", "<b>preferir</b> is a «boot» verb <b>e → ie</b>, like <b>querer</b>: it changes everywhere except nosotros and vosotros. <b>ir</b> is completely irregular — learn its forms by heart."))}
+<h3>${T("Сочетания с ir", "Combinations with ir")}</h3>
+${TBL([T("Предлог", "Preposition"), T("Примеры", "Examples")], [
+[Es("ir de"), Es("ir de compras, ir de viaje")],
+[Es("ir al") + ` (a + el)`, Es("ir al gimnasio, ir al extranjero, ir al mercado")],
+[Es("ir a la"), Es("ir a la playa, ir a la universidad")],
+[Es("ir a") + ` + ${T("un / una", "un / una")}`, Es("ir a un hotel, ir a un cámping, ir a una tienda")]
+])}
+${EsWARN(T("<b>a + el = al</b>: ✗ <s>a el gimnasio</s> → ✓ <b>al gimnasio</b>. С <b>la</b> не сливается: <b>a la playa</b>.", "<b>a + el = al</b>: ✗ <s>a el gimnasio</s> → ✓ <b>al gimnasio</b>. No contraction with <b>la</b>: <b>a la playa</b>."))}
+${EsEX([["¿Qué ropa prefieres para ir de viaje?", "", ""], ["Yo prefiero la camiseta azul. – Pues yo prefiero la blanca.", "", ""], ["Este fin de semana vamos a la playa.", "", ""]])}
+${EsEN(T("<b>ir de compras</b> = <i>go shopping</i>, <b>ir de viaje</b> = <i>go on a trip</i>, <b>ir al extranjero</b> = <i>go abroad</i>.", "<b>ir de compras</b> = <i>go shopping</i>, <b>ir de viaje</b> = <i>go on a trip</i>, <b>ir al extranjero</b> = <i>go abroad</i>."))}
+`,
+ex:[
+{t:"conj", h:T("Проспрягай preferir и ir", "Conjugate preferir and ir"), w:[
+"preferir: prefiero, prefieres, prefiere, preferimos, preferís, prefieren. ir: voy, vas, va, vamos, vais, van.",
+"preferir: prefiero, prefieres, prefiere, preferimos, preferís, prefieren. ir: voy, vas, va, vamos, vais, van."], items:[
+{v:"preferir", p:ES_P6, f:["prefiero", "prefieres", "prefiere", "preferimos", "preferís", "prefieren"]},
+{v:"ir", p:ES_P6, f:["voy", "vas", "va", "vamos", "vais", "van"]}
+]},
+{t:"fill", h:T("de, al, a la или a?", "de, al, a la or a?"), w:[
+"ir de compras / de viaje; a + el = al (gimnasio, mercado, extranjero); a la + ж. р. (playa, universidad); a + un/una.",
+"ir de compras / de viaje; a + el = al (gimnasio, mercado, extranjero); a la + fem. (playa, universidad); a + un/una."], items:[
+{q:"Los sábados voy ___ compras.", a:["de"]},
+{q:"Después del trabajo voy ___ gimnasio.", a:["al"]},
+{q:"En verano vamos ___ playa.", a:["a la"]},
+{q:"Este año quiero ir ___ extranjero.", a:["al"]},
+{q:"¿Vais ___ un hotel o a un cámping?", a:["a"]},
+{q:"Mañana voy ___ viaje.", a:["de"]}
+]},
+{t:"mc", h:T("Выбери правильную форму", "Choose the correct form"), w:[
+"preferir: e → ie под ударением (prefiero, prefieren), но preferimos, preferís. ir: voy, vas, va, vamos, vais, van.",
+"preferir: e → ie when stressed (prefiero, prefieren), but preferimos, preferís. ir: voy, vas, va, vamos, vais, van."], items:[
+{q:"Yo ___ la camiseta blanca.", o:["prefiero", "prefero", "prefiere"], a:0},
+{q:"Nosotros ___ ir de compras por internet.", o:["preferimos", "prefierimos", "prefieren"], a:0},
+{q:"¿Qué ropa ___ vosotros?", o:["preferís", "prefieréis", "prefieren"], a:0},
+{q:"Mis amigos ___ al mercadillo.", o:["van", "vamos", "ven"], a:0},
+{q:"¿Tú ___ de viaje en agosto?", o:["vas", "va", "vais"], a:0},
+{q:"Vosotros ___ a la universidad.", o:["vais", "vamos", "váis"], a:0}
+]}
+]}
+
+]; L4.forEach(tp=>{ if (!WHY[tp.id]) WHY[tp.id] = tp.ex.map(e=>e.w || ["", ""]); }); return L4; });
+
+/* ---------- вопросы пробной (unidad 4) ---------- */
+function ES_POOL_U4(L){
+  ESL = L;
+  return [
+  {tp:"es4-tiendas", q:"¿Cuánto ___ estos pantalones?", o:["cuestan","cuesta","cuestas"], a:0},
+  {tp:"es4-tiendas", q:"¿Cuánto ___ esta chaqueta?", a:["cuesta"]},
+  {tp:"es4-tiendas", q:T("Продавец спрашивает, что нужно клиенту:", "The assistant asks what the customer wants:"), o:["¿Qué desea?","¿Qué quieres tú?","¿Cuánto cuesta?"], a:0},
+  {tp:"es4-tiendas", q:T("Ты выбрал вещь и говоришь:", "You’ve chosen and you say:"), o:["Me llevo este.","Llevo este a mí.","Me lleva este."], a:0},
+  {tp:"es4-tiendas", q:"– Son 30 euros. – ___", o:["Aquí tiene.","Aquí está tú.","De nada."], a:0},
+  {tp:"es4-ropa", q:"unas faldas ___ (rojo)", a:["rojas"]},
+  {tp:"es4-ropa", q:"unos zapatos ___ (azul)", a:["azules"]},
+  {tp:"es4-ropa", q:"una camisa ___ (verde)", o:["verde","verda","verdes"], a:0},
+  {tp:"es4-ropa", q:"dos jerséis ___", o:["marrones","marróns","marrón"], a:0},
+  {tp:"es4-ropa", q:T("Что из этого — аксессуар?", "Which of these is an accessory?"), o:["el cinturón","la falda","el abrigo"], a:0},
+  {tp:"es4-ropa", q:"Hoy ___ un vestido rojo. (llevar, yo)", a:["llevo"]},
+  {tp:"es4-numeros", q:"500", o:["quinientos","cincocientos","quinientas mil"], a:0},
+  {tp:"es4-numeros", q:"200 personas → ___ personas", a:["doscientas"]},
+  {tp:"es4-numeros", q:"100 €", o:["cien euros","ciento euros","cientos euros"], a:0},
+  {tp:"es4-numeros", q:"3000", o:["tres mil","tres miles","trescientos mil"], a:0},
+  {tp:"es4-numeros", q:"175", o:["ciento setenta y cinco","cien setenta y cinco","ciento y setenta y cinco"], a:0},
+  {tp:"es4-demostrativos", q:"¿Cuánto cuesta ___ bolso?", o:["este","esta","esto"], a:0},
+  {tp:"es4-demostrativos", q:"___ gafas son muy caras.", o:["Estas","Estos","Esto"], a:0},
+  {tp:"es4-demostrativos", q:"¿___ qué es?", o:["Esto","Este","Esta"], a:0},
+  {tp:"es4-demostrativos", q:"– ¿Qué camiseta prefieres? – ___ (la camiseta azul)", a:["la azul"]},
+  {tp:"es4-que-cual", q:"¿___ jersey compro?", o:["Qué","Cuál","Cuáles"], a:0},
+  {tp:"es4-que-cual", q:"Hay dos maletas. ¿___ prefieres?", o:["Cuál","Qué","Cuáles"], a:0},
+  {tp:"es4-que-cual", q:"– ¿___ son más bonitas? – Las verdes.", a:["Cuáles"]},
+  {tp:"es4-tener-que", q:"Voy a la playa. ___ que llevar crema solar. (yo)", a:["Tengo"]},
+  {tp:"es4-tener-que", q:"Tenemos ___ comprar un regalo.", o:["que","de","a"], a:0},
+  {tp:"es4-tener-que", q:"¿Vosotros ___ que trabajar mañana?", a:["tenéis"]},
+  {tp:"es4-preferir-ir", q:"Yo ___ la falda negra. (preferir)", a:["prefiero"]},
+  {tp:"es4-preferir-ir", q:"Nosotros ___ la camiseta azul.", o:["preferimos","prefierimos","prefieremos"], a:0},
+  {tp:"es4-preferir-ir", q:"Los sábados voy ___ gimnasio.", o:["al","a el","a la"], a:0},
+  {tp:"es4-preferir-ir", q:"Mañana mis amigos ___ de compras. (ir)", a:["van"]}
+  ];
+}
+
+/* =========================================================
    ESPAÑOL — спряжение по группам и неправильные глаголы,
    справка по произношению
    ========================================================= */
@@ -4992,6 +5464,186 @@ const ES_LEX = [
 ["dos mil", "two thousand", "Nací en dos mil cinco."]
 ]}
 ];
+
+/* ===== Léxico: unidad 4 и все глаголы юнитов 1–4 · [español, English, ejemplo] ===== */
+ES_LEX.push(
+/* ---------- UNIDAD 4 ---------- */
+{u:"4", es:"De compras", ru:"Покупки", en:"Shopping", w:[
+["ir de compras", "to go shopping", "Los sábados voy de compras con mi hermana."],
+["la tienda", "shop", "Compro ropa en tiendas pequeñas."],
+["el centro comercial", "shopping centre", "El centro comercial abre a las 10."],
+["el mercado", "market", "En el mercado de Otavalo venden artesanía."],
+["el mercadillo", "street market, flea market", "Los domingos hay mercadillo en la plaza."],
+["el supermercado", "supermarket", "Compro la fruta en el supermercado."],
+["por internet", "online", "Yo compro libros por internet."],
+["de segunda mano", "second-hand", "Siempre compro ropa de segunda mano."],
+["el precio", "price", "¿Qué precio tiene este bolso?"],
+["caro / cara", "expensive", "Estos zapatos son muy caros."],
+["barato / barata", "cheap", "La camiseta blanca es más barata."],
+["¿Qué desea?", "Can I help you? (formal)", "Buenos días, ¿qué desea?"],
+["Quería…", "I'd like…", "Quería una crema solar."],
+["¿Cuánto cuesta / cuestan?", "How much is it / are they?", "¿Cuánto cuestan estas botas?"],
+["¿Tiene algo más barato?", "Do you have anything cheaper?", "Son un poco caros. ¿Tiene algo más barato?"],
+["Me llevo…", "I'll take…", "Me llevo los negros."],
+["¿Algo más?", "Anything else?", "– ¿Algo más? – No, gracias."],
+["Aquí tiene.", "Here you are.", "– Son 20 euros. – Aquí tiene."],
+["la talla", "size (clothes)", "¿Tiene la talla M?"]
+]},
+{u:"4", es:"Ropa y accesorios", ru:"Одежда и аксессуары", en:"Clothes and accessories", w:[
+["el jersey", "jumper, sweater", "Este jersey es muy bonito."],
+["la camiseta", "T-shirt", "Quería una camiseta blanca."],
+["la camisa", "shirt", "Lleva una camisa de cuadros."],
+["los pantalones", "trousers", "Unos pantalones azules, por favor."],
+["los vaqueros", "jeans", "Normalmente llevo vaqueros."],
+["los pantalones cortos", "shorts", "En verano llevo pantalones cortos."],
+["la falda", "skirt", "Lleva una falda verde."],
+["el vestido", "dress", "Hoy llevo un vestido rojo."],
+["la chaqueta", "jacket", "Lleva una chaqueta marrón."],
+["el abrigo", "coat", "En invierno necesito un abrigo."],
+["el bañador", "swimsuit, trunks", "Para la playa llevo un bañador."],
+["la ropa interior", "underwear", "En la maleta llevo ropa interior."],
+["los zapatos", "shoes", "¿Cuánto cuestan estos zapatos?"],
+["las zapatillas deportivas", "trainers", "Para el gimnasio, zapatillas deportivas."],
+["las botas", "boots", "Estas botas son muy cómodas."],
+["las sandalias", "sandals", "Unas sandalias azules."],
+["el bolso", "handbag", "Un bolso negro de piel."],
+["las gafas (de sol)", "(sun)glasses", "¿Qué gafas son más baratas?"],
+["el gorro", "hat, beanie", "Un gorro rojo para el invierno."],
+["la bufanda", "scarf", "Una bufanda de lana."],
+["el cinturón", "belt", "Lleva un cinturón negro."],
+["la pulsera", "bracelet", "Una pulsera de plata."],
+["la maleta", "suitcase", "¿Qué maleta es más práctica?"]
+]},
+{u:"4", es:"Colores", ru:"Цвета", en:"Colours", w:[
+["blanco / blanca", "white", "una camiseta blanca"],
+["negro / negra", "black", "unos zapatos negros"],
+["rojo / roja", "red", "una chaqueta roja"],
+["amarillo / amarilla", "yellow", "un jersey amarillo"],
+["verde", "green", "una falda verde"],
+["azul", "blue", "unas sandalias azules"],
+["gris", "grey", "unos pantalones grises"],
+["marrón", "brown", "dos jerséis marrones"],
+["naranja", "orange", "una bufanda naranja"],
+["rosa", "pink", "una camiseta rosa"],
+["lila", "lilac", "un vestido lila"],
+["beis", "beige", "un abrigo beis"],
+["¿De qué color es…?", "What colour is…?", "– ¿De qué color es el jersey? – Amarillo."]
+]},
+{u:"4", es:"Hablar de ropa", ru:"Как описать одежду", en:"Describing clothes", w:[
+["de manga corta", "short-sleeved", "una camiseta de manga corta"],
+["de manga larga", "long-sleeved", "una camisa de manga larga"],
+["de tirantes", "strappy, sleeveless", "una camiseta de tirantes"],
+["de rayas", "striped", "un jersey de rayas"],
+["de cuadros", "checked", "una camisa de cuadros"],
+["estampado / estampada", "patterned, printed", "una camisa estampada"],
+["bonito / bonita", "pretty, nice", "Los verdes son muy bonitos."],
+["feo / fea", "ugly", "¿Qué maleta es más fea?"],
+["elegante", "elegant", "¿Qué gafas son más elegantes?"],
+["clásico / clásica", "classic", "Este jersey es muy clásico."],
+["práctico / práctica", "practical", "La amarilla es más práctica."],
+["moderno / moderna", "modern", "una maleta moderna"],
+["cómodo / cómoda", "comfortable", "Estos vaqueros son muy cómodos."],
+["llevar", "to wear; to carry", "Hoy llevo un vestido rojo."],
+["llevarse", "to take (buy)", "Me llevo este jersey."]
+]},
+{u:"4", es:"Los números a partir de 100", ru:"Числа от 100", en:"Numbers from 100", w:[
+["cien", "100", "cien euros"],
+["ciento uno / una", "101", "ciento una personas"],
+["doscientos / doscientas", "200", "doscientos euros, doscientas libras"],
+["trescientos / as", "300", "trescientos kilómetros"],
+["cuatrocientos / as", "400", "cuatrocientas páginas"],
+["quinientos / as", "500", "quinientos euros"],
+["seiscientos / as", "600", "seiscientos metros"],
+["setecientos / as", "700", "setecientas personas"],
+["ochocientos / as", "800", "ochocientos euros"],
+["novecientos / as", "900", "novecientos años"],
+["mil", "1000", "mil euros, dos mil"],
+["diez mil", "10 000", "diez mil habitantes"],
+["cien mil", "100 000", "cien mil personas"],
+["un millón", "1 000 000", "un millón de habitantes"],
+["dos millones", "2 000 000", "dos millones de euros"]
+]},
+{u:"4", es:"Objetos de viaje", ru:"Вещи в дорогу", en:"Things to pack", w:[
+["la toalla de playa", "beach towel", "Siempre llevo una toalla de playa."],
+["la pasta de dientes", "toothpaste", "¿Tienes pasta de dientes?"],
+["el cepillo de dientes", "toothbrush", "Llevo el cepillo de dientes."],
+["el champú", "shampoo", "champú y gel de baño"],
+["el gel de baño", "shower gel", "El hotel tiene gel de baño."],
+["el secador de pelo", "hairdryer", "Yo nunca llevo secador de pelo."],
+["el peine", "comb", "un peine pequeño"],
+["la crema solar", "sun cream", "Tengo que llevar crema solar."],
+["los medicamentos", "medicines", "Siempre llevo mis medicamentos."],
+["el cargador de móvil", "phone charger", "¿Dónde está mi cargador de móvil?"],
+["el carné de identidad", "ID card", "Tengo que llevar el carné de identidad."],
+["el pasaporte", "passport", "Para viajar al extranjero, el pasaporte."],
+["la tarjeta de crédito", "credit card", "Pago con tarjeta de crédito."],
+["el dinero", "money", "¿Llevas dinero?"],
+["el libro", "book", "Llevo un libro para el viaje."]
+]},
+
+/* ---------- ГЛАГОЛЫ (unidades 1–4) ---------- */
+{u:"v", es:"Verbos básicos", ru:"Главные глаголы", en:"Key verbs", w:[
+["ser (soy, eres…)", "to be (identity, origin, description)", "Soy estudiante. Soy de Lima."],
+["estar (estoy, estás…)", "to be (location, state)", "Madrid está en el centro de España."],
+["hay (haber)", "there is / there are", "En Chile hay muchas montañas."],
+["tener (tengo, tienes…)", "to have", "Tengo 25 años."],
+["tener que + inf.", "to have to", "Tengo que llevar el pasaporte."],
+["llamarse (me llamo…)", "to be called", "Me llamo Ana."],
+["hacer (hago, haces…)", "to do, to make", "¿Qué haces este fin de semana?"],
+["ir (voy, vas…)", "to go", "Voy de compras."],
+["venir (vengo, vienes…)", "to come", "¿Vienes a la fiesta?"],
+["querer (quiero…)", "to want", "Quiero aprender español."],
+["poder (puedo…)", "to be able to, can", "¿Puedo pagar con tarjeta?"],
+["preferir (prefiero…)", "to prefer", "Prefiero la camiseta azul."],
+["saber (sé, sabes…)", "to know (facts)", "¿Sabes cómo se dice en español?"],
+["conocer (conozco…)", "to know (people, places)", "Quiero conocer Argentina."]
+]},
+{u:"v", es:"Verbos en -ar", ru:"Глаголы на -ar", en:"-ar verbs", w:[
+["hablar", "to speak", "Hablo inglés y un poco de español."],
+["trabajar", "to work", "Trabajo en un hospital."],
+["estudiar", "to study", "Estudio Medicina."],
+["escuchar", "to listen", "Escucho música en el metro."],
+["practicar", "to practise", "Quiero practicar español."],
+["viajar", "to travel", "Me gusta viajar por Latinoamérica."],
+["visitar", "to visit", "Quiero visitar museos."],
+["bailar", "to dance", "¿Bailas salsa?"],
+["cantar", "to sing", "Canto en un coro."],
+["cocinar", "to cook", "Cocino para mis amigos."],
+["tomar", "to take; to have (food/drink)", "Tomo un café. Tomar el sol."],
+["comprar", "to buy", "Compro ropa por internet."],
+["pagar", "to pay", "¿Puedo pagar con tarjeta?"],
+["llevar", "to wear; to carry", "Hoy llevo vaqueros."],
+["necesitar", "to need", "Necesito 10 euros."],
+["buscar", "to look for", "Busco a alguien para practicar."],
+["preguntar", "to ask", "Pregunto el precio."],
+["chatear", "to chat (online)", "Chateo con amigos españoles."],
+["mirar", "to look at", "Mira las fotografías."],
+["jugar (juego, juegas…)", "to play (games, sport)", "Juego al fútbol los sábados."],
+["costar (cuesta, cuestan)", "to cost", "¿Cuánto cuesta este bolso?"],
+["nevar (nieva)", "to snow", "En los Andes nieva mucho."]
+]},
+{u:"v", es:"Verbos en -er", ru:"Глаголы на -er", en:"-er verbs", w:[
+["comer", "to eat", "Como en casa."],
+["beber", "to drink", "Bebo mucha agua."],
+["leer", "to read", "Leo el periódico."],
+["aprender", "to learn", "Aprendo español en una escuela."],
+["comprender", "to understand", "¿Comprendes la pregunta?"],
+["entender (entiendo…)", "to understand", "No entiendo esta palabra."],
+["ver (veo, ves…)", "to see, to watch", "Veo películas en español."],
+["vender", "to sell", "En el mercado venden artesanía."],
+["llover (llueve)", "to rain", "En Galicia llueve mucho."],
+["responder", "to answer", "Responde a las preguntas."]
+]},
+{u:"v", es:"Verbos en -ir", ru:"Глаголы на -ir", en:"-ir verbs", w:[
+["vivir", "to live", "Vivo en Barcelona."],
+["escribir", "to write", "Escribo correos en español."],
+["abrir", "to open", "La tienda abre a las diez."],
+["salir (salgo…)", "to go out", "Salgo con mis amigos."],
+["decir (digo, dices…)", "to say, to tell", "¿Cómo se dice «shop» en español?"],
+["pedir (pido…)", "to ask for, to order", "Pido un café."],
+["compartir", "to share", "Comparto piso con dos amigos."]
+]}
+);
 
 /* ===== Банк вопросов для пробной контрольной по испанскому (unidades 1–3) ===== */
 function ES_POOL_BUILD(L) {
@@ -8975,7 +9627,7 @@ ru:{
   authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
   authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту — после этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет — проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
   aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена — открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть — войди на вкладке «Вход».", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
-  spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
+  favAddedEs:"Добавлено в Избранное (Лексика)", spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
   qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
@@ -9050,7 +9702,7 @@ en:{
   authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
   authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address — then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
   aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet — open the e-mail and click the link.", aeExists:"This account already exists — sign in on the “Sign in” tab.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
-  spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
+  favAddedEs:"Added to Favourites (Vocabulary)", spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
   qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
@@ -9112,13 +9764,13 @@ en:{
 
 /* --- второй курс (испанский) + упрощённый кабинет --- */
 Object.assign(I18N.ru, {
-  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский"}, esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
-  lexSearch:"Найти слово…", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
-  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
+  lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные ♥", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми ♥ в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
+  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
   esHow:[["Темы по юнитам","Сначала объяснение, потом задания под ним."],["Спряжение","Окончания -ar, -er, -ir и главные неправильные глаголы."],["Лексика","Все слова с переводом и примерами. Скрой перевод и проверь себя."],["Пробная контрольная","Реши несколько вариантов, пока не будет стабильно 80% и выше."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · всё самое важное", esStart:"Начать с первой темы",
-  esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
+  esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · всё самое важное", esStart:"Начать с первой темы",
+  esTestEyebrow:"Prueba · unidades 1–4", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
   esVerdicts:[["¡Excelente!","Ты готов(а) к контрольной."],["¡Muy bien!","Хорошо, но некоторые темы стоит повторить — они внизу."],["Aprobado","Неплохо, но повтори темы с красными полосками."],["A repasar","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
   tipTtsEs:"Нажимай на испанский текст с пунктиром — компьютер прочитает его с испанским произношением.",
@@ -9133,13 +9785,13 @@ Object.assign(I18N.ru, {
   saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
 });
 Object.assign(I18N.en, {
-  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish"}, esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
-  lexSearch:"Find a word…", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
-  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
+  lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked ♥", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap ♥ in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
+  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Mock test","Do a few versions until you consistently get 80% or more."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · the essentials", esStart:"Start with the first topic",
-  esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–3 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
+  esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · the essentials", esStart:"Start with the first topic",
+  esTestEyebrow:"Prueba · unidades 1–4", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–4 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
   esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
   tipTtsEs:"Click Spanish text with a dotted underline and the computer will read it with Spanish pronunciation.",
@@ -9165,7 +9817,7 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, CAH, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG)), cheat: ES_CHEAT(LANG)});
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG), ES_POOL_U4(LANG)), cheat: ES_CHEAT(LANG)});
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
@@ -9188,7 +9840,7 @@ let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normP
 (function loadLocal(){
   try {
     const raw = ls.get(LKEY);
-    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], esfav:(o.quiz&&o.quiz.esfav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
     else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
   } catch(e) {}
 })();
@@ -9229,7 +9881,7 @@ async function supaBackend(){
 function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
   if (key === "settings") return {lang:LANG, course:COURSE, ts:S.ts.settings||0};
-  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
+  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], esfav:S.quiz.esfav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
   if (key === "profile") return Object.assign({}, S.prof, {ts:S.ts.profile||0});
   if (key === "game") return Object.assign({}, S.game, {ts:S.ts.game||0});
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
@@ -9274,7 +9926,7 @@ document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState
 window.addEventListener("pagehide", ()=>{ if (Cloud.dirty.size) flush(); });
 function hasData(k){
   if (k === "progress") return Object.keys(S.p).length || S.tests.length;
-  if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length;
+  if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length || (S.quiz.esfav||[]).length;
   if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
   if (k === "profile") return !!S.prof.name;
   if (k === "game") return Object.keys(S.game.hist).length > 0;
@@ -9320,7 +9972,7 @@ async function initCloudRun(){
         S.ts.progress = Math.max(lt, ct);
       } else if (ct > lt) {
         if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
-        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], sd:v.sd||{}};
+        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], esfav:Array.isArray(v.esfav) ? v.esfav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
         else if (k === "profile") S.prof = normProf(v);
         else if (k === "game") S.game = normGame(v);
@@ -9418,8 +10070,14 @@ function pickVoice(){ try { const vs = synth.getVoices();
   esVoice = vs.find(v=>/^es[-_]ES/i.test(v.lang) && /Mónica|Monica|Jorge|Marisol|Google|Lucía|Lucia|Elvira|Álvaro|Alvaro/i.test(v.name)) || vs.find(v=>/^es[-_]ES/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null; } catch(e) {} }
 if (synth) { pickVoice(); try { synth.addEventListener("voiceschanged", pickVoice); } catch(e) {} }
 const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/\((?:m|f|fam|e|ne|s|es)\.?\)/g,"").replace(/[✗✓→=]/g," ").replace(/\s+\/\s+/g,", ").replace(/\s—\s/g,", ").replace(/\s+/g," ").trim();
+/* повторное прослушивание того же текста (в течение 15 с) — медленнее */
+const SAY_LAST = {k:"", at:0, n:0};
 function speak(text, rate){
   if (!synth) return false;
+  const k = cleanSay(text).trim().toLowerCase(), now = Date.now();
+  if (k && k === SAY_LAST.k && now - SAY_LAST.at < 15000) SAY_LAST.n++; else SAY_LAST.n = 0;
+  SAY_LAST.k = k; SAY_LAST.at = now;
+  if (SAY_LAST.n > 0) rate = Math.min(rate || .88, SAY_LAST.n === 1 ? .62 : .5);
   try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); const es = COURSE === "es"; u.lang = es ? "es-ES" : "fr-FR"; const vo = es ? esVoice : frVoice; if (vo) u.voice = vo; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
 }
 if (!synth) document.documentElement.classList.add("no-tts");
@@ -9556,6 +10214,14 @@ function toggleFav(e){
   touch("quiz");
   return i < 0;
 }
+const esFavIdx = es => (S.quiz.esfav || []).findIndex(x=>dk(x.es) === dk(es));
+const isEsFav = es => esFavIdx(es) >= 0;
+function toggleEsFav(e){
+  S.quiz.esfav = S.quiz.esfav || [];
+  const i = esFavIdx(e.es);
+  if (i >= 0) S.quiz.esfav.splice(i, 1); else S.quiz.esfav.unshift({es:String(e.es).trim().replace(/[.,;:!?…]+$/, ""), m:String(e.m || "").trim().replace(/\.$/, ""), at:Date.now()});
+  touch("quiz"); return i < 0;
+}
 function qMeaning(fr){ if (!DICT) buildDict(); const e = DICT.get(dk(fr)); if (e) return LANG === "en" ? e.en : e.ru; const f = (S.quiz.fav || [])[favIdx(fr)]; return f ? (LANG === "en" ? (f.en || f.ru) : (f.ru || f.en)) : ""; }
 
 /* --- всплывающая подсказка --- */
@@ -9569,19 +10235,21 @@ function spBuild(){
   el.addEventListener("pointerdown", e=>{ if (e.pointerType !== "mouse") e.preventDefault(); });
   $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry && SP.entry.say) speak(SP.entry.say); });
   $(".sp-fav", el).addEventListener("click", ()=>{
-    const e = SP.entry; if (!e || !e.fr) return;
+    const e = SP.entry; if (!e) return;
+    if (COURSE === "es") { if (!e.es) return; const on = toggleEsFav(e); spPaintFav(); toast(on ? t("favAddedEs") : t("favRemoved")); if (location.hash === "#lexico") lexPaintFav(); return; }
+    if (!e.fr) return;
     const on = toggleFav(e); spPaintFav(); toast(on ? t("favAdded") : t("favRemoved"));
     if (location.hash === "#quizlet") qzRefreshList();
   });
   document.body.appendChild(el); SP.el = el;
 }
 function spPaintFav(){
-  const b = $(".sp-fav", SP.el), on = SP.entry && isFav(SP.entry.fr);
+  const esC = COURSE === "es", b = $(".sp-fav", SP.el), on = SP.entry && (esC ? isEsFav(SP.entry.es || "") : isFav(SP.entry.fr));
   b.classList.toggle("on", !!on); b.setAttribute("aria-pressed", on ? "true" : "false");
   b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label");
   const s = $(".sp-say", SP.el); s.setAttribute("aria-label", t("qzSay")); s.title = t("qzSay");
   s.hidden = !synth;
-  const ready = !!(SP.entry && SP.entry.fr); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
+  const ready = !!(SP.entry && (esC ? SP.entry.es : SP.entry.fr)); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
 }
 function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; }
 function spPlace(){
@@ -9636,24 +10304,24 @@ const ES_FN = /(^|\s)(el|la|los|las|un|una|es|son|está|hay|de|del|en|con|por|pa
 function esPop(o){
   const {txt, q, cyr, req, to, el, mEl, nEl, show} = o;
   el.dataset.dir = "fr";
-  const put = (m, note, say, st) => { SP.entry = {sel:q, say:say || "", fr:"", ru:"", en:""}; mEl.textContent = m; nEl.textContent = note || ""; el.dataset.st = st || "ok"; };
+  const put = (m, note, say, st, es) => { SP.entry = {sel:q, say:say || "", fr:"", ru:"", en:"", es:st === "ok" ? (es || "") : "", m:st === "ok" ? m : ""}; mEl.textContent = m; nEl.textContent = note || ""; el.dataset.st = st || "ok"; };
   const remote = (from, toL, sayOut) => {
     put(t("spLoading"), "", "", "load"); show();
     remoteTr(q, toL, from).then(out=>{
       if (req !== SP.req) return;
-      if (out) put(out, t("spAuto"), sayOut ? out : q, "ok"); else put(t("spNone"), navigator.onLine === false ? t("spOffline") : "", "", "none");
+      if (out) { put(out, t("spAuto"), sayOut ? out : q, "ok", sayOut ? out : q); if (sayOut) SP.entry.m = q; } else put(t("spNone"), navigator.onLine === false ? t("spOffline") : "", "", "none");
       spPaintFav(); spPlace();
     });
   };
   if (cyr) { el.dataset.dir = "rev"; return remote("ru", "es", true); }
   const hit = esLookup(txt);
-  if (hit) { put(hit.en, dk(hit.es) !== dk(txt) ? hit.es : "", q, "ok"); return show(); }
+  if (hit) { put(hit.en, dk(hit.es) !== dk(txt) ? hit.es : "", q, "ok", hit.es); return show(); }
   const rEn = !ES_MARK.test(txt) && esDict().en.get(dk(txt).replace(/^(to|a|an|the)\s+/, ""));
-  if (rEn) { el.dataset.dir = "rev"; put(rEn.es, rEn.en, rEn.es, "ok"); return show(); }
+  if (rEn) { el.dataset.dir = "rev"; put(rEn.es, rEn.en, rEn.es, "ok", rEn.es); SP.entry.m = rEn.en; return show(); }
   if (!ES_MARK.test(txt) && EN_FN.test(txt) && !ES_FN.test(txt)) {
     el.dataset.dir = "rev";
     const r = esDict().en.get(dk(txt));
-    if (r) { put(r.es, r.en, r.es, "ok"); return show(); }
+    if (r) { put(r.es, r.en, r.es, "ok", r.es); SP.entry.m = r.en; return show(); }
     return remote("en", "es", true);
   }
   remote("es", to, false);
@@ -9676,7 +10344,6 @@ function spCheck(){
   const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
   $(".sp-fr", el).textContent = q;
   const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
-  el.classList.toggle("no-fav", COURSE === "es");
   if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
@@ -10105,12 +10772,14 @@ INIT.drill = (api, ex) => {
    navigation
    ========================================================= */
 function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="ring" data-ring="${tp.id}"></span><span class="nl-t">${tp.title}</span></a>`; }
-const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>'};
+const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
+let VIEW_ZH = decodeURIComponent((location.hash||"").slice(1)) === "zh";
+const ddCur = () => VIEW_ZH ? "zh" : COURSE;
 const cName = c => t("courseNames")[c];
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[COURSE]}<span class="cdd-v">${cName(COURSE)}</span><svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
-    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es"].map(c=>`<button type="button" role="option" class="cdd-opt${c===COURSE?" on":""}" data-course="${c}" aria-selected="${c===COURSE}">${cName(c)}</button>`).join("")}</div>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}<span class="cdd-v">${cName(ddCur())}</span><svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}${c === "zh" ? ` <small class="cdd-soon">${t("soon")}</small>` : ""}</button>`).join("")}</div>
   </div>`;
 }
 function paintCourseDD(c){
@@ -10129,7 +10798,13 @@ function wireCourseDD(){
   btn.addEventListener("click", e=>{ cddOpen(!dd.classList.contains("open"), e.detail === 0); });
   btn.addEventListener("keydown", e=>{ if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); cddOpen(true, true); } });
   opts().forEach(o=>{
-    o.addEventListener("click", ()=>{ cddOpen(false); btn.focus({preventScroll:true}); setCourse(o.dataset.course); });
+    o.addEventListener("click", ()=>{
+      cddOpen(false); btn.focus({preventScroll:true});
+      const c = o.dataset.course;
+      if (c === "zh") { location.hash = "zh"; return; }
+      if (VIEW_ZH && c === COURSE) { location.hash = "home"; return; }
+      setCourse(c);
+    });
     o.addEventListener("keydown", e=>{
       const list = opts(), k = list.indexOf(o);
       if (e.key === "ArrowDown") { e.preventDefault(); list[(k + 1) % list.length].focus(); }
@@ -10162,13 +10837,13 @@ function setFrMode(m, quiet){
 document.addEventListener("click", e=>{ const b = e.target.closest("[data-frmode]"); if (b) setFrMode(b.dataset.frmode); });
 function buildNav(){
   const es = COURSE === "es", unitW = es ? t("unitWes") : t("unitW");
-  const units = es ? ["1","2","3"] : ["0","1","2","3"], uname = u => es ? t("esUnits")[u] : t("units")[u];
+  const units = es ? ["1","2","3","4"] : ["0","1","2","3"], uname = u => es ? t("esUnits")[u] : t("units")[u];
   nav.innerHTML = `
   <div class="nav-top">
     ${courseDDHTML()}
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button>
   </div>
-  <div class="nav-scroll">
+  <div class="nav-scroll">${VIEW_ZH ? `<div class="nav-zh"><span class="nav-zh-h">中文</span><p>${t("zhNav")}</p></div>` : `
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
@@ -10177,7 +10852,7 @@ function buildNav(){
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
     </div>
     ${es ? `<div class="nav-sec">${t("fromBook")}</div>` : frModeHTML("nav")}
-    ${navTopics(units, unitW, uname)}
+    ${navTopics(units, unitW, uname)}`}
   </div>
   <div class="nav-foot">
     ${meHTML()}
@@ -10185,7 +10860,7 @@ function buildNav(){
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
   wireCourseDD();
-  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
+  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = VIEW_ZH ? `<span class="cs-badge cs-zh">ZH</span><b>中文</b><span>${cName("zh")}</span>` : `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
   const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
 }
@@ -10326,7 +11001,7 @@ function saveNudge(){
 function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
-  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2","3"];
+  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3","4"] : ["0","1","2","3"];
   const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
   main.innerHTML = `<div class="col">
@@ -10375,34 +11050,50 @@ function renderCheat(){
 let LEX = {u:"all", hide:false, q:""};
 try { const o = JSON.parse(ls.get("edito-lex") || "null"); if (o) LEX = Object.assign(LEX, o, {q:""}); } catch(e) {}
 const fold = s => String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+let LEX_APPLY = null;
+const lexUnitLabel = u => u === "all" ? t("lexAll") : u === "+" ? "📅 " + t("lexCal") : u === "v" ? t("lexVerbs") : u === "fav" ? "♥ " + t("lexFav") : "Unidad " + u;
+function lexFavRows(){
+  const f = S.quiz.esfav || [];
+  if (!f.length) return `<p class="lex-fav-empty">${t("lexFavEmpty")}</p>`;
+  return `<div class="lex-rows">${f.map(x=>`<div class="lex-r lex-r-fav" data-k="${esc(fold(x.es + " " + (x.m || "")))}"><span class="fr lex-w">${esc(x.es)}</span><span class="lex-en" tabindex="0">${esc(x.m || "")}</span><button type="button" class="lex-unfav" data-unfav="${esc(x.es)}" aria-label="${esc(t("spUnfav"))}" title="${esc(t("spUnfav"))}">${ICO_HEART}</button></div>`).join("")}</div>`;
+}
+function lexPaintFav(){ const sec = $("#lexFavSec"); if (!sec) return; $(".lex-fav-body", sec).innerHTML = lexFavRows(); const b = $('.lex-units [data-u="fav"] small'); if (b) b.textContent = (S.quiz.esfav || []).length || ""; if (LEX_APPLY) LEX_APPLY(); }
 function renderLexico(){
-  const total = ES_LEX.reduce((n,c)=>n+c.w.length,0);
+  const total = ES_LEX.reduce((n,c)=>n+c.w.length,0), nf = (S.quiz.esfav || []).length;
   main.innerHTML = `<div class="col" style="max-width:1000px">
-  <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–3</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
+  <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–4</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
     <div class="lex-tools">
       <label class="lex-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg><input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
-      <span class="seg lex-units">${["all","1","2","3","+"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : u==="+" ? "📅 " + t("lexCal") : "Unidad " + u}</button>`).join("")}</span>
       <button type="button" class="chip-t${LEX.hide?" on":""}" id="lexHide">${LEX.hide ? t("lexShow") : t("lexHide")}</button>
     </div>
+    <div class="seg lex-units">${["all","1","2","3","4","v","+","fav"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}${u==="fav"?" lex-favtab":""}">${lexUnitLabel(u)}${u==="fav" ? ` <small>${nf || ""}</small>` : ""}</button>`).join("")}</div>
   </header>
   <p class="lex-count" id="lexCount"></p>
-  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
+  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">
+  <section class="lex-cat lex-favsec" id="lexFavSec" data-u="fav"><h3 class="lex-h"><span class="lex-u">♥</span>${t("lexFav")} <small>${t("lexFavSub")}</small></h3><div class="lex-fav-body">${lexFavRows()}</div></section>
+  ${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : c.u === "v" ? "V" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
   <p class="muted lex-none" id="lexNone" hidden>${t("lexNone")}</p></div>`;
   const box = $("#lexBox"), save = () => ls.set("edito-lex", JSON.stringify({u:LEX.u, hide:LEX.hide}));
   const apply = () => {
     const q = fold(LEX.q.trim()); let n = 0;
     $$(".lex-cat", box).forEach(sec=>{
-      const unitOk = LEX.u === "all" || sec.dataset.u === LEX.u; let m = 0;
+      const fav = sec.dataset.u === "fav";
+      const unitOk = fav ? LEX.u === "fav" : (LEX.u === "all" || sec.dataset.u === LEX.u); let m = 0;
       $$(".lex-r", sec).forEach(r=>{ const ok = unitOk && (!q || r.dataset.k.includes(q)); r.hidden = !ok; if (ok) m++; });
-      sec.hidden = !m; n += m;
+      sec.hidden = fav ? LEX.u !== "fav" : !m; n += m;
     });
-    $("#lexCount").textContent = t("lexN", n) + (n !== total ? ` / ${total}` : "");
-    $("#lexNone").hidden = !!n;
+    const tot = LEX.u === "fav" ? (S.quiz.esfav || []).length : total;
+    $("#lexCount").textContent = t("lexN", n) + (n !== tot ? ` / ${tot}` : "");
+    $("#lexNone").hidden = !!n || LEX.u === "fav";
   };
+  LEX_APPLY = apply;
   $("#lexQ").addEventListener("input", e=>{ LEX.q = e.target.value; apply(); });
-  $$("[data-u]", main).forEach(b=>b.addEventListener("click", ()=>{ LEX.u = b.dataset.u; save(); $$("[data-u]", main).forEach(x=>x.classList.toggle("on", x===b)); apply(); }));
+  $$(".lex-units [data-u]", main).forEach(b=>b.addEventListener("click", ()=>{ LEX.u = b.dataset.u; save(); $$(".lex-units [data-u]", main).forEach(x=>x.classList.toggle("on", x===b)); apply(); }));
   $("#lexHide").addEventListener("click", e=>{ LEX.hide = !LEX.hide; save(); box.classList.toggle("lex-hide", LEX.hide); e.currentTarget.classList.toggle("on", LEX.hide); e.currentTarget.textContent = LEX.hide ? t("lexShow") : t("lexHide"); $$(".lex-en.peek", box).forEach(x=>x.classList.remove("peek")); });
-  box.addEventListener("click", e=>{ const en = e.target.closest(".lex-en"); if (en && LEX.hide) en.classList.toggle("peek"); });
+  box.addEventListener("click", e=>{
+    const un = e.target.closest("[data-unfav]"); if (un) { toggleEsFav({es:un.dataset.unfav}); toast(t("favRemoved")); lexPaintFav(); return; }
+    const en = e.target.closest(".lex-en"); if (en && LEX.hide) en.classList.toggle("peek");
+  });
   apply();
 }
 
@@ -11241,7 +11932,7 @@ Object.assign(I18N.ru, {
   bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
   heroLead:n=>`Теория из учебника, задания рабочей тетради, ${n} упражнений, карточки Quizlet и пробная контрольная по юнитам 0–3.`,
   frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
-  esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–3.`,
+  esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–4.`,
   homeCont:"Продолжить", homeStart:"Начать с первой темы",
   testSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Оценка — из 20 баллов.`, esTestSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Результат — в процентах.`,
   tCheckL:"Проверка", tLenL:"Вопросов", modeNow:"Сразу", modeEnd:"В конце", tGo:"Начать",
@@ -11261,7 +11952,7 @@ Object.assign(I18N.en, {
   bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
   heroLead:n=>`Textbook theory, workbook exercises, ${n} tasks, Quizlet flashcards and a mock test for units 0–3.`,
   frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
-  esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–3.`,
+  esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–4.`,
   homeCont:"Continue", homeStart:"Start with the first topic",
   testSub:n=>`Random questions from the bank (${n}) across all topics. Graded out of 20.`, esTestSub:n=>`Random questions from the bank (${n}) across all topics. Scored in percent.`,
   tCheckL:"Checking", tLenL:"Questions", modeNow:"Instantly", modeEnd:"At the end", tGo:"Start",
@@ -11307,7 +11998,7 @@ function renderBank(){
   tops.forEach(x=>{ if (!cfg.seen.includes(x.id)) { cfg.seen.push(x.id); if (!cfg.sel.includes(x.id)) cfg.sel.push(x.id); } });
   const es = COURSE === "es";
   const groups = [];
-  const units = es ? ["1","2","3"] : ["0","1","2","3"];
+  const units = es ? ["1","2","3","4"] : ["0","1","2","3"];
   units.forEach(u=>{ const g = tops.filter(x=>x.sec === "book" && x.unit === u); if (g.length) groups.push([`${es ? t("unitWes") : t("unitW")} ${u}`, g]); });
   const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
   const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);
@@ -11510,6 +12201,14 @@ document.addEventListener("keydown", e=>{
 /* =========================================================
    router
    ========================================================= */
+function renderZh(){
+  main.innerHTML = `<div class="col"><div class="zh-soon seyes">
+    <div class="zh-big" aria-hidden="true">你好</div>
+    <p class="eyebrow">${t("zhEyebrow")}</p><h1>${t("zhH")}</h1><p class="t-ru">${t("zhP")}</p>
+    <div class="btns"><a class="btn pri" href="#home" data-zhback="fr">${t("zhBackFr")}</a><a class="btn sec" href="#home" data-zhback="es">${t("zhBackEs")}</a></div>
+  </div></div>`;
+  $$("[data-zhback]", main).forEach(a=>a.addEventListener("click", e=>{ const c = a.dataset.zhback; if (c !== COURSE) { e.preventDefault(); setCourse(c, true); location.hash = "home"; } }));
+}
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
@@ -11525,6 +12224,7 @@ function route(keepScroll){
   if (h === "quizlet" || FR_IDS.has(h)) want = "fr";
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
   if (want && want !== COURSE) setCourse(want, true);
+  if ((h === "zh") !== VIEW_ZH) { VIEW_ZH = h === "zh"; const keep = nav.classList.contains("open"); buildNav(); if (keep) nav.classList.add("open"); }
   const y = window.scrollY;
   if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
   if (byId[h]) renderTopic(byId[h]);
@@ -11534,6 +12234,7 @@ function route(keepScroll){
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
   else if (h === "bank") renderBank();
+  else if (h === "zh") renderZh();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }

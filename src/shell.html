@@ -1552,6 +1552,34 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .mist-good .fr{color:var(--ok)}
 .mist-why{grid-column:1/-1;font-size:13.5px;color:var(--ink-2)}
 @media (max-width:600px){.mist-r{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- китайский (скоро) ---- */
+.cf-zh{background:#de2910;display:grid;place-items:center}
+.cf-zh b{color:#ffde00;font-size:13px;line-height:1;margin:-1px 0 0 -3px}
+.cs-zh{background:linear-gradient(140deg,#b3261e,#e5533b)}
+.cdd-soon{font-size:11px;font-weight:700;color:var(--ink-3);background:var(--tint);border-radius:99px;padding:2px 7px;margin-left:6px;vertical-align:1px}
+.cdd-opt.on .cdd-soon{background:rgba(255,255,255,.2);color:inherit}
+.nav-zh{margin:18px 8px;padding:18px;border-radius:18px;background:var(--tint);text-align:center}
+.nav-zh-h{display:block;font-size:30px;font-weight:800;color:#c8322a;margin-bottom:6px}
+.nav-zh p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.zh-soon{background:var(--sheet);border-radius:var(--r-xl);box-shadow:var(--sh-2);padding:clamp(28px,6vw,64px);text-align:center;display:grid;justify-items:center;gap:6px;margin-top:8px}
+.zh-big{font-size:clamp(56px,12vw,96px);font-weight:800;line-height:1;color:#c8322a;margin-bottom:10px}
+.zh-soon h1{margin:0}
+.zh-soon .t-ru{max-width:44ch}
+.zh-soon .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+/* ---- испанский: цвета, избранное в лексике ---- */
+.es-col{display:inline-block;width:12px;height:12px;border-radius:50%;margin:0 5px 0 0;vertical-align:-1px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.c-w{background:#fff}.c-k{background:#222}.c-r{background:#d23b2f}.c-y{background:#f2c230}.c-g{background:#3e9a52}.c-o{background:#f08a24}.c-p{background:#f3a3c0}.c-l{background:#b49ad8}.c-b{background:#2f6fd0}.c-gr{background:#9a9a9a}.c-br{background:#7a4a24}.c-be{background:#d9c3a0}
+.lex-units{margin-top:12px;max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.lex-units::-webkit-scrollbar{display:none}
+.lex-units small{font-size:11px;opacity:.7}
+.lex-favtab.on{color:#d0335b}
+.lex-r-fav{grid-template-columns:minmax(0,1.05fr) minmax(0,1.6fr) auto}
+.lex-unfav{border:0;background:transparent;color:#d0335b;cursor:pointer;display:grid;place-items:center;padding:4px;border-radius:10px}
+.lex-unfav svg{fill:currentColor}
+.lex-unfav:hover{background:var(--tint)}
+.lex-fav-empty{color:var(--ink-3);margin:6px 2px 12px}
+@media (max-width:640px){.lex-r-fav{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}}
 </style>
 
 <header class="topbar">

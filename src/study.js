@@ -15,7 +15,7 @@ Object.assign(I18N.ru, {
   bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
   heroLead:n=>`Теория из учебника, задания рабочей тетради, ${n} упражнений, карточки Quizlet и пробная контрольная по юнитам 0–3.`,
   frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
-  esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–3.`,
+  esHeroLead:n=>`Теория, ${n} упражнений, лексика и пробная контрольная по юнитам 1–4.`,
   homeCont:"Продолжить", homeStart:"Начать с первой темы",
   testSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Оценка — из 20 баллов.`, esTestSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Результат — в процентах.`,
   tCheckL:"Проверка", tLenL:"Вопросов", modeNow:"Сразу", modeEnd:"В конце", tGo:"Начать",
@@ -35,7 +35,7 @@ Object.assign(I18N.en, {
   bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
   heroLead:n=>`Textbook theory, workbook exercises, ${n} tasks, Quizlet flashcards and a mock test for units 0–3.`,
   frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
-  esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–3.`,
+  esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a mock test for units 1–4.`,
   homeCont:"Continue", homeStart:"Start with the first topic",
   testSub:n=>`Random questions from the bank (${n}) across all topics. Graded out of 20.`, esTestSub:n=>`Random questions from the bank (${n}) across all topics. Scored in percent.`,
   tCheckL:"Checking", tLenL:"Questions", modeNow:"Instantly", modeEnd:"At the end", tGo:"Start",
@@ -81,7 +81,7 @@ function renderBank(){
   tops.forEach(x=>{ if (!cfg.seen.includes(x.id)) { cfg.seen.push(x.id); if (!cfg.sel.includes(x.id)) cfg.sel.push(x.id); } });
   const es = COURSE === "es";
   const groups = [];
-  const units = es ? ["1","2","3"] : ["0","1","2","3"];
+  const units = es ? ["1","2","3","4"] : ["0","1","2","3"];
   units.forEach(u=>{ const g = tops.filter(x=>x.sec === "book" && x.unit === u); if (g.length) groups.push([`${es ? t("unitWes") : t("unitW")} ${u}`, g]); });
   const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
   const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);

@@ -39,7 +39,7 @@ ru:{
   authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
   authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту — после этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет — проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
   aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена — открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть — войди на вкладке «Вход».", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
-  spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
+  favAddedEs:"Добавлено в Избранное (Лексика)", spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
   qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
@@ -114,7 +114,7 @@ en:{
   authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
   authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address — then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
   aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet — open the e-mail and click the link.", aeExists:"This account already exists — sign in on the “Sign in” tab.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
-  spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
+  favAddedEs:"Added to Favourites (Vocabulary)", spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
   qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
@@ -176,13 +176,13 @@ en:{
 
 /* --- второй курс (испанский) + упрощённый кабинет --- */
 Object.assign(I18N.ru, {
-  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский"}, esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
-  lexSearch:"Найти слово…", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
-  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
+  lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные ♥", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми ♥ в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
+  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
   esHow:[["Темы по юнитам","Сначала объяснение, потом задания под ним."],["Спряжение","Окончания -ar, -er, -ir и главные неправильные глаголы."],["Лексика","Все слова с переводом и примерами. Скрой перевод и проверь себя."],["Пробная контрольная","Реши несколько вариантов, пока не будет стабильно 80% и выше."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · всё самое важное", esStart:"Начать с первой темы",
-  esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
+  esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · всё самое важное", esStart:"Начать с первой темы",
+  esTestEyebrow:"Prueba · unidades 1–4", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
   esVerdicts:[["¡Excelente!","Ты готов(а) к контрольной."],["¡Muy bien!","Хорошо, но некоторые темы стоит повторить — они внизу."],["Aprobado","Неплохо, но повтори темы с красными полосками."],["A repasar","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
   tipTtsEs:"Нажимай на испанский текст с пунктиром — компьютер прочитает его с испанским произношением.",
@@ -197,13 +197,13 @@ Object.assign(I18N.ru, {
   saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
 });
 Object.assign(I18N.en, {
-  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish"}, esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?"},
+  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
-  lexSearch:"Find a word…", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
-  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–3", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
+  lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked ♥", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap ♥ in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
+  esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Mock test","Do a few versions until you consistently get 80% or more."]],
-  esBookSub:"Unidades 1–3, p. 14–56", esCheatEyebrow:"Unidades 1–3 · the essentials", esStart:"Start with the first topic",
-  esTestEyebrow:"Prueba · unidades 1–3", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–3 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
+  esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · the essentials", esStart:"Start with the first topic",
+  esTestEyebrow:"Prueba · unidades 1–4", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–4 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
   esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
   tipTtsEs:"Click Spanish text with a dotted underline and the computer will read it with Spanish pronunciation.",
@@ -229,7 +229,7 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, CAH, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG)), cheat: ES_CHEAT(LANG)});
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG), ES_POOL_U4(LANG)), cheat: ES_CHEAT(LANG)});
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
@@ -252,7 +252,7 @@ let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normP
 (function loadLocal(){
   try {
     const raw = ls.get(LKEY);
-    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], esfav:(o.quiz&&o.quiz.esfav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
     else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
   } catch(e) {}
 })();
@@ -293,7 +293,7 @@ async function supaBackend(){
 function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
   if (key === "settings") return {lang:LANG, course:COURSE, ts:S.ts.settings||0};
-  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
+  if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], esfav:S.quiz.esfav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
   if (key === "profile") return Object.assign({}, S.prof, {ts:S.ts.profile||0});
   if (key === "game") return Object.assign({}, S.game, {ts:S.ts.game||0});
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
@@ -338,7 +338,7 @@ document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState
 window.addEventListener("pagehide", ()=>{ if (Cloud.dirty.size) flush(); });
 function hasData(k){
   if (k === "progress") return Object.keys(S.p).length || S.tests.length;
-  if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length;
+  if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length || (S.quiz.esfav||[]).length;
   if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
   if (k === "profile") return !!S.prof.name;
   if (k === "game") return Object.keys(S.game.hist).length > 0;
@@ -384,7 +384,7 @@ async function initCloudRun(){
         S.ts.progress = Math.max(lt, ct);
       } else if (ct > lt) {
         if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
-        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], sd:v.sd||{}};
+        else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], esfav:Array.isArray(v.esfav) ? v.esfav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
         else if (k === "profile") S.prof = normProf(v);
         else if (k === "game") S.game = normGame(v);
@@ -482,8 +482,14 @@ function pickVoice(){ try { const vs = synth.getVoices();
   esVoice = vs.find(v=>/^es[-_]ES/i.test(v.lang) && /Mónica|Monica|Jorge|Marisol|Google|Lucía|Lucia|Elvira|Álvaro|Alvaro/i.test(v.name)) || vs.find(v=>/^es[-_]ES/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null; } catch(e) {} }
 if (synth) { pickVoice(); try { synth.addEventListener("voiceschanged", pickVoice); } catch(e) {} }
 const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/\((?:m|f|fam|e|ne|s|es)\.?\)/g,"").replace(/[✗✓→=]/g," ").replace(/\s+\/\s+/g,", ").replace(/\s—\s/g,", ").replace(/\s+/g," ").trim();
+/* повторное прослушивание того же текста (в течение 15 с) — медленнее */
+const SAY_LAST = {k:"", at:0, n:0};
 function speak(text, rate){
   if (!synth) return false;
+  const k = cleanSay(text).trim().toLowerCase(), now = Date.now();
+  if (k && k === SAY_LAST.k && now - SAY_LAST.at < 15000) SAY_LAST.n++; else SAY_LAST.n = 0;
+  SAY_LAST.k = k; SAY_LAST.at = now;
+  if (SAY_LAST.n > 0) rate = Math.min(rate || .88, SAY_LAST.n === 1 ? .62 : .5);
   try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); const es = COURSE === "es"; u.lang = es ? "es-ES" : "fr-FR"; const vo = es ? esVoice : frVoice; if (vo) u.voice = vo; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
 }
 if (!synth) document.documentElement.classList.add("no-tts");
@@ -620,6 +626,14 @@ function toggleFav(e){
   touch("quiz");
   return i < 0;
 }
+const esFavIdx = es => (S.quiz.esfav || []).findIndex(x=>dk(x.es) === dk(es));
+const isEsFav = es => esFavIdx(es) >= 0;
+function toggleEsFav(e){
+  S.quiz.esfav = S.quiz.esfav || [];
+  const i = esFavIdx(e.es);
+  if (i >= 0) S.quiz.esfav.splice(i, 1); else S.quiz.esfav.unshift({es:String(e.es).trim().replace(/[.,;:!?…]+$/, ""), m:String(e.m || "").trim().replace(/\.$/, ""), at:Date.now()});
+  touch("quiz"); return i < 0;
+}
 function qMeaning(fr){ if (!DICT) buildDict(); const e = DICT.get(dk(fr)); if (e) return LANG === "en" ? e.en : e.ru; const f = (S.quiz.fav || [])[favIdx(fr)]; return f ? (LANG === "en" ? (f.en || f.ru) : (f.ru || f.en)) : ""; }
 
 /* --- всплывающая подсказка --- */
@@ -633,19 +647,21 @@ function spBuild(){
   el.addEventListener("pointerdown", e=>{ if (e.pointerType !== "mouse") e.preventDefault(); });
   $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry && SP.entry.say) speak(SP.entry.say); });
   $(".sp-fav", el).addEventListener("click", ()=>{
-    const e = SP.entry; if (!e || !e.fr) return;
+    const e = SP.entry; if (!e) return;
+    if (COURSE === "es") { if (!e.es) return; const on = toggleEsFav(e); spPaintFav(); toast(on ? t("favAddedEs") : t("favRemoved")); if (location.hash === "#lexico") lexPaintFav(); return; }
+    if (!e.fr) return;
     const on = toggleFav(e); spPaintFav(); toast(on ? t("favAdded") : t("favRemoved"));
     if (location.hash === "#quizlet") qzRefreshList();
   });
   document.body.appendChild(el); SP.el = el;
 }
 function spPaintFav(){
-  const b = $(".sp-fav", SP.el), on = SP.entry && isFav(SP.entry.fr);
+  const esC = COURSE === "es", b = $(".sp-fav", SP.el), on = SP.entry && (esC ? isEsFav(SP.entry.es || "") : isFav(SP.entry.fr));
   b.classList.toggle("on", !!on); b.setAttribute("aria-pressed", on ? "true" : "false");
   b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label");
   const s = $(".sp-say", SP.el); s.setAttribute("aria-label", t("qzSay")); s.title = t("qzSay");
   s.hidden = !synth;
-  const ready = !!(SP.entry && SP.entry.fr); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
+  const ready = !!(SP.entry && (esC ? SP.entry.es : SP.entry.fr)); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
 }
 function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; }
 function spPlace(){
@@ -700,24 +716,24 @@ const ES_FN = /(^|\s)(el|la|los|las|un|una|es|son|está|hay|de|del|en|con|por|pa
 function esPop(o){
   const {txt, q, cyr, req, to, el, mEl, nEl, show} = o;
   el.dataset.dir = "fr";
-  const put = (m, note, say, st) => { SP.entry = {sel:q, say:say || "", fr:"", ru:"", en:""}; mEl.textContent = m; nEl.textContent = note || ""; el.dataset.st = st || "ok"; };
+  const put = (m, note, say, st, es) => { SP.entry = {sel:q, say:say || "", fr:"", ru:"", en:"", es:st === "ok" ? (es || "") : "", m:st === "ok" ? m : ""}; mEl.textContent = m; nEl.textContent = note || ""; el.dataset.st = st || "ok"; };
   const remote = (from, toL, sayOut) => {
     put(t("spLoading"), "", "", "load"); show();
     remoteTr(q, toL, from).then(out=>{
       if (req !== SP.req) return;
-      if (out) put(out, t("spAuto"), sayOut ? out : q, "ok"); else put(t("spNone"), navigator.onLine === false ? t("spOffline") : "", "", "none");
+      if (out) { put(out, t("spAuto"), sayOut ? out : q, "ok", sayOut ? out : q); if (sayOut) SP.entry.m = q; } else put(t("spNone"), navigator.onLine === false ? t("spOffline") : "", "", "none");
       spPaintFav(); spPlace();
     });
   };
   if (cyr) { el.dataset.dir = "rev"; return remote("ru", "es", true); }
   const hit = esLookup(txt);
-  if (hit) { put(hit.en, dk(hit.es) !== dk(txt) ? hit.es : "", q, "ok"); return show(); }
+  if (hit) { put(hit.en, dk(hit.es) !== dk(txt) ? hit.es : "", q, "ok", hit.es); return show(); }
   const rEn = !ES_MARK.test(txt) && esDict().en.get(dk(txt).replace(/^(to|a|an|the)\s+/, ""));
-  if (rEn) { el.dataset.dir = "rev"; put(rEn.es, rEn.en, rEn.es, "ok"); return show(); }
+  if (rEn) { el.dataset.dir = "rev"; put(rEn.es, rEn.en, rEn.es, "ok", rEn.es); SP.entry.m = rEn.en; return show(); }
   if (!ES_MARK.test(txt) && EN_FN.test(txt) && !ES_FN.test(txt)) {
     el.dataset.dir = "rev";
     const r = esDict().en.get(dk(txt));
-    if (r) { put(r.es, r.en, r.es, "ok"); return show(); }
+    if (r) { put(r.es, r.en, r.es, "ok", r.es); SP.entry.m = r.en; return show(); }
     return remote("en", "es", true);
   }
   remote("es", to, false);
@@ -740,7 +756,6 @@ function spCheck(){
   const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
   $(".sp-fr", el).textContent = q;
   const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
-  el.classList.toggle("no-fav", COURSE === "es");
   if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
@@ -1169,12 +1184,14 @@ INIT.drill = (api, ex) => {
    navigation
    ========================================================= */
 function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="ring" data-ring="${tp.id}"></span><span class="nl-t">${tp.title}</span></a>`; }
-const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>'};
+const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
+let VIEW_ZH = decodeURIComponent((location.hash||"").slice(1)) === "zh";
+const ddCur = () => VIEW_ZH ? "zh" : COURSE;
 const cName = c => t("courseNames")[c];
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[COURSE]}<span class="cdd-v">${cName(COURSE)}</span><svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
-    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es"].map(c=>`<button type="button" role="option" class="cdd-opt${c===COURSE?" on":""}" data-course="${c}" aria-selected="${c===COURSE}">${cName(c)}</button>`).join("")}</div>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}<span class="cdd-v">${cName(ddCur())}</span><svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}${c === "zh" ? ` <small class="cdd-soon">${t("soon")}</small>` : ""}</button>`).join("")}</div>
   </div>`;
 }
 function paintCourseDD(c){
@@ -1193,7 +1210,13 @@ function wireCourseDD(){
   btn.addEventListener("click", e=>{ cddOpen(!dd.classList.contains("open"), e.detail === 0); });
   btn.addEventListener("keydown", e=>{ if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); cddOpen(true, true); } });
   opts().forEach(o=>{
-    o.addEventListener("click", ()=>{ cddOpen(false); btn.focus({preventScroll:true}); setCourse(o.dataset.course); });
+    o.addEventListener("click", ()=>{
+      cddOpen(false); btn.focus({preventScroll:true});
+      const c = o.dataset.course;
+      if (c === "zh") { location.hash = "zh"; return; }
+      if (VIEW_ZH && c === COURSE) { location.hash = "home"; return; }
+      setCourse(c);
+    });
     o.addEventListener("keydown", e=>{
       const list = opts(), k = list.indexOf(o);
       if (e.key === "ArrowDown") { e.preventDefault(); list[(k + 1) % list.length].focus(); }
@@ -1226,13 +1249,13 @@ function setFrMode(m, quiet){
 document.addEventListener("click", e=>{ const b = e.target.closest("[data-frmode]"); if (b) setFrMode(b.dataset.frmode); });
 function buildNav(){
   const es = COURSE === "es", unitW = es ? t("unitWes") : t("unitW");
-  const units = es ? ["1","2","3"] : ["0","1","2","3"], uname = u => es ? t("esUnits")[u] : t("units")[u];
+  const units = es ? ["1","2","3","4"] : ["0","1","2","3"], uname = u => es ? t("esUnits")[u] : t("units")[u];
   nav.innerHTML = `
   <div class="nav-top">
     ${courseDDHTML()}
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button>
   </div>
-  <div class="nav-scroll">
+  <div class="nav-scroll">${VIEW_ZH ? `<div class="nav-zh"><span class="nav-zh-h">中文</span><p>${t("zhNav")}</p></div>` : `
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
@@ -1241,7 +1264,7 @@ function buildNav(){
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
     </div>
     ${es ? `<div class="nav-sec">${t("fromBook")}</div>` : frModeHTML("nav")}
-    ${navTopics(units, unitW, uname)}
+    ${navTopics(units, unitW, uname)}`}
   </div>
   <div class="nav-foot">
     ${meHTML()}
@@ -1249,7 +1272,7 @@ function buildNav(){
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
   wireCourseDD();
-  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
+  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = VIEW_ZH ? `<span class="cs-badge cs-zh">ZH</span><b>中文</b><span>${cName("zh")}</span>` : `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
   const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
 }
@@ -1390,7 +1413,7 @@ function saveNudge(){
 function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
-  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3"] : ["0","1","2","3"];
+  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3","4"] : ["0","1","2","3"];
   const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
   main.innerHTML = `<div class="col">
@@ -1439,34 +1462,50 @@ function renderCheat(){
 let LEX = {u:"all", hide:false, q:""};
 try { const o = JSON.parse(ls.get("edito-lex") || "null"); if (o) LEX = Object.assign(LEX, o, {q:""}); } catch(e) {}
 const fold = s => String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+let LEX_APPLY = null;
+const lexUnitLabel = u => u === "all" ? t("lexAll") : u === "+" ? "📅 " + t("lexCal") : u === "v" ? t("lexVerbs") : u === "fav" ? "♥ " + t("lexFav") : "Unidad " + u;
+function lexFavRows(){
+  const f = S.quiz.esfav || [];
+  if (!f.length) return `<p class="lex-fav-empty">${t("lexFavEmpty")}</p>`;
+  return `<div class="lex-rows">${f.map(x=>`<div class="lex-r lex-r-fav" data-k="${esc(fold(x.es + " " + (x.m || "")))}"><span class="fr lex-w">${esc(x.es)}</span><span class="lex-en" tabindex="0">${esc(x.m || "")}</span><button type="button" class="lex-unfav" data-unfav="${esc(x.es)}" aria-label="${esc(t("spUnfav"))}" title="${esc(t("spUnfav"))}">${ICO_HEART}</button></div>`).join("")}</div>`;
+}
+function lexPaintFav(){ const sec = $("#lexFavSec"); if (!sec) return; $(".lex-fav-body", sec).innerHTML = lexFavRows(); const b = $('.lex-units [data-u="fav"] small'); if (b) b.textContent = (S.quiz.esfav || []).length || ""; if (LEX_APPLY) LEX_APPLY(); }
 function renderLexico(){
-  const total = ES_LEX.reduce((n,c)=>n+c.w.length,0);
+  const total = ES_LEX.reduce((n,c)=>n+c.w.length,0), nf = (S.quiz.esfav || []).length;
   main.innerHTML = `<div class="col" style="max-width:1000px">
-  <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–3</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
+  <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–4</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
     <div class="lex-tools">
       <label class="lex-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg><input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
-      <span class="seg lex-units">${["all","1","2","3","+"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}">${u==="all" ? t("lexAll") : u==="+" ? "📅 " + t("lexCal") : "Unidad " + u}</button>`).join("")}</span>
       <button type="button" class="chip-t${LEX.hide?" on":""}" id="lexHide">${LEX.hide ? t("lexShow") : t("lexHide")}</button>
     </div>
+    <div class="seg lex-units">${["all","1","2","3","4","v","+","fav"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}${u==="fav"?" lex-favtab":""}">${lexUnitLabel(u)}${u==="fav" ? ` <small>${nf || ""}</small>` : ""}</button>`).join("")}</div>
   </header>
   <p class="lex-count" id="lexCount"></p>
-  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
+  <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">
+  <section class="lex-cat lex-favsec" id="lexFavSec" data-u="fav"><h3 class="lex-h"><span class="lex-u">♥</span>${t("lexFav")} <small>${t("lexFavSub")}</small></h3><div class="lex-fav-body">${lexFavRows()}</div></section>
+  ${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : c.u === "v" ? "V" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
   <p class="muted lex-none" id="lexNone" hidden>${t("lexNone")}</p></div>`;
   const box = $("#lexBox"), save = () => ls.set("edito-lex", JSON.stringify({u:LEX.u, hide:LEX.hide}));
   const apply = () => {
     const q = fold(LEX.q.trim()); let n = 0;
     $$(".lex-cat", box).forEach(sec=>{
-      const unitOk = LEX.u === "all" || sec.dataset.u === LEX.u; let m = 0;
+      const fav = sec.dataset.u === "fav";
+      const unitOk = fav ? LEX.u === "fav" : (LEX.u === "all" || sec.dataset.u === LEX.u); let m = 0;
       $$(".lex-r", sec).forEach(r=>{ const ok = unitOk && (!q || r.dataset.k.includes(q)); r.hidden = !ok; if (ok) m++; });
-      sec.hidden = !m; n += m;
+      sec.hidden = fav ? LEX.u !== "fav" : !m; n += m;
     });
-    $("#lexCount").textContent = t("lexN", n) + (n !== total ? ` / ${total}` : "");
-    $("#lexNone").hidden = !!n;
+    const tot = LEX.u === "fav" ? (S.quiz.esfav || []).length : total;
+    $("#lexCount").textContent = t("lexN", n) + (n !== tot ? ` / ${tot}` : "");
+    $("#lexNone").hidden = !!n || LEX.u === "fav";
   };
+  LEX_APPLY = apply;
   $("#lexQ").addEventListener("input", e=>{ LEX.q = e.target.value; apply(); });
-  $$("[data-u]", main).forEach(b=>b.addEventListener("click", ()=>{ LEX.u = b.dataset.u; save(); $$("[data-u]", main).forEach(x=>x.classList.toggle("on", x===b)); apply(); }));
+  $$(".lex-units [data-u]", main).forEach(b=>b.addEventListener("click", ()=>{ LEX.u = b.dataset.u; save(); $$(".lex-units [data-u]", main).forEach(x=>x.classList.toggle("on", x===b)); apply(); }));
   $("#lexHide").addEventListener("click", e=>{ LEX.hide = !LEX.hide; save(); box.classList.toggle("lex-hide", LEX.hide); e.currentTarget.classList.toggle("on", LEX.hide); e.currentTarget.textContent = LEX.hide ? t("lexShow") : t("lexHide"); $$(".lex-en.peek", box).forEach(x=>x.classList.remove("peek")); });
-  box.addEventListener("click", e=>{ const en = e.target.closest(".lex-en"); if (en && LEX.hide) en.classList.toggle("peek"); });
+  box.addEventListener("click", e=>{
+    const un = e.target.closest("[data-unfav]"); if (un) { toggleEsFav({es:un.dataset.unfav}); toast(t("favRemoved")); lexPaintFav(); return; }
+    const en = e.target.closest(".lex-en"); if (en && LEX.hide) en.classList.toggle("peek");
+  });
   apply();
 }
 
@@ -1953,6 +1992,14 @@ function qzMatch(stage){
 /* =========================================================
    router
    ========================================================= */
+function renderZh(){
+  main.innerHTML = `<div class="col"><div class="zh-soon seyes">
+    <div class="zh-big" aria-hidden="true">你好</div>
+    <p class="eyebrow">${t("zhEyebrow")}</p><h1>${t("zhH")}</h1><p class="t-ru">${t("zhP")}</p>
+    <div class="btns"><a class="btn pri" href="#home" data-zhback="fr">${t("zhBackFr")}</a><a class="btn sec" href="#home" data-zhback="es">${t("zhBackEs")}</a></div>
+  </div></div>`;
+  $$("[data-zhback]", main).forEach(a=>a.addEventListener("click", e=>{ const c = a.dataset.zhback; if (c !== COURSE) { e.preventDefault(); setCourse(c, true); location.hash = "home"; } }));
+}
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
@@ -1968,6 +2015,7 @@ function route(keepScroll){
   if (h === "quizlet" || FR_IDS.has(h)) want = "fr";
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
   if (want && want !== COURSE) setCourse(want, true);
+  if ((h === "zh") !== VIEW_ZH) { VIEW_ZH = h === "zh"; const keep = nav.classList.contains("open"); buildNav(); if (keep) nav.classList.add("open"); }
   const y = window.scrollY;
   if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
   if (byId[h]) renderTopic(byId[h]);
@@ -1977,6 +2025,7 @@ function route(keepScroll){
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
   else if (h === "bank") renderBank();
+  else if (h === "zh") renderZh();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
