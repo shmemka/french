@@ -18,8 +18,35 @@ const ICO = {
   check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10.5 3.2 3.2L15 6.8"/></svg>',
   bank:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><path d="M14 11.5v5M11.5 14h5"/></svg>',
   shop:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 7.5h13l-1 9a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M7 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
-  cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>'
+  cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>',
+  chev:'<svg class="ng-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg>',
+  crumb:'<svg class="cr-sep" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 5 5 5-5 5"/></svg>',
+  search:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>',
+  gram:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 3.5 2.8 7.3 10 11l7.2-3.7z"/><path d="m2.8 10.8 7.2 3.7 7.2-3.7"/><path d="m2.8 14.2 7.2 3.6 7.2-3.6" opacity=".55"/></svg>',
+  ref:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 5.6C8.5 4.4 6.3 4 3 4v11c3.3 0 5.5.4 7 1.6 1.5-1.2 3.7-1.6 7-1.6V4c-3.3 0-5.5.4-7 1.6z"/><path d="M10 5.6v11"/></svg>'
 };
+/* иконки карточек тем (по типу темы) */
+const KIND_ICO = (()=>{ const w = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`; return {
+  chat:w('<path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4.5 19.5l1.4-4.2A7.5 7.5 0 1 1 20 11.5z"/><path d="M9 11.5h.01M12.5 11.5h.01M16 11.5h.01"/>'),
+  doc:w('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h2"/>'),
+  vocab:w('<path d="M3 18 7.5 6 12 18M4.8 14h5.4"/><circle cx="17.3" cy="15" r="2.8"/><path d="M20.1 11.8V18"/>'),
+  sound:w('<path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/>'),
+  conj:w('<rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M4 9.5h16M4 15h16M10 4v16"/>'),
+  spark:w('<path d="M11 3.5l1.8 5.2 5.2 1.8-5.2 1.8L11 17.5l-1.8-5.2L4 10.5l5.2-1.8z"/><path d="M18.5 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
+  bulb:w('<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'),
+  medal:w('<circle cx="12" cy="14" r="5.5"/><path d="M8.5 9.5 6 3h4l2 4 2-4h4l-2.5 6.5"/><path d="M12 11.8v4.4M10.3 13.2 12 11.8"/>'),
+  pencil:w('<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>'),
+  read:w('<path d="M12 6.5C10.3 5.2 7.8 4.8 4 4.8v12.4c3.8 0 6.3.4 8 1.8 1.7-1.4 4.2-1.8 8-1.8V4.8c-3.8 0-6.3.4-8 1.7z"/><path d="M12 6.5V19"/>')
+}; })();
+function kindIco(tp){
+  const k = String(tp.kind || "").toLowerCase();
+  const id = /^(communication|общение|communic)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
+    : /phon|произн|pronun/.test(k) ? "sound" : /спряж|conjug/.test(k) ? "conj" : /нуля|scratch/.test(k) ? "spark" : /полезно|good to know/.test(k) ? "bulb"
+    : /delf/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" ? "pencil" : "doc";
+  return KIND_ICO[id];
+}
+/* цвет группы: юнит 0–4, грамматика, справочник */
+const HUE_OF = tp => tp.sec === "gram" ? "g" : tp.sec === "ref" ? "r" : String(tp.unit || "0");
 
 /* =========================================================
    i18n
@@ -176,7 +203,7 @@ en:{
 
 /* --- второй курс (испанский) + упрощённый кабинет --- */
 Object.assign(I18N.ru, {
-  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
+  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", navSearch:"Поиск тем", navNone:"Ничего не нашлось", navMore:"Справка", tcOpen:"Открыть", homeAll:"Все", homeTip:"Подсказка", crumbsL:"Вы здесь", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
   lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные ♥", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми ♥ в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
@@ -197,7 +224,7 @@ Object.assign(I18N.ru, {
   saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
 });
 Object.assign(I18N.en, {
-  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
+  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", navSearch:"Search topics", navNone:"Nothing found", navMore:"Reference", tcOpen:"Open", homeAll:"All", homeTip:"Tip", crumbsL:"You are here", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
   lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked ♥", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap ♥ in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
@@ -1183,20 +1210,111 @@ INIT.drill = (api, ex) => {
 /* =========================================================
    navigation
    ========================================================= */
-function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="ring" data-ring="${tp.id}"></span><span class="nl-t">${tp.title}</span></a>`; }
+function navLink(tp){ return `<a class="nl" href="#${tp.id}" data-id="${tp.id}"><span class="nl-t">${tp.title}</span><span class="ring" data-ring="${tp.id}"></span></a>`; }
+/* группы в сайдбаре: юниты, грамматика, справочник — сворачиваются, состояние в localStorage */
+let NAVG = {}; try { NAVG = JSON.parse(ls.get("edito-navg") || "{}") || {}; } catch(e) { NAVG = {}; }
+const navGKey = g => COURSE + ":" + (COURSE === "fr" ? FRMODE + ":" : "") + g;
+function navGroup(key, head, links, opts){
+  opts = opts || {};
+  const k = navGKey(key), open = NAVG[k] !== undefined ? NAVG[k] : !!opts.open;
+  return `<div class="ng${open ? " open" : ""}" data-g="${esc(k)}">
+    <button type="button" class="ng-h" aria-expanded="${open}">${head}${ICO.chev}</button>
+    <div class="ng-b"><div class="ng-in">${links}</div></div></div>`;
+}
+const unitBadge = (u, hue) => `<span class="ng-n" data-hue="${hue}">${u}</span>`;
+function navTopics(units, unitW, uname){
+  const es = COURSE === "es";
+  if (!es && FRMODE === "tutor") return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
+  const cah = !es && FRMODE === "cahier", list = cah ? CAH : BOOK;
+  const first = units.find(u=>list.some(x=>x.unit===u));
+  let h = units.map(u=>{ const g = list.filter(x=>x.unit===u); return g.length ? navGroup("u" + u, `${unitBadge(u, u)}<span class="ng-t"><b>${unitW} ${u}</b><i>${uname(u)}</i></span>`, g.map(navLink).join(""), {open: u === first}) : ""; }).join("");
+  if (!cah) h += `<div class="nav-sec">${t("navMore")}</div>`
+    + (GRAM.length ? navGroup("gram", `<span class="ng-n ng-i" data-hue="g">${ICO.gram}</span><span class="ng-t"><b>${t("gram")}</b></span>`, GRAM.map(navLink).join("")) : "")
+    + navGroup("ref", `<span class="ng-n ng-i" data-hue="r">${ICO.ref}</span><span class="ng-t"><b>${t("ref")}</b></span>`, REF.map(navLink).join(""));
+  return h;
+}
+function navOpenGroup(el, open, save){
+  el.classList.toggle("open", open); $(".ng-h", el).setAttribute("aria-expanded", open);
+  if (save) { NAVG[el.dataset.g] = open; ls.set("edito-navg", JSON.stringify(NAVG)); }
+}
+/* поиск по темам в сайдбаре («/» — фокус) */
+function navSearchHTML(){
+  return `<label class="nsearch">${ICO.search}<input type="search" id="navQ" placeholder="${esc(t("navSearch"))}" autocomplete="off" spellcheck="false" aria-label="${esc(t("navSearch"))}"><kbd>/</kbd></label>`;
+}
+function navWhere(tp){
+  const es = COURSE === "es";
+  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
+}
+function navSearchRun(q){
+  const box = $("#navRes"), groups = $("#navGroups"); if (!box || !groups) return;
+  const f = fold(q).trim();
+  if (!f) { box.hidden = true; groups.hidden = false; box.innerHTML = ""; return; }
+  const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
+  const tps = [...BOOK, ...CAH, ...GRAM, ...REF];
+  const hit = s => fold(s).includes(f);
+  const res = pages.filter(([,n])=>hit(n)).map(([id,n])=>`<a class="nl nsr" href="#${id}" data-id="${id}"><span class="nl-t">${esc(n)}</span></a>`)
+    .concat(tps.filter(tp=>hit(tp.title) || hit(tp.ru) || hit(tp.kind)).slice(0, 40).map(tp=>`<a class="nl nsr" href="#${tp.id}" data-id="${tp.id}"><span class="nl-t">${tp.title}<small>${navWhere(tp)} · ${esc(String(tp.ru).replace(/<[^>]+>/g,""))}</small></span></a>`));
+  box.innerHTML = res.length ? res.join("") : `<p class="nav-empty">${t("navNone")}</p>`;
+  box.hidden = false; groups.hidden = true; markActive();
+}
+function wireNavSearch(){
+  const q = $("#navQ"); if (!q) return;
+  q.addEventListener("input", ()=>navSearchRun(q.value));
+  q.addEventListener("keydown", e=>{
+    if (e.key === "Escape") { if (q.value) { e.preventDefault(); e.stopPropagation(); q.value = ""; navSearchRun(""); } else q.blur(); }
+    else if (e.key === "Enter") { const a = $("#navRes .nsr"); if (a) { e.preventDefault(); location.hash = a.getAttribute("href").slice(1); q.value = ""; navSearchRun(""); q.blur(); } }
+    else if (e.key === "ArrowDown") { const a = $("#navRes .nsr"); if (a) { e.preventDefault(); a.focus(); } }
+  });
+  $("#navRes").addEventListener("keydown", e=>{
+    const list = $$("#navRes .nsr"), k = list.indexOf(document.activeElement); if (k < 0) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); (list[k+1] || list[k]).focus(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); (k ? list[k-1] : q).focus(); }
+  });
+  $("#navRes").addEventListener("click", e=>{ if (e.target.closest(".nsr")) { q.value = ""; setTimeout(()=>navSearchRun(""), 0); } });
+}
+document.addEventListener("keydown", e=>{
+  if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const a = document.activeElement; if (a && (a.isContentEditable || /^(input|textarea|select)$/i.test(a.tagName))) return;
+  const q = $("#navQ"); if (!q || VIEW_ZH) return;
+  e.preventDefault();
+  if (window.matchMedia("(max-width:979px)").matches && !nav.classList.contains("open")) openNav();
+  else if (app.classList.contains("nav-off")) setNavHidden(false);
+  setTimeout(()=>{ const q2 = $("#navQ"); if (q2) q2.focus(); }, 30);
+});
+/* хлебные крошки над страницей */
+function crumbsFor(h){
+  const tp = byId[h], es = COURSE === "es", out = [];
+  const pages = {test:t("test"), bank:t("bank"), shpargalka:t("cheat"), quizlet:"Quizlet", lexico:t("lexico"), account:t("account"), zh:cName("zh")};
+  if (tp) {
+    if (tp.sec === "cahier") out.push(["", "Cahier"], ["", `${t("unitW")} ${tp.unit}`]);
+    else if (tp.sec === "book") out.push(["", `${es ? t("unitWes") : t("unitW")} ${tp.unit}`]);
+    else out.push(["", tp.sec === "gram" ? t("gram") : t("ref")]);
+    out.push(["", tp.title]);
+  } else if (pages[h]) out.push(["", pages[h]]);
+  return out;
+}
+function paintCrumbs(h){
+  const el = $("#crumbs"); if (!el) return;
+  const parts = crumbsFor(h);
+  el.classList.toggle("cr-root", !parts.length);
+  el.innerHTML = `<div class="cr-in"><button type="button" class="icon-btn cr-side" id="crSide" aria-label="${esc(t("showNav"))}" title="${esc(t("showNav"))}">${ICO.side}</button>
+    <nav class="cr" aria-label="${esc(t("crumbsL"))}"><a class="cr-home${parts.length ? "" : " cur"}" href="#home" aria-label="${esc(t("home"))}">${ICO.home}${parts.length ? "" : `<span>${t("home")}</span>`}</a>${parts.map(([, l], i)=>`${ICO.crumb}<span class="cr-i${i === parts.length - 1 ? " cur" : ""}">${l}</span>`).join("")}</nav></div>`;
+  $("#crSide", el).addEventListener("click", ()=>setNavHidden(false));
+}
 const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
 let VIEW_ZH = decodeURIComponent((location.hash||"").slice(1)) === "zh";
 const ddCur = () => VIEW_ZH ? "zh" : COURSE;
 const cName = c => t("courseNames")[c];
+const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${c === "zh" ? t("soon") : COURSES[c].book}</small></span>`;
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}<span class="cdd-v">${cName(ddCur())}</span><svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}${cddVal(ddCur())}<svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
     <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}${c === "zh" ? ` <small class="cdd-soon">${t("soon")}</small>` : ""}</button>`).join("")}</div>
   </div>`;
 }
 function paintCourseDD(c){
   const dd = $("#cdd"); if (!dd) return;
-  $("#cddBtn", dd).innerHTML = `${CFLAG[c]}<span class="cdd-v">${cName(c)}</span>` + $("#cddBtn .cdd-ch", dd).outerHTML;
+  $("#cddBtn", dd).innerHTML = `${CFLAG[c]}${cddVal(c)}` + $("#cddBtn .cdd-ch", dd).outerHTML;
   $$(".cdd-opt", dd).forEach(o=>{ const on = o.dataset.course === c; o.classList.toggle("on", on); o.setAttribute("aria-selected", on); });
 }
 function cddOpen(open, focus){
@@ -1231,13 +1349,6 @@ document.addEventListener("keydown", e=>{ if (e.key === "Escape") { const dd = $
 function frModeHTML(where){
   return `<div class="seg frmode${where === "nav" ? " frmode-nav" : ""}" role="tablist" aria-label="${esc(t("frModeL"))}">${["livre","cahier","tutor"].map(m=>`<button type="button" role="tab" data-frmode="${m}" aria-selected="${FRMODE===m}" class="${FRMODE===m?"on":""}">${t("frModes")[m]}</button>`).join("")}</div>`;
 }
-function navTopics(units, unitW, uname){
-  const es = COURSE === "es";
-  if (!es && FRMODE === "tutor") return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
-  const list = !es && FRMODE === "cahier" ? CAH : BOOK;
-  return units.map(u=>{ const g = list.filter(x=>x.unit===u); return g.length ? `<div class="nav-unit">${unitW} ${u} <i>· ${uname(u)}</i></div>` + g.map(navLink).join("") : ""; }).join("")
-    + (!es && FRMODE === "cahier" ? "" : `${GRAM.length ? `<div class="nav-sec">${t("gram")}</div>${GRAM.map(navLink).join("")}` : ""}<div class="nav-sec">${t("ref")}</div>${REF.map(navLink).join("")}`);
-}
 function setFrMode(m, quiet){
   if (!["livre","cahier","tutor"].includes(m) || m === FRMODE) return;
   FRMODE = m; ls.set("edito-frmode", m);
@@ -1255,6 +1366,7 @@ function buildNav(){
     ${courseDDHTML()}
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button>
   </div>
+  ${VIEW_ZH ? "" : navSearchHTML()}
   <div class="nav-scroll">${VIEW_ZH ? `<div class="nav-zh"><span class="nav-zh-h">中文</span><p>${t("zhNav")}</p></div>` : `
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
@@ -1264,14 +1376,16 @@ function buildNav(){
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
     </div>
     ${es ? `<div class="nav-sec">${t("fromBook")}</div>` : frModeHTML("nav")}
-    ${navTopics(units, unitW, uname)}`}
+    <div id="navGroups">${navTopics(units, unitW, uname)}</div>
+    <div class="nav-res" id="navRes" hidden></div>`}
   </div>
   <div class="nav-foot">
     ${meHTML()}
   </div>`;
   $("#navHide").addEventListener("click", ()=>{ if (window.matchMedia("(max-width:979px)").matches) closeNav(); else setNavHidden(true); });
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
-  wireCourseDD();
+  wireCourseDD(); wireNavSearch();
+  $$(".ng-h", nav).forEach(b=>b.addEventListener("click", ()=>{ const g = b.parentElement; navOpenGroup(g, !g.classList.contains("open"), true); }));
   const tb = $(".topbar .brand"); if (tb) tb.innerHTML = VIEW_ZH ? `<span class="cs-badge cs-zh">ZH</span><b>中文</b><span>${cName("zh")}</span>` : `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
   const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
@@ -1380,7 +1494,7 @@ function wireAuth(){
 }
 function paintAccount(){ paintMe(); }
 function paintNavProgress(){
-  $$("[data-ring]").forEach(r=>{ const tp = byId[r.dataset.ring]; if (!tp) return; const p = topicPct(tp).pct*100; r.style.setProperty("--p", p.toFixed(0)); r.classList.toggle("full", p>=99.5); });
+  $$("[data-ring]").forEach(r=>{ const tp = byId[r.dataset.ring]; if (!tp) return; const p = topicPct(tp).pct*100; r.style.setProperty("--p", p.toFixed(0)); r.classList.toggle("full", p>=99.5); r.classList.toggle("zero", p < .5); });
   paintMe();
 }
 function setLang(l){
@@ -1403,37 +1517,45 @@ window.matchMedia("(max-width:979px)").addEventListener("change", ()=>closeNav()
    views
    ========================================================= */
 function totals(){ let ex = 0, done = 0, full = 0, sum = 0; TOP.forEach(tp=>{ const p = topicPct(tp); ex += p.n; done += p.done; sum += p.pct*p.n; if (p.pct >= .995) full++; }); return {ex, done, full, avg: ex ? sum/ex : 0}; }
-function card(tp){ const p = topicPct(tp); return `<a class="tc" href="#${tp.id}"><span class="k">${tp.kind}</span><h3>${tp.title}</h3><p>${tp.ru}</p><div class="bar"><i style="width:${(p.pct*100).toFixed(0)}%"></i></div><span class="pc">${t("doneOf", p.done, p.n, (p.pct*100).toFixed(0))}</span></a>`; }
+const TC_SPARK = '<svg class="tc-sp" viewBox="0 0 120 64" aria-hidden="true"><path d="M90 9l2.4 6.6 6.6 2.4-6.6 2.4L90 27l-2.4-6.6-6.6-2.4 6.6-2.4z"/><path d="M66 30l1.5 3.9 3.9 1.5-3.9 1.5L66 40.8l-1.5-3.9-3.9-1.5 3.9-1.5z"/><path d="M106 34l1.1 2.8 2.8 1.1-2.8 1.1-1.1 2.8-1.1-2.8-2.8-1.1 2.8-1.1z"/><circle cx="54" cy="13" r="1.3"/><circle cx="113" cy="18" r="1.1"/><circle cx="80" cy="44" r="1"/></svg>';
+function card(tp){ const p = topicPct(tp), pc = Math.round(p.pct*100); return `<a class="tc${pc >= 100 ? " done" : ""}" href="#${tp.id}" data-hue="${HUE_OF(tp)}"><span class="tc-glow" aria-hidden="true">${TC_SPARK}</span><span class="tc-top"><span class="tc-ic">${kindIco(tp)}</span><span class="tc-go">${pc >= 100 ? ICO.check : ""}${t("tcOpen")}</span></span><h3>${tp.title}</h3><p>${tp.ru}</p><span class="tc-f"><span class="bar"><i style="width:${pc}%"></i></span><span class="tc-m"><span class="k">${tp.kind}</span><span class="pc">${p.done}/${p.n}</span></span></span></a>`; }
 function testsOf(){ return S.tests.filter(x=>(x.c||"fr") === COURSE); }
 const scoreTxt = h => (h.c === "es") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
 function saveNudge(){
   if (Cloud.kind !== "supabase" || ME || Cloud.state === "loading") return "";
   return `<a class="nudge" href="#account"><span class="nudge-i">${ICO.cloud}</span><span>${t("saveNudge")}</span><b>${t("saveNudgeBtn")} →</b></a>`;
 }
+let HOME_U = "all";
 function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
   const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3","4"] : ["0","1","2","3"];
   const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
+  const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE !== "cahier" ? t("unit0note") : "");
+  const uHead = u => `<h3 class="unit-h">${unitBadge(u, u)}<span>${unitW} ${u}</span> <small>${uname(u)}</small></h3>`;
+  if (!es || !["all","ref",...units].includes(HOME_U)) HOME_U = "all";
+  const showU = k => !es || HOME_U === "all" || HOME_U === k;
+  const tabs = es ? `<div class="seg ph-tabs" role="tablist">${["all",...units,"ref"].map(k=>`<button type="button" role="tab" data-hu="${k}" class="${HOME_U===k?"on":""}" aria-selected="${HOME_U===k}">${k === "all" ? t("homeAll") : k === "ref" ? t("navMore") : "Unidad " + k}</button>`).join("")}</div>` : frModeHTML("home");
+  const cta = cont ? `<a class="btn pri" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span> →</a>` : `<a class="btn pri" href="#${seq[0] ? seq[0].id : "test"}">${t("homeStart")} →</a>`;
   main.innerHTML = `<div class="col">
-  <header class="hero seyes">
+  <header class="ph">
     <p class="eyebrow">${es ? t("esHeroEyebrow") : t("heroEyebrow")}</p>
     <h1>${es ? `Repaso <em>para el examen</em>` : `Révisions <em>pour le contrôle</em>`}</h1>
-    <p class="lead">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
-    <div class="btns">${cont ? `<a class="btn pri" href="#${cont.id}">${t("homeCont")}: ${cont.title} →</a>` : `<a class="btn pri" href="#${seq[0].id}">${t("homeStart")} →</a>`}<a class="btn sec" href="#test">${t("test")}</a></div>
+    <p class="ph-sub">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
+  <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act"><a class="btn sec" href="#test">${t("test")}</a>${cta}</div></div>
   <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
-  ${es ? "" : `<div class="home-mode">${frModeHTML("home")}</div>`}
   ${!es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
   <div class="sec-h"><h2>Cahier d’activités</h2><p>${t("cahierSub")}</p></div>
-  ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `<h3 class="unit-h">${unitW} ${u} <small>${t("units")[u]}</small></h3><div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
-  <div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>
-  ${units.map(u=>`<h3 class="unit-h">${unitW} ${u} <small>${es ? t("esUnits")[u] : t("units")[u] + (u==="0" ? t("unit0note") : "")}</small></h3><div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div>`).join("")}
-  ${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
-  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>`}
+  ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
+  ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>`}
+  ${units.filter(showU).map(u=>`<section class="hu">${uHead(u)}<div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div></section>`).join("")}
+  ${showU("ref") ? `${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
+  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>` : ""}`}
   </div>`;
+  $$("[data-hu]", main).forEach(b=>b.addEventListener("click", ()=>{ HOME_U = b.dataset.hu; renderHome(); }));
 }
 function renderTopic(tp){
   const seq = seqOf(tp), idx = seq.indexOf(tp), prev = seq[idx-1], next = seq[idx+1], es = COURSE === "es";
@@ -2004,6 +2126,7 @@ function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
+  const cur = $(`#navGroups a.nl[data-id="${id}"]`); if (cur) { const g = cur.closest(".ng"); if (g && !g.classList.contains("open")) navOpenGroup(g, true, false); }
 }
 function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
@@ -2027,7 +2150,7 @@ function route(keepScroll){
   else if (h === "bank") renderBank();
   else if (h === "zh") renderZh();
   else renderHome();
-  markActive(); closeNav(); updSrsBadge();
+  markActive(); paintCrumbs(byId[h] || ["test","shpargalka","quizlet","account","lexico","bank","zh"].includes(h) ? h : "home"); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
   window.scrollTo(0, keepScroll ? y : 0);
 }
