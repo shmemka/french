@@ -53,3 +53,10 @@ const BOOTS = (...b) => `<div class="boots">${b.join("")}</div>`;
 /* NODE / TREE: семейное древо */
 const NODE = (fr, ru, c="") => `<div class="tn ${c}"><span class="fr">${fr}</span><small>${ru}</small></div>`;
 const TC = (col, row, cap, nodes, dn) => `<div class="tr-c${dn?" dn":""}" style="grid-column:${col};grid-row:${row}">${cap?`<span class="cap">${cap}</span>`:""}<div class="tr-n">${nodes}</div></div>`;
+
+/* S3: три карточки «+ / − / ?» — схема предложения.
+   cards: [{k:"pos"|"neg"|"q", sym:"+", h:"Утверждение", f:["подлежащее","!ne", …], ex:[[фраза, перевод], …]}]
+   в f: "!слово" — выделенное слово языка, остальное — подписи-кирпичики */
+const S3 = cards => `<div class="s3">${cards.map(c=>`<div class="s3-c s3-${c.k}"><div class="s3-h"><span class="s3-k">${c.sym}</span><span>${c.h}</span></div><div class="s3-f">${c.f.map(p=>p[0]==="!" ? `<span class="s3-p hi fr">${p.slice(1)}</span>` : `<span class="s3-p">${p}</span>`).join("")}</div><ul class="s3-ex">${c.ex.map(([a,b])=>`<li><span class="fr">${a}</span>${b?`<small>${b}</small>`:""}</li>`).join("")}</ul></div>`).join("")}</div>`;
+/* заголовок столбца таблицы с кружком + / − / ? */
+const S3TH = (k, sym, txt) => `<span class="s3-th s3-${k}"><span class="s3-k">${sym}</span>${txt}</span>`;

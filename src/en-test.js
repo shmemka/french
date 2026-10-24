@@ -20,6 +20,7 @@ const POOL_EN = POOL.map((q,i)=>Object.assign({}, q, POOL_TR[i]||{}));
 
 const CHEAT_EN = `
 <div class="cheat">
+<section class="ch"><h3>+ · − · ?</h3>${TBL(["",""],[["<b>+</b> subject + verb","Tu aimes le café."],["<b>−</b> ne + verb + pas","Tu n’aimes pas le café."],["<b>?</b> est-ce que + sentence","Est-ce que tu aimes le café ?"],["<b>?</b> inversion","Aimes-tu le café ?"]])}<p class="ch-n">ne → n’ before a vowel; pas <b>de</b> instead of un/une/des. «Yes» to a negative question = <b>si</b>.</p></section>
 <section class="ch"><h3>être · avoir</h3>${TBL(["","être","avoir"],[["je / j’","suis","ai"],["tu","es","as"],["il / elle / on","est","a"],["nous","sommes","avons"],["vous","êtes","avez"],["ils / elles","sont","ont"]])}<p class="ch-n">Age: <b>j’ai</b> 20 ans. Job: il est étudiant (no article).</p></section>
 <section class="ch"><h3>s’appeler · -er</h3>${TBL(["","s’appeler","aimer"],[["je / j’","m’appelle","aime"],["tu","t’appelles","aimes"],["il / elle / on","s’appelle","aime"],["nous","nous appelons","aimons"],["vous","vous appelez","aimez"],["ils / elles","s’appellent","aiment"]])}<p class="ch-n">-e, -es, -e, -ent are silent. ne + verb + pas.</p></section>
 <section class="ch"><h3>Articles</h3>${TBL(["","m.","f.","pl."],[["definite","le / l’","la / l’","les"],["indefinite","un","une","des"],["after pas","de / d’","de / d’","de / d’"]])}<p class="ch-n">aimer + le/la/les. pas de only replaces un/une/des.</p></section>

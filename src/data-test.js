@@ -118,6 +118,7 @@ const POOL = [
 /* ===== Шпаргалка ===== */
 const CHEAT = `
 <div class="cheat">
+<section class="ch"><h3>+ · − · ?</h3>${TBL(["",""],[["<b>+</b> подлежащее + глагол","Tu aimes le café."],["<b>−</b> ne + глагол + pas","Tu n’aimes pas le café."],["<b>?</b> est-ce que + фраза","Est-ce que tu aimes le café ?"],["<b>?</b> инверсия","Aimes-tu le café ?"]])}<p class="ch-n">ne → n’ перед гласной; pas <b>de</b> вместо un/une/des. На «Ты не…?» «да» = <b>si</b>.</p></section>
 <section class="ch"><h3>être · avoir</h3>${TBL(["","être","avoir"],[["je / j’","suis","ai"],["tu","es","as"],["il / elle / on","est","a"],["nous","sommes","avons"],["vous","êtes","avez"],["ils / elles","sont","ont"]])}<p class="ch-n">Возраст: <b>j’ai</b> 20 ans. Профессия: il est étudiant (без артикля).</p></section>
 <section class="ch"><h3>s’appeler · -er</h3>${TBL(["","s’appeler","aimer"],[["je / j’","m’appelle","aime"],["tu","t’appelles","aimes"],["il / elle / on","s’appelle","aime"],["nous","nous appelons","aimons"],["vous","vous appelez","aimez"],["ils / elles","s’appellent","aiment"]])}<p class="ch-n">-e, -es, -e, -ent не читаются. ne + глагол + pas.</p></section>
 <section class="ch"><h3>Артикли</h3>${TBL(["","м.","ж.","мн."],[["опред.","le / l’","la / l’","les"],["неопред.","un","une","des"],["после pas","de / d’","de / d’","de / d’"]])}<p class="ch-n">aimer + le/la/les. pas de только для un/une/des.</p></section>

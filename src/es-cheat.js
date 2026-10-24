@@ -10,6 +10,8 @@ function ES_CHEAT(L) {
     const P = ["yo", "tú", T("él, ella, Ud.", "él, ella, Ud."), "nosotros", "vosotros", T("ellos, Uds.", "ellos, Uds.")];
     const V = (verbs, rows) => TBL(["", ...verbs], P.map((p, k) => [p, ...rows.map(r => r[k])]));
     return `<div class="cheat">
+${C("+ · − · ?", TBL(["", ""], [[T("<b>+</b> (подлежащее) + глагол", "<b>+</b> (subject) + verb"), "Hablas inglés."], [T("<b>−</b> no + глагол", "<b>−</b> no + verb"), "No hablas inglés."], ["<b>?</b> ¿ … ?", "¿Hablas inglés?"], [T("<b>?</b> слово + глагол", "<b>?</b> word + verb"), "¿Dónde vive tu hermano?"]]),
+  T("no — перед глаголом и перед me / te / se. Ответ «нет»: <b>No, no hablo.</b>", "no goes before the verb and before me / te / se. Answering «no»: <b>No, no hablo.</b>"))}
 ${C("ser · tener", V(["ser", "tener"], [["soy", "eres", "es", "somos", "sois", "son"], ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]]),
   T("Возраст — <b>tener</b>: tengo 20 años. Профессия — <b>ser</b> без артикля: soy profesora.", "Age uses <b>tener</b>: tengo 20 años. Jobs use <b>ser</b> with no article: soy profesora."))}
 ${C(T("Presente: окончания", "Presente: endings"), V(["habl-ar", "com-er", "viv-ir"], [["-o", "-as", "-a", "-amos", "-áis", "-an"], ["-o", "-es", "-e", "-emos", "-éis", "-en"], ["-o", "-es", "-e", "-imos", "-ís", "-en"]]),
