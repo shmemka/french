@@ -1789,6 +1789,11 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 :root[data-theme="dark"] .gate-bg::after{background:rgba(4,8,2,.5)}
 .gate-in{max-width:1080px;gap:0}
 .g-loading .gate-in{max-width:340px}
+/* загрузка: без фона и карточки — только колёсико и подпись */
+.gate.g-loading{background:var(--sheet);animation:none}
+.g-loading .gate-bg{display:none}
+.g-loading .gate-card{background:none;box-shadow:none;border-radius:0;animation:none;padding:0;gap:12px}
+.g-loading .gate-card p{margin:0;font-size:14px;color:var(--ink-3)}
 .gate-split{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr);background:var(--g-card);border-radius:30px;padding:14px;box-shadow:0 40px 90px -30px rgba(8,16,2,.6);animation:cardin .5s var(--spring);min-height:min(660px,calc(100dvh - 48px))}
 .gate-pic{border-radius:20px;background:url(img/meadow.webp) 32% center/cover no-repeat,#5b6b38;min-height:100%}
 .gate-side{display:flex;flex-direction:column;min-width:0;padding:16px 26px 14px 52px}
