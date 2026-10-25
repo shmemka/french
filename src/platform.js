@@ -3,6 +3,8 @@
    оформление, личный кабинет
    ========================================================= */
 Object.assign(I18N.ru, {
+  gEyeIn:"Вход в Révisions · Repaso", gEyeUp:"Регистрация в Révisions · Repaso", gEyeReset:"Новый пароль · Révisions · Repaso", gEyeOb:"Почти готово",
+  gTitle:"Французский и испанский — шаг за шагом", gEmailPh:"Почта", gPwPh:"Пароль (от 6 символов)", gFoot:"Édito A1 · Aula internacional Plus 1<br>Теория, задания и пробные тесты",
   gateUpH:"Создай аккаунт", gateUpSub:"Почта и пароль — и можно начинать. Прогресс будет на всех твоих устройствах.", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
   gateLoading:"Загружаем твой прогресс…", gateRetry:"Повторить", gateErr:"Не получилось связаться с сервером. Проверь интернет (и VPN, если он нужен).",
   obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.",
@@ -14,6 +16,8 @@ Object.assign(I18N.ru, {
   bankL:"Банк заданий"
 });
 Object.assign(I18N.en, {
+  gEyeIn:"Sign in to Révisions · Repaso", gEyeUp:"Sign up for Révisions · Repaso", gEyeReset:"New password · Révisions · Repaso", gEyeOb:"Almost there",
+  gTitle:"French and Spanish, one step at a time", gEmailPh:"E-mail", gPwPh:"Password (6+ characters)", gFoot:"Édito A1 · Aula internacional Plus 1<br>Theory, exercises and practice tests",
   gateUpH:"Create your account", gateUpSub:"An e-mail and a password — and you're in. Your progress will be on all your devices.", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
   gateLoading:"Loading your progress…", gateRetry:"Try again", gateErr:"Couldn't reach the server. Check your internet connection (and VPN if you need one).",
   obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.",
@@ -125,21 +129,25 @@ function showGate(mode){
   if (GATE === "auth" && mode === "auth" && $("#authForm", gateEl)) return;
   GATE = mode; gateEl.hidden = false; gateEl.classList.remove("out"); document.body.classList.add("gated"); closeNav();
   const langSw = `<div class="lang-sw gate-lang"><button type="button" data-glang="ru" class="${LANG==="ru"?"on":""}">RU</button><button type="button" data-glang="en" class="${LANG==="en"?"on":""}">EN</button></div>`;
-  const brand = `<div class="gate-brand"><span class="cs-badge cs-fr">FR</span><span class="cs-badge cs-es">ES</span><b>Révisions · Repaso</b></div>`;
+  const brand = `<div class="gate-brand"><span class="cs-badge cs-fr">FR</span><span class="cs-badge cs-es">ES</span><b>Révisions · Repaso</b><small>${t("gFoot")}</small></div>`;
+  /* экран входа: размытое фото на фоне, карточка = фото слева + форма справа */
+  const split = inner => `<div class="gate-split"><div class="gate-pic" aria-hidden="true"></div><div class="gate-side"><div class="gate-top">${langSw}</div><div class="gate-main">${inner}</div>${brand}</div></div>`;
   let body = "";
   if (mode === "loading") body = `<div class="gate-card center"><span class="spin big"></span><p class="muted">${t("gateLoading")}</p></div>`;
-  else if (mode === "auth") { if (!Auth.touched) Auth.mode = ls.get("edito-seen-auth") ? "in" : "up"; body = `<div class="gate-card">${authHTML()}</div>`; }
-  else if (mode === "onboard") body = onboardHTML();
-  gateEl.innerHTML = `<div class="gate-bg"></div><div class="gate-in">${brand}${langSw}${body}</div>`;
+  else if (mode === "auth") { if (!Auth.touched) Auth.mode = ls.get("edito-seen-auth") ? "in" : "up"; body = split(authHTML(true)); }
+  else if (mode === "onboard") body = split(onboardHTML());
+  gateEl.className = "gate g-" + mode;
+  gateEl.innerHTML = `<div class="gate-bg"></div><div class="gate-in">${body}</div>`;
   $$("[data-glang]", gateEl).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.glang !== LANG) { setLang(b.dataset.glang); const m = GATE; GATE = ""; showGate(m); } }));
   if (mode === "auth") { wireAuth(); const e = $("#authEmail", gateEl); if (e) setTimeout(()=>e.focus(), 60); }
   if (mode === "onboard") wireOnboard();
 }
 function onboardHTML(){
   const d = {emoji: S.prof.emoji || "🙂", bg: S.prof.bg || "peach"};
-  return `<form class="gate-card ob" id="obForm" novalidate>
-    <div class="ob-prev" id="obPrev">${avHTML(S.prof, "xl", d)}</div>
-    <h2>${t("obH")}</h2><p class="auth-sub">${t("obSub")}</p>
+  return `<form class="ob" id="obForm" novalidate>
+    <p class="g-eye">${t("gEyeOb")}</p>
+    <div class="ob-hd"><h2 class="g-title">${t("obH")}</h2><div class="ob-prev" id="obPrev">${avHTML(S.prof, "xl", d)}</div></div>
+    <p class="auth-sub">${t("obSub")}</p>
     <label class="fld"><span>${t("obName")}</span><input id="obName" maxlength="30" autocomplete="given-name" placeholder="${esc(t("obNamePh"))}" value="${esc(S.prof.name || "")}"></label>
     <div class="ob-sec"><span class="ob-l">${t("obBg")}</span><div class="sw-row">${CAT.bg.filter(x=>x.p === 0).map(x=>`<button type="button" class="sw${x.id===d.bg?" on":""}" data-obbg="${x.id}" style="--sw:${x.css}" aria-label="${esc(itemName("bg", x.id))}"></button>`).join("")}</div></div>
     <div class="ob-sec"><span class="ob-l">${t("obEmoji")}</span><div class="em-grid">${CAT.emoji.filter(x=>x.p === 0).map(x=>`<button type="button" class="em${x.v===d.emoji?" on":""}" data-obem="${x.v}">${x.v}</button>`).join("")}</div></div>

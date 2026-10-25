@@ -29,6 +29,9 @@ open(os.path.join(OUT,'index.html'),'w').write(page)
 for f in ['supabase.js','schema.sql','README.md','.nojekyll']:
     src=os.path.join('static',f)
     if os.path.exists(src): shutil.copy(src, os.path.join(OUT,f))
+# картинки (фон экрана входа и т.п.)
+if os.path.isdir('static/img'):
+    shutil.copytree('static/img', os.path.join(OUT,'img'), dirs_exist_ok=True)
 if not os.path.exists(os.path.join(OUT,'config.js')):
     shutil.copy('static/config.js',os.path.join(OUT,'config.js'))
 print('index.html', len(page))

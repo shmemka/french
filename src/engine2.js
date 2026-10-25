@@ -1401,14 +1401,19 @@ function setCourse(c, silent){
   };
   if (silent) finish(); else setTimeout(finish, 240);
 }
-function authHTML(){
+function authHTML(gate){
   const m = Auth.mode, up = m === "up", reset = m === "reset";
-  return `<form class="auth" id="authForm" novalidate data-mode="${m}">
-    <div class="auth-ico">${ICO.cloud}</div>
+  const head = gate
+    ? `<p class="g-eye" id="authEye">${t(up ? "gEyeUp" : reset ? "gEyeReset" : "gEyeIn")}</p>
+    <h2 class="g-title" id="authH">${t("gTitle")}</h2>
+    <p class="auth-sub" id="authSub">${up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub")}</p>`
+    : `<div class="auth-ico">${ICO.cloud}</div>
     <h2 id="authH">${up ? t("authUpH") : reset ? t("authResetH") : t("authInH")}</h2>
-    <p class="auth-sub" id="authSub">${up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub")}</p>
-    <label class="fld"><span>${t("email")}</span><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required placeholder="name@mail.com"></label>
-    <div class="fld-wrap" ${reset ? "hidden" : ""}><label class="fld"><span>${t("password")}</span><input type="password" id="authPw" autocomplete="${up?"new-password":"current-password"}" minlength="6" required></label></div>
+    <p class="auth-sub" id="authSub">${up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub")}</p>`;
+  return `<form class="auth${gate ? " g-auth" : ""}" id="authForm" novalidate data-mode="${m}">
+    ${head}
+    <label class="fld"><span>${t("email")}</span><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required placeholder="${gate ? esc(t("gEmailPh")) : "name@mail.com"}"></label>
+    <div class="fld-wrap" ${reset ? "hidden" : ""}><label class="fld"><span>${t("password")}</span><input type="password" id="authPw" autocomplete="${up?"new-password":"current-password"}" minlength="6" required${gate ? ` placeholder="${esc(t("gPwPh"))}"` : ""}></label></div>
     <p class="auth-msg" id="authMsg" data-k="${Auth.msgKind}" aria-live="polite">${esc(Auth.msg)}</p>
     <button type="submit" class="btn pri auth-go" id="authGo">${up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn")}</button>
     <div class="auth-links" id="authLinks">${authLinks(m)}</div>
@@ -1426,7 +1431,9 @@ function setAuthMode(m){
   setTimeout(()=>{
     const up = m === "up", reset = m === "reset";
     f.dataset.mode = m;
-    $("#authH").textContent = up ? t("authUpH") : reset ? t("authResetH") : t("authInH");
+    const eye = $("#authEye");
+    if (eye) eye.textContent = t(up ? "gEyeUp" : reset ? "gEyeReset" : "gEyeIn");
+    else $("#authH").textContent = up ? t("authUpH") : reset ? t("authResetH") : t("authInH");
     $("#authSub").textContent = up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub");
     $("#authGo").textContent = up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn");
     $(".fld-wrap", f).hidden = reset; const pw = $("#authPw"); pw.autocomplete = up ? "new-password" : "current-password";
