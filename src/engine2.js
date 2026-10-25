@@ -20,7 +20,6 @@ const ICO = {
   shop:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 7.5h13l-1 9a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M7 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
   cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>',
   chev:'<svg class="ng-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg>',
-  crumb:'<svg class="cr-sep" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 5 5 5-5 5"/></svg>',
   search:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>',
   gram:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 3.5 2.8 7.3 10 11l7.2-3.7z"/><path d="m2.8 10.8 7.2 3.7 7.2-3.7"/><path d="m2.8 14.2 7.2 3.6 7.2-3.6" opacity=".55"/></svg>',
   ref:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 5.6C8.5 4.4 6.3 4 3 4v11c3.3 0 5.5.4 7 1.6 1.5-1.2 3.7-1.6 7-1.6V4c-3.3 0-5.5.4-7 1.6z"/><path d="M10 5.6v11"/></svg>'
@@ -203,7 +202,7 @@ en:{
 
 /* --- второй курс (испанский) + упрощённый кабинет --- */
 Object.assign(I18N.ru, {
-  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", navSearch:"Поиск тем", navNone:"Ничего не нашлось", navMore:"Справка", tcOpen:"Открыть", homeAll:"Все", homeTip:"Подсказка", crumbsL:"Вы здесь", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
+  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", navSearch:"Тема или страница", navNone:"Ничего не нашлось", navNonePage:n=>`Нет тем на странице ${n}`, navMore:"Справка", tcOpen:"Открыть", homeAll:"Все", homeTip:"Подсказка", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
   lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные ♥", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми ♥ в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и пробная контрольная.`,
@@ -224,7 +223,7 @@ Object.assign(I18N.ru, {
   saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
 });
 Object.assign(I18N.en, {
-  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", navSearch:"Search topics", navNone:"Nothing found", navMore:"Reference", tcOpen:"Open", homeAll:"All", homeTip:"Tip", crumbsL:"You are here", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
+  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", navSearch:"Topic or page", navNone:"Nothing found", navNonePage:n=>`No topics on page ${n}`, navMore:"Reference", tcOpen:"Open", homeAll:"All", homeTip:"Tip", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
   lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked ♥", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap ♥ in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a mock test.`,
@@ -1245,6 +1244,11 @@ function navWhere(tp){
   const es = COURSE === "es";
   return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
 }
+function pagesOf(tp){
+  const src = String(tp.page || "").replace(/(Unidad|Unité)\s*\d+/g, ""), out = [];
+  src.replace(/(\d+)\s*[–-]\s*(\d+)|(\d+)/g, (m, a, b, c)=>{ out.push(c ? [+c, +c] : [+a, +b]); return m; });
+  return out;
+}
 function navSearchRun(q){
   const box = $("#navRes"), groups = $("#navGroups"); if (!box || !groups) return;
   const f = fold(q).trim();
@@ -1252,6 +1256,15 @@ function navSearchRun(q){
   const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
   const tps = [...BOOK, ...CAH, ...GRAM, ...REF];
   const hit = s => fold(s).includes(f);
+  /* число → темы с этой страницей учебника / тетради */
+  if (/^\d{1,3}$/.test(f)) {
+    const n = +f, onPage = tps.filter(tp=>pagesOf(tp).some(([a,b])=>n >= a && n <= b));
+    const rest = tps.filter(tp=>!onPage.includes(tp) && (hit(tp.title) || hit(tp.ru)));
+    const row = (tp, pg) => `<a class="nl nsr" href="#${tp.id}" data-id="${tp.id}"><span class="nl-t">${tp.title}<small>${navWhere(tp)}${pg ? " · " + esc(String(tp.page).replace(/^(Unidad|Unité)\s*\d+,\s*/, "")) : " · " + esc(String(tp.ru).replace(/<[^>]+>/g,""))}</small></span></a>`;
+    const res = onPage.map(tp=>row(tp, true)).concat(rest.slice(0, 20).map(tp=>row(tp, false)));
+    box.innerHTML = res.length ? res.join("") : `<p class="nav-empty">${t("navNonePage", n)}</p>`;
+    box.hidden = false; groups.hidden = true; markActive(); return;
+  }
   const res = pages.filter(([,n])=>hit(n)).map(([id,n])=>`<a class="nl nsr" href="#${id}" data-id="${id}"><span class="nl-t">${esc(n)}</span></a>`)
     .concat(tps.filter(tp=>hit(tp.title) || hit(tp.ru) || hit(tp.kind)).slice(0, 40).map(tp=>`<a class="nl nsr" href="#${tp.id}" data-id="${tp.id}"><span class="nl-t">${tp.title}<small>${navWhere(tp)} · ${esc(String(tp.ru).replace(/<[^>]+>/g,""))}</small></span></a>`));
   box.innerHTML = res.length ? res.join("") : `<p class="nav-empty">${t("navNone")}</p>`;
@@ -1281,26 +1294,6 @@ document.addEventListener("keydown", e=>{
   else if (app.classList.contains("nav-off")) setNavHidden(false);
   setTimeout(()=>{ const q2 = $("#navQ"); if (q2) q2.focus(); }, 30);
 });
-/* хлебные крошки над страницей */
-function crumbsFor(h){
-  const tp = byId[h], es = COURSE === "es", out = [];
-  const pages = {test:t("test"), bank:t("bank"), shpargalka:t("cheat"), quizlet:"Quizlet", lexico:t("lexico"), account:t("account"), zh:cName("zh")};
-  if (tp) {
-    if (tp.sec === "cahier") out.push(["", "Cahier"], ["", `${t("unitW")} ${tp.unit}`]);
-    else if (tp.sec === "book") out.push(["", `${es ? t("unitWes") : t("unitW")} ${tp.unit}`]);
-    else out.push(["", tp.sec === "gram" ? t("gram") : t("ref")]);
-    out.push(["", tp.title]);
-  } else if (pages[h]) out.push(["", pages[h]]);
-  return out;
-}
-function paintCrumbs(h){
-  const el = $("#crumbs"); if (!el) return;
-  const parts = crumbsFor(h);
-  el.classList.toggle("cr-root", !parts.length);
-  el.innerHTML = `<div class="cr-in"><button type="button" class="icon-btn cr-side" id="crSide" aria-label="${esc(t("showNav"))}" title="${esc(t("showNav"))}">${ICO.side}</button>
-    <nav class="cr" aria-label="${esc(t("crumbsL"))}"><a class="cr-home${parts.length ? "" : " cur"}" href="#home" aria-label="${esc(t("home"))}">${ICO.home}${parts.length ? "" : `<span>${t("home")}</span>`}</a>${parts.map(([, l], i)=>`${ICO.crumb}<span class="cr-i${i === parts.length - 1 ? " cur" : ""}">${l}</span>`).join("")}</nav></div>`;
-  $("#crSide", el).addEventListener("click", ()=>setNavHidden(false));
-}
 const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
 let VIEW_ZH = decodeURIComponent((location.hash||"").slice(1)) === "zh";
 const ddCur = () => VIEW_ZH ? "zh" : COURSE;
@@ -1517,8 +1510,7 @@ window.matchMedia("(max-width:979px)").addEventListener("change", ()=>closeNav()
    views
    ========================================================= */
 function totals(){ let ex = 0, done = 0, full = 0, sum = 0; TOP.forEach(tp=>{ const p = topicPct(tp); ex += p.n; done += p.done; sum += p.pct*p.n; if (p.pct >= .995) full++; }); return {ex, done, full, avg: ex ? sum/ex : 0}; }
-const TC_SPARK = '<svg class="tc-sp" viewBox="0 0 120 64" aria-hidden="true"><path d="M90 9l2.4 6.6 6.6 2.4-6.6 2.4L90 27l-2.4-6.6-6.6-2.4 6.6-2.4z"/><path d="M66 30l1.5 3.9 3.9 1.5-3.9 1.5L66 40.8l-1.5-3.9-3.9-1.5 3.9-1.5z"/><path d="M106 34l1.1 2.8 2.8 1.1-2.8 1.1-1.1 2.8-1.1-2.8-2.8-1.1 2.8-1.1z"/><circle cx="54" cy="13" r="1.3"/><circle cx="113" cy="18" r="1.1"/><circle cx="80" cy="44" r="1"/></svg>';
-function card(tp){ const p = topicPct(tp), pc = Math.round(p.pct*100); return `<a class="tc${pc >= 100 ? " done" : ""}" href="#${tp.id}" data-hue="${HUE_OF(tp)}"><span class="tc-glow" aria-hidden="true">${TC_SPARK}</span><span class="tc-top"><span class="tc-ic">${kindIco(tp)}</span><span class="tc-go">${pc >= 100 ? ICO.check : ""}${t("tcOpen")}</span></span><h3>${tp.title}</h3><p>${tp.ru}</p><span class="tc-f"><span class="bar"><i style="width:${pc}%"></i></span><span class="tc-m"><span class="k">${tp.kind}</span><span class="pc">${p.done}/${p.n}</span></span></span></a>`; }
+function card(tp){ const p = topicPct(tp), pc = Math.round(p.pct*100); return `<a class="tc${pc >= 100 ? " done" : ""}" href="#${tp.id}" data-hue="${HUE_OF(tp)}"><span class="tc-glow" aria-hidden="true"></span><span class="tc-top"><span class="tc-ic">${kindIco(tp)}</span><span class="tc-go">${pc >= 100 ? ICO.check : ""}${t("tcOpen")}</span></span><h3>${tp.title}</h3><p>${tp.ru}</p><span class="tc-f"><span class="bar"><i style="width:${pc}%"></i></span><span class="tc-m"><span class="k">${tp.kind}</span><span class="pc">${p.done}/${p.n}</span></span></span></a>`; }
 function testsOf(){ return S.tests.filter(x=>(x.c||"fr") === COURSE); }
 const scoreTxt = h => (h.c === "es") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
 function saveNudge(){
@@ -2150,7 +2142,7 @@ function route(keepScroll){
   else if (h === "bank") renderBank();
   else if (h === "zh") renderZh();
   else renderHome();
-  markActive(); paintCrumbs(byId[h] || ["test","shpargalka","quizlet","account","lexico","bank","zh"].includes(h) ? h : "home"); closeNav(); updSrsBadge();
+  markActive(); closeNav(); updSrsBadge();
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
   window.scrollTo(0, keepScroll ? y : 0);
 }

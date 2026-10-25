@@ -1617,29 +1617,16 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 @media (min-width:980px){
   .app,.app:not(.nav-off){grid-template-columns:284px minmax(0,1fr)}
   .app.nav-off{grid-template-columns:minmax(0,1fr)}
-  body.nav-off .nav-show{display:none!important}
-  body.nav-off .cr-side{display:inline-flex}
 }
 @media (min-width:980px){.nav{position:sticky;top:0;height:100vh;margin:0;background:transparent;box-shadow:none;border-radius:0;padding:12px 10px 12px max(12px,env(safe-area-inset-left,0px))}}
 .panel{min-width:0;display:flex;flex-direction:column;background:var(--sheet);margin:12px max(12px,env(safe-area-inset-right,0px)) 0 0;border-radius:20px 20px 0 0;min-height:calc(100vh - 12px);box-shadow:0 0 0 1px var(--line-2),0 1px 3px rgba(20,24,50,.04);
   --sh-1:0 0 0 1px var(--line-2),0 1px 2px rgba(20,24,50,.035);
   --sh-2:0 0 0 1px var(--line-2),0 8px 24px rgba(20,24,50,.06)}
 .app.nav-off .panel{margin-left:max(12px,env(safe-area-inset-left,0px))}
-.main,.app.nav-off .main{padding:34px 48px 96px}
+.main{padding:40px 48px 96px}
+.app.nav-off .main{padding:84px 48px 96px}
+@media (min-width:980px){.nav-show{top:28px;left:32px;border-radius:12px;padding:8px 14px 8px 11px;box-shadow:0 0 0 1px var(--line-2),0 4px 14px rgba(20,24,50,.08)}}
 .col{max-width:920px;margin:0 auto}
-
-/* хлебные крошки */
-.crumbs{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--sheet) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line-2);border-radius:20px 20px 0 0}
-.cr-in{max-width:1016px;margin:0 auto;padding:11px 48px;display:flex;align-items:center;gap:6px;min-height:60px}
-.cr-side{display:none;margin-right:4px}
-.cr{display:flex;align-items:center;gap:4px;min-width:0;font-size:14px;color:var(--ink-3)}
-.cr-home{display:inline-flex;align-items:center;gap:8px;flex:none;color:var(--ink-3);text-decoration:none;padding:6px 8px;border-radius:9px;transition:background .15s,color .15s}
-.cr-home svg{width:19px;height:19px}
-.cr-home:hover{background:var(--fill);color:var(--ink)}
-.cr-sep{width:15px;height:15px;flex:none;color:var(--ink-3);opacity:.6}
-.cr-i{flex:none;white-space:nowrap;padding:5px 4px}
-.cr-i.cur,.cr-home.cur{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;background:var(--fill);color:var(--ink);font-weight:600;padding:5px 10px;border-radius:8px}
-.cr-home.cur svg{color:var(--ink-3)}
 
 /* сайдбар */
 .nav-top{padding:0 0 12px;gap:6px}
@@ -1749,7 +1736,6 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
   background:radial-gradient(50% 85% at 54% -14%,color-mix(in srgb,var(--hc) 62%,transparent),transparent 72%),radial-gradient(40% 70% at 96% 0%,color-mix(in srgb,var(--hc) 32%,transparent),transparent 74%),radial-gradient(70% 90% at 22% -20%,color-mix(in srgb,var(--hc) 16%,transparent),transparent 76%);
   -webkit-mask-image:linear-gradient(#000 25%,transparent);mask-image:linear-gradient(#000 25%,transparent)}
 .tc:hover .tc-glow{opacity:1}
-.tc-sp{position:absolute;top:4px;right:58px;width:120px;height:64px;fill:#fff;opacity:.95}
 .tc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
 .tc-ic{width:30px;height:30px;display:grid;place-items:center;color:var(--hc);margin:2px 0 0 -2px}
 .tc-ic svg{width:27px;height:27px}
@@ -1769,11 +1755,6 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 /* телефоны и планшеты */
 @media (max-width:979px){
   .panel{margin:0;border-radius:20px 20px 0 0;min-height:calc(100dvh - 64px)}
-  .crumbs{position:static;background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
-  .cr-in{padding:10px 16px;min-height:0}
-  .cr{font-size:13px}
-  .cr-side{display:none!important}
-  .crumbs.cr-root{display:none}
   .main,.app.nav-off .main{padding:24px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
   .nav{background:var(--paper);border-radius:22px;padding:14px 12px 12px}
   .nsearch kbd{display:none}
@@ -1784,8 +1765,12 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
   .ph-tabs button{flex:none}
   .ph-act{width:100%}
   .ph-act .btn{flex:1 1 auto;justify-content:center}
-  .topbar{background:color-mix(in srgb,var(--paper) 90%,transparent)}
-  .menu-btn{border-radius:10px;box-shadow:0 0 0 1px var(--line-2),var(--lift)}
+  .topbar{position:fixed;top:0;right:0;left:auto;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:calc(10px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 0 0;pointer-events:none}
+  .topbar .brand,.topbar .me-top{display:none!important}
+  .menu-btn{pointer-events:auto;border-radius:12px;background:color-mix(in srgb,var(--sheet) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 0 0 1px var(--line-2),0 6px 18px rgba(20,24,50,.12)}
+  body::before{background:var(--sheet)}
+  .panel{border-radius:0;min-height:100dvh;box-shadow:none}
+  .main,.app.nav-off .main{padding-top:66px}
 }
 @media (max-width:600px){
   .ph h1{font-size:28px}
@@ -1803,7 +1788,6 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 <div class="app">
   <nav class="nav" id="nav" aria-label="Navigation"></nav>
   <div class="panel">
-    <div class="crumbs" id="crumbs"></div>
     <main class="main" id="main"></main>
   </div>
 </div>
