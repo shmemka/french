@@ -1536,24 +1536,22 @@ function renderHome(){
   const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
   const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE !== "cahier" ? t("unit0note") : "");
-  const uHead = u => `<h3 class="unit-h">${unitBadge(u, u)}<span>${unitW} ${u}</span> <small>${uname(u)}</small></h3>`;
+  const uHead = u => `<h3 class="unit-h"><span class="ng-n u-pill" data-hue="${u}">${unitW} ${u}</span><small>${uname(u)}</small></h3>`;
   if (!es || !["all","ref",...units].includes(HOME_U)) HOME_U = "all";
   const showU = k => !es || HOME_U === "all" || HOME_U === k;
   const tabs = es ? `<div class="seg ph-tabs" role="tablist">${["all",...units,"ref"].map(k=>`<button type="button" role="tab" data-hu="${k}" class="${HOME_U===k?"on":""}" aria-selected="${HOME_U===k}">${k === "all" ? t("homeAll") : k === "ref" ? t("navMore") : "Unidad " + k}</button>`).join("")}</div>` : frModeHTML("home");
-  const cta = cont ? `<a class="btn pri" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span> →</a>` : `<a class="btn pri" href="#${seq[0] ? seq[0].id : "test"}">${t("homeStart")} →</a>`;
+  const cta = cont ? `<a class="btn sec" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span> →</a>` : `<a class="btn sec" href="#${seq[0] ? seq[0].id : "test"}">${t("homeStart")} →</a>`;
   main.innerHTML = `<div class="col">
   <header class="ph">
-    <p class="eyebrow">${es ? t("esHeroEyebrow") : t("heroEyebrow")}</p>
     <h1>${es ? `El español <em>paso a paso</em>` : `Le français <em>pas à pas</em>`}</h1>
     <p class="ph-sub">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
-    <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span><span><b>${BOOK.length}</b>${t("bookTopics")}</span>${es ? `<span><b>${ES_LEX.reduce((n,c)=>n+c.w.length,0)}</b>${t("lexN", 0).replace(/^0\s*/,"")}</span>` : `<span><b>${REF.length}</b>${t("refTopics")}</span>`}${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
+    <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span>${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
-  <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act"><a class="btn sec" href="#test">${t("test")}</a>${cta}</div></div>
-  <p class="tip">${ICON_PLAY.replace("<svg","<svg width=20 height=20")}<span>${synth ? (es ? t("tipTtsEs") : t("tipTts")) : t("tipNoTts")}</span></p>
+  <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act">${cta}</div></div>
   ${!es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
   <div class="sec-h"><h2>Cahier d’activités</h2><p>${t("cahierSub")}</p></div>
   ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
-  ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2><p>${es ? t("esBookSub") : t("bookSub")}</p></div>`}
+  ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2></div>`}
   ${units.filter(showU).map(u=>`<section class="hu">${uHead(u)}<div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div></section>`).join("")}
   ${showU("ref") ? `${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
   <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>` : ""}`}
