@@ -108,7 +108,9 @@ const CUR = {
 };
 function applyLook(){
   const root = document.documentElement, p = S.prof;
-  if (p.theme === "light" || p.theme === "dark") root.dataset.theme = p.theme; else delete root.dataset.theme;
+  /* экран входа и онбординга — всегда в светлой теме */
+  if (document.body.classList.contains("gated")) root.dataset.theme = "light";
+  else if (p.theme === "light" || p.theme === "dark") root.dataset.theme = p.theme; else delete root.dataset.theme;
   const pal = p.eq.theme && owns("theme", p.eq.theme) ? p.eq.theme : "";
   if (pal) root.dataset.palette = pal; else delete root.dataset.palette;
   let css = "";
@@ -140,10 +142,10 @@ function gateCheck(){
 }
 const Gate = {ready:false, busy:false};
 function showGate(mode){
-  if (!mode) { if (GATE) { GATE = ""; gateEl.classList.add("out"); document.body.classList.remove("gated"); setTimeout(()=>{ if (!GATE) { gateEl.hidden = true; gateEl.classList.remove("out"); gateEl.innerHTML = ""; } }, 380); route(false); } return; }
+  if (!mode) { if (GATE) { GATE = ""; gateEl.classList.add("out"); document.body.classList.remove("gated"); setTimeout(()=>{ if (!GATE) { gateEl.hidden = true; gateEl.classList.remove("out"); gateEl.innerHTML = ""; applyLook(); } }, 380); route(false); } return; }
   if (GATE === mode && mode !== "auth") return;
   if (GATE === "auth" && mode === "auth" && $("#authForm", gateEl)) return;
-  GATE = mode; gateEl.hidden = false; gateEl.classList.remove("out"); document.body.classList.add("gated"); closeNav();
+  GATE = mode; gateEl.hidden = false; gateEl.classList.remove("out"); document.body.classList.add("gated"); applyLook(); closeNav();
   const langSw = `<div class="lang-sw gate-lang"><button type="button" data-glang="ru" class="${LANG==="ru"?"on":""}">RU</button><button type="button" data-glang="en" class="${LANG==="en"?"on":""}">EN</button></div>`;
   /* экран входа: размытое фото на фоне, карточка = фото слева + форма справа */
   const split = inner => `<div class="gate-split"><div class="gate-pic" aria-hidden="true"></div><div class="gate-side"><div class="gate-top">${langSw}</div><div class="gate-main">${inner}</div></div></div>`;
