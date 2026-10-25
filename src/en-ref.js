@@ -89,7 +89,7 @@ TOPICS_EN.push({
 id:"r-accents", sec:"ref", kind:"From scratch",
 title:"Accents : é, è, ê, ç…", ru:"Accent marks and how to type them on a Mac", page:"",
 theory:`
-<p>The marks above letters are not decoration. They change the pronunciation or distinguish words. In a test, a missing accent counts as a mistake.</p>
+<p>The marks above letters are not decoration. They change the pronunciation or distinguish words. In writing, a missing accent counts as a mistake.</p>
 ${TBL(["Mark","Name","What it does","Examples"],[
 [F("é"),"accent aigu","only on e → closed [e]",F("été, café, né, étudiant")],
 [F("è"),"accent grave","on e → open [ɛ]",F("mère, frère, très")],
@@ -289,7 +289,7 @@ ${TBL(["No change","Example"],[["le / la / les",F("J’aime le ski. → Je n’a
 ${CMP(`«У меня нет брата» — the form changes in Russian too (genitive). Similar logic: «нет + чего?» → pas de.`,`<i>I don’t have <b>a</b> brother / any brothers</i> → ${F("pas de frère")}.`)}
 <h3>Other negatives (for reference)</h3>
 ${TBL(["Français","In English","Example"],[[F("ne… jamais"),"never",F("Je ne skie jamais.")],[F("ne… plus"),"no longer",F("Il n’habite plus à Lyon.")],[F("ne… rien"),"nothing",F("Je ne comprends rien.")],[F("ne… personne"),"nobody",F("Je ne connais personne.")]])}
-${NOTE(`In conversation the French often drop ne: «J’aime pas…», «C’est pas grave». In the test, always write <b>ne… pas</b>.`)}
+${NOTE(`In conversation the French often drop ne: «J’aime pas…», «C’est pas grave». In writing, always write <b>ne… pas</b>.`)}
 `,
 ex:[
 {t:"fill", h:"Make the sentence negative", items:[
@@ -399,7 +399,7 @@ ex:[
 
 TOPICS_EN.push({
 id:"r-erreurs", sec:"ref", kind:"Good to know",
-title:"Erreurs typiques", ru:"Typical mistakes — check yourself before the test", page:"",
+title:"Erreurs typiques", ru:"Typical mistakes — check yourself", page:"",
 theory:`
 <div class="errs">
 ${[
@@ -447,7 +447,7 @@ ex:[
 
 TOPICS_EN.push({
 id:"r-consignes", sec:"ref", kind:"Good to know",
-title:"Les consignes", ru:"Test instructions in French: understand what you’re asked to do", page:"",
+title:"Les consignes", ru:"Instructions in French: understand what you’re asked to do", page:"",
 theory:`
 <p>The test instructions will most likely be in French, as in the textbook. Here is everything you may see.</p>
 ${TBL(["Consigne","What to do"],[

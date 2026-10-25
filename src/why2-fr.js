@@ -951,8 +951,8 @@ WHY2_ADD({
 ["Названия языков пишутся с маленькой: anglais.","Language names take a small letter: anglais."]]}
 ],
 "r-consignes": [
-{r:["Задания в учебнике и на контрольной написаны в повелительном наклонении на vous: complétez, choisissez, associez, conjuguez, mettez…",
-"Textbook and test instructions are imperatives in the vous form: complétez, choisissez, associez, conjuguez, mettez…"],
+{r:["Задания в учебнике и в тестах написаны в повелительном наклонении на vous: complétez, choisissez, associez, conjuguez, mettez…",
+"Textbook and exercise instructions are imperatives in the vous form: complétez, choisissez, associez, conjuguez, mettez…"],
  t:["Многие похожи на английские: complétez — complete, associez — associate, conjuguez — conjugate. Barrez l’intrus — «вычеркни лишнее» (intrus — чужак). Cochez — поставь галочку (une coche).",
 "Many look like English: complétez — complete, associez — associate, conjuguez — conjugate. Barrez l’intrus — «cross out the odd one» (intrus — intruder). Cochez — tick (une coche)."]},
 {r:["Внимательно читай глагол задания: mettez à la forme négative — сделать отрицание; accordez — согласовать; écrivez en lettres — словами; mettez au pluriel — во множественное.",
@@ -1134,8 +1134,8 @@ WHY2_ADD({
 ["du pain → pas de pain; achetons с гласной → n’achetons.","du pain → pas de pain; achetons starts with a vowel → n’achetons."]]},
 {r:["faire: je fais, tu fais, il fait, nous faisons, vous faites, ils font. Запомни vous faites (не faisez) и ils font.",
 "faire: je fais, tu fais, il fait, nous faisons, vous faites, ils font. Remember vous faites (not faisez) and ils font."],
- t:["je и tu — одинаково fais, il — fait. Nous faisons пишется с ai, но звучит [fəzɔ̃]. Две формы-исключения: vous faites и ils font — их чаще всего путают в контрольных.",
-"je and tu share fais, il takes fait. Nous faisons is spelt with ai but sounds [fəzɔ̃]. Two exceptions: vous faites and ils font — the forms most often wrong in tests."]},
+ t:["je и tu — одинаково fais, il — fait. Nous faisons пишется с ai, но звучит [fəzɔ̃]. Две формы-исключения: vous faites и ils font — их путают чаще всего.",
+"je and tu share fais, il takes fait. Nous faisons is spelt with ai but sounds [fəzɔ̃]. Two exceptions: vous faites and ils font — the forms people get wrong most often."]},
 {r:["manger: nous mangeons (e после g, чтобы g осталось мягким [ʒ]). faire: nous faisons, vous faites, ils font.",
 "manger: nous mangeons (an e after g keeps it soft [ʒ]). faire: nous faisons, vous faites, ils font."],
  i:[["nous + faire → faisons.","nous + faire → faisons."],

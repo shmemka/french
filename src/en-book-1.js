@@ -141,7 +141,7 @@ TOPICS_EN.push({
 id:"u1-verbes", sec:"book", unit:"1", kind:"Grammaire",
 title:"Être, avoir, s’appeler, parler", ru:"The four key verbs for introducing yourself", page:"p. 18–19, 26",
 theory:`
-<p>These are the first verbs in the textbook and they will definitely be in the test. Learn the forms by heart: once you can write out the tables, you’re halfway there.</p>
+<p>These are the first verbs in the textbook and you can’t get through a single conversation without them. Learn the forms by heart: once you can write out the tables, you’re halfway there.</p>
 ${CJS(
 CJ("être","to be / быть",["je <b>suis</b>","tu <b>es</b>","il / elle / on <b>est</b>","nous <b>sommes</b>","vous <b>êtes</b>","ils / elles <b>sont</b>"]),
 CJ("avoir","to have / иметь",["j’<b>ai</b>","tu <b>as</b>","il / elle / on <b>a</b>","nous <b>avons</b>","vous <b>avez</b>","ils / elles <b>ont</b>"]),

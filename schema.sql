@@ -1,4 +1,4 @@
--- Révisions Édito A1 — таблица для облачного прогресса.
+-- Языки — шаг за шагом — таблица для облачного прогресса.
 -- Supabase → SQL Editor → New query → вставь всё и нажми Run.
 
 create table if not exists public.user_docs (

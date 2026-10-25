@@ -17,7 +17,7 @@ head=head.replace('<meta name="claude:viewport-fit-sides" content="cover">\n',''
 fav="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%233446d0'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3E%C3%A9%3C/text%3E%3C/svg%3E"
 page=('<!doctype html>\n<html lang="ru">\n<head>\n<meta charset="utf-8">\n'
  '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
- '<meta name="description" content="Подготовка к контрольным: французский (Édito A1, юниты 0–2) и испанский (Aula internacional Plus 1, юниты 1–3) — теория, упражнения, лексика и пробные тесты.">\n'
+ '<meta name="description" content="Учи языки с нуля шаг за шагом: французский и испанский (скоро — китайский). Понятная теория, упражнения с мгновенной проверкой и объяснениями, лексика, карточки и тесты для самопроверки.">\n'
  '<meta name="theme-color" content="#f3f4fa" media="(prefers-color-scheme: light)">\n'
  '<meta name="theme-color" content="#0f1127" media="(prefers-color-scheme: dark)">\n'
  f'<link rel="icon" href="{fav}">\n'

@@ -157,7 +157,7 @@ TOPICS.push({
 id:"u1-verbes", sec:"book", unit:"1", kind:"Grammaire",
 title:"Être, avoir, s’appeler, parler", ru:"Четыре главных глагола для знакомства", page:"с. 18–19, 26",
 theory:`
-<p>Это первые глаголы учебника, и они точно будут в контрольной. Их формы нужно знать наизусть: выпишешь таблицы — уже половина успеха.</p>
+<p>Это первые глаголы учебника, и без них не обойтись ни в одном разговоре. Их формы нужно знать наизусть: выпишешь таблицы — уже половина успеха.</p>
 ${CJS(
 CJ("être","быть / to be",["je <b>suis</b>","tu <b>es</b>","il / elle / on <b>est</b>","nous <b>sommes</b>","vous <b>êtes</b>","ils / elles <b>sont</b>"]),
 CJ("avoir","иметь / to have",["j’<b>ai</b>","tu <b>as</b>","il / elle / on <b>a</b>","nous <b>avons</b>","vous <b>avez</b>","ils / elles <b>ont</b>"]),

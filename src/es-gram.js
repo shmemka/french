@@ -168,7 +168,7 @@ ex:[
 id:"esg-irreg", sec:"gram", kind:T("Спряжение", "Conjugation"),
 title:"Los irregulares más importantes", ru:T("Карта неправильных глаголов: полностью неправильные, «ботинки», особое yo", "A map of irregular verbs: fully irregular, “boots”, special yo"), page:"Más gramática, p. 224–225",
 theory:`
-<h3>★ ${T("Минимум для контрольной", "The must-knows for the test")}</h3>
+<h3>★ ${T("Самое важное", "The must-knows")}</h3>
 <div class="bigc">${[["ser", T("быть", "to be"), "soy · eres · es · somos · sois · son", "m"], ["estar", T("находиться", "to be located"), "estoy · estás · está · estamos · estáis · están", "f"], ["tener", T("иметь", "to have"), "tengo · tienes · tiene · tenemos · tenéis · tienen", "p"], ["hacer", T("делать", "to do"), "hago · haces · hace · hacemos · hacéis · hacen", "m"], ["querer", T("хотеть", "to want"), "quiero · quieres · quiere · queremos · queréis · quieren", "f"], ["ir", T("идти, ехать", "to go"), "voy · vas · va · vamos · vais · van", "p"], ["llamarse", T("называться", "to be called"), "me llamo · te llamas · se llama · nos llamamos · os llamáis · se llaman", "m"], ["hay", T("есть, имеется", "there is / are"), T("одна форма на всё", "one form for everything"), "f"]].map(([v, h, x, c]) => `<div class="bc ${c}"><span class="big fr">${v}</span><h5>${h}</h5><span class="ex fr">${x}</span></div>`).join("")}</div>
 <h3>${T("Тип 1. Полностью неправильные", "Type 1. Completely irregular")}</h3>
 <div class="cjs">
