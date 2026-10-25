@@ -1697,6 +1697,14 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .mew{background:var(--sheet);border-radius:14px;padding:9px 11px;box-shadow:0 0 0 1px var(--line-2),var(--lift)}
 .mew:hover,.mew.on{background:var(--sheet);box-shadow:0 0 0 1px var(--line-3),0 2px 8px rgba(20,24,50,.07)}
 .nav-foot{padding:10px 0 0;margin-top:0}
+/* профиль внизу сайдбара — как выпадающий список курса сверху */
+.mew{min-height:54px;padding:8px 10px;gap:10px}
+.mew .me-av .av{--s:32px}
+.mew .me-tx{gap:1px;line-height:1.2}
+.mew .me-name{font-size:14.5px;font-weight:700;letter-spacing:0}
+.mew .me-lv{font-size:12px;font-weight:500;color:var(--ink-3)}
+.mew .me-bar{display:none}
+.me-ch{flex:none;width:16px;height:16px;color:var(--ink-3)}
 .nav-zh{background:var(--sheet);box-shadow:0 0 0 1px var(--line-2)}
 
 /* кнопки и сегменты */
@@ -16872,6 +16880,7 @@ function meHTML(){
   return `<a class="mew" href="#account" data-id="account" id="me">
     <span class="me-av">${avHTML(S.prof, "m")}</span>
     <span class="me-tx"><b class="me-name">${esc(S.prof.name || t("guest"))}</b><span class="me-lv"><span class="me-lvt">${t("meProg", c.d, c.n)}</span></span><span class="me-bar"><i style="width:${(c.pct*100).toFixed(1)}%"></i></span></span>
+    <svg class="me-ch" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
   </a>`;
 }
 function meTopHTML(){ return `<a class="me-top" href="#account" id="meTop" aria-label="${esc(t("account"))}">${avHTML(S.prof, "s")}</a>`; }

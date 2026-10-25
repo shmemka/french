@@ -33,6 +33,7 @@ function meHTML(){
   return `<a class="mew" href="#account" data-id="account" id="me">
     <span class="me-av">${avHTML(S.prof, "m")}</span>
     <span class="me-tx"><b class="me-name">${esc(S.prof.name || t("guest"))}</b><span class="me-lv"><span class="me-lvt">${t("meProg", c.d, c.n)}</span></span><span class="me-bar"><i style="width:${(c.pct*100).toFixed(1)}%"></i></span></span>
+    <svg class="me-ch" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
   </a>`;
 }
 function meTopHTML(){ return `<a class="me-top" href="#account" id="meTop" aria-label="${esc(t("account"))}">${avHTML(S.prof, "s")}</a>`; }
