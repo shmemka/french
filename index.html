@@ -7,10 +7,10 @@
 <meta name="theme-color" content="#f3f4fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0f1127" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%233446d0'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3E%C3%A9%3C/text%3E%3C/svg%3E">
-<title>Языки — шаг за шагом</title>
+<title>Учим языки шаг за шагом</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
 /* Layout: французская школьная тетрадь, но мягкая — клетка Seyès в шапках, «перо учителя» для исправлений, синие чернила как акцент. Поверхности без обводок: тон фона + мягкая тень, крупные скругления. */
 :root{
@@ -1789,57 +1789,83 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
   .btn-l{max-width:200px}
 }
 
-/* ---------- экран входа v5 (25.10.2026): размытое фото на фоне, карточка = фото + форма ---------- */
-.gate{--g-card:color-mix(in srgb,var(--sheet) 90%,var(--paper));--g-fill:color-mix(in srgb,var(--ink) 6%,transparent);background:#4d5a2e;align-items:center;padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.gate-bg{background:url(img/meadow-blur.webp) center/cover no-repeat,#566034;transform:scale(1.06)}
-.gate-bg::after{content:"";position:absolute;inset:0;background:rgba(18,26,8,.16)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gate-bg::after{background:rgba(4,8,2,.5)}}
-:root[data-theme="dark"] .gate-bg::after{background:rgba(4,8,2,.5)}
-.gate-in{max-width:1080px;gap:0}
+/* ---------- экран входа v6 (25.10.2026): как весь сайт — фон --paper, белая карточка с тонкой обводкой, Manrope ---------- */
+.gate{background:var(--paper);align-items:center;padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.gate-bg{display:none}
+.gate-in{max-width:1000px;gap:0}
 .g-loading .gate-in{max-width:340px}
-/* загрузка: без фона и карточки — только колёсико и подпись */
+/* загрузка: без фона и карточки, только колёсико и подпись */
 .gate.g-loading{background:var(--sheet);animation:none}
-.g-loading .gate-bg{display:none}
 .g-loading .gate-card{background:none;box-shadow:none;border-radius:0;animation:none;padding:0;gap:12px}
 .g-loading .gate-card p{margin:0;font-size:14px;color:var(--ink-3)}
-.gate-split{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr);background:var(--g-card);border-radius:30px;padding:14px;box-shadow:0 40px 90px -30px rgba(8,16,2,.6);animation:cardin .5s var(--spring);min-height:min(660px,calc(100dvh - 48px))}
-.gate-pic{border-radius:20px;background:url(img/meadow.webp) 32% center/cover no-repeat,#5b6b38;min-height:100%}
-.gate-side{display:flex;flex-direction:column;min-width:0;padding:16px 26px 14px 52px}
+.gate-split{position:relative;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);background:var(--sheet);border-radius:20px;padding:12px;box-shadow:0 0 0 1px var(--line-2),0 1px 3px rgba(20,24,50,.04);animation:cardin .45s var(--spring);min-height:min(620px,calc(100dvh - 48px))}
+.gate-pic{border-radius:12px;background:url(img/meadow.webp) 32% center/cover no-repeat,#5b6b38;min-height:100%}
+.gate-side{display:flex;flex-direction:column;min-width:0;padding:8px 14px 10px 44px}
 .gate-top{display:flex;justify-content:flex-end}
-.gate-top .gate-lang{width:104px;background:var(--g-fill)}
-.gate-top .gate-lang button.on{background:var(--sheet)}
-.gate-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 0 36px;max-width:440px}
-.g-eye{margin:0 0 12px;font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
-.gate .g-title,.gate .ob h2.g-title{font-family:"Literata",Georgia,"Times New Roman",serif;font-optical-sizing:auto;font-weight:400;font-size:clamp(34px,3.9vw,50px);line-height:1.08;letter-spacing:-.025em;color:var(--ink);margin:0;text-wrap:balance}
+.gate-top .gate-lang{width:96px;background:var(--fill);border-radius:10px;padding:3px}
+.gate-top .gate-lang button{border-radius:8px;padding:5px 8px}
+.gate-top .gate-lang button.on{background:var(--sheet);box-shadow:0 0 0 1px var(--line-2),0 1px 2px rgba(20,24,50,.08)}
+.gate-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 0 32px;max-width:400px}
+.gate .g-title,.gate .ob h2.g-title{font-family:inherit;font-weight:700;font-size:clamp(28px,3vw,34px);line-height:1.15;letter-spacing:-.03em;color:var(--ink);margin:0;text-wrap:balance;text-align:left}
+.gate .auth-sub{margin:10px 0 22px;color:var(--ink-3);font-size:15px;line-height:1.5;text-align:left}
 .gate .g-auth{background:none;box-shadow:none;padding:0;margin:0;max-width:none;gap:12px;animation:none}
-.g-auth .auth-sub{margin:12px 0 22px;color:var(--ink-3);font-size:14.5px;line-height:1.5}
-.g-auth .fld span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.g-auth .fld input,.gate .ob .fld input{background:var(--g-fill);border-radius:14px;padding:15px 18px;font-size:16px}
-.g-auth .fld input::placeholder{color:var(--ink-3)}
-.g-auth .fld input:focus,.gate .ob .fld input:focus{background:var(--sheet)}
-.gate .g-auth .btn.pri.auth-go,.gate .ob .btn.pri{border-radius:14px;margin-top:6px;padding:15px 22px}
-.g-auth .auth-links{justify-content:flex-start;gap:6px 22px;padding:6px 2px 0;font-size:14.5px}
+.gate .fld{gap:6px}
+.gate .fld span{font-size:13px;font-weight:600;color:var(--ink-2)}
+.gate .fld input{background:var(--fill);border:0;border-radius:10px;padding:12px 14px;font-size:15.5px;box-shadow:none;transition:background .15s,box-shadow .15s}
+.gate .fld input::placeholder{color:var(--ink-3)}
+.gate .fld input:focus{background:var(--sheet);box-shadow:0 0 0 1px var(--line-3,var(--line-2)),0 0 0 4px color-mix(in srgb,var(--encre) 14%,transparent)}
+.gate .btn.pri{border-radius:10px;padding:12px 18px;justify-self:stretch;justify-content:center;margin-top:4px}
+.g-auth .auth-links{justify-content:flex-start;gap:6px 20px;padding:4px 0 0;font-size:14px;color:var(--ink-3)}
 .g-auth .auth-links button{color:var(--encre);font-weight:600}
 .gate .auth-msg{margin:0}
-.gate-brand{justify-content:flex-start;align-items:center;flex-wrap:wrap;gap:6px}
-.gate-brand b{font-size:19px;margin-left:4px}
-.gate-brand small{flex-basis:100%;font-family:"Literata",Georgia,serif;font-size:12.5px;line-height:1.4;color:var(--ink-2);margin-top:4px}
 .gate .ob{gap:14px}
-.gate .ob h2.g-title{text-align:left;font-size:clamp(30px,3.4vw,42px)}
-.gate .ob .auth-sub{text-align:left;margin:2px 0 4px;color:var(--ink-3)}
+.gate .ob .auth-sub{margin:0 0 6px}
 .ob-hd{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .ob-hd .ob-prev{flex:none}
+.gate .ob-l{font-size:13px;font-weight:600;color:var(--ink-2)}
+/* онбординг: язык, уровень, тест */
+.pl{display:grid;gap:0}
+.pl-back{justify-self:start;border:0;background:none;padding:0;margin:0 0 18px;font:inherit;font-size:14px;color:var(--ink-3);cursor:pointer}
+.pl-back:hover{color:var(--ink)}
+.pl-list{display:grid;gap:8px}
+.pl-opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:var(--sheet);box-shadow:0 0 0 1px var(--line-2);border-radius:12px;padding:13px 14px;font:inherit;color:var(--ink);cursor:pointer;transition:background .15s,box-shadow .15s}
+.pl-opt:hover:not(:disabled){background:var(--fill)}
+.pl-opt:focus-visible{outline:none;box-shadow:0 0 0 2px var(--encre)}
+.pl-opt:disabled{cursor:default;opacity:.55}
+.pl-opt .cflag{width:32px;height:32px;border-radius:9px}
+.pl-opt .pl-ic{flex:none;width:32px;height:32px;border-radius:9px;background:var(--fill);display:grid;place-items:center;color:var(--ink-2)}
+.pl-opt .pl-ic svg{width:18px;height:18px}
+.pl-tx{flex:1;min-width:0;display:grid;gap:2px}
+.pl-tx b{font-size:15px;font-weight:600}
+.pl-tx small{font-size:13px;color:var(--ink-3)}
+.pl-ch{flex:none;color:var(--ink-3)}
+.pl-soon{flex:none;font-size:12px;font-weight:600;color:var(--ink-3);background:var(--fill);border-radius:6px;padding:3px 7px}
+.pl-top{display:flex;align-items:center;gap:12px;margin:0 0 22px;font-size:13px;color:var(--ink-3)}
+.pl-bar{flex:1;height:4px;border-radius:99px;background:var(--fill);overflow:hidden}
+.pl-bar i{display:block;height:100%;background:var(--ink);border-radius:inherit;transition:width .3s var(--ease)}
+.pl-q{font-size:19px;font-weight:600;line-height:1.4;letter-spacing:-.01em;margin:0 0 18px;color:var(--ink)}
+.pl-q .blank{min-width:3em}
+.pl-ans{display:block;width:100%;text-align:left;border:0;background:var(--sheet);box-shadow:0 0 0 1px var(--line-2);border-radius:10px;padding:12px 14px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:background .15s,box-shadow .15s}
+.pl-ans:hover:not(:disabled){background:var(--fill)}
+.pl-ans.sel{background:var(--encre-soft);box-shadow:0 0 0 1.5px var(--encre)}
+.pl-idk{justify-self:start;margin-top:14px;border:0;background:none;padding:0;font:inherit;font-size:14px;color:var(--ink-3);cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.pl-idk:hover{color:var(--ink)}
+.pl-res{display:grid;gap:0}
+.pl-res .auth-sub{margin-bottom:8px}
+.pl-res .pl-note{margin:0 0 22px;font-size:14px;color:var(--ink-3)}
+.pl-in{animation:plin .28s var(--ease)}
+@keyframes plin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pl-in{animation:none}}
 @media (max-width:860px){
-  .gate{align-items:flex-start}
+  .gate{align-items:flex-start;padding-top:max(16px,env(safe-area-inset-top,0px))}
   .gate-in{max-width:520px}
-  .gate-split{grid-template-columns:1fr;padding:10px;border-radius:26px;min-height:0}
-  .gate-pic{height:clamp(140px,24vh,220px);min-height:0;border-radius:18px;background-position:center 60%}
-  .gate-side{padding:6px 12px 12px}
-  .gate-top{position:absolute;top:20px;right:20px}
-  .gate-top .gate-lang{background:color-mix(in srgb,var(--sheet) 70%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-  .gate-main{padding:22px 0 12px;max-width:none}
-  .g-eye{font-size:16px;margin-bottom:8px}
-  .gate .g-title,.gate .ob h2.g-title{font-size:clamp(28px,8vw,36px)}
+  .gate-split{grid-template-columns:1fr;padding:8px;border-radius:18px;min-height:0}
+  .gate-pic{height:clamp(120px,20vh,190px);min-height:0;border-radius:12px;background-position:center 60%}
+  .gate-side{padding:4px 10px 10px}
+  .gate-top{position:absolute;top:16px;right:16px}
+  .gate-top .gate-lang{background:color-mix(in srgb,var(--sheet) 75%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .gate-main{padding:20px 0 8px;max-width:none}
+  .gate .g-title,.gate .ob h2.g-title{font-size:clamp(26px,7.4vw,32px)}
 }
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
@@ -1850,7 +1876,7 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 
 
 <header class="topbar">
-  <a class="brand" href="#home"><b>Языки</b><span>шаг за шагом</span></a>
+  <a class="brand" href="#home"><b>Учим языки</b><span>шаг за шагом</span></a>
   <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span id="menuLbl">Темы</span></button>
 </header>
 <button class="nav-show" id="navShow" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3.5" width="14" height="13" rx="2.5"/><path d="M8 3.5v13"/></svg><span>Меню</span></button>
@@ -14763,8 +14789,8 @@ ru:{
   authInSub:"Чтобы прогресс сохранялся в облаке и был виден на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль (от 6 символов).", authMagicSub:"Пришлём на почту ссылку — нажми её, и ты войдёшь без пароля.", authResetSub:"Пришлём на почту ссылку, по которой можно задать новый пароль.",
   email:"Почта", password:"Пароль", authInBtn:"Войти", authUpBtn:"Зарегистрироваться", authMagicBtn:"Прислать ссылку", authResetBtn:"Прислать ссылку", authMagicLink:"Войти по ссылке на почту", authForgot:"Забыл пароль", authBackPw:"← Вход по паролю",
   authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
-  authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту — после этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет — проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
-  aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена — открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть — войди на вкладке «Вход».", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
+  authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту. После этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет, проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
+  aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена. Открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть. Нажми «Войти» внизу.", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
   favAddedEs:"Добавлено в Избранное (Лексика)", spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
   qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
@@ -14838,8 +14864,8 @@ en:{
   authInSub:"So your progress is saved to the cloud and shows up on your phone and computer.", authUpSub:"All you need is an e-mail and a password (6+ characters).", authMagicSub:"We’ll e-mail you a link — click it and you’re in, no password needed.", authResetSub:"We’ll e-mail you a link to set a new password.",
   email:"E-mail", password:"Password", authInBtn:"Sign in", authUpBtn:"Sign up", authMagicBtn:"Send link", authResetBtn:"Send link", authMagicLink:"Sign in with an e-mail link", authForgot:"Forgot password", authBackPw:"← Sign in with password",
   authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
-  authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address — then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
-  aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet — open the e-mail and click the link.", aeExists:"This account already exists — sign in on the “Sign in” tab.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
+  authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address. Then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
+  aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet. Open the e-mail and click the link.", aeExists:"This account already exists. Tap “Sign in” below.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
   favAddedEs:"Added to Favourites (Vocabulary)", spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
   qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
@@ -14915,7 +14941,7 @@ Object.assign(I18N.ru, {
   dirFr:()=>`${COURSE==="es"?"ES":"FR"} → RU`, dirRu:()=>`RU → ${COURSE==="es"?"ES":"FR"}`,
   cloud:{local:"Только в этом браузере", loading:"Подключаюсь…", saved:"Всё сохранено", saving:"Сохраняю…", error:"Нет связи — сохраню позже", readonly:"Сохраняю в браузере", signedout:"Войди, чтобы сохранять"},
   authInH:"С возвращением!", authUpH:"Создай аккаунт", authResetH:"Восстановить пароль",
-  authInSub:"Войди — и прогресс будет одинаковым на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль от 6 символов.", authResetSub:"Пришлём на почту ссылку, чтобы задать новый пароль.",
+  authInSub:"Войди, и прогресс будет одинаковым на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль от 6 символов.", authResetSub:"Пришлём на почту ссылку, чтобы задать новый пароль.",
   authNoAcc:"Нет аккаунта?", authCreate:"Создать", authHaveAcc:"Уже есть аккаунт?", authLogin:"Войти", authForgot:"Забыли пароль?", authBack:"← Назад ко входу",
   authNote:"Всё, что ты уже сделал без входа, сохранится в аккаунте.",
   accSaved:"Прогресс сохраняется автоматически — на всех устройствах, где ты вошёл.", accOffline:"Нет связи с сервером. Ничего не потеряется: всё сохранится, когда связь вернётся.", accLocal:"Прогресс сохраняется в этом браузере.", retry:"Повторить",
@@ -14930,7 +14956,7 @@ Object.assign(I18N.en, {
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Self-check","Do a few versions until you consistently get 80% or more."]],
   esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · the essentials", esStart:"Start with the first topic",
   esTestEyebrow:"Autoevaluación · unidades 1–4", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–4 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
-  esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
+  esVerdicts:[["¡Excelente!","Excellent — you’ve got this material down."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
   tipTtsEs:"Click Spanish text with a dotted underline and the computer will read it with Spanish pronunciation.",
   dirFr:()=>`${COURSE==="es"?"ES":"FR"} → EN`, dirRu:()=>`EN → ${COURSE==="es"?"ES":"FR"}`,
@@ -14964,7 +14990,7 @@ function setData(){
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
   document.documentElement.lang = LANG;
-  document.title = LANG === "en" ? "Languages, one step at a time" : "Языки — шаг за шагом";
+  document.title = LANG === "en" ? "Learn languages step by step" : "Учим языки шаг за шагом";
   document.documentElement.dataset.course = COURSE;
 }
 setData();
@@ -14976,7 +15002,7 @@ const seqOf = tp => tp && tp.sec === "cahier" ? CAH : ORDER;
    STORE: local cache + cloud (db) under data/users/<id>/
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
-const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, at: o.at || 0}; };
+const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, ob: o.ob === 0 ? 0 : 1, lvl: o.lvl && typeof o.lvl === "object" ? Object.assign({}, o.lvl) : {}, at: o.at || 0}; };
 const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}, promo: Array.isArray(o.promo) ? o.promo : []}; };
 let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
@@ -15200,7 +15226,9 @@ function setScore(tid, ei, got, total){
   p[ei] = {b: Math.max(r, prev ? prev.b : 0), l: r};
   touch("progress"); paintNavProgress();
 }
-function topicPct(tp){ const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEach((_,i)=>{ if (p[i]) { s += p[i].b; d++; } }); return {pct: tp.ex.length ? s/tp.ex.length : 0, done:d, n:tp.ex.length}; }
+/* тест на уровень «закрывает» темы учебника и тетради до стартового юнита: S.prof.lvl = {fr:"2", es:"3"} */
+function closedTp(tp){ if (tp.sec !== "book" && tp.sec !== "cahier") return false; const l = S.prof.lvl && S.prof.lvl[tp.id.slice(0,2) === "es" ? "es" : "fr"]; return l != null && +tp.unit < +l; }
+function topicPct(tp){ if (closedTp(tp)) return {pct:1, done:tp.ex.length, n:tp.ex.length, closed:true}; const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEach((_,i)=>{ if (p[i]) { s += p[i].b; d++; } }); return {pct: tp.ex.length ? s/tp.ex.length : 0, done:d, n:tp.ex.length}; }
 
 /* =========================================================
    speech
@@ -16863,10 +16891,18 @@ function paintMe(){
    оформление, личный кабинет
    ========================================================= */
 Object.assign(I18N.ru, {
-  gTitle:"Языки —<br>шаг за шагом", gEmailPh:"Почта", gPwPh:"Пароль (от 6 символов)",
-  gateUpH:"Создай аккаунт", gateUpSub:"Почта и пароль — и можно начинать. Прогресс будет на всех твоих устройствах.", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
+  gTitle:"Учим языки<br>шаг за шагом", gEmailPh:"name@mail.com", gPwPh:"От 6 символов",
+  gateUpH:"Создай аккаунт", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
   gateLoading:"Загружаем твой прогресс…", gateRetry:"Повторить", gateErr:"Не получилось связаться с сервером. Проверь интернет (и VPN, если он нужен).",
-  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.",
+  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Дальше", obNeedName:"Напиши, как тебя зовут.",
+  plLangH:"Какой язык будешь учить?", plLangSub:"Второй язык можно добавить позже в меню слева.", plBack:"← Назад", plCancel:"← Отмена",
+  plLvlH:c=>`Ты уже знаешь ${cName(c).toLowerCase()}?`, plLvlSub:"Если немного знаешь, пройди короткий тест. Мы начнём с подходящего юнита, а темы до него отметим пройденными.",
+  plZero:"Начинаю с нуля", plZeroS:"Откроем первую тему", plSome:"Немного знаю", plSomeS:"Тест на уровень, около 3 минут",
+  plQ:i=>`Вопрос ${i}`, plIdk:"Не знаю",
+  plResH:u=>`Начнём с юнита ${u}`, plResFirst:"Начнём с самого начала", plGot:(g,n)=>`Верных ответов: ${g} из ${n}.`,
+  plClosed:(a,b)=>a===b ? `Юнит ${a} отмечен как пройденный, вернуться к нему можно в любой момент.` : `Юниты ${a}–${b} отмечены как пройденные, вернуться к ним можно в любой момент.`,
+  plFirstTp:n=>`Первая тема: ${n}`, plAll:"Ты знаешь всё, что уже есть на сайте. Начни с последнего юнита, чтобы закрепить.", plGo:"Начать",
+  plSetH:"Тест на уровень", plSetP:"Определит, с какого юнита начать, и отметит темы до него пройденными.", plSetBtn:"Пройти тест",
   accTabs:{acc:["Аккаунт","Имя, аватар, почта и пароль"], set:["Настройки","Язык, обучение и сброс"], prog:["Прогресс","Темы, активность и самопроверки"], look:["Оформление","Тема, цвета, аватар и курсор"]},
   profileH:"Профиль", nameSave:"Сохранить", nameSaved:"Имя сохранено", avatarH:"Аватар", emailL:"Почта", securityH:"Безопасность",
   langH:"Язык интерфейса", courseH:"Курс по умолчанию", newWordsH:"Новых слов в день (Quizlet)", resetH:"Сброс прогресса",
@@ -16875,10 +16911,18 @@ Object.assign(I18N.ru, {
   bankL:"Банк заданий"
 });
 Object.assign(I18N.en, {
-  gTitle:"Languages,<br>one step at a time", gEmailPh:"E-mail", gPwPh:"Password (6+ characters)",
-  gateUpH:"Create your account", gateUpSub:"An e-mail and a password — and you're in. Your progress will be on all your devices.", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
+  gTitle:"Learn languages<br>step by step", gEmailPh:"name@mail.com", gPwPh:"6+ characters",
+  gateUpH:"Create your account", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
   gateLoading:"Loading your progress…", gateRetry:"Try again", gateErr:"Couldn't reach the server. Check your internet connection (and VPN if you need one).",
-  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.",
+  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Next", obNeedName:"Tell us your name.",
+  plLangH:"Which language will you learn?", plLangSub:"You can add another one later in the menu on the left.", plBack:"← Back", plCancel:"← Cancel",
+  plLvlH:c=>`Do you already know some ${cName(c)}?`, plLvlSub:"If you know a bit, take a short test. We’ll start you at the right unit and mark the topics before it as done.",
+  plZero:"I’m starting from scratch", plZeroS:"We’ll open the first topic", plSome:"I know a bit", plSomeS:"Level test, about 3 minutes",
+  plQ:i=>`Question ${i}`, plIdk:"I don’t know",
+  plResH:u=>`Let’s start with unit ${u}`, plResFirst:"Let’s start from the beginning", plGot:(g,n)=>`Correct answers: ${g} of ${n}.`,
+  plClosed:(a,b)=>a===b ? `Unit ${a} is marked as done, you can go back to it any time.` : `Units ${a}–${b} are marked as done, you can go back to them any time.`,
+  plFirstTp:n=>`First topic: ${n}`, plAll:"You know everything that’s on the site so far. Start with the last unit to consolidate it.", plGo:"Start",
+  plSetH:"Level test", plSetP:"Finds the unit to start from and marks the topics before it as done.", plSetBtn:"Take the test",
   accTabs:{acc:["Account","Name, avatar, e-mail and password"], set:["Settings","Language, learning and reset"], prog:["Progress","Topics, activity and self-checks"], look:["Appearance","Theme, colours, avatar and cursor"]},
   profileH:"Profile", nameSave:"Save", nameSaved:"Name saved", avatarH:"Avatar", emailL:"E-mail", securityH:"Security",
   langH:"Interface language", courseH:"Default course", newWordsH:"New words per day (Quizlet)", resetH:"Reset progress",
@@ -16972,12 +17016,14 @@ function setProf(patch, quiet){ Object.assign(S.prof, patch); S.prof.at = Date.n
 /* ---------- экран входа и онбординг ---------- */
 const gateEl = (() => { const el = document.createElement("div"); el.className = "gate"; el.id = "gate"; el.hidden = true; document.body.appendChild(el); return el; })();
 let GATE = "";
+const PL = {on:false, step:"lang", c:"", qs:[], qi:0, got:0, start:"", tot:0};
 function gateCheck(){
   let want = "";
   if (Cloud.kind === "supabase") {
     if (!ME) want = Cloud.state === "loading" || !Gate.ready ? "loading" : "auth";
     else if (!S.prof.name) want = Cloud.be || Cloud.state === "error" ? "onboard" : "loading";
   } else if (!S.prof.name) want = "onboard";
+  if (!want && S.prof.name && (S.prof.ob === 0 || PL.on) && (Cloud.kind !== "supabase" || ME)) want = "place";
   showGate(want);
 }
 const Gate = {ready:false, busy:false};
@@ -16993,11 +17039,13 @@ function showGate(mode){
   if (mode === "loading") body = `<div class="gate-card center"><span class="spin big"></span><p class="muted">${t("gateLoading")}</p></div>`;
   else if (mode === "auth") { if (!Auth.touched) Auth.mode = ls.get("edito-seen-auth") ? "in" : "up"; body = split(authHTML(true)); }
   else if (mode === "onboard") body = split(onboardHTML());
+  else if (mode === "place") body = split(`<div class="pl" id="pl"></div>`);
   gateEl.className = "gate g-" + mode;
   gateEl.innerHTML = `<div class="gate-bg"></div><div class="gate-in">${body}</div>`;
   $$("[data-glang]", gateEl).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.glang !== LANG) { setLang(b.dataset.glang); const m = GATE; GATE = ""; showGate(m); } }));
   if (mode === "auth") { wireAuth(); const e = $("#authEmail", gateEl); if (e) setTimeout(()=>e.focus(), 60); }
   if (mode === "onboard") wireOnboard();
+  if (mode === "place") plPaint();
 }
 function onboardHTML(){
   const d = {emoji: S.prof.emoji || "🙂", bg: S.prof.bg || "peach"};
@@ -17020,10 +17068,94 @@ function wireOnboard(){
     e.preventDefault();
     const name = $("#obName").value.trim().replace(/\s+/g, " ");
     if (!name) { $("#obMsg").textContent = t("obNeedName"); $("#obName").focus(); return; }
-    setProf({name, emoji: st.emoji, bg: st.bg}, true);
+    setProf({name, emoji: st.emoji, bg: st.bg, ob: 0}, true); PL.step = "lang";
     buildNav(); gateCheck();
   });
   setTimeout(()=>$("#obName").focus(), 60);
+}
+
+/* ---------- после первого входа: язык → уровень → тест → стартовый юнит ---------- */
+const PL_UNITS = {fr:{first:"0", test:["1","2","3"]}, es:{first:"1", test:["1","2","3","4"]}};
+const PL_PER = 4, PL_PASS = 3;
+const plShuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const PL_CH = '<svg class="pl-ch" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
+/* 4 вопроса с выбором ответа на юнит, по возможности из разных тем */
+function plPick(u){
+  const byTp = {};
+  POOLX.forEach(q=>{ const tp = byId[q.tp]; if (!q.o || q.o.length < 2 || !tp || tp.sec !== "book" || tp.unit !== u) return; (byTp[q.tp] = byTp[q.tp] || []).push(q); });
+  const groups = plShuffle(Object.values(byTp).map(plShuffle)), out = [];
+  for (let r = 0; out.length < PL_PER && groups.some(g=>g[r]); r++) groups.forEach(g=>{ if (out.length < PL_PER && g[r]) out.push(g[r]); });
+  return out.map(q=>({q, u, ord: plShuffle(q.o.map((_, j)=>j))}));
+}
+function plStartTest(){
+  const cfg = PL_UNITS[PL.c];
+  PL.units = cfg.test.filter(u=>plPick(u).length >= PL_PASS); PL.ui = 0; PL.qs = plPick(PL.units[0]); PL.qi = 0; PL.uGot = 0; PL.got = 0; PL.tot = 0;
+  PL.max = PL.units.length * PL_PER; PL.step = "q"; plPaint();
+}
+function plAnswer(ok){
+  PL.tot++; if (ok) { PL.got++; PL.uGot++; }
+  PL.qi++;
+  if (PL.qi < PL.qs.length) return plPaint();
+  const cfg = PL_UNITS[PL.c], u = PL.units[PL.ui];
+  if (PL.uGot < PL_PASS) return plFinish(PL.ui === 0 ? cfg.first : u, false);
+  PL.ui++;
+  if (PL.ui >= PL.units.length) return plFinish(PL.units[PL.units.length - 1], true);
+  PL.qs = plPick(PL.units[PL.ui]); PL.qi = 0; PL.uGot = 0; plPaint();
+}
+function plFinish(start, all){ PL.start = start; PL.all = all; PL.step = "res"; plPaint(); }
+function plDone(start){
+  const lvl = Object.assign({}, S.prof.lvl || {});
+  if (start == null || start === PL_UNITS[PL.c].first) delete lvl[PL.c]; else lvl[PL.c] = start;
+  setProf({lvl, ob: 1}, true);
+  const first = BOOK.find(x=>x.unit === (start == null ? PL_UNITS[PL.c].first : start)) || BOOK[0];
+  PL.on = false; PL.step = "lang";
+  buildNav(); paintNavProgress();
+  if (first) location.hash = first.id;
+  gateCheck();
+}
+function plPaint(){
+  const box = $("#pl", gateEl); if (!box) return;
+  const back = (lbl, to) => `<button type="button" class="pl-back" data-plto="${to}">${lbl}</button>`;
+  let h = "";
+  if (PL.step === "lang") {
+    h = `${PL.on ? back(t("plCancel"), "cancel") : ""}<h2 class="g-title">${t("plLangH")}</h2><p class="auth-sub">${t("plLangSub")}</p>
+    <div class="pl-list">${["fr","es"].map(c=>`<button type="button" class="pl-opt" data-plc="${c}">${CFLAG[c]}<span class="pl-tx"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>${PL_CH}</button>`).join("")}
+    <button type="button" class="pl-opt" disabled>${CFLAG.zh}<span class="pl-tx"><b>${cName("zh")}</b></span><span class="pl-soon">${t("soon")}</span></button></div>`;
+  } else if (PL.step === "lvl") {
+    h = `${back(t("plBack"), "lang")}<h2 class="g-title">${t("plLvlH", PL.c)}</h2><p class="auth-sub">${t("plLvlSub")}</p>
+    <div class="pl-list">
+      <button type="button" class="pl-opt" data-pllv="zero"><span class="pl-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16V4.5M4 4.5h9l-2 3 2 3H4"/></svg></span><span class="pl-tx"><b>${t("plZero")}</b><small>${t("plZeroS")}</small></span>${PL_CH}</button>
+      <button type="button" class="pl-opt" data-pllv="test"><span class="pl-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3.5 16.5h13M6 13.5V10M10 13.5V6M14 13.5V3.5"/></svg></span><span class="pl-tx"><b>${t("plSome")}</b><small>${t("plSomeS")}</small></span>${PL_CH}</button>
+    </div>`;
+  } else if (PL.step === "q") {
+    const it = PL.qs[PL.qi], q = it.q, n = PL.tot + 1;
+    const qt = qhtml(q.q);
+    h = `<div class="pl-top"><span>${t("plQ", n)}</span><span class="pl-bar"><i style="width:${Math.round(PL.tot / PL.max * 100)}%"></i></span></div>
+    <p class="pl-q">${qt}</p>
+    <div class="pl-list">${it.ord.map(j=>`<button type="button" class="pl-ans" data-plj="${j}">${esc(q.o[j])}</button>`).join("")}</div>
+    <button type="button" class="pl-idk" data-plj="-1">${t("plIdk")}</button>`;
+  } else if (PL.step === "res") {
+    const cfg = PL_UNITS[PL.c], st = PL.start, fromFirst = st === cfg.first;
+    const first = BOOK.find(x=>x.unit === st);
+    const closedTxt = fromFirst ? t("plFirstTp", first ? first.title : "") : t("plClosed", cfg.first, String(+st - 1));
+    h = `<div class="pl-res"><h2 class="g-title">${fromFirst ? t("plResFirst") : t("plResH", st)}</h2>
+    <p class="auth-sub">${PL.all ? t("plAll") + " " : ""}${closedTxt}</p>
+    <p class="pl-note">${t("plGot", PL.got, PL.tot)}</p>
+    <button type="button" class="btn pri" id="plGo">${t("plGo")} →</button></div>`;
+  }
+  box.innerHTML = `<div class="pl-in">${h}</div>`;
+  const into = box.firstElementChild; into.style.display = "grid";
+  $$("[data-plto]", box).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.plto === "cancel") { PL.on = false; PL.step = "lang"; gateCheck(); return; } PL.step = b.dataset.plto; plPaint(); }));
+  $$("[data-plc]", box).forEach(b=>b.addEventListener("click", ()=>{ PL.c = b.dataset.plc; if (COURSE !== PL.c) setCourse(PL.c, true); PL.step = "lvl"; plPaint(); }));
+  $$("[data-pllv]", box).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.pllv === "zero") plDone(null); else plStartTest(); }));
+  $$("[data-plj]", box).forEach(b=>b.addEventListener("click", ()=>{
+    if (box.dataset.lock) return; box.dataset.lock = "1";
+    const j = +b.dataset.plj, it = PL.qs[PL.qi];
+    if (j >= 0) b.classList.add("sel");
+    setTimeout(()=>{ delete box.dataset.lock; plAnswer(j === it.q.a); }, j >= 0 ? 260 : 0);
+  }));
+  const go = $("#plGo", box); if (go) { go.addEventListener("click", ()=>plDone(PL.start)); setTimeout(()=>go.focus(), 60); }
+  const f = $(".pl-opt:not(:disabled), .pl-ans", box); if (f && PL.step !== "q") setTimeout(()=>f.focus({preventScroll:true}), 60);
 }
 
 /* ---------- оформление ---------- */
@@ -17100,11 +17232,13 @@ function panelSet(p){
     <div class="pcard"><h3>${t("langH")}</h3><div class="seg big">${[["ru","Русский"],["en","English"]].map(([k,n])=>`<button type="button" data-lang2="${k}" class="${LANG===k?"on":""}">${n}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("newWordsH")}</h3><div class="seg big">${[5,10,15,20,30].map(n=>`<button type="button" data-nw="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("plSetH")}</h3><p class="muted" style="margin:0;font-size:14px">${t("plSetP")}</p><div class="cb-btns"><button type="button" class="btn sm sec" id="plRetake">${t("plSetBtn")}</button></div></div>
     <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
   </div>`;
   $$("[data-lang2]", p).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
   $$("[data-course2]", p).forEach(b=>b.addEventListener("click", ()=>{ setCourse(b.dataset.course2, true); renderAccount(); }));
   $$("[data-nw]", p).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.nw; saveQZ(); panelSet(p); }));
+  $("#plRetake", p).addEventListener("click", ()=>{ PL.on = true; PL.step = "lang"; gateCheck(); });
   $$("[data-reset]", p).forEach(b=>b.addEventListener("click", ()=>{
     const c = b.dataset.reset;
     if (armed !== c) { armed = c; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed === c) { armed = ""; b.textContent = t("resetCourse", COURSES[c].name); b.classList.remove("armed"); } }, 5000); return; }
@@ -17116,6 +17250,7 @@ function resetCourse(c){
   ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
   S.tests = S.tests.filter(x=>(x.c||"fr") !== c);
   if (c === "fr") { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
+  if (S.prof.lvl && S.prof.lvl[c] != null) { const lvl = Object.assign({}, S.prof.lvl); delete lvl[c]; setProf({lvl}, true); }
   touch("progress"); paintNavProgress();
 }
 function panelProg(p){

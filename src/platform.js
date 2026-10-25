@@ -3,10 +3,18 @@
    оформление, личный кабинет
    ========================================================= */
 Object.assign(I18N.ru, {
-  gTitle:"Языки —<br>шаг за шагом", gEmailPh:"Почта", gPwPh:"Пароль (от 6 символов)",
-  gateUpH:"Создай аккаунт", gateUpSub:"Почта и пароль — и можно начинать. Прогресс будет на всех твоих устройствах.", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
+  gTitle:"Учим языки<br>шаг за шагом", gEmailPh:"name@mail.com", gPwPh:"От 6 символов",
+  gateUpH:"Создай аккаунт", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
   gateLoading:"Загружаем твой прогресс…", gateRetry:"Повторить", gateErr:"Не получилось связаться с сервером. Проверь интернет (и VPN, если он нужен).",
-  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Начать", obNeedName:"Напиши, как тебя зовут.",
+  obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Дальше", obNeedName:"Напиши, как тебя зовут.",
+  plLangH:"Какой язык будешь учить?", plLangSub:"Второй язык можно добавить позже в меню слева.", plBack:"← Назад", plCancel:"← Отмена",
+  plLvlH:c=>`Ты уже знаешь ${cName(c).toLowerCase()}?`, plLvlSub:"Если немного знаешь, пройди короткий тест. Мы начнём с подходящего юнита, а темы до него отметим пройденными.",
+  plZero:"Начинаю с нуля", plZeroS:"Откроем первую тему", plSome:"Немного знаю", plSomeS:"Тест на уровень, около 3 минут",
+  plQ:i=>`Вопрос ${i}`, plIdk:"Не знаю",
+  plResH:u=>`Начнём с юнита ${u}`, plResFirst:"Начнём с самого начала", plGot:(g,n)=>`Верных ответов: ${g} из ${n}.`,
+  plClosed:(a,b)=>a===b ? `Юнит ${a} отмечен как пройденный, вернуться к нему можно в любой момент.` : `Юниты ${a}–${b} отмечены как пройденные, вернуться к ним можно в любой момент.`,
+  plFirstTp:n=>`Первая тема: ${n}`, plAll:"Ты знаешь всё, что уже есть на сайте. Начни с последнего юнита, чтобы закрепить.", plGo:"Начать",
+  plSetH:"Тест на уровень", plSetP:"Определит, с какого юнита начать, и отметит темы до него пройденными.", plSetBtn:"Пройти тест",
   accTabs:{acc:["Аккаунт","Имя, аватар, почта и пароль"], set:["Настройки","Язык, обучение и сброс"], prog:["Прогресс","Темы, активность и самопроверки"], look:["Оформление","Тема, цвета, аватар и курсор"]},
   profileH:"Профиль", nameSave:"Сохранить", nameSaved:"Имя сохранено", avatarH:"Аватар", emailL:"Почта", securityH:"Безопасность",
   langH:"Язык интерфейса", courseH:"Курс по умолчанию", newWordsH:"Новых слов в день (Quizlet)", resetH:"Сброс прогресса",
@@ -15,10 +23,18 @@ Object.assign(I18N.ru, {
   bankL:"Банк заданий"
 });
 Object.assign(I18N.en, {
-  gTitle:"Languages,<br>one step at a time", gEmailPh:"E-mail", gPwPh:"Password (6+ characters)",
-  gateUpH:"Create your account", gateUpSub:"An e-mail and a password — and you're in. Your progress will be on all your devices.", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
+  gTitle:"Learn languages<br>step by step", gEmailPh:"name@mail.com", gPwPh:"6+ characters",
+  gateUpH:"Create your account", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
   gateLoading:"Loading your progress…", gateRetry:"Try again", gateErr:"Couldn't reach the server. Check your internet connection (and VPN if you need one).",
-  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Let's go", obNeedName:"Tell us your name.",
+  obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Next", obNeedName:"Tell us your name.",
+  plLangH:"Which language will you learn?", plLangSub:"You can add another one later in the menu on the left.", plBack:"← Back", plCancel:"← Cancel",
+  plLvlH:c=>`Do you already know some ${cName(c)}?`, plLvlSub:"If you know a bit, take a short test. We’ll start you at the right unit and mark the topics before it as done.",
+  plZero:"I’m starting from scratch", plZeroS:"We’ll open the first topic", plSome:"I know a bit", plSomeS:"Level test, about 3 minutes",
+  plQ:i=>`Question ${i}`, plIdk:"I don’t know",
+  plResH:u=>`Let’s start with unit ${u}`, plResFirst:"Let’s start from the beginning", plGot:(g,n)=>`Correct answers: ${g} of ${n}.`,
+  plClosed:(a,b)=>a===b ? `Unit ${a} is marked as done, you can go back to it any time.` : `Units ${a}–${b} are marked as done, you can go back to them any time.`,
+  plFirstTp:n=>`First topic: ${n}`, plAll:"You know everything that’s on the site so far. Start with the last unit to consolidate it.", plGo:"Start",
+  plSetH:"Level test", plSetP:"Finds the unit to start from and marks the topics before it as done.", plSetBtn:"Take the test",
   accTabs:{acc:["Account","Name, avatar, e-mail and password"], set:["Settings","Language, learning and reset"], prog:["Progress","Topics, activity and self-checks"], look:["Appearance","Theme, colours, avatar and cursor"]},
   profileH:"Profile", nameSave:"Save", nameSaved:"Name saved", avatarH:"Avatar", emailL:"E-mail", securityH:"Security",
   langH:"Interface language", courseH:"Default course", newWordsH:"New words per day (Quizlet)", resetH:"Reset progress",
@@ -112,12 +128,14 @@ function setProf(patch, quiet){ Object.assign(S.prof, patch); S.prof.at = Date.n
 /* ---------- экран входа и онбординг ---------- */
 const gateEl = (() => { const el = document.createElement("div"); el.className = "gate"; el.id = "gate"; el.hidden = true; document.body.appendChild(el); return el; })();
 let GATE = "";
+const PL = {on:false, step:"lang", c:"", qs:[], qi:0, got:0, start:"", tot:0};
 function gateCheck(){
   let want = "";
   if (Cloud.kind === "supabase") {
     if (!ME) want = Cloud.state === "loading" || !Gate.ready ? "loading" : "auth";
     else if (!S.prof.name) want = Cloud.be || Cloud.state === "error" ? "onboard" : "loading";
   } else if (!S.prof.name) want = "onboard";
+  if (!want && S.prof.name && (S.prof.ob === 0 || PL.on) && (Cloud.kind !== "supabase" || ME)) want = "place";
   showGate(want);
 }
 const Gate = {ready:false, busy:false};
@@ -133,11 +151,13 @@ function showGate(mode){
   if (mode === "loading") body = `<div class="gate-card center"><span class="spin big"></span><p class="muted">${t("gateLoading")}</p></div>`;
   else if (mode === "auth") { if (!Auth.touched) Auth.mode = ls.get("edito-seen-auth") ? "in" : "up"; body = split(authHTML(true)); }
   else if (mode === "onboard") body = split(onboardHTML());
+  else if (mode === "place") body = split(`<div class="pl" id="pl"></div>`);
   gateEl.className = "gate g-" + mode;
   gateEl.innerHTML = `<div class="gate-bg"></div><div class="gate-in">${body}</div>`;
   $$("[data-glang]", gateEl).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.glang !== LANG) { setLang(b.dataset.glang); const m = GATE; GATE = ""; showGate(m); } }));
   if (mode === "auth") { wireAuth(); const e = $("#authEmail", gateEl); if (e) setTimeout(()=>e.focus(), 60); }
   if (mode === "onboard") wireOnboard();
+  if (mode === "place") plPaint();
 }
 function onboardHTML(){
   const d = {emoji: S.prof.emoji || "🙂", bg: S.prof.bg || "peach"};
@@ -160,10 +180,94 @@ function wireOnboard(){
     e.preventDefault();
     const name = $("#obName").value.trim().replace(/\s+/g, " ");
     if (!name) { $("#obMsg").textContent = t("obNeedName"); $("#obName").focus(); return; }
-    setProf({name, emoji: st.emoji, bg: st.bg}, true);
+    setProf({name, emoji: st.emoji, bg: st.bg, ob: 0}, true); PL.step = "lang";
     buildNav(); gateCheck();
   });
   setTimeout(()=>$("#obName").focus(), 60);
+}
+
+/* ---------- после первого входа: язык → уровень → тест → стартовый юнит ---------- */
+const PL_UNITS = {fr:{first:"0", test:["1","2","3"]}, es:{first:"1", test:["1","2","3","4"]}};
+const PL_PER = 4, PL_PASS = 3;
+const plShuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const PL_CH = '<svg class="pl-ch" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
+/* 4 вопроса с выбором ответа на юнит, по возможности из разных тем */
+function plPick(u){
+  const byTp = {};
+  POOLX.forEach(q=>{ const tp = byId[q.tp]; if (!q.o || q.o.length < 2 || !tp || tp.sec !== "book" || tp.unit !== u) return; (byTp[q.tp] = byTp[q.tp] || []).push(q); });
+  const groups = plShuffle(Object.values(byTp).map(plShuffle)), out = [];
+  for (let r = 0; out.length < PL_PER && groups.some(g=>g[r]); r++) groups.forEach(g=>{ if (out.length < PL_PER && g[r]) out.push(g[r]); });
+  return out.map(q=>({q, u, ord: plShuffle(q.o.map((_, j)=>j))}));
+}
+function plStartTest(){
+  const cfg = PL_UNITS[PL.c];
+  PL.units = cfg.test.filter(u=>plPick(u).length >= PL_PASS); PL.ui = 0; PL.qs = plPick(PL.units[0]); PL.qi = 0; PL.uGot = 0; PL.got = 0; PL.tot = 0;
+  PL.max = PL.units.length * PL_PER; PL.step = "q"; plPaint();
+}
+function plAnswer(ok){
+  PL.tot++; if (ok) { PL.got++; PL.uGot++; }
+  PL.qi++;
+  if (PL.qi < PL.qs.length) return plPaint();
+  const cfg = PL_UNITS[PL.c], u = PL.units[PL.ui];
+  if (PL.uGot < PL_PASS) return plFinish(PL.ui === 0 ? cfg.first : u, false);
+  PL.ui++;
+  if (PL.ui >= PL.units.length) return plFinish(PL.units[PL.units.length - 1], true);
+  PL.qs = plPick(PL.units[PL.ui]); PL.qi = 0; PL.uGot = 0; plPaint();
+}
+function plFinish(start, all){ PL.start = start; PL.all = all; PL.step = "res"; plPaint(); }
+function plDone(start){
+  const lvl = Object.assign({}, S.prof.lvl || {});
+  if (start == null || start === PL_UNITS[PL.c].first) delete lvl[PL.c]; else lvl[PL.c] = start;
+  setProf({lvl, ob: 1}, true);
+  const first = BOOK.find(x=>x.unit === (start == null ? PL_UNITS[PL.c].first : start)) || BOOK[0];
+  PL.on = false; PL.step = "lang";
+  buildNav(); paintNavProgress();
+  if (first) location.hash = first.id;
+  gateCheck();
+}
+function plPaint(){
+  const box = $("#pl", gateEl); if (!box) return;
+  const back = (lbl, to) => `<button type="button" class="pl-back" data-plto="${to}">${lbl}</button>`;
+  let h = "";
+  if (PL.step === "lang") {
+    h = `${PL.on ? back(t("plCancel"), "cancel") : ""}<h2 class="g-title">${t("plLangH")}</h2><p class="auth-sub">${t("plLangSub")}</p>
+    <div class="pl-list">${["fr","es"].map(c=>`<button type="button" class="pl-opt" data-plc="${c}">${CFLAG[c]}<span class="pl-tx"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>${PL_CH}</button>`).join("")}
+    <button type="button" class="pl-opt" disabled>${CFLAG.zh}<span class="pl-tx"><b>${cName("zh")}</b></span><span class="pl-soon">${t("soon")}</span></button></div>`;
+  } else if (PL.step === "lvl") {
+    h = `${back(t("plBack"), "lang")}<h2 class="g-title">${t("plLvlH", PL.c)}</h2><p class="auth-sub">${t("plLvlSub")}</p>
+    <div class="pl-list">
+      <button type="button" class="pl-opt" data-pllv="zero"><span class="pl-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16V4.5M4 4.5h9l-2 3 2 3H4"/></svg></span><span class="pl-tx"><b>${t("plZero")}</b><small>${t("plZeroS")}</small></span>${PL_CH}</button>
+      <button type="button" class="pl-opt" data-pllv="test"><span class="pl-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3.5 16.5h13M6 13.5V10M10 13.5V6M14 13.5V3.5"/></svg></span><span class="pl-tx"><b>${t("plSome")}</b><small>${t("plSomeS")}</small></span>${PL_CH}</button>
+    </div>`;
+  } else if (PL.step === "q") {
+    const it = PL.qs[PL.qi], q = it.q, n = PL.tot + 1;
+    const qt = qhtml(q.q);
+    h = `<div class="pl-top"><span>${t("plQ", n)}</span><span class="pl-bar"><i style="width:${Math.round(PL.tot / PL.max * 100)}%"></i></span></div>
+    <p class="pl-q">${qt}</p>
+    <div class="pl-list">${it.ord.map(j=>`<button type="button" class="pl-ans" data-plj="${j}">${esc(q.o[j])}</button>`).join("")}</div>
+    <button type="button" class="pl-idk" data-plj="-1">${t("plIdk")}</button>`;
+  } else if (PL.step === "res") {
+    const cfg = PL_UNITS[PL.c], st = PL.start, fromFirst = st === cfg.first;
+    const first = BOOK.find(x=>x.unit === st);
+    const closedTxt = fromFirst ? t("plFirstTp", first ? first.title : "") : t("plClosed", cfg.first, String(+st - 1));
+    h = `<div class="pl-res"><h2 class="g-title">${fromFirst ? t("plResFirst") : t("plResH", st)}</h2>
+    <p class="auth-sub">${PL.all ? t("plAll") + " " : ""}${closedTxt}</p>
+    <p class="pl-note">${t("plGot", PL.got, PL.tot)}</p>
+    <button type="button" class="btn pri" id="plGo">${t("plGo")} →</button></div>`;
+  }
+  box.innerHTML = `<div class="pl-in">${h}</div>`;
+  const into = box.firstElementChild; into.style.display = "grid";
+  $$("[data-plto]", box).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.plto === "cancel") { PL.on = false; PL.step = "lang"; gateCheck(); return; } PL.step = b.dataset.plto; plPaint(); }));
+  $$("[data-plc]", box).forEach(b=>b.addEventListener("click", ()=>{ PL.c = b.dataset.plc; if (COURSE !== PL.c) setCourse(PL.c, true); PL.step = "lvl"; plPaint(); }));
+  $$("[data-pllv]", box).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.pllv === "zero") plDone(null); else plStartTest(); }));
+  $$("[data-plj]", box).forEach(b=>b.addEventListener("click", ()=>{
+    if (box.dataset.lock) return; box.dataset.lock = "1";
+    const j = +b.dataset.plj, it = PL.qs[PL.qi];
+    if (j >= 0) b.classList.add("sel");
+    setTimeout(()=>{ delete box.dataset.lock; plAnswer(j === it.q.a); }, j >= 0 ? 260 : 0);
+  }));
+  const go = $("#plGo", box); if (go) { go.addEventListener("click", ()=>plDone(PL.start)); setTimeout(()=>go.focus(), 60); }
+  const f = $(".pl-opt:not(:disabled), .pl-ans", box); if (f && PL.step !== "q") setTimeout(()=>f.focus({preventScroll:true}), 60);
 }
 
 /* ---------- оформление ---------- */
@@ -240,11 +344,13 @@ function panelSet(p){
     <div class="pcard"><h3>${t("langH")}</h3><div class="seg big">${[["ru","Русский"],["en","English"]].map(([k,n])=>`<button type="button" data-lang2="${k}" class="${LANG===k?"on":""}">${n}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("newWordsH")}</h3><div class="seg big">${[5,10,15,20,30].map(n=>`<button type="button" data-nw="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("plSetH")}</h3><p class="muted" style="margin:0;font-size:14px">${t("plSetP")}</p><div class="cb-btns"><button type="button" class="btn sm sec" id="plRetake">${t("plSetBtn")}</button></div></div>
     <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
   </div>`;
   $$("[data-lang2]", p).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
   $$("[data-course2]", p).forEach(b=>b.addEventListener("click", ()=>{ setCourse(b.dataset.course2, true); renderAccount(); }));
   $$("[data-nw]", p).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.nw; saveQZ(); panelSet(p); }));
+  $("#plRetake", p).addEventListener("click", ()=>{ PL.on = true; PL.step = "lang"; gateCheck(); });
   $$("[data-reset]", p).forEach(b=>b.addEventListener("click", ()=>{
     const c = b.dataset.reset;
     if (armed !== c) { armed = c; b.textContent = t("resetConfirm"); b.classList.add("armed"); setTimeout(()=>{ if (armed === c) { armed = ""; b.textContent = t("resetCourse", COURSES[c].name); b.classList.remove("armed"); } }, 5000); return; }
@@ -256,6 +362,7 @@ function resetCourse(c){
   ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
   S.tests = S.tests.filter(x=>(x.c||"fr") !== c);
   if (c === "fr") { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
+  if (S.prof.lvl && S.prof.lvl[c] != null) { const lvl = Object.assign({}, S.prof.lvl); delete lvl[c]; setProf({lvl}, true); }
   touch("progress"); paintNavProgress();
 }
 function panelProg(p){

@@ -1,8 +1,8 @@
-<title>Языки — шаг за шагом</title>
+<title>Учим языки шаг за шагом</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
 /* Layout: французская школьная тетрадь, но мягкая — клетка Seyès в шапках, «перо учителя» для исправлений, синие чернила как акцент. Поверхности без обводок: тон фона + мягкая тень, крупные скругления. */
 :root{
@@ -1781,62 +1781,88 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
   .btn-l{max-width:200px}
 }
 
-/* ---------- экран входа v5 (25.10.2026): размытое фото на фоне, карточка = фото + форма ---------- */
-.gate{--g-card:color-mix(in srgb,var(--sheet) 90%,var(--paper));--g-fill:color-mix(in srgb,var(--ink) 6%,transparent);background:#4d5a2e;align-items:center;padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.gate-bg{background:url(img/meadow-blur.webp) center/cover no-repeat,#566034;transform:scale(1.06)}
-.gate-bg::after{content:"";position:absolute;inset:0;background:rgba(18,26,8,.16)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gate-bg::after{background:rgba(4,8,2,.5)}}
-:root[data-theme="dark"] .gate-bg::after{background:rgba(4,8,2,.5)}
-.gate-in{max-width:1080px;gap:0}
+/* ---------- экран входа v6 (25.10.2026): как весь сайт — фон --paper, белая карточка с тонкой обводкой, Manrope ---------- */
+.gate{background:var(--paper);align-items:center;padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.gate-bg{display:none}
+.gate-in{max-width:1000px;gap:0}
 .g-loading .gate-in{max-width:340px}
-/* загрузка: без фона и карточки — только колёсико и подпись */
+/* загрузка: без фона и карточки, только колёсико и подпись */
 .gate.g-loading{background:var(--sheet);animation:none}
-.g-loading .gate-bg{display:none}
 .g-loading .gate-card{background:none;box-shadow:none;border-radius:0;animation:none;padding:0;gap:12px}
 .g-loading .gate-card p{margin:0;font-size:14px;color:var(--ink-3)}
-.gate-split{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr);background:var(--g-card);border-radius:30px;padding:14px;box-shadow:0 40px 90px -30px rgba(8,16,2,.6);animation:cardin .5s var(--spring);min-height:min(660px,calc(100dvh - 48px))}
-.gate-pic{border-radius:20px;background:url(img/meadow.webp) 32% center/cover no-repeat,#5b6b38;min-height:100%}
-.gate-side{display:flex;flex-direction:column;min-width:0;padding:16px 26px 14px 52px}
+.gate-split{position:relative;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);background:var(--sheet);border-radius:20px;padding:12px;box-shadow:0 0 0 1px var(--line-2),0 1px 3px rgba(20,24,50,.04);animation:cardin .45s var(--spring);min-height:min(620px,calc(100dvh - 48px))}
+.gate-pic{border-radius:12px;background:url(img/meadow.webp) 32% center/cover no-repeat,#5b6b38;min-height:100%}
+.gate-side{display:flex;flex-direction:column;min-width:0;padding:8px 14px 10px 44px}
 .gate-top{display:flex;justify-content:flex-end}
-.gate-top .gate-lang{width:104px;background:var(--g-fill)}
-.gate-top .gate-lang button.on{background:var(--sheet)}
-.gate-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 0 36px;max-width:440px}
-.g-eye{margin:0 0 12px;font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
-.gate .g-title,.gate .ob h2.g-title{font-family:"Literata",Georgia,"Times New Roman",serif;font-optical-sizing:auto;font-weight:400;font-size:clamp(34px,3.9vw,50px);line-height:1.08;letter-spacing:-.025em;color:var(--ink);margin:0;text-wrap:balance}
+.gate-top .gate-lang{width:96px;background:var(--fill);border-radius:10px;padding:3px}
+.gate-top .gate-lang button{border-radius:8px;padding:5px 8px}
+.gate-top .gate-lang button.on{background:var(--sheet);box-shadow:0 0 0 1px var(--line-2),0 1px 2px rgba(20,24,50,.08)}
+.gate-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 0 32px;max-width:400px}
+.gate .g-title,.gate .ob h2.g-title{font-family:inherit;font-weight:700;font-size:clamp(28px,3vw,34px);line-height:1.15;letter-spacing:-.03em;color:var(--ink);margin:0;text-wrap:balance;text-align:left}
+.gate .auth-sub{margin:10px 0 22px;color:var(--ink-3);font-size:15px;line-height:1.5;text-align:left}
 .gate .g-auth{background:none;box-shadow:none;padding:0;margin:0;max-width:none;gap:12px;animation:none}
-.g-auth .auth-sub{margin:12px 0 22px;color:var(--ink-3);font-size:14.5px;line-height:1.5}
-.g-auth .fld span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.g-auth .fld input,.gate .ob .fld input{background:var(--g-fill);border-radius:14px;padding:15px 18px;font-size:16px}
-.g-auth .fld input::placeholder{color:var(--ink-3)}
-.g-auth .fld input:focus,.gate .ob .fld input:focus{background:var(--sheet)}
-.gate .g-auth .btn.pri.auth-go,.gate .ob .btn.pri{border-radius:14px;margin-top:6px;padding:15px 22px}
-.g-auth .auth-links{justify-content:flex-start;gap:6px 22px;padding:6px 2px 0;font-size:14.5px}
+.gate .fld{gap:6px}
+.gate .fld span{font-size:13px;font-weight:600;color:var(--ink-2)}
+.gate .fld input{background:var(--fill);border:0;border-radius:10px;padding:12px 14px;font-size:15.5px;box-shadow:none;transition:background .15s,box-shadow .15s}
+.gate .fld input::placeholder{color:var(--ink-3)}
+.gate .fld input:focus{background:var(--sheet);box-shadow:0 0 0 1px var(--line-3,var(--line-2)),0 0 0 4px color-mix(in srgb,var(--encre) 14%,transparent)}
+.gate .btn.pri{border-radius:10px;padding:12px 18px;justify-self:stretch;justify-content:center;margin-top:4px}
+.g-auth .auth-links{justify-content:flex-start;gap:6px 20px;padding:4px 0 0;font-size:14px;color:var(--ink-3)}
 .g-auth .auth-links button{color:var(--encre);font-weight:600}
 .gate .auth-msg{margin:0}
-.gate-brand{justify-content:flex-start;align-items:center;flex-wrap:wrap;gap:6px}
-.gate-brand b{font-size:19px;margin-left:4px}
-.gate-brand small{flex-basis:100%;font-family:"Literata",Georgia,serif;font-size:12.5px;line-height:1.4;color:var(--ink-2);margin-top:4px}
 .gate .ob{gap:14px}
-.gate .ob h2.g-title{text-align:left;font-size:clamp(30px,3.4vw,42px)}
-.gate .ob .auth-sub{text-align:left;margin:2px 0 4px;color:var(--ink-3)}
+.gate .ob .auth-sub{margin:0 0 6px}
 .ob-hd{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .ob-hd .ob-prev{flex:none}
+.gate .ob-l{font-size:13px;font-weight:600;color:var(--ink-2)}
+/* онбординг: язык, уровень, тест */
+.pl{display:grid;gap:0}
+.pl-back{justify-self:start;border:0;background:none;padding:0;margin:0 0 18px;font:inherit;font-size:14px;color:var(--ink-3);cursor:pointer}
+.pl-back:hover{color:var(--ink)}
+.pl-list{display:grid;gap:8px}
+.pl-opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:var(--sheet);box-shadow:0 0 0 1px var(--line-2);border-radius:12px;padding:13px 14px;font:inherit;color:var(--ink);cursor:pointer;transition:background .15s,box-shadow .15s}
+.pl-opt:hover:not(:disabled){background:var(--fill)}
+.pl-opt:focus-visible{outline:none;box-shadow:0 0 0 2px var(--encre)}
+.pl-opt:disabled{cursor:default;opacity:.55}
+.pl-opt .cflag{width:32px;height:32px;border-radius:9px}
+.pl-opt .pl-ic{flex:none;width:32px;height:32px;border-radius:9px;background:var(--fill);display:grid;place-items:center;color:var(--ink-2)}
+.pl-opt .pl-ic svg{width:18px;height:18px}
+.pl-tx{flex:1;min-width:0;display:grid;gap:2px}
+.pl-tx b{font-size:15px;font-weight:600}
+.pl-tx small{font-size:13px;color:var(--ink-3)}
+.pl-ch{flex:none;color:var(--ink-3)}
+.pl-soon{flex:none;font-size:12px;font-weight:600;color:var(--ink-3);background:var(--fill);border-radius:6px;padding:3px 7px}
+.pl-top{display:flex;align-items:center;gap:12px;margin:0 0 22px;font-size:13px;color:var(--ink-3)}
+.pl-bar{flex:1;height:4px;border-radius:99px;background:var(--fill);overflow:hidden}
+.pl-bar i{display:block;height:100%;background:var(--ink);border-radius:inherit;transition:width .3s var(--ease)}
+.pl-q{font-size:19px;font-weight:600;line-height:1.4;letter-spacing:-.01em;margin:0 0 18px;color:var(--ink)}
+.pl-q .blank{min-width:3em}
+.pl-ans{display:block;width:100%;text-align:left;border:0;background:var(--sheet);box-shadow:0 0 0 1px var(--line-2);border-radius:10px;padding:12px 14px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:background .15s,box-shadow .15s}
+.pl-ans:hover:not(:disabled){background:var(--fill)}
+.pl-ans.sel{background:var(--encre-soft);box-shadow:0 0 0 1.5px var(--encre)}
+.pl-idk{justify-self:start;margin-top:14px;border:0;background:none;padding:0;font:inherit;font-size:14px;color:var(--ink-3);cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.pl-idk:hover{color:var(--ink)}
+.pl-res{display:grid;gap:0}
+.pl-res .auth-sub{margin-bottom:8px}
+.pl-res .pl-note{margin:0 0 22px;font-size:14px;color:var(--ink-3)}
+.pl-in{animation:plin .28s var(--ease)}
+@keyframes plin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pl-in{animation:none}}
 @media (max-width:860px){
-  .gate{align-items:flex-start}
+  .gate{align-items:flex-start;padding-top:max(16px,env(safe-area-inset-top,0px))}
   .gate-in{max-width:520px}
-  .gate-split{grid-template-columns:1fr;padding:10px;border-radius:26px;min-height:0}
-  .gate-pic{height:clamp(140px,24vh,220px);min-height:0;border-radius:18px;background-position:center 60%}
-  .gate-side{padding:6px 12px 12px}
-  .gate-top{position:absolute;top:20px;right:20px}
-  .gate-top .gate-lang{background:color-mix(in srgb,var(--sheet) 70%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-  .gate-main{padding:22px 0 12px;max-width:none}
-  .g-eye{font-size:16px;margin-bottom:8px}
-  .gate .g-title,.gate .ob h2.g-title{font-size:clamp(28px,8vw,36px)}
+  .gate-split{grid-template-columns:1fr;padding:8px;border-radius:18px;min-height:0}
+  .gate-pic{height:clamp(120px,20vh,190px);min-height:0;border-radius:12px;background-position:center 60%}
+  .gate-side{padding:4px 10px 10px}
+  .gate-top{position:absolute;top:16px;right:16px}
+  .gate-top .gate-lang{background:color-mix(in srgb,var(--sheet) 75%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .gate-main{padding:20px 0 8px;max-width:none}
+  .gate .g-title,.gate .ob h2.g-title{font-size:clamp(26px,7.4vw,32px)}
 }
 </style>
 
 <header class="topbar">
-  <a class="brand" href="#home"><b>Языки</b><span>шаг за шагом</span></a>
+  <a class="brand" href="#home"><b>Учим языки</b><span>шаг за шагом</span></a>
   <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span id="menuLbl">Темы</span></button>
 </header>
 <button class="nav-show" id="navShow" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3.5" width="14" height="13" rx="2.5"/><path d="M8 3.5v13"/></svg><span>Меню</span></button>

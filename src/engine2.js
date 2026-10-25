@@ -63,8 +63,8 @@ ru:{
   authInSub:"Чтобы прогресс сохранялся в облаке и был виден на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль (от 6 символов).", authMagicSub:"Пришлём на почту ссылку — нажми её, и ты войдёшь без пароля.", authResetSub:"Пришлём на почту ссылку, по которой можно задать новый пароль.",
   email:"Почта", password:"Пароль", authInBtn:"Войти", authUpBtn:"Зарегистрироваться", authMagicBtn:"Прислать ссылку", authResetBtn:"Прислать ссылку", authMagicLink:"Войти по ссылке на почту", authForgot:"Забыл пароль", authBackPw:"← Вход по паролю",
   authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
-  authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту — после этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет — проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
-  aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена — открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть — войди на вкладке «Вход».", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
+  authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту. После этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет, проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
+  aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена. Открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть. Нажми «Войти» внизу.", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
   favAddedEs:"Добавлено в Избранное (Лексика)", spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
   qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
@@ -138,8 +138,8 @@ en:{
   authInSub:"So your progress is saved to the cloud and shows up on your phone and computer.", authUpSub:"All you need is an e-mail and a password (6+ characters).", authMagicSub:"We’ll e-mail you a link — click it and you’re in, no password needed.", authResetSub:"We’ll e-mail you a link to set a new password.",
   email:"E-mail", password:"Password", authInBtn:"Sign in", authUpBtn:"Sign up", authMagicBtn:"Send link", authResetBtn:"Send link", authMagicLink:"Sign in with an e-mail link", authForgot:"Forgot password", authBackPw:"← Sign in with password",
   authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
-  authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address — then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
-  aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet — open the e-mail and click the link.", aeExists:"This account already exists — sign in on the “Sign in” tab.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
+  authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address. Then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
+  aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet. Open the e-mail and click the link.", aeExists:"This account already exists. Tap “Sign in” below.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
   favAddedEs:"Added to Favourites (Vocabulary)", spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
   qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
@@ -215,7 +215,7 @@ Object.assign(I18N.ru, {
   dirFr:()=>`${COURSE==="es"?"ES":"FR"} → RU`, dirRu:()=>`RU → ${COURSE==="es"?"ES":"FR"}`,
   cloud:{local:"Только в этом браузере", loading:"Подключаюсь…", saved:"Всё сохранено", saving:"Сохраняю…", error:"Нет связи — сохраню позже", readonly:"Сохраняю в браузере", signedout:"Войди, чтобы сохранять"},
   authInH:"С возвращением!", authUpH:"Создай аккаунт", authResetH:"Восстановить пароль",
-  authInSub:"Войди — и прогресс будет одинаковым на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль от 6 символов.", authResetSub:"Пришлём на почту ссылку, чтобы задать новый пароль.",
+  authInSub:"Войди, и прогресс будет одинаковым на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль от 6 символов.", authResetSub:"Пришлём на почту ссылку, чтобы задать новый пароль.",
   authNoAcc:"Нет аккаунта?", authCreate:"Создать", authHaveAcc:"Уже есть аккаунт?", authLogin:"Войти", authForgot:"Забыли пароль?", authBack:"← Назад ко входу",
   authNote:"Всё, что ты уже сделал без входа, сохранится в аккаунте.",
   accSaved:"Прогресс сохраняется автоматически — на всех устройствах, где ты вошёл.", accOffline:"Нет связи с сервером. Ничего не потеряется: всё сохранится, когда связь вернётся.", accLocal:"Прогресс сохраняется в этом браузере.", retry:"Повторить",
@@ -230,7 +230,7 @@ Object.assign(I18N.en, {
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Self-check","Do a few versions until you consistently get 80% or more."]],
   esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · the essentials", esStart:"Start with the first topic",
   esTestEyebrow:"Autoevaluación · unidades 1–4", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–4 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
-  esVerdicts:[["¡Excelente!","You’re ready for the test."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
+  esVerdicts:[["¡Excelente!","Excellent — you’ve got this material down."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
   practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
   tipTtsEs:"Click Spanish text with a dotted underline and the computer will read it with Spanish pronunciation.",
   dirFr:()=>`${COURSE==="es"?"ES":"FR"} → EN`, dirRu:()=>`EN → ${COURSE==="es"?"ES":"FR"}`,
@@ -264,7 +264,7 @@ function setData(){
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
   document.documentElement.lang = LANG;
-  document.title = LANG === "en" ? "Languages, one step at a time" : "Языки — шаг за шагом";
+  document.title = LANG === "en" ? "Learn languages step by step" : "Учим языки шаг за шагом";
   document.documentElement.dataset.course = COURSE;
 }
 setData();
@@ -276,7 +276,7 @@ const seqOf = tp => tp && tp.sec === "cahier" ? CAH : ORDER;
    STORE: local cache + cloud (db) under data/users/<id>/
    ========================================================= */
 const LKEY = "edito-a1-revisions-v2";
-const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, at: o.at || 0}; };
+const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, ob: o.ob === 0 ? 0 : 1, lvl: o.lvl && typeof o.lvl === "object" ? Object.assign({}, o.lvl) : {}, at: o.at || 0}; };
 const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}, promo: Array.isArray(o.promo) ? o.promo : []}; };
 let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
@@ -500,7 +500,9 @@ function setScore(tid, ei, got, total){
   p[ei] = {b: Math.max(r, prev ? prev.b : 0), l: r};
   touch("progress"); paintNavProgress();
 }
-function topicPct(tp){ const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEach((_,i)=>{ if (p[i]) { s += p[i].b; d++; } }); return {pct: tp.ex.length ? s/tp.ex.length : 0, done:d, n:tp.ex.length}; }
+/* тест на уровень «закрывает» темы учебника и тетради до стартового юнита: S.prof.lvl = {fr:"2", es:"3"} */
+function closedTp(tp){ if (tp.sec !== "book" && tp.sec !== "cahier") return false; const l = S.prof.lvl && S.prof.lvl[tp.id.slice(0,2) === "es" ? "es" : "fr"]; return l != null && +tp.unit < +l; }
+function topicPct(tp){ if (closedTp(tp)) return {pct:1, done:tp.ex.length, n:tp.ex.length, closed:true}; const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEach((_,i)=>{ if (p[i]) { s += p[i].b; d++; } }); return {pct: tp.ex.length ? s/tp.ex.length : 0, done:d, n:tp.ex.length}; }
 
 /* =========================================================
    speech
