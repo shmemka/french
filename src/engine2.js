@@ -1404,8 +1404,7 @@ function setCourse(c, silent){
 function authHTML(gate){
   const m = Auth.mode, up = m === "up", reset = m === "reset";
   const head = gate
-    ? `<p class="g-eye" id="authEye">${t(up ? "gEyeUp" : reset ? "gEyeReset" : "gEyeIn")}</p>
-    <h2 class="g-title" id="authH">${t("gTitle")}</h2>
+    ? `<h2 class="g-title" id="authH">${t("gTitle")}</h2>
     <p class="auth-sub" id="authSub">${up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub")}</p>`
     : `<div class="auth-ico">${ICO.cloud}</div>
     <h2 id="authH">${up ? t("authUpH") : reset ? t("authResetH") : t("authInH")}</h2>
@@ -1431,9 +1430,7 @@ function setAuthMode(m){
   setTimeout(()=>{
     const up = m === "up", reset = m === "reset";
     f.dataset.mode = m;
-    const eye = $("#authEye");
-    if (eye) eye.textContent = t(up ? "gEyeUp" : reset ? "gEyeReset" : "gEyeIn");
-    else $("#authH").textContent = up ? t("authUpH") : reset ? t("authResetH") : t("authInH");
+    if (!f.classList.contains("g-auth")) $("#authH").textContent = up ? t("authUpH") : reset ? t("authResetH") : t("authInH");
     $("#authSub").textContent = up ? t("authUpSub") : reset ? t("authResetSub") : t("authInSub");
     $("#authGo").textContent = up ? t("authUpBtn") : reset ? t("authResetBtn") : t("authInBtn");
     $(".fld-wrap", f).hidden = reset; const pw = $("#authPw"); pw.autocomplete = up ? "new-password" : "current-password";
