@@ -28,7 +28,7 @@ const ES_P = ["yo", "tú", "él / ella / usted", "nosotros/as", "vosotros/as", "
 const ES_P6 = ["yo", "tú", "él / ella / usted", "nosotros", "vosotros", "ellos / ustedes"];
 function ES_BUILD(L) {
   const keepHL = HL; ESL = L; HL = L;
-  try { const out = ES_PARTS.flatMap(f => f()); if (typeof ES_PLUS_APPLY === "function") ES_PLUS_APPLY(out); return out; } finally { HL = keepHL; }
+  try { const out = ES_PARTS.flatMap(f => f()); if (typeof ES_PLUS_APPLY === "function") ES_PLUS_APPLY(out); WHY2_APPLY(out, L === "en" ? 1 : 0); return out; } finally { HL = keepHL; }
 }
 
 /* =========================================================

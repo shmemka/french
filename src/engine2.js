@@ -255,7 +255,10 @@ const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] 
 let TOP, BOOK, GRAM, REF, CAH, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
-    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: ES_POOL_BUILD(LANG).concat(ES_POOL_EXTRA(LANG), ES_POOL_U4(LANG)), cheat: ES_CHEAT(LANG)});
+    const esPool = L => ES_POOL_BUILD(L).concat(ES_POOL_EXTRA(L), ES_POOL_U4(L));
+    if (!ES_CACHE.ruPool) ES_CACHE.ruPool = esPool("ru");
+    const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: esPool(LANG), cheat: ES_CHEAT(LANG)});
+    if (!c.why) { WHYP_APPLY("es", ES_CACHE.ruPool, c.pool, LANG === "en" ? 1 : 0); c.why = 1; }
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
@@ -893,15 +896,16 @@ function makeBlock(tp, ex, i){
     tid: tp.id, ei: i,
     ans(k, st, restoring){ if (!restoring) gameAnswer(tp.id + "|" + i, k, st); },
     whyItem(answer, e){ return whyHTML(answer, e, ruleFor(tp.id, i)); },
-    whyFoot(){ if ($(".why-foot", el)) return; const f = $(".exb-f", el); f.insertAdjacentHTML("beforeend", `<div class="why-foot">${whyHTML("", "", ruleFor(tp.id, i))}</div>`); }
+    whyFoot(){ if ($(".why-foot", el)) return; const f = $(".exb-f", el); f.insertAdjacentHTML("beforeend", `<div class="why-foot">${whyHTML("", taskFor(tp.id, i), ruleFor(tp.id, i))}</div>`); }
   };
   api.showBest();
   return api;
 }
 function ruleFor(tid, ei){ const w = WHY[tid] && WHY[tid][ei]; return w ? (LANG === "en" ? w[1] : w[0]) : ""; }
+function taskFor(tid, ei){ const w = WHYT[tid] && WHYT[tid][ei]; return w ? (LANG === "en" ? w[1] : w[0]) : ""; }
 function whyHTML(answer, e, rule){
   if (!answer && !e && !rule) return "";
-  return `<button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button><div class="why-p" hidden>${answer !== "" && answer != null ? `<p><b>${t("answerIs")}</b> ${esc(answer)}</p>` : ""}${e ? `<p>${e}</p>` : ""}${rule ? `<p class="why-r"><span>${t("whyRule")}</span>${rule}</p>` : ""}</div>`;
+  return `<button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button><div class="why-p" hidden>${answer !== "" && answer != null ? `<p class="why-a"><b>${t("answerIs")}</b> ${esc(answer)}</p>` : ""}${e ? `<p class="why-c"><span>${t("whyHere")}</span>${e}</p>` : ""}${rule ? `<p class="why-r"><span>${t("whyRule")}</span>${rule}</p>` : ""}</div>`;
 }
 document.addEventListener("click", e=>{
   const b = e.target.closest(".why-b"); if (!b) return;

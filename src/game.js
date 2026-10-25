@@ -5,13 +5,13 @@
    ========================================================= */
 Object.assign(I18N.ru, {
   meProg:(d,n)=>`${d} из ${n} заданий`, todayN:n=>`Сегодня: ${n} ${plural(n,["ответ","ответа","ответов"])}`,
-  whyA:"Пояснение", whyRule:"Почему так: ",
+  whyA:"Пояснение", whyRule:"Правило: ", whyHere:"Почему здесь так: ",
   instantHint:"Впиши ответ и нажми Enter — он сразу проверится. Засчитывается первая попытка.",
   conjHint:"Впиши форму и нажми Enter — проверка, и курсор перейдёт к следующей."
 });
 Object.assign(I18N.en, {
   meProg:(d,n)=>`${d} of ${n} exercises`, todayN:n=>`Today: ${n} ${n===1?"answer":"answers"}`,
-  whyA:"Explanation", whyRule:"Why: ",
+  whyA:"Explanation", whyRule:"Rule: ", whyHere:"Why here: ",
   instantHint:"Type the answer and press Enter to check it. Your first attempt counts.",
   conjHint:"Type the form and press Enter to check it — the cursor moves to the next one."
 });

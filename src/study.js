@@ -61,7 +61,7 @@ function bankItems(){
       if (/тексту|по тексту|the text|текст[ае]? выше/i.test(ex.h || "")) return;
       if (ex.t === "mc" || ex.t === "tf") ex.items.forEach((it, k)=>out.push({tid:tp.id, base:tp.id + "|" + ei, k, q:it.q, o: ex.t === "tf" ? tfOpts() : it.o, a: ex.t === "tf" ? (it.a ? 0 : 1) : it.a, keep: ex.t === "tf", e:it.e || "", rule:ruleFor(tp.id, ei), h:ex.h}));
       else if (ex.t === "fill") ex.items.forEach((it, k)=>out.push({tid:tp.id, base:tp.id + "|" + ei, k, q:it.q, a:it.a, e:it.e || "", rule:ruleFor(tp.id, ei), h:ex.h}));
-      else { let k = 0; ex.items.forEach(it=>it.f.forEach((f, j)=>{ out.push({tid:tp.id, base:tp.id + "|" + ei, k:k++, q:`<span class="fr">${it.v}</span> · ${it.p[j]} ___`, a:[f], e:"", rule:ruleFor(tp.id, ei), h:ex.h, conj:1}); })); }
+      else { let k = 0; ex.items.forEach(it=>it.f.forEach((f, j)=>{ out.push({tid:tp.id, base:tp.id + "|" + ei, k:k++, q:`<span class="fr">${it.v}</span> · ${it.p[j]} ___`, a:[f], e:taskFor(tp.id, ei), rule:ruleFor(tp.id, ei), h:ex.h, conj:1}); })); }
     });
   });
   POOLX.forEach((q, k)=>{ if (byId[q.tp]) out.push({tid:q.tp, base:"P|" + COURSE, k, q:q.q, o:q.o, a:q.a, e:q.e || "", rule:poolRule(q)}); });

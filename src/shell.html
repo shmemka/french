@@ -1258,7 +1258,9 @@ html.theme-anim *,html.theme-anim *::before,html.theme-anim *::after{transition:
 .why-b.on{background:var(--encre);color:var(--on-encre)}
 .why-p{flex-basis:100%;margin:8px 0 2px;background:color-mix(in srgb,var(--encre-soft) 60%,var(--sheet));border-radius:14px;padding:11px 15px;font-size:14.5px;line-height:1.55;color:var(--ink);animation:whyin .25s var(--ease)}
 .why-p p{margin:0}.why-p p+p{margin-top:6px}
-.why-r span{font-weight:800;color:var(--encre-2)}
+.why-r span,.why-c span{font-weight:800;color:var(--encre-2)}
+.why-r{padding-top:6px;border-top:1px solid color-mix(in srgb,var(--encre) 14%,transparent)}
+.why-p p.why-r:first-child{padding-top:0;border-top:0}
 @keyframes whyin{from{opacity:0;transform:translateY(-4px)}}
 .why-foot{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center}
 .why-foot .why-b{margin-left:0}
