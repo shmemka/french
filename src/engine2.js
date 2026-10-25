@@ -41,7 +41,7 @@ function kindIco(tp){
   const k = String(tp.kind || "").toLowerCase();
   const id = /^(communication|общение|communic)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
     : /phon|произн|pronun/.test(k) ? "sound" : /спряж|conjug/.test(k) ? "conj" : /нуля|scratch/.test(k) ? "spark" : /полезно|good to know/.test(k) ? "bulb"
-    : /delf/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" ? "pencil" : "doc";
+    : /delf|^test/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" ? "pencil" : "doc";
   return KIND_ICO[id];
 }
 /* цвет группы: юнит 0–4, грамматика, справочник */
