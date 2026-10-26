@@ -7,7 +7,7 @@ Object.assign(I18N.ru, {
   gateUpH:"Создай аккаунт", gateInH:"С возвращением!", gateInSub:"Войди, чтобы продолжить с того же места.",
   gateLoading:"Загружаем твой прогресс…", gateRetry:"Повторить", gateErr:"Не получилось связаться с сервером. Проверь интернет (и VPN, если он нужен).",
   obH:"Давай познакомимся", obSub:"Как тебя зовут и как будет выглядеть твоя аватарка? Всё это можно поменять позже.", obName:"Имя", obNamePh:"Например, Влад", obBg:"Фон", obEmoji:"Эмодзи", obGo:"Дальше", obNeedName:"Напиши, как тебя зовут.",
-  plLangH:"Какой язык будешь учить?", plLangSub:"Второй язык можно добавить позже в меню слева.", plBack:"← Назад", plCancel:"← Отмена",
+  plLangH:"Какой язык будешь учить?", plLangSub:"Второй язык можно добавить позже в меню слева.", plBack:"Назад", plCancel:"Отмена",
   plLvlH:c=>`Ты уже знаешь ${cName(c).toLowerCase()}?`, plLvlSub:"Если немного знаешь, пройди короткий тест. Мы начнём с подходящего юнита, а темы до него отметим пройденными.",
   plZero:"Начинаю с нуля", plZeroS:"Откроем первую тему", plSome:"Немного знаю", plSomeS:"Тест на уровень, около 3 минут",
   plQ:i=>`Вопрос ${i}`, plIdk:"Не знаю",
@@ -27,7 +27,7 @@ Object.assign(I18N.en, {
   gateUpH:"Create your account", gateInH:"Welcome back!", gateInSub:"Sign in to continue where you left off.",
   gateLoading:"Loading your progress…", gateRetry:"Try again", gateErr:"Couldn't reach the server. Check your internet connection (and VPN if you need one).",
   obH:"Let's get to know each other", obSub:"What's your name and what should your avatar look like? You can change all of this later.", obName:"Name", obNamePh:"e.g. Vlad", obBg:"Background", obEmoji:"Emoji", obGo:"Next", obNeedName:"Tell us your name.",
-  plLangH:"Which language will you learn?", plLangSub:"You can add another one later in the menu on the left.", plBack:"← Back", plCancel:"← Cancel",
+  plLangH:"Which language will you learn?", plLangSub:"You can add another one later in the menu on the left.", plBack:"Back", plCancel:"Cancel",
   plLvlH:c=>`Do you already know some ${cName(c)}?`, plLvlSub:"If you know a bit, take a short test. We’ll start you at the right unit and mark the topics before it as done.",
   plZero:"I’m starting from scratch", plZeroS:"We’ll open the first topic", plSome:"I know a bit", plSomeS:"Level test, about 3 minutes",
   plQ:i=>`Question ${i}`, plIdk:"I don’t know",
@@ -170,7 +170,7 @@ function onboardHTML(){
     <div class="ob-sec"><span class="ob-l">${t("obBg")}</span><div class="sw-row">${CAT.bg.filter(x=>x.p === 0).map(x=>`<button type="button" class="sw${x.id===d.bg?" on":""}" data-obbg="${x.id}" style="--sw:${x.css}" aria-label="${esc(itemName("bg", x.id))}"></button>`).join("")}</div></div>
     <div class="ob-sec"><span class="ob-l">${t("obEmoji")}</span><div class="em-grid">${CAT.emoji.filter(x=>x.p === 0).map(x=>`<button type="button" class="em${x.v===d.emoji?" on":""}" data-obem="${x.v}">${x.v}</button>`).join("")}</div></div>
     <p class="auth-msg" id="obMsg" data-k="err"></p>
-    <button type="submit" class="btn pri auth-go">${t("obGo")} →</button>
+    <button type="submit" class="btn pri auth-go">${t("obGo")}${ARR}</button>
   </form>`;
 }
 function wireOnboard(){
@@ -192,7 +192,7 @@ function wireOnboard(){
 const PL_UNITS = {fr:{first:"0", test:["1","2","3"]}, es:{first:"1", test:["1","2","3","4"]}};
 const PL_PER = 4, PL_PASS = 3;
 const plShuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-const PL_CH = '<svg class="pl-ch" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
+const PL_CH = f7("chevron_right", "pl-ch");
 /* 4 вопроса с выбором ответа на юнит, по возможности из разных тем */
 function plPick(u){
   const byTp = {};
@@ -229,7 +229,7 @@ function plDone(start){
 }
 function plPaint(){
   const box = $("#pl", gateEl); if (!box) return;
-  const back = (lbl, to) => `<button type="button" class="pl-back" data-plto="${to}">${lbl}</button>`;
+  const back = (lbl, to) => `<button type="button" class="pl-back" data-plto="${to}">${ARL}${lbl}</button>`;
   let h = "";
   if (PL.step === "lang") {
     h = `${PL.on ? back(t("plCancel"), "cancel") : ""}<h2 class="g-title">${t("plLangH")}</h2><p class="auth-sub">${t("plLangSub")}</p>
@@ -238,8 +238,8 @@ function plPaint(){
   } else if (PL.step === "lvl") {
     h = `${back(t("plBack"), "lang")}<h2 class="g-title">${t("plLvlH", PL.c)}</h2><p class="auth-sub">${t("plLvlSub")}</p>
     <div class="pl-list">
-      <button type="button" class="pl-opt" data-pllv="zero"><span class="pl-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16V4.5M4 4.5h9l-2 3 2 3H4"/></svg></span><span class="pl-tx"><b>${t("plZero")}</b><small>${t("plZeroS")}</small></span>${PL_CH}</button>
-      <button type="button" class="pl-opt" data-pllv="test"><span class="pl-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3.5 16.5h13M6 13.5V10M10 13.5V6M14 13.5V3.5"/></svg></span><span class="pl-tx"><b>${t("plSome")}</b><small>${t("plSomeS")}</small></span>${PL_CH}</button>
+      <button type="button" class="pl-opt" data-pllv="zero"><span class="pl-ic">${f7("flag")}</span><span class="pl-tx"><b>${t("plZero")}</b><small>${t("plZeroS")}</small></span>${PL_CH}</button>
+      <button type="button" class="pl-opt" data-pllv="test"><span class="pl-ic">${f7("chart_bar")}</span><span class="pl-tx"><b>${t("plSome")}</b><small>${t("plSomeS")}</small></span>${PL_CH}</button>
     </div>`;
   } else if (PL.step === "q") {
     const it = PL.qs[PL.qi], q = it.q, n = PL.tot + 1;
@@ -255,7 +255,7 @@ function plPaint(){
     h = `<div class="pl-res"><h2 class="g-title">${fromFirst ? t("plResFirst") : t("plResH", st)}</h2>
     <p class="auth-sub">${PL.all ? t("plAll") + " " : ""}${closedTxt}</p>
     <p class="pl-note">${t("plGot", PL.got, PL.tot)}</p>
-    <button type="button" class="btn pri" id="plGo">${t("plGo")} →</button></div>`;
+    <button type="button" class="btn pri" id="plGo">${t("plGo")}${ARR}</button></div>`;
   }
   box.innerHTML = `<div class="pl-in">${h}</div>`;
   const into = box.firstElementChild; into.style.display = "grid";
@@ -297,7 +297,7 @@ let ACC_TAB = ls.get("edito-acctab") || "acc", PROG_C = null;
 function renderAccount(){
   const isSupa = Cloud.kind === "supabase";
   const tabs = I18N[LANG].accTabs;
-  const ico = {acc:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="7" r="3.5"/><path d="M3.5 17c1.2-3.2 3.6-4.6 6.5-4.6s5.3 1.4 6.5 4.6"/></svg>', set:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h8M15 6h1M4 14h2M9 14h7"/><circle cx="13.5" cy="6" r="1.8"/><circle cx="7.5" cy="14" r="1.8"/></svg>', prog:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 16.5h14M5.5 13V9.5M10 13V5.5M14.5 13V8"/></svg>', look:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3a7 7 0 1 0 0 14c1 0 1.5-.7 1.5-1.4 0-1-.9-1.3-.9-2.2 0-.8.7-1.4 1.6-1.4H14a3 3 0 0 0 3-3C17 5.6 13.9 3 10 3z"/><circle cx="6.5" cy="9" r="1"/><circle cx="9" cy="6.3" r="1"/><circle cx="12.5" cy="6.6" r="1"/></svg>'};
+  const ico = {acc:f7("person"), set:f7("slider_horizontal_3"), prog:f7("chart_bar"), look:f7("paintbrush")};
   main.innerHTML = `<div class="col">
   <header class="t-head seyes acc-hero">
     <div class="acc-av">${avHTML(S.prof, "xl")}</div>

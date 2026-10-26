@@ -16,9 +16,9 @@ Object.assign(I18N.en, {
   plyPlay:"Play", plyPause:"Pause", plyBack:"Back 5 seconds", plyFwd:"Forward 5 seconds", plySpeed:"Speed", plyWords:"Show the words", plyWords2:"Words and translation", plyWords0:"Hide the words", plyClose:"Close the player",
   plyDlg:"Play the dialogue"
 });
-const ICO_X = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg>';
-const ICO_COPY = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="7" width="9.5" height="9.5" rx="2"/><path d="M13 7V5a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 4 5v6.5A1.5 1.5 0 0 0 5.5 13H7"/></svg>';
-const ICO_SWAP = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11l-3-3M16 13H5l3 3"/></svg>';
+const ICO_X = f7("xmark");
+const ICO_COPY = f7("doc_on_doc");
+const ICO_SWAP = f7("arrow_right_arrow_left");
 const VOICE_LANG = {fr:"fr-FR", es:"es-ES", ru:"ru-RU", en:"en-US"};
 /* озвучка на любом из четырёх языков */
 function sayIn(text, lang){
@@ -50,7 +50,7 @@ function trBuild(){
   el.className = "trp"; el.hidden = true; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "false");
   el.innerHTML = `<div class="trp-bg" data-trx></div><div class="trp-card">
     <div class="trp-hd"><span class="trp-grab" aria-hidden="true"></span><b class="trp-t"></b><button type="button" class="trp-ib" data-trx></button></div>
-    <div class="trp-langs"><select class="trp-sel" id="trFrom"></select><button type="button" class="trp-ib" id="trSwap">${ICO_SWAP}</button><select class="trp-sel" id="trTo"></select></div>
+    <div class="trp-langs"><label><select class="trp-sel" id="trFrom"></select></label><button type="button" class="trp-ib" id="trSwap">${ICO_SWAP}</button><label><select class="trp-sel" id="trTo"></select></label></div>
     <div class="trp-box"><textarea id="trSrc" maxlength="1500" spellcheck="false"></textarea>
       <div class="trp-tools"><span class="trp-cnt" id="trCnt"></span><button type="button" class="trp-ib" id="trSaySrc">${ICON_PLAY}</button><button type="button" class="trp-ib" id="trClr">${ICO_X}</button></div></div>
     <div class="trp-box trp-res"><div class="trp-out" id="trOut" aria-live="polite"></div>
@@ -145,12 +145,12 @@ function plyBuild(){
   el.className = "ply"; el.hidden = true; el.setAttribute("role", "region");
   el.innerHTML = `<div class="ply-live" id="plyLive" hidden></div>
   <div class="ply-bar">
-    <button type="button" class="ply-b" data-ply="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4v3.5H8"/><text x="12" y="15.2" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">5</text></svg></button>
+    <button type="button" class="ply-b" data-ply="back">${f7("gobackward")}</button>
     <button type="button" class="ply-b ply-pp" data-ply="pp"></button>
-    <button type="button" class="ply-b" data-ply="fwd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v3.5H16"/><text x="12" y="15.2" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">5</text></svg></button>
+    <button type="button" class="ply-b" data-ply="fwd">${f7("goforward")}</button>
     <div class="ply-mid"><div class="ply-ti"><span class="ply-name"></span><span class="ply-time"></span></div><div class="ply-track" data-ply="seek"><i></i></div></div>
     <span class="ply-spw"><button type="button" class="ply-b ply-sp" data-ply="speed" aria-haspopup="menu" aria-expanded="false"></button><div class="ply-menu" role="menu" hidden></div></span>
-    <button type="button" class="ply-b ply-cc" data-ply="words"><i class="ply-cc-n" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="3"/><path d="M7 11h4M13 11h4M7 14.5h7M16 14.5h1" stroke-linecap="round"/></svg></button>
+    <button type="button" class="ply-b ply-cc" data-ply="words"><i class="ply-cc-n" aria-hidden="true"></i>${f7on("captions_bubble", "captions_bubble_fill")}</button>
     <button type="button" class="ply-b" data-ply="close">${ICO_X}</button>
   </div>`;
   document.body.appendChild(el); PLY.el = el;
@@ -236,7 +236,7 @@ function plyMenu(open){
   const m = $(".ply-menu", el), b = $(".ply-sp", el);
   PLY.menu = !!open; b.setAttribute("aria-expanded", PLY.menu); b.classList.toggle("on", PLY.menu);
   if (!PLY.menu) { m.hidden = true; return; }
-  m.innerHTML = PLY_SPEEDS.map(v=>`<button type="button" role="menuitemradio" aria-checked="${v === PLY.speed}" class="${v === PLY.speed ? "on" : ""}" data-ply="spd" data-v="${v}"><span>${spdTxt(v)}</span>${v === PLY.speed ? '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg>' : ""}</button>`).join("");
+  m.innerHTML = PLY_SPEEDS.map(v=>`<button type="button" role="menuitemradio" aria-checked="${v === PLY.speed}" class="${v === PLY.speed ? "on" : ""}" data-ply="spd" data-v="${v}"><span>${spdTxt(v)}</span>${v === PLY.speed ? f7("checkmark_alt") : ""}</button>`).join("");
   m.hidden = false;
   const cur = $(".on", m) || $("button", m); if (cur) cur.focus({preventScroll:true});
 }
@@ -251,7 +251,7 @@ function plyTr(li){
 function plyPaint(done){
   const el = PLY.el; if (!el || !PLY.d) return;
   const pp = $(".ply-pp", el);
-  pp.innerHTML = PLY.playing ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.2-6.5a1 1 0 0 0 0-1.7L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg>';
+  pp.innerHTML = PLY.playing ? f7("pause_fill") : f7("play_fill");
   const lbl = (sel, k) => { const b = $(sel, el); b.setAttribute("aria-label", t(k)); b.title = t(k); };
   lbl(".ply-pp", PLY.playing ? "plyPause" : "plyPlay"); lbl('[data-ply="back"]', "plyBack"); lbl('[data-ply="fwd"]', "plyFwd"); lbl(".ply-sp", "plySpeed"); lbl(".ply-cc", ["plyWords", "plyWords2", "plyWords0"][PLY.show]); lbl('[data-ply="close"]', "plyClose");
   el.setAttribute("aria-label", PLY.d.title || t("plyDlg"));

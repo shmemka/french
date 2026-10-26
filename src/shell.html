@@ -4,6 +4,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
+/* иконки: только Framework7 Icons (MIT), размер по умолчанию — от шрифта, конкретные размеры задают компоненты */
+:where(svg.f7){width:1.15em;height:1.15em;flex:none;fill:currentColor}
+:where(svg.f7-arr){width:1em;height:1em;margin-left:.15em}
+:where(svg.f7-arr:first-child){margin-left:0;margin-right:.15em}
+:where(svg.f7-in){width:1em;height:1em;vertical-align:-.15em;margin-right:.3em}
+.f7-on{display:none!important}
+.on>.f7-on,[aria-pressed="true"]>.f7-on{display:inline-block!important}
+.on>.f7-off,[aria-pressed="true"]>.f7-off{display:none!important}
+:where(svg.f7-g){width:.95em;height:.95em;vertical-align:-.12em}
+.g-ok{color:var(--ok)}.g-no{color:var(--marge)}.g-star{color:#f2b01e}
 /* Layout: французская школьная тетрадь, но мягкая — клетка Seyès в шапках, «перо учителя» для исправлений, синие чернила как акцент. Поверхности без обводок: тон фона + мягкая тень, крупные скругления. */
 :root{
   --paper:#f3f4fa; --sheet:#ffffff; --tint:#eef0f9; --tint-2:#e4e7f5;
@@ -574,9 +584,9 @@ body.nav-off .nav-show{display:inline-flex}
 .qz-nav .still{background:var(--warn-soft);color:var(--warn)}
 .qz-keys{text-align:center;font-size:12px;color:var(--ink-3);margin:10px 0 0}
 .star{border:0;background:transparent;cursor:pointer;width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
-.star svg{width:18px;height:18px;fill:none;stroke:var(--ink-3);stroke-width:1.5;stroke-linejoin:round}
+.star svg{width:19px;height:19px;color:var(--ink-3)}
 .star:hover{background:var(--tint)}
-.star.on svg{fill:#f2b01e;stroke:#f2b01e}
+.star.on svg{color:#f2b01e}
 .lv{font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap;letter-spacing:.02em}
 .lv0{background:var(--tint);color:var(--ink-3)}
 .lv1{background:var(--marge-soft);color:var(--marge)}
@@ -791,8 +801,8 @@ img,svg{max-width:100%}
 .srs-how{max-width:100%;flex:1 1 220px;text-align:right}
 .srs-how summary{cursor:pointer;color:var(--encre-2);font-weight:600;list-style:none;padding:4px 0}
 .srs-how summary::-webkit-details-marker{display:none}
-.srs-how summary::after{content:" ▾";font-size:11px}
-.srs-how[open] summary::after{content:" ▴"}
+.srs-how summary::after{content:"";display:inline-block;width:11px;height:11px;margin-left:5px;vertical-align:-1px;background:currentColor;-webkit-mask:{{f7url:chevron_down}} center/contain no-repeat;mask:{{f7url:chevron_down}} center/contain no-repeat;transition:transform .2s}
+.srs-how[open] summary::after{transform:rotate(180deg)}
 .srs-how[open]{flex-basis:100%;text-align:left}
 .srs-how p{margin:6px 0 0;line-height:1.55;color:var(--ink-2);font-size:14px}
 .srs-done{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:8px 0 4px}
@@ -1482,7 +1492,7 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .bank-go #bkAvail{align-self:center;font-size:13px}
 .tchip{background:transparent;box-shadow:inset 0 0 0 1.5px var(--tint-2);color:var(--ink-3)}
 .tchip.on{background:var(--encre-soft);color:var(--encre-2);box-shadow:none}
-.tchip.on::before{content:"✓";font-weight:800}
+.tchip.on::before{content:"";width:12px;height:12px;flex:none;background:currentColor;-webkit-mask:{{f7url:checkmark_alt}} center/contain no-repeat;mask:{{f7url:checkmark_alt}} center/contain no-repeat}
 @media (max-width:600px){.tset .btn{width:100%;justify-content:center}.bank-go{padding:14px;position:static;order:-1;box-shadow:var(--sh-1)}.bank-go .btn{width:100%;justify-content:center}.bank-go .bank-sp,.bank-go #bkAvail{display:none}.bank-opt .seg{display:flex}.bank-opt .seg button{flex:1}.tset .bank-opt,.bank-go .bank-opt{width:100%}}
 .shop-grid[data-cat="emoji"]{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
 .shop-grid[data-cat="emoji"] .si{padding:14px 10px 10px}
@@ -1701,7 +1711,10 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .t2-aud{display:block;margin:0 0 10px}
 .t2-aud .btn.fr{border-bottom:0;font-family:inherit}
 .t2-tr{margin:0 0 4px;font-size:14px}
-.t2-tr summary{cursor:pointer;color:var(--ink-3);font-weight:500}
+.t2-tr summary{cursor:pointer;color:var(--ink-3);font-weight:500;list-style:none;display:inline-flex;align-items:center;gap:6px}
+.t2-tr summary::-webkit-details-marker{display:none}
+.t2-tr summary::before{content:"";width:11px;height:11px;flex:none;background:currentColor;-webkit-mask:{{f7url:chevron_right}} center/contain no-repeat;mask:{{f7url:chevron_right}} center/contain no-repeat;transition:transform .2s}
+.t2-tr[open] summary::before{transform:rotate(90deg)}
 .t2-tr[open] summary{margin-bottom:8px}
 .t2-l{display:block;margin:3px 0;line-height:1.45}
 .t2-l b{display:inline-block;min-width:62px;font-weight:600;color:var(--ink-2)}
@@ -1726,8 +1739,10 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .trp-ib[hidden]{display:none}
 .trp-ib svg{width:18px;height:18px}
 .trp-langs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:6px;align-items:center}
-.trp-sel{-webkit-appearance:none;appearance:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--fill) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%237f85a8' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E") no-repeat right 10px center;border:0;border-radius:10px;padding:9px 28px 9px 12px;width:100%;cursor:pointer;outline:none}
+.trp-sel{-webkit-appearance:none;appearance:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--fill);border:0;border-radius:10px;padding:9px 28px 9px 12px;width:100%;cursor:pointer;outline:none}
 .trp-sel:focus-visible{box-shadow:0 0 0 2px var(--encre)}
+.trp-langs label{position:relative;display:block;min-width:0}
+.trp-langs label::after{content:"";position:absolute;right:11px;top:50%;width:11px;height:11px;margin-top:-5.5px;background:var(--ink-3);pointer-events:none;-webkit-mask:{{f7url:chevron_down}} center/contain no-repeat;mask:{{f7url:chevron_down}} center/contain no-repeat}
 .trp-box{flex:1 1 0;display:flex;flex-direction:column;min-height:0;border-radius:12px;box-shadow:0 0 0 1px var(--line-2);background:var(--sheet);transition:box-shadow .15s}
 .trp-box:focus-within{box-shadow:0 0 0 1px var(--line-3,var(--line-2)),0 0 0 4px color-mix(in srgb,var(--encre) 12%,transparent)}
 .trp-box textarea{flex:1;min-height:110px;font:inherit;font-size:15.5px;line-height:1.5;color:var(--ink);border:0;background:transparent;resize:none;padding:12px 14px 4px;outline:none}
@@ -1979,9 +1994,9 @@ body.has-ply .main{padding-bottom:120px}
 
 <header class="topbar">
   <a class="brand" href="#home"><b>Учим языки</b><span>шаг за шагом</span></a>
-  <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span id="menuLbl">Темы</span></button>
+  <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">{{f7:line_horizontal_3}}<span id="menuLbl">Темы</span></button>
 </header>
-<button class="nav-show" id="navShow" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3.5" width="14" height="13" rx="2.5"/><path d="M8 3.5v13"/></svg><span>Меню</span></button>
+<button class="nav-show" id="navShow" type="button">{{f7:sidebar_left}}<span>Меню</span></button>
 <div class="app">
   <nav class="nav" id="nav" aria-label="Navigation"></nav>
   <div class="panel">

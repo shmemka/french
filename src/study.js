@@ -96,7 +96,7 @@ function renderBank(){
     <div class="bank-go">
       <div class="bank-opt"><span class="bank-l">${t("bankCount")}</span><div class="seg big">${[10,20,30,50].map(n=>`<button type="button" data-bn="${n}" class="${cfg.n===n?"on":""}">${n}</button>`).join("")}</div></div>
       <div class="bank-opt"><span class="bank-l">${t("bankMode")}</span><div class="seg big"><button type="button" data-mix="0" class="${cfg.mix?"":"on"}">${t("bankByTopic")}</button><button type="button" data-mix="1" class="${cfg.mix?"on":""}">${t("bankMix")}</button></div></div>
-      <span class="bank-sp"></span><span class="muted" id="bkAvail"></span><p class="auth-msg" id="bkMsg" data-k="err"></p><button type="button" class="btn pri" id="bkGo">${t("bankGo")} →</button></div>
+      <span class="bank-sp"></span><span class="muted" id="bkAvail"></span><p class="auth-msg" id="bkMsg" data-k="err"></p><button type="button" class="btn pri" id="bkGo">${t("bankGo")}${ARR}</button></div>
   </div></div>`;
   const avail = () => { const n = cfg.sel.reduce((s, id)=>s + (cnt[id] || 0), 0); $("#bkAvail").textContent = t("bankAvail", n); $("#bkGo").disabled = !n; };
   const paint = () => { $$("[data-tp]", main).forEach(b=>b.classList.toggle("on", cfg.sel.includes(b.dataset.tp))); avail(); bankSave(); };
@@ -122,7 +122,7 @@ function renderBank(){
 function bankRun(list){
   BANK = {list: list.map(x=>x.o ? Object.assign({}, x, {oo: x.keep ? x.o.map((o, j)=>({o, j})) : shuffle(x.o.map((o, j)=>({o, j})))}) : x), i:0, res:[]};
   main.innerHTML = `<div class="col bank-run" style="max-width:760px">
-    <div class="bank-top"><button type="button" class="chip-t" id="bkBack">← ${t("bankBack")}</button><span class="bank-ctr" id="bkCtr"></span></div>
+    <div class="bank-top"><button type="button" class="chip-t" id="bkBack">${ARL}${t("bankBack")}</button><span class="bank-ctr" id="bkCtr"></span></div>
     <div class="bank-prog"><i id="bkBar"></i></div>
     <section class="exb bank-card" id="bkCard"></section></div>`;
   $("#bkBack").addEventListener("click", ()=>renderBank());
@@ -138,7 +138,7 @@ function bankStep(){
   const qh = it.o ? `<p class="q">${qhtml(it.q)}</p><div class="opts">${it.oo.map(x=>`<button type="button" class="opt" data-j="${x.j}">${x.o}</button>`).join("")}</div>` : `<p class="fillq">${it.q.includes("___") ? it.q.replace("___", inp).replace(/___/g, "…") : `${it.q} ${inp}`}</p>`;
   card.innerHTML = `<header class="exb-h"><span class="exb-n">${B.i + 1}</span><div><span class="exb-k">${t("bankFrom")}: <a href="#${tp.id}">${tp.title}</a></span>${it.h ? `<h4>${it.h}</h4>` : ""}</div></header>
     <div class="exb-b">${it.o ? "" : accBar()}<div class="it">${qh}<div class="fb" hidden></div></div></div>
-    <footer class="exb-f"><span class="exb-score muted" id="bkHint">${it.o ? "" : t("bankEnterHint")}</span><div class="exb-btns"><button type="button" class="btn pri" id="bkNext" hidden>${B.i + 1 < n ? t("bankNext") : t("bankFinish")} →</button></div></footer>`;
+    <footer class="exb-f"><span class="exb-score muted" id="bkHint">${it.o ? "" : t("bankEnterHint")}</span><div class="exb-btns"><button type="button" class="btn pri" id="bkNext" hidden>${B.i + 1 < n ? t("bankNext") : t("bankFinish")}${ARR}</button></div></footer>`;
   card.classList.remove("in"); void card.offsetWidth; card.classList.add("in");
   const fb = $(".fb", card), nextB = $("#bkNext");
   let done = false;
@@ -146,7 +146,7 @@ function bankStep(){
     done = true; B.res[B.i] = st === "ok" || st === "acc";
     gameAnswer(it.base, it.k, st === "empty" ? "bad" : st);
     fb.hidden = false;
-    fb.innerHTML = (it.o ? (st === "ok" ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${it.o[it.a]}</span>`) : fbHtml(st, it.a)) + whyHTML(answer, it.e, it.rule);
+    fb.innerHTML = (it.o ? (st === "ok" ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${it.o[it.a]}</span>`) : fbHtml(st, it.a)) + whyHTML(answer, it.e, it.rule);
     nextB.hidden = false; $("#bkHint").textContent = t("bankEnterNext");
     setTimeout(()=>nextB.focus({preventScroll:true}), 30);
   };
@@ -183,8 +183,8 @@ function bankDone(){
 /* ---------- карточный режим темы ---------- */
 let DECK = null;
 const deckPref = () => ls.get("edito-deck") === "1";
-const ICO_DECK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4.5" y="5" width="11" height="12" rx="2"/><path d="M6.5 3h8a2 2 0 0 1 2 2v9"/></svg>';
-const ICO_LIST = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 5.5h12M4 10h12M4 14.5h8"/></svg>';
+const ICO_DECK = f7("rectangle_on_rectangle");
+const ICO_LIST = f7("list_bullet");
 function deckToggleHTML(){ const on = deckPref(); return `<button type="button" class="deck-tg${on ? " on" : ""}" id="deckTg" aria-pressed="${on}" title="${esc(on ? t("deckOff") : t("deckOn"))}" aria-label="${esc(on ? t("deckOff") : t("deckOn"))}">${on ? ICO_LIST : ICO_DECK}</button>`; }
 function deckToggle(){ const on = !deckPref(); ls.set("edito-deck", on ? "1" : "0"); paintDeckTg(); if (on && DECK_TP) openDeck(DECK_TP); else closeDeck(); }
 function paintDeckTg(){ const b = $("#deckTg"); if (!b) return; b.outerHTML = deckToggleHTML(); $("#deckTg").addEventListener("click", deckToggle); }
@@ -212,7 +212,7 @@ function openDeck(tp, start){
   const cards = [{h:`<div class="dk-intro"><p class="eyebrow">${eb}</p><h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>${hasEx ? `<p class="dk-plan">${t("deckPlan", parts.length, moved.length)}</p>` : ""}</div>`},
     ...parts.map(h=>({h:`<div class="theory">${h}</div>`}))];
   if (hasEx) {
-    cards.push({h:`<div class="dk-end dk-mid"><div class="dk-end-i">✎</div><h2>${t("deckPracticeH")}</h2><p class="muted">${t("deckPracticeP", moved.length)}</p><button type="button" class="btn pri" data-dk="1">${t("deckStart")} →</button></div>`});
+    cards.push({h:`<div class="dk-end dk-mid"><div class="dk-end-i">${f7("pencil")}</div><h2>${t("deckPracticeH")}</h2><p class="muted">${t("deckPracticeP", moved.length)}</p><button type="button" class="btn pri" data-dk="1">${t("deckStart")}${ARR}</button></div>`});
     moved.forEach((m, k)=>cards.push({ex:k}));
   }
   const sq = seqOf(tp), idx = sq.indexOf(tp), next = sq[idx + 1];
@@ -220,7 +220,7 @@ function openDeck(tp, start){
   const el = document.createElement("div"); el.className = "deck"; el.id = "deck";
   el.innerHTML = `<div class="dk-top"><span class="dk-t">${tp.title}</span><span class="dk-ctr" id="dkCtr"></span><button type="button" class="dk-x" data-dk-x aria-label="${esc(t("deckOff"))}" title="${esc(t("deckOff"))}">${ICO_LIST}</button></div>
     <div class="dk-stage">${cards.map((c, i)=>`<article class="dk-card${c.ex != null ? " dk-exc" : ""}" data-i="${i}" ${i ? "hidden" : ""}><div class="dk-in">${c.h || ""}</div></article>`).join("")}</div>
-    <div class="dk-nav"><button type="button" class="dk-arr" data-dk="-1" aria-label="←">←</button><div class="dk-dots">${cards.map((c, i)=>`<i data-dot="${i}" class="${c.ex != null ? "x" : ""}"></i>`).join("")}</div><button type="button" class="dk-arr" data-dk="1" aria-label="→">→</button></div>
+    <div class="dk-nav"><button type="button" class="dk-arr" data-dk="-1" aria-label="←">${f7("chevron_left")}</button><div class="dk-dots">${cards.map((c, i)=>`<i data-dot="${i}" class="${c.ex != null ? "x" : ""}"></i>`).join("")}</div><button type="button" class="dk-arr" data-dk="1" aria-label="→">${f7("chevron_right")}</button></div>
     <p class="dk-keys">${t("deckKeys")}</p>`;
   const cardEls = $$(".dk-card", el);
   cards.forEach((c, i)=>{ if (c.ex != null) $(".dk-in", cardEls[i]).appendChild(moved[c.ex].el); });
@@ -228,9 +228,9 @@ function openDeck(tp, start){
   DECK = {el, i:0, n:cards.length, moved, tid:tp.id};
   const fin = () => {
     const pc = topicPct(tp), pct = Math.round(pc.pct * 100);
-    $("#dkFin").innerHTML = `<div class="dk-end-i${hasEx && pc.done < pc.n ? " todo" : ""}">${hasEx && pc.done < pc.n ? "✎" : "✓"}</div><h2>${hasEx ? (pc.done === pc.n ? praise(pc.pct) : t("deckFinLeft", pc.n - pc.done)) : tp.title}</h2>
+    $("#dkFin").innerHTML = `<div class="dk-end-i${hasEx && pc.done < pc.n ? " todo" : ""}">${hasEx && pc.done < pc.n ? f7("pencil") : f7("checkmark_alt")}</div><h2>${hasEx ? (pc.done === pc.n ? praise(pc.pct) : t("deckFinLeft", pc.n - pc.done)) : tp.title}</h2>
       <p class="muted">${hasEx ? t("doneOf", pc.done, pc.n, pct) : t("deckFinRead")}</p>
-      <div class="btns">${hasEx && pc.done < pc.n ? `<button type="button" class="btn sec" data-dot-go="${nT + 1 + moved.findIndex((_, k)=>!(S.p[tp.id] || {})[k])}">${t("deckToTodo")}</button>` : ""}${next ? `<a class="btn pri" href="#${next.id}">${t("deckNext")}: ${next.title} →</a>` : `<a class="btn pri" href="#test">${t("test")} →</a>`}</div>`;
+      <div class="btns">${hasEx && pc.done < pc.n ? `<button type="button" class="btn sec" data-dot-go="${nT + 1 + moved.findIndex((_, k)=>!(S.p[tp.id] || {})[k])}">${t("deckToTodo")}</button>` : ""}${next ? `<a class="btn pri" href="#${next.id}">${t("deckNext")}: ${next.title}${ARR}</a>` : `<a class="btn pri" href="#test">${t("test")}${ARR}</a>`}</div>`;
   };
   const paintDots = () => { const p = S.p[tp.id] || {}; $$("[data-dot]", el).forEach((d, k)=>{ const c = cards[k]; d.classList.toggle("on", k === DECK.i); if (c.ex != null) d.classList.toggle("done", !!p[c.ex]); }); };
   const go = (i, dir) => {

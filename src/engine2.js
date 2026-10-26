@@ -6,38 +6,32 @@ const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"
 const plural = (n, f) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? f[2] : b > 1 && b < 5 ? f[1] : b === 1 ? f[0] : f[2]; };
 const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 const ls = { get(k){ try { return localStorage.getItem(k); } catch(e) { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e) {} } };
-const ICO_TROPHY = '<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7v4.2a3.5 3.5 0 0 1-7 0z"/><path d="M6.5 5H4a2.2 2.2 0 0 0 2.6 3.1M13.5 5H16a2.2 2.2 0 0 1-2.6 3.1M10 11.2v2.8M7 16.5h6M8 14h4"/></svg>';
-const ICON_PLAY = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><path d="M10.5 5.2a3.8 3.8 0 0 1 0 5.6M12.4 3.4a6.3 6.3 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+const ICO_TROPHY = f7("rosette");
+const ICON_PLAY = f7("speaker_2_fill");
+/* стрелки в кнопках — тоже иконки Framework7 */
+const ARR = f7("arrow_right", "f7-arr"), ARL = f7("arrow_left", "f7-arr"), ARD = f7("arrow_down", "f7-arr");
 const ICO = {
-  home:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9.5 10 4l7 5.5V16a1 1 0 0 1-1 1h-3.5v-4.5h-5V17H4a1 1 0 0 1-1-1z"/></svg>',
-  test:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="12" height="15" rx="2"/><path d="M7 7.5h6M7 11h6M7 14.5h3.5"/></svg>',
-  quiz:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5.5" y="2.5" width="11" height="13" rx="2"/><path d="M3.5 5.5v10a2 2 0 0 0 2 2h8"/></svg>',
-  cheat:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M10 4v12M3 8.5h14M3 12h14"/></svg>',
-  side:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3.5" width="14" height="13" rx="2.5"/><path d="M8 3.5v13"/></svg>',
-  star:'<svg viewBox="0 0 20 20"><path d="m10 2.8 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></svg>',
-  lex:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H16v12H5.5A1.5 1.5 0 0 0 4 16.5z"/><path d="M4 16.5A1.5 1.5 0 0 0 5.5 18H16v-3M7.5 7h5M7.5 10h3.5"/></svg>',
-  check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10.5 3.2 3.2L15 6.8"/></svg>',
-  bank:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><path d="M14 11.5v5M11.5 14h5"/></svg>',
-  shop:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 7.5h13l-1 9a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M7 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
-  cloud:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 15.5h8.2a3.3 3.3 0 0 0 .5-6.6A4.8 4.8 0 0 0 5.4 8 3.8 3.8 0 0 0 6 15.5z"/></svg>',
-  chev:'<svg class="ng-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg>',
-  search:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>',
-  gram:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 3.5 2.8 7.3 10 11l7.2-3.7z"/><path d="m2.8 10.8 7.2 3.7 7.2-3.7"/><path d="m2.8 14.2 7.2 3.6 7.2-3.6" opacity=".55"/></svg>',
-  ref:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 5.6C8.5 4.4 6.3 4 3 4v11c3.3 0 5.5.4 7 1.6 1.5-1.2 3.7-1.6 7-1.6V4c-3.3 0-5.5.4-7 1.6z"/><path d="M10 5.6v11"/></svg>'
+  home:f7("house", "ico"),
+  test:f7("checkmark_rectangle", "ico"),
+  quiz:f7("rectangle_stack", "ico"),
+  cheat:f7("table", "ico"),
+  side:f7("sidebar_left"),
+  star:f7on("star", "star_fill"),
+  lex:f7("book", "ico"),
+  check:f7("checkmark_alt"),
+  bank:f7("square_grid_2x2", "ico"),
+  shop:f7("bag", "ico"),
+  cloud:f7("cloud"),
+  chev:f7("chevron_down", "ng-ch"),
+  search:f7("search"),
+  gram:f7("square_stack_3d_up", "ico"),
+  ref:f7("bookmark", "ico"),
 };
 /* иконки карточек тем (по типу темы) */
-const KIND_ICO = (()=>{ const w = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`; return {
-  chat:w('<path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4.5 19.5l1.4-4.2A7.5 7.5 0 1 1 20 11.5z"/><path d="M9 11.5h.01M12.5 11.5h.01M16 11.5h.01"/>'),
-  doc:w('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h2"/>'),
-  vocab:w('<path d="M3 18 7.5 6 12 18M4.8 14h5.4"/><circle cx="17.3" cy="15" r="2.8"/><path d="M20.1 11.8V18"/>'),
-  sound:w('<path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/>'),
-  conj:w('<rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M4 9.5h16M4 15h16M10 4v16"/>'),
-  spark:w('<path d="M11 3.5l1.8 5.2 5.2 1.8-5.2 1.8L11 17.5l-1.8-5.2L4 10.5l5.2-1.8z"/><path d="M18.5 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
-  bulb:w('<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'),
-  medal:w('<circle cx="12" cy="14" r="5.5"/><path d="M8.5 9.5 6 3h4l2 4 2-4h4l-2.5 6.5"/><path d="M12 11.8v4.4M10.3 13.2 12 11.8"/>'),
-  pencil:w('<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>'),
-  read:w('<path d="M12 6.5C10.3 5.2 7.8 4.8 4 4.8v12.4c3.8 0 6.3.4 8 1.8 1.7-1.4 4.2-1.8 8-1.8V4.8c-3.8 0-6.3.4-8 1.7z"/><path d="M12 6.5V19"/>')
-}; })();
+const KIND_ICO = {
+  chat:f7("chat_bubble_2"), doc:f7("doc_text"), vocab:f7("textformat"), sound:f7("waveform"), conj:f7("table"),
+  spark:f7("sparkles"), bulb:f7("lightbulb"), medal:f7("checkmark_seal"), pencil:f7("pencil"), read:f7("book")
+};
 function kindIco(tp){
   const k = String(tp.kind || "").toLowerCase();
   const id = /^(communication|общение|communic)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
@@ -62,12 +56,12 @@ ru:{
   accCloudOnS:"Твои ответы, прогресс, история самопроверок и карточки Quizlet хранятся в облаке под твоим аккаунтом. Их видишь только ты — с любого устройства, где ты вошёл.", accCloudErrS:"Ты вошёл, но облако сейчас не отвечает. Прогресс сохраняется в этом браузере и отправится в облако, как только связь появится.", accNoCloud:"Облако для этой копии сайта не настроено: прогресс сохраняется только в этом браузере.", noTable:"похоже, в Supabase не создана таблица — выполни schema.sql",
   authIn:"Вход", authUp:"Регистрация", authInH:"Войти в аккаунт", authUpH:"Создать аккаунт", authMagicH:"Вход по ссылке", authResetH:"Восстановить пароль",
   authInSub:"Чтобы прогресс сохранялся в облаке и был виден на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль (от 6 символов).", authMagicSub:"Пришлём на почту ссылку — нажми её, и ты войдёшь без пароля.", authResetSub:"Пришлём на почту ссылку, по которой можно задать новый пароль.",
-  email:"Почта", password:"Пароль", authInBtn:"Войти", authUpBtn:"Зарегистрироваться", authMagicBtn:"Прислать ссылку", authResetBtn:"Прислать ссылку", authMagicLink:"Войти по ссылке на почту", authForgot:"Забыл пароль", authBackPw:"← Вход по паролю",
+  email:"Почта", password:"Пароль", authInBtn:"Войти", authUpBtn:"Зарегистрироваться", authMagicBtn:"Прислать ссылку", authResetBtn:"Прислать ссылку", authMagicLink:"Войти по ссылке на почту", authForgot:"Забыл пароль", authBackPw:"Вход по паролю",
   authNote:"То, что ты уже решил без входа, после входа перенесётся в аккаунт.", authWait:"Секунду…",
   authCheckMail:e=>`Готово! Мы отправили письмо на ${e}. Открой его и нажми ссылку, чтобы подтвердить почту. После этого ты войдёшь.`, authMagicSent:e=>`Ссылка для входа отправлена на ${e}. Если письма нет, проверь «Спам».`, authResetSent:e=>`Ссылка для смены пароля отправлена на ${e}.`,
   aeCreds:"Неверная почта или пароль.", aeNotConfirmed:"Почта ещё не подтверждена. Открой письмо и нажми ссылку.", aeExists:"Такой аккаунт уже есть. Нажми «Войти» внизу.", aeRate:"Слишком много попыток или писем. Подожди немного и попробуй снова.", aeShort:"Пароль должен быть не короче 6 символов.", aeLink:"Ссылка устарела или уже использована. Запроси новую.", aeNet:"Нет связи с сервером. Проверь интернет (и VPN, если он нужен).", aeEmail:"Проверь адрес почты.",
-  favAddedEs:"Добавлено в Избранное (Лексика)", spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"♥ Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
-  qzFav:"Избранное", qzFavSub:"Слова, которые ты отметил ♥", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми ♥ — оно появится здесь. Ещё можно нажать ♥ рядом со словом в любом наборе.",
+  favAddedEs:"Добавлено в Избранное (Лексика)", spFav:"Добавить в Избранное", spUnfav:"Убрать из Избранного", spLoading:"перевожу…", spNone:"перевод не найден", spOffline:"нет интернета", spAuto:"автоперевод", spAlso:"ещё:", spAltA:x=>`Показать перевод ${x}`, spForm:x=>`форма глагола ${x}`, favAdded:"Добавлено в Избранное (Quizlet)", favRemoved:"Убрано из Избранного",
+  qzFav:"Избранное", qzFavSub:"Слова, отмеченные сердечком", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми на сердечко — оно появится здесь. Ещё можно нажать на сердечко рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
   heroLead:n=>`Вся грамматика и лексика первых двух юнитов: объяснения на русском с параллелями из английского, ${n} упражнений с мгновенной проверкой, карточки Quizlet и тест для самопроверки.`,
@@ -78,8 +72,8 @@ ru:{
   tipCloud:"Ответы и прогресс сохраняются в облаке и видны с любого устройства, где ты вошёл в Claude.",
   tipLocal:"Ответы и прогресс сохраняются в этом браузере.",
   bookSub:"Unités 0–3, с. 11–58", refSub:"Объяснения с нуля и то, что просто полезно знать", unit0note:" — основа, на которую опираются юниты 1–3",
-  refEyebrow:"Для справки", toPractice:n=>`К заданиям ↓ (${n})`, practiceSub:"Практика по теме. Ответы проверяются сразу и сохраняются — можно вернуться позже.",
-  back:"← назад", next:"дальше →",
+  refEyebrow:"Для справки", toPractice:n=>`К заданиям (${n})`, practiceSub:"Практика по теме. Ответы проверяются сразу и сохраняются — можно вернуться позже.",
+  back:"назад", next:"дальше",
   doneOf:(d,n,p)=>`${d} / ${n} заданий · ${p}%`,
   label:{mc:"Выбор ответа", tf:"Vrai ou faux", fill:"Впиши ответ", conj:"Спряжение", match:"Соедини пары", sort:"Распредели", order:"Собери фразу", listen:"Аудирование", cards:"Карточки", drill:"Читаем вслух"},
   best:p=>`лучший: ${p}%`, bestT:p=>`Лучший результат: ${p}%`, again:"Заново", showAnswers:"Показать ответы", shuffleAgain:"Перемешать заново",
@@ -120,7 +114,7 @@ ru:{
   srsDoneH:"На сегодня всё!", srsNext:s=>`Следующее повторение — ${s}.`, srsToday:(a,n)=>`Сегодня: ${a} ${plural(a,["ответ","ответа","ответов"])}, новых слов — ${n}.`, srsMore:n=>`Ещё ${n} новых слов`, srsFc:"Повторения на неделю вперёд", srsDay:["Сегодня","Завтра"],
   srsPerDay:"Новых слов в день", srsHowS:"Как работает повторение", srsHow:"Посмотри на слово, вспомни перевод и открой ответ. Потом честно оцени себя: «Снова» — не вспомнил, «Трудно» — вспомнил с трудом, «Хорошо» — вспомнил, «Легко» — сразу. На кнопках видно, когда слово вернётся. Новое слово сначала повторяется через минуту и через 10 минут, потом через день, а дальше паузы растут: примерно 3 дня, неделя, две недели… Забытое слово снова начинает с коротких интервалов. Заходи каждый день — это занимает несколько минут.",
   srsDue:n=>`${n} к повтору`, srsWhen:s=>`Следующее повторение: ${s}`, srsU:{lt:"<1 мин", m:"мин", h:"ч", d:"д", mo:"мес", y:"г"}, srsIn:s=>`через ${s}`, srsTmrw:"завтра", srsNow:"сейчас", srsDays:n=>`${n} ${plural(n,["день","дня","дней"])}`, srsBadge:"карточек к повторению",
-  qzShuffle:"Перемешать", qzStarOnly:"Только ★", qzStill:"Ещё учу", qzKnow:"Знаю", qzPrev:"Назад", qzNext:"Далее", qzKeys:"Пробел — перевернуть · ← → — листать", qzEmpty:"Нет карточек со звёздочкой в этом наборе.",
+  qzShuffle:"Перемешать", qzStarOnly:"Только отмеченные", qzStill:"Ещё учу", qzKnow:"Знаю", qzPrev:"Назад", qzNext:"Далее", qzKeys:"Пробел — перевернуть · ← → — листать", qzEmpty:"Нет карточек со звёздочкой в этом наборе.",
   qzLearnDone:"Все слова набора выучены!", qzLearnDoneSub:"Можно сбросить прогресс набора и пройти заново — или выбрать другой набор.", qzResetSet:"Сбросить прогресс набора",
   qzChoose:"Выбери перевод", qzType:"Напиши по-французски", qzLv:["Новые","Учу","Почти","Выучено"], qzCorrect:"Juste !", qzWrongIs:"Правильно:", qzContinue:"Дальше", qzCheck:"Проверить", qzDontKnow:"Не знаю",
   qzWriteDone:(g,n)=>`Готово: ${g} из ${n}`, qzRetryWrong:"Повторить ошибки", qzRoundAgain:"Новый раунд",
@@ -137,12 +131,12 @@ en:{
   accCloudOnS:"Your answers, progress, self-check history and Quizlet cards are stored in the cloud under your account. Only you can see them — on any device where you’re signed in.", accCloudErrS:"You’re signed in, but the cloud isn’t responding right now. Progress is saved in this browser and will be uploaded once the connection is back.", accNoCloud:"The cloud isn’t set up for this copy of the site: progress is saved in this browser only.", noTable:"looks like the table hasn’t been created in Supabase — run schema.sql",
   authIn:"Sign in", authUp:"Sign up", authInH:"Sign in to your account", authUpH:"Create an account", authMagicH:"Sign in with a link", authResetH:"Reset your password",
   authInSub:"So your progress is saved to the cloud and shows up on your phone and computer.", authUpSub:"All you need is an e-mail and a password (6+ characters).", authMagicSub:"We’ll e-mail you a link — click it and you’re in, no password needed.", authResetSub:"We’ll e-mail you a link to set a new password.",
-  email:"E-mail", password:"Password", authInBtn:"Sign in", authUpBtn:"Sign up", authMagicBtn:"Send link", authResetBtn:"Send link", authMagicLink:"Sign in with an e-mail link", authForgot:"Forgot password", authBackPw:"← Sign in with password",
+  email:"E-mail", password:"Password", authInBtn:"Sign in", authUpBtn:"Sign up", authMagicBtn:"Send link", authResetBtn:"Send link", authMagicLink:"Sign in with an e-mail link", authForgot:"Forgot password", authBackPw:"Sign in with password",
   authNote:"Whatever you’ve already done without signing in will move to your account.", authWait:"One moment…",
   authCheckMail:e=>`Done! We’ve sent an e-mail to ${e}. Open it and click the link to confirm your address. Then you’re in.`, authMagicSent:e=>`A sign-in link has been sent to ${e}. No e-mail? Check your spam folder.`, authResetSent:e=>`A password reset link has been sent to ${e}.`,
   aeCreds:"Wrong e-mail or password.", aeNotConfirmed:"Your e-mail isn’t confirmed yet. Open the e-mail and click the link.", aeExists:"This account already exists. Tap “Sign in” below.", aeRate:"Too many attempts or e-mails. Wait a bit and try again.", aeShort:"The password must be at least 6 characters.", aeLink:"The link has expired or was already used. Request a new one.", aeNet:"Can’t reach the server. Check your internet connection (and VPN if you need one).", aeEmail:"Check the e-mail address.",
-  favAddedEs:"Added to Favourites (Vocabulary)", spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"♥ Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
-  qzFav:"Favourites", qzFavSub:"Words you’ve marked ♥", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap ♥ — it will appear here. You can also tap ♥ next to a word in any set.",
+  favAddedEs:"Added to Favourites (Vocabulary)", spFav:"Add to Favourites", spUnfav:"Remove from Favourites", spLoading:"translating…", spNone:"no translation found", spOffline:"you’re offline", spAuto:"machine translation", spAlso:"also:", spAltA:x=>`Show translation ${x}`, spForm:x=>`form of the verb ${x}`, favAdded:"Added to Favourites (Quizlet)", favRemoved:"Removed from Favourites",
+  qzFav:"Favourites", qzFavSub:"Words you’ve marked with a heart", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap the heart — it will appear here. You can also tap the heart next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
   heroLead:n=>`All the grammar and vocabulary of the first two units: explanations in English with parallels from Russian, ${n} exercises with instant checking, Quizlet flashcards and a self-check test.`,
@@ -153,8 +147,8 @@ en:{
   tipCloud:"Your answers and progress are saved in the cloud and available on any device where you’re signed in to Claude.",
   tipLocal:"Your answers and progress are saved in this browser.",
   bookSub:"Unités 0–3, p. 11–58", refSub:"Explanations from scratch and things that are good to know", unit0note:" — the basics units 1–3 build on",
-  refEyebrow:"Reference", toPractice:n=>`Go to exercises ↓ (${n})`, practiceSub:"Practice for this topic. Answers are checked instantly and saved — you can come back later.",
-  back:"← back", next:"next →",
+  refEyebrow:"Reference", toPractice:n=>`Go to exercises (${n})`, practiceSub:"Practice for this topic. Answers are checked instantly and saved — you can come back later.",
+  back:"back", next:"next",
   doneOf:(d,n,p)=>`${d} / ${n} exercises · ${p}%`,
   label:{mc:"Multiple choice", tf:"Vrai ou faux", fill:"Type the answer", conj:"Conjugation", match:"Match the pairs", sort:"Sort", order:"Build the sentence", listen:"Listening", cards:"Flashcards", drill:"Read aloud"},
   best:p=>`best: ${p}%`, bestT:p=>`Best result: ${p}%`, again:"Start over", showAnswers:"Show answers", shuffleAgain:"Shuffle again",
@@ -205,7 +199,7 @@ en:{
 Object.assign(I18N.ru, {
   stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", navSearch:"Тема или страница", navNone:"Ничего не нашлось", navNonePage:n=>`Нет тем на странице ${n}`, navMore:"Справка", tcOpen:"Открыть", homeAll:"Все", homeTip:"Подсказка", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
-  lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные ♥", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми ♥ в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
+  lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные сердечком", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми на сердечко в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и тест для самопроверки.`,
   esHow:[["Темы по юнитам","Сначала объяснение, потом задания под ним."],["Спряжение","Окончания -ar, -er, -ir и главные неправильные глаголы."],["Лексика","Все слова с переводом и примерами. Скрой перевод и проверь себя."],["Самопроверка","Реши несколько вариантов, пока не будет стабильно 80% и выше."]],
   esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · всё самое важное", esStart:"Начать с первой темы",
@@ -217,7 +211,7 @@ Object.assign(I18N.ru, {
   cloud:{local:"Только в этом браузере", loading:"Подключаюсь…", saved:"Всё сохранено", saving:"Сохраняю…", error:"Нет связи — сохраню позже", readonly:"Сохраняю в браузере", signedout:"Войди, чтобы сохранять"},
   authInH:"С возвращением!", authUpH:"Создай аккаунт", authResetH:"Восстановить пароль",
   authInSub:"Войди, и прогресс будет одинаковым на телефоне и компьютере.", authUpSub:"Нужны только почта и пароль от 6 символов.", authResetSub:"Пришлём на почту ссылку, чтобы задать новый пароль.",
-  authNoAcc:"Нет аккаунта?", authCreate:"Создать", authHaveAcc:"Уже есть аккаунт?", authLogin:"Войти", authForgot:"Забыли пароль?", authBack:"← Назад ко входу",
+  authNoAcc:"Нет аккаунта?", authCreate:"Создать", authHaveAcc:"Уже есть аккаунт?", authLogin:"Войти", authForgot:"Забыли пароль?", authBack:"Назад ко входу",
   authNote:"Всё, что ты уже сделал без входа, сохранится в аккаунте.",
   accSaved:"Прогресс сохраняется автоматически — на всех устройствах, где ты вошёл.", accOffline:"Нет связи с сервером. Ничего не потеряется: всё сохранится, когда связь вернётся.", accLocal:"Прогресс сохраняется в этом браузере.", retry:"Повторить",
   accFor:c=>`Прогресс · ${c}`, resetCourse:c=>`Сбросить прогресс: ${c}`,
@@ -226,7 +220,7 @@ Object.assign(I18N.ru, {
 Object.assign(I18N.en, {
   stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", navSearch:"Topic or page", navNone:"Nothing found", navNonePage:n=>`No topics on page ${n}`, navMore:"Reference", tcOpen:"Open", homeAll:"All", homeTip:"Tip", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
-  lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked ♥", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap ♥ in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
+  lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked with a heart", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap the heart in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a self-check test.`,
   esHow:[["Topics by unit","First the explanation, then the exercises below it."],["Conjugation","-ar, -er, -ir endings and the key irregular verbs."],["Vocabulary","Every word with a translation and examples. Hide the translation to test yourself."],["Self-check","Do a few versions until you consistently get 80% or more."]],
   esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · the essentials", esStart:"Start with the first topic",
@@ -238,7 +232,7 @@ Object.assign(I18N.en, {
   cloud:{local:"This browser only", loading:"Connecting…", saved:"All saved", saving:"Saving…", error:"Offline — will save later", readonly:"Saving in this browser", signedout:"Sign in to save"},
   authInH:"Welcome back!", authUpH:"Create an account", authResetH:"Reset your password",
   authInSub:"Sign in and your progress will be the same on your phone and computer.", authUpSub:"All you need is an e-mail and a password (6+ characters).", authResetSub:"We’ll e-mail you a link to set a new password.",
-  authNoAcc:"No account yet?", authCreate:"Create one", authHaveAcc:"Already have an account?", authLogin:"Sign in", authForgot:"Forgot your password?", authBack:"← Back to sign in",
+  authNoAcc:"No account yet?", authCreate:"Create one", authHaveAcc:"Already have an account?", authLogin:"Sign in", authForgot:"Forgot your password?", authBack:"Back to sign in",
   authNote:"Whatever you’ve done without signing in will be kept in your account.",
   accSaved:"Your progress is saved automatically — on every device where you’re signed in.", accOffline:"Can’t reach the server. Nothing will be lost: everything is saved once the connection is back.", accLocal:"Progress is saved in this browser.", retry:"Try again",
   accFor:c=>`Progress · ${c}`, resetCourse:c=>`Reset progress: ${c}`,
@@ -708,7 +702,7 @@ function qMeaning(fr){ if (!DICT) buildDict(); const e = DICT.get(dk(fr)); if (e
 
 /* --- всплывающая подсказка --- */
 const SP = {el:null, range:null, entry:null, req:0, timer:null};
-const ICO_HEART = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 16.6S3 12.4 3 7.6A3.6 3.6 0 0 1 10 6a3.6 3.6 0 0 1 7 1.6c0 4.8-7 9-7 9z"/></svg>';
+const ICO_HEART = f7on("heart", "heart_fill");
 function spBuild(){
   const el = document.createElement("div");
   el.className = "selpop"; el.hidden = true; el.setAttribute("role", "dialog");
@@ -972,7 +966,7 @@ const fbHtml = (state, answers) => {
   if (state === "ok") return `<span class="ok-t">${OKW()}</span>`;
   if (state === "acc") return `<span class="acc-t">${t("almost")}</span> <b>${right}</b>`;
   if (state === "shown") return `<span class="ex-e">${t("answerIs")} <b>${right}</b></span>`;
-  return `<span class="pen">→ ${right}</span>`;
+  return `<span class="pen">${f7("arrow_right", "f7-in")}${right}</span>`;
 };
 const INIT = {};
 
@@ -986,7 +980,7 @@ INIT.mc = (api, ex) => {
     const ok = j === it.a; answered++; if (ok) correct++;
     $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
     const fb = $(".fb", row); fb.hidden = false;
-    fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${it.o[it.a]}</span>`) + api.whyItem(it.o[it.a], it.e);
+    fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${it.o[it.a]}</span>`) + api.whyItem(it.o[it.a], it.e);
     sel[k] = j; if (!restoring) { api.save({sel}); api.ans(k, ok ? "ok" : "bad"); }
     if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcProg", answered, items.length, correct));
   };
@@ -1087,7 +1081,7 @@ INIT.listen = (api, ex) => {
     api.status(t("listenHint"));
     const slots = $$(".it", api.body).map((row,k)=>{ const fb = $(".fb", row), it = items[k];
       return {inp: $(".ans", row), a: it.a, minAdv: 2,
-        show: st => { fb.hidden = false; fb.innerHTML = (st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">→ ${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`) + api.whyItem(it.a[0] + " — " + it.say, ""); },
+        show: st => { fb.hidden = false; fb.innerHTML = (st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`) + api.whyItem(it.a[0] + " — " + it.say, ""); },
         hide: () => { fb.hidden = true; }}; });
     ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
@@ -1146,7 +1140,7 @@ INIT.sort = (api, ex) => {
       if (!firstWrong.has(k)) api.ans(null, "bad");
       firstWrong.add(k); wrong[k] = (wrong[k]||0) + 1;
       chip.classList.add("is-bad","flash"); setTimeout(()=>chip.classList.remove("is-bad","flash"), 650);
-      if (wrong[k] >= 2 && !$(".pen", chip)) chip.insertAdjacentHTML("beforeend", `<span class="pen">→ ${esc(ex.cats[it[1]])}</span>`);
+      if (wrong[k] >= 2 && !$(".pen", chip)) chip.insertAdjacentHTML("beforeend", `<span class="pen">${f7("arrow_right", "f7-in")}${esc(ex.cats[it[1]])}</span>`);
     }
     persist(); api.whyFoot(); report(false);
   };
@@ -1360,7 +1354,7 @@ const cName = c => t("courseNames")[c];
 const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${c === "zh" ? t("soon") : COURSES[c].book}</small></span>`;
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}${cddVal(ddCur())}<svg class="cdd-ch" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 4 4 4-4"/></svg></button>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}${cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
     <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}${c === "zh" ? ` <small class="cdd-soon">${t("soon")}</small>` : ""}</button>`).join("")}</div>
   </div>`;
 }
@@ -1416,7 +1410,7 @@ function buildNav(){
   nav.innerHTML = `
   <div class="nav-top">
     ${courseDDHTML()}
-    <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></button>
+    <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x">${f7("xmark")}</span></button>
   </div>
   ${VIEW_ZH ? "" : navSearchHTML()}
   <div class="nav-scroll">${VIEW_ZH ? `<div class="nav-zh"><span class="nav-zh-h">中文</span><p>${t("zhNav")}</p></div>` : `
@@ -1475,7 +1469,7 @@ function authHTML(gate){
 }
 function authLinks(m){
   if (m === "up") return `<span>${t("authHaveAcc")} <button type="button" data-am="in">${t("authLogin")}</button></span>`;
-  if (m === "reset") return `<button type="button" data-am="in">${t("authBack")}</button>`;
+  if (m === "reset") return `<button type="button" data-am="in">${ARL}${t("authBack")}</button>`;
   return `<span>${t("authNoAcc")} <button type="button" data-am="up">${t("authCreate")}</button></span><button type="button" data-am="reset">${t("authForgot")}</button>`;
 }
 function setAuthMode(m){
@@ -1578,7 +1572,7 @@ function testsOf(){ return S.tests.filter(x=>(x.c||"fr") === COURSE); }
 const scoreTxt = h => (h.c === "es") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
 function saveNudge(){
   if (Cloud.kind !== "supabase" || ME || Cloud.state === "loading") return "";
-  return `<a class="nudge" href="#account"><span class="nudge-i">${ICO.cloud}</span><span>${t("saveNudge")}</span><b>${t("saveNudgeBtn")} →</b></a>`;
+  return `<a class="nudge" href="#account"><span class="nudge-i">${ICO.cloud}</span><span>${t("saveNudge")}</span><b>${t("saveNudgeBtn")}${ARR}</b></a>`;
 }
 let HOME_U = "all";
 function renderHome(){
@@ -1592,7 +1586,7 @@ function renderHome(){
   if (!es || !["all","ref",...units].includes(HOME_U)) HOME_U = "all";
   const showU = k => !es || HOME_U === "all" || HOME_U === k;
   const tabs = es ? `<div class="seg ph-tabs" role="tablist">${["all",...units,"ref"].map(k=>`<button type="button" role="tab" data-hu="${k}" class="${HOME_U===k?"on":""}" aria-selected="${HOME_U===k}">${k === "all" ? t("homeAll") : k === "ref" ? t("navMore") : "Unidad " + k}</button>`).join("")}</div>` : frModeHTML("home");
-  const cta = cont ? `<a class="btn sec" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span> →</a>` : `<a class="btn sec" href="#${seq[0] ? seq[0].id : "test"}">${t("homeStart")} →</a>`;
+  const cta = cont ? `<a class="btn sec" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span>${ARR}</a>` : `<a class="btn sec" href="#${seq[0] ? seq[0].id : "test"}">${t("homeStart")}${ARR}</a>`;
   main.innerHTML = `<div class="col">
   <header class="ph">
     <h1>${es ? `El español <em>paso a paso</em>` : `Le français <em>pas à pas</em>`}</h1>
@@ -1602,7 +1596,7 @@ function renderHome(){
   <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act">${cta}</div></div>
   ${!es && FRMODE === "tutor" && TUT.length ? `
   <div class="sec-h"><h2>Tutor</h2><p>${t("tutorSub")}</p></div>
-  ${units.map(u=>{ const g = TUT.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : !es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
+  ${units.map(u=>{ const g = TUT.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : !es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">${f7("pencil")}</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
   <div class="sec-h"><h2>Cahier d’activités</h2><p>${t("cahierSub")}</p></div>
   ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
   ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2></div>`}
@@ -1619,11 +1613,11 @@ function renderTopic(tp){
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
     ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
-    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}</button></div>
+    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button></div>
   </header>
   <section class="theory">${tp.theory}</section>
   <section class="practice" id="practice"><h2>${es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
-  <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${t("back")}</small>${prev.title}</a>` : ""}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}</small>${next.title}</a>` : `<a class="next" href="#test"><small>${t("next")}</small>${t("test")}</a>`}</nav>
+  <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${ARL}${t("back")}</small>${prev.title}</a>` : ""}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}${ARR}</small>${next.title}</a>` : `<a class="next" href="#test"><small>${t("next")}${ARR}</small>${t("test")}</a>`}</nav>
   </article></div>`;
   const exs = $(".exs", main);
   tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
@@ -1640,7 +1634,7 @@ let LEX = {u:"all", hide:false, q:""};
 try { const o = JSON.parse(ls.get("edito-lex") || "null"); if (o) LEX = Object.assign(LEX, o, {q:""}); } catch(e) {}
 const fold = s => String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
 let LEX_APPLY = null;
-const lexUnitLabel = u => u === "all" ? t("lexAll") : u === "+" ? "📅 " + t("lexCal") : u === "v" ? t("lexVerbs") : u === "fav" ? "♥ " + t("lexFav") : "Unidad " + u;
+const lexUnitLabel = u => u === "all" ? t("lexAll") : u === "+" ? f7("calendar", "f7-in") + t("lexCal") : u === "v" ? t("lexVerbs") : u === "fav" ? f7("heart_fill", "f7-in") + t("lexFav") : "Unidad " + u;
 function lexFavRows(){
   const f = S.quiz.esfav || [];
   if (!f.length) return `<p class="lex-fav-empty">${t("lexFavEmpty")}</p>`;
@@ -1652,15 +1646,15 @@ function renderLexico(){
   main.innerHTML = `<div class="col" style="max-width:1000px">
   <header class="t-head seyes"><p class="eyebrow">Léxico · unidades 1–4</p><h1>${t("lexico")}</h1><p class="t-ru">${t("lexicoSub")}</p>
     <div class="lex-tools">
-      <label class="lex-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg><input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
+      <label class="lex-search">${f7("search")}<input type="search" id="lexQ" placeholder="${esc(t("lexSearch"))}" autocomplete="off" spellcheck="false"></label>
       <button type="button" class="chip-t${LEX.hide?" on":""}" id="lexHide">${LEX.hide ? t("lexShow") : t("lexHide")}</button>
     </div>
     <div class="seg lex-units">${["all","1","2","3","4","v","+","fav"].map(u=>`<button type="button" data-u="${u}" class="${LEX.u===u?"on":""}${u==="fav"?" lex-favtab":""}">${lexUnitLabel(u)}${u==="fav" ? ` <small>${nf || ""}</small>` : ""}</button>`).join("")}</div>
   </header>
   <p class="lex-count" id="lexCount"></p>
   <div class="lex${LEX.hide?" lex-hide":""}" id="lexBox">
-  <section class="lex-cat lex-favsec" id="lexFavSec" data-u="fav"><h3 class="lex-h"><span class="lex-u">♥</span>${t("lexFav")} <small>${t("lexFavSub")}</small></h3><div class="lex-fav-body">${lexFavRows()}</div></section>
-  ${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? "📅" : c.u === "v" ? "V" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
+  <section class="lex-cat lex-favsec" id="lexFavSec" data-u="fav"><h3 class="lex-h"><span class="lex-u">${f7("heart_fill")}</span>${t("lexFav")} <small>${t("lexFavSub")}</small></h3><div class="lex-fav-body">${lexFavRows()}</div></section>
+  ${ES_LEX.map((c,ci)=>`<section class="lex-cat" data-u="${c.u}"><h3 class="lex-h"><span class="lex-u">${c.u === "+" ? f7("calendar") : c.u === "v" ? "V" : "U" + c.u}</span>${esc(c.es)} <small>${esc(LANG==="en" ? c.en : c.ru)}</small></h3><div class="lex-rows">${c.w.map(([w,en,ex])=>`<div class="lex-r" data-k="${esc(fold(w + " " + en))}"><span class="fr lex-w">${esc(w)}</span><span class="lex-en" tabindex="0">${esc(en)}</span><span class="fr lex-ex">${esc(ex)}</span></div>`).join("")}</div></section>`).join("")}</div>
   <p class="muted lex-none" id="lexNone" hidden>${t("lexNone")}</p></div>`;
   const box = $("#lexBox"), save = () => ls.set("edito-lex", JSON.stringify({u:LEX.u, hide:LEX.hide}));
   const apply = () => {
@@ -1705,7 +1699,7 @@ function renderTest(){
   <div class="tset">
     <div class="bank-opt"><span class="bank-l">${t("tCheckL")}</span><div class="seg big" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div></div>
     <div class="bank-opt"><span class="bank-l">${t("tLenL")}</span><div class="seg big">${[20,30,45].map(n=>`<button type="button" data-n="${n}" class="${TLEN===n?"on":""}">${n}</button>`).join("")}</div></div>
-    <button type="button" class="btn pri" id="tGo">${t("tGo")} →</button>
+    <button type="button" class="btn pri" id="tGo">${t("tGo")}${ARR}</button>
   </div></header>
   ${hist.length ? `<div class="sec-h"><h2>${t("myTries")}</h2></div><ul class="hist">${hist.map(h=>`<li>${esc(h.d)} — <b>${scoreTxt(h)}</b> (${h.got} / ${h.total})</li>`).join("")}</ul>` : ""}</div>`;
   $$("[data-m]", main).forEach(b=>b.addEventListener("click", ()=>{ TMODE = b.dataset.m; $$("[data-m]", main).forEach(x=>x.classList.toggle("on", x===b)); }));
@@ -1734,7 +1728,7 @@ function startTest(n){
       if (now) {
         row.dataset.locked = "1"; const j = +b.dataset.j, ok = j === q.a; q.sel = j; res[k] = ok;
         $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === q.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
-        fb.hidden = false; fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${q.o[q.a]}</span>`) + whyHTML(q.o[q.a], q.e, poolRule(q));
+        fb.hidden = false; fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${q.o[q.a]}</span>`) + whyHTML(q.o[q.a], q.e, poolRule(q));
         gameAnswer("P|" + COURSE, q.k, ok ? "ok" : "bad");
       } else { $$(".opt", row).forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); q.sel = +b.dataset.j; }
       stat();
@@ -1758,7 +1752,7 @@ function gradeTest(box, now, res){
     if (q.o) {
       ok = q.sel === q.a;
       $$(".opt", row).forEach(b=>{ b.disabled = true; const j = +b.dataset.j; if (j === q.a) b.classList.add("is-ok"); else if (j === q.sel) b.classList.add("is-bad"); b.classList.remove("sel"); });
-      fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">→ ${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}`) + whyHTML(q.o[q.a], q.e, poolRule(q));
+      fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${q.o[q.a]}</span>${q.sel===undefined?` <span class="ex-e">${t("noAnswer")}</span>`:""}`) + whyHTML(q.o[q.a], q.e, poolRule(q));
       if (!now && q.sel !== undefined) gameAnswer("P|" + COURSE, q.k, ok ? "ok" : "bad");
     } else {
       const inp = $(".ans", row), st = judge(inp.value, q.a);
@@ -1914,7 +1908,7 @@ function qzReview(stage){
   };
   const counts = q => `<span class="srs-cnt"><span><b class="c-new">${q.fresh.length}</b> ${t("srsNew")}</span><span><b class="c-lrn">${q.lrn.length}</b> ${t("srsLrn")}</span><span><b class="c-rev">${q.rev.length}</b> ${t("srsRev")}</span></span>`;
   const dirSeg = () => `<span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
-  const undoBtn = () => hist.length ? `<button type="button" class="chip-t" data-undo>↶ ${t("srsUndo")}</button>` : "";
+  const undoBtn = () => hist.length ? `<button type="button" class="chip-t" data-undo>${f7("arrow_uturn_left", "f7-in")}${t("srsUndo")}</button>` : "";
   const foot = () => `<div class="srs-foot"><label class="srs-per"><span>${t("srsPerDay")}</span><span class="seg">${[5,10,15,20,30].map(n=>`<button type="button" data-per="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</span></label>
     <details class="srs-how"><summary>${t("srsHowS")}</summary><p>${t("srsHow")}</p></details></div>`;
   const bind = () => {
@@ -1931,7 +1925,7 @@ function qzReview(stage){
   const doneView = q => {
     const nexts = q.all.map(w=>qR(w.fr)).filter(Boolean).map(r=>r.due).sort((a,b)=>a-b);
     stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar">${counts(q)}${undoBtn()}</div><div class="center srs-done">
-      <span class="srs-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+      <span class="srs-ok">${f7("checkmark_alt")}</span>
       <h3 class="qz-done">${t("srsDoneH")}</h3>
       ${q.sd.a ? `<p class="muted">${t("srsToday", q.sd.a, q.sd.n)}</p>` : ""}
       ${nexts.length ? `<p class="muted">${t("srsNext", srsWhenTxt(nexts[0]))}</p>${forecast(q)}` : ""}
@@ -2012,7 +2006,7 @@ function qzCards(stage){
         <button type="button" class="qz-say" aria-label="${esc(t("qzSay"))}">${ICON_PLAY}</button>
         <span class="lv lv${Math.min(qLv(w.fr),3)} qz-clv">${t("qzLvShort")[Math.min(qLv(w.fr),3)]}</span>
       </div>
-      <div class="qz-nav"><button type="button" class="btn sec" data-q="prev">← ${t("qzPrev")}</button><button type="button" class="btn sec still" data-q="still">${t("qzStill")}</button><button type="button" class="btn pri" data-q="know">${t("qzKnow")}</button><button type="button" class="btn sec" data-q="next">${t("qzNext")} →</button></div>
+      <div class="qz-nav"><button type="button" class="btn sec" data-q="prev">${ARL}${t("qzPrev")}</button><button type="button" class="btn sec still" data-q="still">${t("qzStill")}</button><button type="button" class="btn pri" data-q="know">${t("qzKnow")}</button><button type="button" class="btn sec" data-q="next">${t("qzNext")}${ARR}</button></div>
       <p class="qz-keys">${t("qzKeys")}</p></div>`;
     bindTools();
     const cardEl = $(".qz-card", stage);
@@ -2026,7 +2020,7 @@ function qzCards(stage){
   };
   const flip = () => { flipped = !flipped; draw(); if (flipped || QZ.dir === "fr") speak(deck[i].fr); };
   const go = d => { if (!deck.length) return; i = (i + d + deck.length) % deck.length; flipped = false; draw(); };
-  const tools = () => `<button type="button" class="chip-t${QZ.shuf?" on":""}" data-t="shuf">${t("qzShuffle")}</button><button type="button" class="chip-t${QZ.star?" on":""}" data-t="star">★ ${t("qzStarOnly")}</button><span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
+  const tools = () => `<button type="button" class="chip-t${QZ.shuf?" on":""}" data-t="shuf">${t("qzShuffle")}</button><button type="button" class="chip-t${QZ.star?" on":""}" data-t="star">${f7("star_fill", "f7-in")}${t("qzStarOnly")}</button><span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
   const bindTools = () => {
     $$("[data-t]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ[b.dataset.t] = !QZ[b.dataset.t]; saveQZ(); qzCards(stage); }));
     $$("[data-dir]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.dir = b.dataset.dir; saveQZ(); flipped = false; draw(); }));
@@ -2112,7 +2106,7 @@ function qzWrite(stage){
       return;
     }
     const w = round[i];
-    stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar"><span class="qz-ctr">${i+1} / ${round.length}</span><span class="qz-ctr ok">✓ ${got}</span></div><div class="qz-q"><span class="qz-kind">${t("qzType")}</span><span class="qz-term">${esc(w.m)}</span></div>${accBar()}<div class="qz-write"><input class="ans wide" id="qzIn" ${inputAttrs} aria-label="${esc(t("qzType"))}"><button type="button" class="btn pri" id="qzChk">${t("qzCheck")}</button><button type="button" class="btn sec" id="qzIdk">${t("qzDontKnow")}</button></div><div class="qz-fb"></div></div>`;
+    stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar"><span class="qz-ctr">${i+1} / ${round.length}</span><span class="qz-ctr ok">${f7("checkmark_alt", "f7-in")}${got}</span></div><div class="qz-q"><span class="qz-kind">${t("qzType")}</span><span class="qz-term">${esc(w.m)}</span></div>${accBar()}<div class="qz-write"><input class="ans wide" id="qzIn" ${inputAttrs} aria-label="${esc(t("qzType"))}"><button type="button" class="btn pri" id="qzChk">${t("qzCheck")}</button><button type="button" class="btn sec" id="qzIdk">${t("qzDontKnow")}</button></div><div class="qz-fb"></div></div>`;
     const inp = $("#qzIn", stage); inp.focus();
     let done = false;
     const check = giveUp => {
@@ -2209,6 +2203,19 @@ function route(keepScroll){
   if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
   window.scrollTo(0, keepScroll ? y : 0);
 }
+/* в теории и разборах встречаются значки ✓ ✗ ★ ✦ — показываем их иконками Framework7 */
+const GLYPH_ICO = {"✓":["checkmark_alt", "g-ok"], "✗":["xmark", "g-no"], "★":["star_fill", "g-star"], "✦":["sparkles", "g-star"]}, GLYPH_RE = /[✓✗★✦]/;
+function glyphIcons(root){
+  if (!root || !GLYPH_RE.test(root.textContent || "")) return;
+  const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode: n => GLYPH_RE.test(n.nodeValue) && !n.parentElement.closest("script,style,textarea,input,.cflag,svg") ? 1 : 3});
+  const list = []; while (tw.nextNode()) list.push(tw.currentNode);
+  list.forEach(n=>{
+    const frag = document.createElement("span"); frag.innerHTML = esc(n.nodeValue).replace(/[✓✗★✦]/g, g => f7(GLYPH_ICO[g][0], "f7-g " + GLYPH_ICO[g][1]));
+    n.replaceWith(...frag.childNodes);
+  });
+}
+new MutationObserver(ms=>{ for (const m of ms) for (const n of m.addedNodes) { if (n.nodeType === 1) glyphIcons(n); else if (n.nodeType === 3 && GLYPH_RE.test(n.nodeValue) && n.parentElement) glyphIcons(n.parentElement); } }).observe(document.body, {childList:true, subtree:true});
+glyphIcons(document.body);
 function rerender(){ route(true); }
 window.addEventListener("hashchange", ()=>route(false));
 $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav");

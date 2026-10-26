@@ -4,11 +4,28 @@ HERE=os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 OUT=os.path.dirname(HERE)  # корень репозитория = то, что публикует GitHub Pages
 files=['visuals.js','data-book.js','data-ref.js','data-test.js','vocab.js','gloss.js','es-book.js','es-book-2.js','es-book-3.js','es-book-4.js','es-gram.js','es-lexico.js','es-lexico-4.js','es-test.js','es-cheat.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','bank-extra.js','why.js','why2.js','fr-u3.js','fr-cahier.js','fr-plus.js','es-plus.js','fr-phrase.js','es-frase.js','fr-test-u1.js','fr-test-u2.js','fr-tutor.js','why2-fr.js','why2-cahier.js','why2-es.js','why2-pool.js','engine2.js']
 js=''.join(open(f).read()+'\n' for f in files)
+# иконки: только Framework7 Icons (src/f7-icons.json, собирается src/f7gen.py)
+import json, re
+from urllib.parse import quote
+F7I=json.load(open('f7-icons.json'))
+f7js=('const F7 = '+json.dumps(F7I, ensure_ascii=False)+';\n'
+ 'const f7 = (n, c) => `<svg class="f7${c ? " " + c : ""}" viewBox="0 0 56 56" fill="currentColor" aria-hidden="true"><path d="${F7[n] || ""}"/></svg>`;\n'
+ '/* пара иконок «выкл / вкл» — видна та, что соответствует классу .on у родителя */\n'
+ 'const f7on = (off, on, c) => f7(off, "f7-off" + (c ? " " + c : "")) + f7(on, "f7-on" + (c ? " " + c : ""));\n')
 # модули платформы встраиваются внутрь движка (общая область видимости)
 mods=''.join(open(f).read()+'\n' for f in ['game.js','platform.js','study.js','tools.js'])
 assert js.count('/*@@MODULES@@*/')==1
 js=js.replace('/*@@MODULES@@*/', mods)
 shell=open('shell.html').read()
+def _f7svg(m):
+    n, c = m.group(1), (m.group(2) or '').strip()
+    return f'<svg class="f7{(" "+c) if c else ""}" viewBox="0 0 56 56" fill="currentColor" aria-hidden="true"><path d="{F7I[n]}"/></svg>'
+shell=re.sub(r'\{\{f7:([a-z0-9_]+)((?: [a-z0-9_-]+)*)\}\}', _f7svg, shell)
+shell=re.sub(r'\{\{f7url:([a-z0-9_]+)\}\}', lambda m: 'url("data:image/svg+xml,'+quote(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56"><path d="{F7I[m.group(1)]}"/></svg>')+'")', shell)
+_used=set(re.findall(r'\bf7\(\s*"([a-z0-9_]+)"', js))|{x for p in re.findall(r'\bf7on\(\s*"([a-z0-9_]+)"\s*,\s*"([a-z0-9_]+)"', js) for x in p}
+_miss=_used-set(F7I)
+assert not _miss, 'нет иконок в f7-icons.json (запусти f7gen.py): '+' '.join(sorted(_miss))
+js=f7js+js
 
 # index.html = каркас (shell.html) + все скрипты
 cut=shell.index('</style>')+len('</style>')
