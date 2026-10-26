@@ -412,6 +412,7 @@ function mergeDocs(docs, pull, changed){
 function pullSafe(){
   if (typeof DECK !== "undefined" && DECK) return false;
   if (document.body.classList.contains("gated")) return false;
+  if (typeof PLY !== "undefined" && PLY.playing) return false;
   const h = decodeURIComponent((location.hash||"").slice(1));
   if (["test","bank","quizlet"].includes(h)) return false;
   const a = document.activeElement;
@@ -710,10 +711,11 @@ const ICO_HEART = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" s
 function spBuild(){
   const el = document.createElement("div");
   el.className = "selpop"; el.hidden = true; el.setAttribute("role", "dialog");
-  el.innerHTML = `<div class="sp-tx"><span class="sp-fr"></span><span class="sp-m"></span><span class="sp-note"></span></div><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button></div>`;
+  el.innerHTML = `<div class="sp-tx"><span class="sp-fr"></span><span class="sp-m"></span><span class="sp-note"></span></div><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button><button type="button" class="sp-go"></button></div>`;
   el.addEventListener("mousedown", e=>e.preventDefault());
   el.addEventListener("pointerdown", e=>{ if (e.pointerType !== "mouse") e.preventDefault(); });
   $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry && SP.entry.say) speak(SP.entry.say); });
+  $(".sp-go", el).addEventListener("click", ()=>{ const e = SP.entry; if (!e || !e.long) return; trOpen(e.long); spHide(); try { window.getSelection().removeAllRanges(); } catch(_) {} });
   $(".sp-fav", el).addEventListener("click", ()=>{
     const e = SP.entry; if (!e) return;
     if (COURSE === "es") { if (!e.es) return; const on = toggleEsFav(e); spPaintFav(); toast(on ? t("favAddedEs") : t("favRemoved")); if (location.hash === "#lexico") lexPaintFav(); return; }
@@ -745,16 +747,19 @@ function spPlace(){
   if (touchUI && top + h > vh - 8) { top = r.top - h - gap; below = false; }
   const cx = below ? last.left + last.width / 2 : r.left + r.width / 2;
   let left = Math.round(cx - w / 2); left = Math.max(8, Math.min(left, vw - w - 8));
+  /* длинное выделение может не помещаться в экран: держим окошко внутри экрана, стрелку тогда прячем */
+  const t0 = top; top = Math.max(8, Math.min(top, vh - h - 8)); el.classList.toggle("free", Math.abs(top - t0) > 1);
   el.style.left = left + "px"; el.style.top = Math.round(top) + "px";
   el.style.setProperty("--ax", Math.max(14, Math.min(w - 14, cx - left)) + "px");
   el.classList.toggle("below", below);
-  if (r.bottom < 0 || r.top > vh) el.style.visibility = "hidden"; else el.style.visibility = "";
+  const all = SP.range.getBoundingClientRect();   /* прячем, только если всё выделение ушло за экран */
+  if (all.bottom < 0 || all.top > vh) el.style.visibility = "hidden"; else el.style.visibility = "";
 }
 function spAllowed(sel){
   const h = location.hash.slice(1);
   if (h === "test" || h === "quizlet") return false;
   const n = sel.anchorNode; const el = n && (n.nodeType === 1 ? n : n.parentElement);
-  if (!el || el.closest("input,textarea,.selpop,.nav,.topbar,[contenteditable]")) return false;
+  if (!el || el.closest("input,textarea,.selpop,.trp,.ply,.nav,.topbar,[contenteditable]")) return false;
   return true;
 }
 
@@ -815,7 +820,9 @@ function spCheck(){
   const q = raw.replace(/^[\s«»"“”„.,;:!?()\[\]…—–-]+/, "").replace(/[\s«»"“”„,;:()\[\]—–-]+$/, "").replace(/([^.])\.$/, "$1").trim();
   const tail = endPunct(q);
   const cyr = /[А-Яа-яЁё]/.test(txt), lat = /[a-zà-ÿœæç]/i.test(txt);
-  if (!txt || txt.length > 80 || txt.split(" ").length > 8 || (cyr && lat) || (!cyr && !lat) || !spAllowed(sel)) { spHide(); return; }
+  /* длинное выделение: окошко с кнопкой «Перевести» → панель переводчика */
+  const long = txt.length > 80 || txt.split(" ").length > 8;
+  if (!txt || (!cyr && !lat) || (!long && cyr && lat) || !spAllowed(sel)) { spHide(); return; }
   if (!SP.el) spBuild();
   const range = sel.getRangeAt(0).cloneRange();
   if (SP.entry && SP.entry.sel === q && !SP.el.hidden) { SP.range = range; spPlace(); return; }
@@ -824,6 +831,14 @@ function spCheck(){
   const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
   $(".sp-fr", el).textContent = q;
   const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
+  el.classList.toggle("long", long);
+  if (long) {
+    const full = raw.slice(0, 1500);
+    SP.entry = {sel:q, long:full, say: trDetect(full) === trCourse() ? full : ""};
+    mEl.textContent = ""; nEl.textContent = ""; el.dataset.st = "ok"; el.dataset.dir = "fr";
+    const g = $(".sp-go", el); g.textContent = t("trBtn");
+    return show();
+  }
   if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };

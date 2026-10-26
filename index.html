@@ -1713,6 +1713,86 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .t2-tr[open] summary{margin-bottom:8px}
 .t2-l{display:block;margin:3px 0;line-height:1.45}
 .t2-l b{display:inline-block;min-width:62px;font-weight:600;color:var(--ink-2)}
+/* окошко выделения: длинный текст → кнопка «Перевести» */
+.sp-go{display:none!important}
+.selpop.long .sp-go{display:inline-flex!important;width:auto!important;padding:0 12px;border-radius:10px!important;background:var(--sheet)!important;color:var(--ink)!important;font:inherit;font-size:13.5px;font-weight:600;white-space:nowrap}
+.selpop.long .sp-go:hover{opacity:.9}
+.selpop.long .sp-fav,.selpop.long .sp-say:disabled,.selpop.long .sp-m,.selpop.long .sp-note{display:none}
+.selpop.long .sp-fr{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-weight:500;opacity:.85;font-size:13px;line-height:1.35}
+.selpop.long{max-width:min(380px,calc(100vw - 16px))}
+.selpop.free::after{display:none}
+/* переводчик: панель справа, на телефоне — шторка снизу */
+.trp{position:fixed;inset:0;z-index:95;pointer-events:none}
+.trp-bg{display:none}
+.trp-card{pointer-events:auto;position:absolute;top:12px;right:12px;bottom:12px;width:min(410px,calc(100vw - 24px));display:flex;flex-direction:column;gap:10px;background:var(--sheet);border-radius:16px;box-shadow:0 0 0 1px var(--line-2),0 18px 50px rgba(20,24,50,.18);padding:12px 14px 14px;transform:translateX(24px);opacity:0;transition:transform .22s var(--ease),opacity .22s}
+.trp.in .trp-card{transform:none;opacity:1}
+.trp-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:34px}
+.trp-t{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.trp-grab{display:none}
+.trp-ib{flex:none;width:34px;height:34px;border:0;border-radius:9px;background:transparent;color:var(--ink-2);display:inline-grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.trp-ib:hover{background:var(--fill);color:var(--ink)}
+.trp-ib[hidden]{display:none}
+.trp-ib svg{width:18px;height:18px}
+.trp-langs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:6px;align-items:center}
+.trp-sel{-webkit-appearance:none;appearance:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--fill) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%237f85a8' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E") no-repeat right 10px center;border:0;border-radius:10px;padding:9px 28px 9px 12px;width:100%;cursor:pointer;outline:none}
+.trp-sel:focus-visible{box-shadow:0 0 0 2px var(--encre)}
+.trp-box{flex:1 1 0;display:flex;flex-direction:column;min-height:0;border-radius:12px;box-shadow:0 0 0 1px var(--line-2);background:var(--sheet);transition:box-shadow .15s}
+.trp-box:focus-within{box-shadow:0 0 0 1px var(--line-3,var(--line-2)),0 0 0 4px color-mix(in srgb,var(--encre) 12%,transparent)}
+.trp-box textarea{flex:1;min-height:110px;font:inherit;font-size:15.5px;line-height:1.5;color:var(--ink);border:0;background:transparent;resize:none;padding:12px 14px 4px;outline:none}
+.trp-box textarea::placeholder{color:var(--ink-3)}
+.trp-res{background:var(--fill);box-shadow:none}
+.trp-out{flex:1;min-height:110px;overflow:auto;padding:12px 14px 4px;font-size:15.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.trp-out[data-st="load"]{opacity:.5}
+.trp-out[data-st="empty"],.trp-out[data-st="err"]{color:var(--ink-3)}
+.trp-tools{display:flex;align-items:center;gap:2px;padding:2px 6px 6px 14px}
+.trp-cnt{flex:1;font-size:12px;color:var(--ink-3)}
+@media (max-width:760px){
+  .trp-bg{display:block;position:absolute;inset:0;background:rgba(10,12,30,.32);opacity:0;transition:opacity .22s;pointer-events:auto}
+  .trp.in .trp-bg{opacity:1}
+  .trp-card{top:auto;left:0;right:0;bottom:0;width:auto;height:min(78dvh,620px);border-radius:18px 18px 0 0;padding:6px 14px calc(14px + env(safe-area-inset-bottom,0px));transform:translateY(40px)}
+  .trp-grab{display:block;position:absolute;left:50%;top:6px;width:36px;height:4px;margin-left:-18px;border-radius:99px;background:var(--line-2)}
+  .trp-hd{padding-top:8px}
+  .trp-box textarea,.trp-out{min-height:70px}
+}
+/* мини-плеер диалогов: снизу по центру, на телефоне сверху */
+.ply{position:fixed;z-index:85;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));width:min(640px,calc(100vw - 32px));display:flex;flex-direction:column;gap:8px;transform:translate(-50%,12px);opacity:0;transition:transform .22s var(--ease),opacity .22s}
+.ply.in{transform:translate(-50%,0);opacity:1}
+.ply-bar{display:flex;align-items:center;gap:2px;background:var(--sheet);border-radius:14px;box-shadow:0 0 0 1px var(--line-2),0 12px 36px rgba(20,24,50,.16);padding:8px}
+.ply-b{flex:none;width:36px;height:36px;border:0;border-radius:10px;background:transparent;color:var(--ink-2);display:inline-grid;place-items:center;cursor:pointer;font:inherit;font-size:13px;font-weight:700;transition:background .15s,color .15s}
+.ply-b:hover{background:var(--fill);color:var(--ink)}
+.ply-b svg{width:21px;height:21px}
+.ply-pp{width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--sheet);margin:0 2px}
+.ply-pp:hover{background:var(--ink);color:var(--sheet);opacity:.88}
+.ply-pp svg{width:20px;height:20px}
+.ply-mid{flex:1;min-width:0;display:grid;gap:5px;padding:0 10px}
+.ply-ti{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--ink-3);line-height:1.2}
+.ply-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:var(--ink-2)}
+.ply-time{flex:none;font-variant-numeric:tabular-nums}
+.ply-track{position:relative;height:14px;display:flex;align-items:center;cursor:pointer}
+.ply-track::before{content:"";position:absolute;left:0;right:0;height:4px;border-radius:99px;background:var(--fill)}
+.ply-track i{position:relative;display:block;height:4px;border-radius:99px;background:var(--ink);transition:width .12s linear}
+.ply-sp{width:auto;min-width:44px;padding:0 6px;font-variant-numeric:tabular-nums}
+.ply-cc.on{background:var(--encre-soft);color:var(--encre)}
+.ply-live{background:var(--sheet);border-radius:14px;box-shadow:0 0 0 1px var(--line-2),0 12px 36px rgba(20,24,50,.12);padding:12px 16px 14px;font-size:17px;line-height:1.55}
+.ply-live[hidden]{display:none}
+.ply-who{display:block;font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:3px}
+.ply-ln span{color:var(--ink-3);transition:color .15s,background .15s}
+.ply-ln span.past{color:var(--ink)}
+.ply-ln span.now{color:var(--encre);background:var(--encre-soft);border-radius:5px;box-shadow:0 0 0 2px var(--encre-soft)}
+body.has-ply .main{padding-bottom:120px}
+.dlg-btn svg{margin-right:2px}
+@media (max-width:760px){
+  .ply{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto;width:calc(100vw - 16px);transform:translate(-50%,-12px)}
+  .ply-live{order:2;font-size:16px}
+  .ply-bar{padding:6px}
+  .ply-b{width:34px;height:34px}
+  .ply-mid{padding:0 6px}
+  .ply-name{display:none}
+  .ply-ti{justify-content:flex-end}
+  .ply-sp{min-width:38px}
+  body.has-ply .topbar{top:var(--ply-h,66px)}
+  body.has-ply .main{padding-top:calc(var(--ply-h,66px) + 58px);padding-bottom:0}
+}
 .nav-zh{background:var(--sheet);box-shadow:0 0 0 1px var(--line-2)}
 
 /* кнопки и сегменты */
@@ -1907,6 +1987,8 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 <script>
 var HL = "ru";
 const HT = (ru, en) => HL === "en" ? en : ru;
+/* диалоги для мини-плеера: DLG[id] = {lang, title, lines:[[кто, текст]…]}; кнопка — [data-dlg="id"] */
+const DLG = {};
 /* ===== visual scheme helpers ===== */
 const OPS = new Set(["+","=","→","×","≠","/","↔","…"]);
 /* FX: формула из «кирпичиков». Префиксы: ! — выделить, ~ — не французский текст, _ — приглушить; "текст|подпись" */
@@ -10383,7 +10465,7 @@ WHY2_ADD({"u1-test": [
    Двуязычная сборка через TF (FRL из fr-u3.js). Тема вставляется
    в TOPICS / TOPICS_EN сразу после u2-phonetique (последняя тема юнита 2).
    Упр. 9 (Compréhension orale): записи нет, диалог восстановлен по
-   расшифровке и озвучивается синтезом речи (кнопка .fr с data-say).
+   расшифровке и озвучивается синтезом речи в мини-плеере (DLG["fr-u2-test"], кнопка data-dlg).
    ========================================================= */
 function FR_TEST_U2(L){
   const keepHL = HL, keepFRL = FRL; FRL = L; HL = L;
@@ -10400,11 +10482,11 @@ const FR_U2_DIALOG = [
   ["Armand", "Oui, mais…"],
   ["Astrid", "Oui, tu adores le cinéma… Mais, oncle Armand, c’est mon mariage !"]
 ];
+DLG["fr-u2-test"] = {lang:"fr", title:"Test unité 2 · Compréhension orale", lines:FR_U2_DIALOG};
 function FR_TEST_U2_TOPIC(){
 const N = n => TF("Упр. ", "Ex. ") + n + " · ";
 const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name} →</a>`;
-const SAY = FR_U2_DIALOG.map(x=>x[1]).join(" ").replace(/"/g, "");
-const DIALOG = `<span class="t2-aud"><button type="button" class="btn sm sec fr" data-say="${SAY}">▶ ${TF("Слушать диалог", "Play the dialogue")}</button></span>
+const DIALOG = `<span class="t2-aud"><button type="button" class="btn sm sec dlg-btn" data-dlg="fr-u2-test"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.2-6.5a1 1 0 0 0 0-1.7L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg>${TF("Слушать диалог", "Play the dialogue")}</button></span>
 <details class="t2-tr"><summary>${TF("Текст диалога (открой, если не расслышал)", "Dialogue text (open if you didn’t catch it)")}</summary>${FR_U2_DIALOG.map(([who, s])=>`<span class="t2-l"><b>${who}</b> <span class="fr">${s}</span></span>`).join("")}</details><br>`;
 const THIAGO = "Bonjour, moi c’est Thiago ! Je suis portugais et j’ai 38 ans. J’ai une grande famille. J’ai trois frères et une sœur. Mes deux frères, Paulo et Mateo, sont célibataires. Mon frère Leo a deux filles, elles s’appellent Vanessa et Victoria. Ma sœur, Amanda, a un fils, João. Il est fils unique. Mes parents sont âgés : mon père a 79 ans et ma mère a 76 ans. Ma famille habite à 5 minutes de la mer. Mais moi, j’habite en ville, à Paris, avec ma femme Alice. Elle est française et elle a 37 ans.";
 const PETIT = "Madame Petit travaille dans un hôpital. Elle adore son travail et aime aider les autres. Elle joue au basket-ball avec ses enfants le week-end.";
@@ -15366,6 +15448,7 @@ function mergeDocs(docs, pull, changed){
 function pullSafe(){
   if (typeof DECK !== "undefined" && DECK) return false;
   if (document.body.classList.contains("gated")) return false;
+  if (typeof PLY !== "undefined" && PLY.playing) return false;
   const h = decodeURIComponent((location.hash||"").slice(1));
   if (["test","bank","quizlet"].includes(h)) return false;
   const a = document.activeElement;
@@ -15664,10 +15747,11 @@ const ICO_HEART = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" s
 function spBuild(){
   const el = document.createElement("div");
   el.className = "selpop"; el.hidden = true; el.setAttribute("role", "dialog");
-  el.innerHTML = `<div class="sp-tx"><span class="sp-fr"></span><span class="sp-m"></span><span class="sp-note"></span></div><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button></div>`;
+  el.innerHTML = `<div class="sp-tx"><span class="sp-fr"></span><span class="sp-m"></span><span class="sp-note"></span></div><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button><button type="button" class="sp-go"></button></div>`;
   el.addEventListener("mousedown", e=>e.preventDefault());
   el.addEventListener("pointerdown", e=>{ if (e.pointerType !== "mouse") e.preventDefault(); });
   $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry && SP.entry.say) speak(SP.entry.say); });
+  $(".sp-go", el).addEventListener("click", ()=>{ const e = SP.entry; if (!e || !e.long) return; trOpen(e.long); spHide(); try { window.getSelection().removeAllRanges(); } catch(_) {} });
   $(".sp-fav", el).addEventListener("click", ()=>{
     const e = SP.entry; if (!e) return;
     if (COURSE === "es") { if (!e.es) return; const on = toggleEsFav(e); spPaintFav(); toast(on ? t("favAddedEs") : t("favRemoved")); if (location.hash === "#lexico") lexPaintFav(); return; }
@@ -15699,16 +15783,19 @@ function spPlace(){
   if (touchUI && top + h > vh - 8) { top = r.top - h - gap; below = false; }
   const cx = below ? last.left + last.width / 2 : r.left + r.width / 2;
   let left = Math.round(cx - w / 2); left = Math.max(8, Math.min(left, vw - w - 8));
+  /* длинное выделение может не помещаться в экран: держим окошко внутри экрана, стрелку тогда прячем */
+  const t0 = top; top = Math.max(8, Math.min(top, vh - h - 8)); el.classList.toggle("free", Math.abs(top - t0) > 1);
   el.style.left = left + "px"; el.style.top = Math.round(top) + "px";
   el.style.setProperty("--ax", Math.max(14, Math.min(w - 14, cx - left)) + "px");
   el.classList.toggle("below", below);
-  if (r.bottom < 0 || r.top > vh) el.style.visibility = "hidden"; else el.style.visibility = "";
+  const all = SP.range.getBoundingClientRect();   /* прячем, только если всё выделение ушло за экран */
+  if (all.bottom < 0 || all.top > vh) el.style.visibility = "hidden"; else el.style.visibility = "";
 }
 function spAllowed(sel){
   const h = location.hash.slice(1);
   if (h === "test" || h === "quizlet") return false;
   const n = sel.anchorNode; const el = n && (n.nodeType === 1 ? n : n.parentElement);
-  if (!el || el.closest("input,textarea,.selpop,.nav,.topbar,[contenteditable]")) return false;
+  if (!el || el.closest("input,textarea,.selpop,.trp,.ply,.nav,.topbar,[contenteditable]")) return false;
   return true;
 }
 
@@ -15769,7 +15856,9 @@ function spCheck(){
   const q = raw.replace(/^[\s«»"“”„.,;:!?()\[\]…—–-]+/, "").replace(/[\s«»"“”„,;:()\[\]—–-]+$/, "").replace(/([^.])\.$/, "$1").trim();
   const tail = endPunct(q);
   const cyr = /[А-Яа-яЁё]/.test(txt), lat = /[a-zà-ÿœæç]/i.test(txt);
-  if (!txt || txt.length > 80 || txt.split(" ").length > 8 || (cyr && lat) || (!cyr && !lat) || !spAllowed(sel)) { spHide(); return; }
+  /* длинное выделение: окошко с кнопкой «Перевести» → панель переводчика */
+  const long = txt.length > 80 || txt.split(" ").length > 8;
+  if (!txt || (!cyr && !lat) || (!long && cyr && lat) || !spAllowed(sel)) { spHide(); return; }
   if (!SP.el) spBuild();
   const range = sel.getRangeAt(0).cloneRange();
   if (SP.entry && SP.entry.sel === q && !SP.el.hidden) { SP.range = range; spPlace(); return; }
@@ -15778,6 +15867,14 @@ function spCheck(){
   const el = SP.el, mEl = $(".sp-m", el), nEl = $(".sp-note", el);
   $(".sp-fr", el).textContent = q;
   const show = () => { spPaintFav(); el.hidden = false; spPlace(); requestAnimationFrame(()=>el.classList.add("in")); };
+  el.classList.toggle("long", long);
+  if (long) {
+    const full = raw.slice(0, 1500);
+    SP.entry = {sel:q, long:full, say: trDetect(full) === trCourse() ? full : ""};
+    mEl.textContent = ""; nEl.textContent = ""; el.dataset.st = "ok"; el.dataset.dir = "fr";
+    const g = $(".sp-go", el); g.textContent = t("trBtn");
+    return show();
+  }
   if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
@@ -17834,6 +17931,249 @@ document.addEventListener("keydown", e=>{
   else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); DECK.go(DECK.i - 1); }
   else if (e.key === "Escape") { ls.set("edito-deck", "0"); paintDeckTg(); closeDeck(); }
 });
+
+/* =========================================================
+   TOOLS: переводчик для длинных выделений и мини-плеер диалогов
+   (встраивается внутрь движка вместе с game / platform / study)
+   ========================================================= */
+Object.assign(I18N.ru, {
+  trTitle:"Переводчик", trBtn:"Перевести", trSrcPh:"Введи или вставь текст", trCopy:"Копировать", trCopied:"Скопировано", trClear:"Очистить",
+  trSwap:"Поменять языки", trListen:"Слушать", trClose:"Закрыть", trFrom:"С языка", trTo:"На язык", trFail:"Не получилось перевести. Проверь интернет и попробуй ещё раз.",
+  trEmpty:"Здесь появится перевод", trAuto:"машинный перевод", trLangs:{fr:"Французский", es:"Испанский", ru:"Русский", en:"Английский"},
+  plyPlay:"Слушать", plyPause:"Пауза", plyBack:"Назад на 5 секунд", plyFwd:"Вперёд на 5 секунд", plySpeed:"Скорость", plyWords:"Показывать слова", plyClose:"Закрыть плеер",
+  plyDlg:"Слушать диалог"
+});
+Object.assign(I18N.en, {
+  trTitle:"Translator", trBtn:"Translate", trSrcPh:"Type or paste text", trCopy:"Copy", trCopied:"Copied", trClear:"Clear",
+  trSwap:"Swap languages", trListen:"Listen", trClose:"Close", trFrom:"From", trTo:"To", trFail:"Couldn’t translate. Check your connection and try again.",
+  trEmpty:"The translation will appear here", trAuto:"machine translation", trLangs:{fr:"French", es:"Spanish", ru:"Russian", en:"English"},
+  plyPlay:"Play", plyPause:"Pause", plyBack:"Back 5 seconds", plyFwd:"Forward 5 seconds", plySpeed:"Speed", plyWords:"Show the words", plyClose:"Close the player",
+  plyDlg:"Play the dialogue"
+});
+const ICO_X = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg>';
+const ICO_COPY = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="7" width="9.5" height="9.5" rx="2"/><path d="M13 7V5a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 4 5v6.5A1.5 1.5 0 0 0 5.5 13H7"/></svg>';
+const ICO_SWAP = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11l-3-3M16 13H5l3 3"/></svg>';
+const VOICE_LANG = {fr:"fr-FR", es:"es-ES", ru:"ru-RU", en:"en-US"};
+/* озвучка на любом из четырёх языков */
+function sayIn(text, lang){
+  if (!synth || !text) return;
+  if (lang === (COURSE === "es" ? "es" : "fr")) return speak(text);
+  try { synth.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = VOICE_LANG[lang] || lang; u.rate = .95; synth.speak(u); } catch(e) {}
+}
+function copyText(s){
+  const ok = () => toast(t("trCopied"));
+  try { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(s).then(ok, ()=>{}); } catch(e) {}
+  try { const ta = document.createElement("textarea"); ta.value = s; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); ok(); } catch(e) {}
+}
+
+/* ---------- переводчик ---------- */
+const TR = {el:null, from:"fr", to:"ru", req:0, timer:null};
+const trCourse = () => COURSE === "es" ? "es" : "fr";
+function trDetect(s){
+  const cyr = (s.match(/[А-Яа-яЁё]/g) || []).length, lat = (s.match(/[A-Za-zÀ-ÿœæçñ]/g) || []).length;
+  if (cyr > lat) return "ru";
+  const c = trCourse();
+  if (c === "fr" && FR_MARK.test(s)) return "fr";
+  if (c === "es" && ES_MARK.test(s)) return "es";
+  if (EN_FN.test(s) && !(c === "fr" ? FR_FN : ES_FN).test(s)) return "en";
+  return c;
+}
+function trLangs(){ return [trCourse(), "ru", "en"]; }
+function trBuild(){
+  const el = document.createElement("aside");
+  el.className = "trp"; el.hidden = true; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "false");
+  el.innerHTML = `<div class="trp-bg" data-trx></div><div class="trp-card">
+    <div class="trp-hd"><span class="trp-grab" aria-hidden="true"></span><b class="trp-t"></b><button type="button" class="trp-ib" data-trx></button></div>
+    <div class="trp-langs"><select class="trp-sel" id="trFrom"></select><button type="button" class="trp-ib" id="trSwap">${ICO_SWAP}</button><select class="trp-sel" id="trTo"></select></div>
+    <div class="trp-box"><textarea id="trSrc" maxlength="1500" spellcheck="false"></textarea>
+      <div class="trp-tools"><span class="trp-cnt" id="trCnt"></span><button type="button" class="trp-ib" id="trSaySrc">${ICON_PLAY}</button><button type="button" class="trp-ib" id="trClr">${ICO_X}</button></div></div>
+    <div class="trp-box trp-res"><div class="trp-out" id="trOut" aria-live="polite"></div>
+      <div class="trp-tools"><span class="trp-cnt" id="trSt"></span><button type="button" class="trp-ib" id="trSayOut">${ICON_PLAY}</button><button type="button" class="trp-ib" id="trCopy">${ICO_COPY}</button></div></div>
+  </div>`;
+  document.body.appendChild(el); TR.el = el;
+  $$("[data-trx]", el).forEach(b=>b.addEventListener("click", trClose));
+  $("#trFrom", el).addEventListener("change", e=>{ TR.from = e.target.value; if (TR.from === TR.to) TR.to = TR.from === trCourse() ? (LANG === "en" ? "en" : "ru") : trCourse(); trPaint(); trRun(0); });
+  $("#trTo", el).addEventListener("change", e=>{ TR.to = e.target.value; if (TR.from === TR.to) TR.from = TR.to === trCourse() ? (LANG === "en" ? "en" : "ru") : trCourse(); trPaint(); trRun(0); });
+  $("#trSwap", el).addEventListener("click", ()=>{ const o = $("#trOut", el).dataset.v || ""; [TR.from, TR.to] = [TR.to, TR.from]; if (o) $("#trSrc", el).value = o; trPaint(); trRun(0); });
+  $("#trSrc", el).addEventListener("input", ()=>{ trCount(); trRun(650); });
+  $("#trClr", el).addEventListener("click", ()=>{ const s = $("#trSrc", el); s.value = ""; trCount(); trRun(0); s.focus(); });
+  $("#trSaySrc", el).addEventListener("click", ()=>sayIn($("#trSrc", el).value.trim(), TR.from));
+  $("#trSayOut", el).addEventListener("click", ()=>sayIn($("#trOut", el).dataset.v || "", TR.to));
+  $("#trCopy", el).addEventListener("click", ()=>{ const v = $("#trOut", el).dataset.v; if (v) copyText(v); });
+}
+function trCount(){ const s = $("#trSrc", TR.el).value; $("#trCnt", TR.el).textContent = s.length ? `${s.length} / 1500` : ""; }
+function trPaint(){
+  const el = TR.el, L = t("trLangs"), opts = v => trLangs().map(k=>`<option value="${k}"${k === v ? " selected" : ""}>${L[k]}</option>`).join("");
+  $(".trp-t", el).textContent = t("trTitle");
+  $("#trFrom", el).innerHTML = opts(TR.from); $("#trTo", el).innerHTML = opts(TR.to);
+  $("#trFrom", el).setAttribute("aria-label", t("trFrom")); $("#trTo", el).setAttribute("aria-label", t("trTo"));
+  $("#trSrc", el).placeholder = t("trSrcPh");
+  const lbl = (id, k) => { const b = $(id, el); b.setAttribute("aria-label", t(k)); b.title = t(k); };
+  lbl(".trp-hd [data-trx]", "trClose"); lbl("#trSwap", "trSwap"); lbl("#trSaySrc", "trListen"); lbl("#trSayOut", "trListen"); lbl("#trCopy", "trCopy"); lbl("#trClr", "trClear");
+  $(".trp-hd [data-trx]", el).innerHTML = ICO_X;
+  $("#trSaySrc", el).hidden = $("#trSayOut", el).hidden = !synth;
+  el.setAttribute("aria-label", t("trTitle"));
+}
+/* MyMemory принимает до ~500 символов за раз: режем по предложениям */
+function trChunks(s){
+  const parts = s.replace(/\s+/g, " ").trim().match(/[^.!?…]+[.!?…]*\s*/g) || [s], out = [];
+  let cur = "";
+  parts.forEach(p=>{ if ((cur + p).length > 450 && cur) { out.push(cur.trim()); cur = ""; } while (p.length > 450) { out.push(p.slice(0, 450)); p = p.slice(450); } cur += p; });
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+}
+function trRun(delay){
+  clearTimeout(TR.timer);
+  TR.timer = setTimeout(async ()=>{
+    const el = TR.el, src = $("#trSrc", el).value.trim(), out = $("#trOut", el), st = $("#trSt", el), req = ++TR.req;
+    if (!src) { out.textContent = t("trEmpty"); out.dataset.v = ""; out.dataset.st = "empty"; st.textContent = ""; return; }
+    out.dataset.st = "load"; st.textContent = t("spLoading");
+    const chunks = trChunks(src), res = [];
+    for (const c of chunks) { const r = await remoteTr(c, TR.to, TR.from); if (req !== TR.req) return; if (!r) { out.dataset.st = "err"; out.textContent = t("trFail"); out.dataset.v = ""; st.textContent = navigator.onLine === false ? t("spOffline") : ""; return; } res.push(r); }
+    const v = res.join(" ");
+    out.textContent = v; out.dataset.v = v; out.dataset.st = "ok"; st.textContent = t("trAuto");
+  }, delay);
+}
+function trOpen(text){
+  if (!TR.el) trBuild();
+  const src = String(text || "").replace(/\s+/g, " ").trim().slice(0, 1500);
+  TR.from = trDetect(src); TR.to = TR.from === trCourse() ? (LANG === "en" ? "en" : "ru") : trCourse();
+  trPaint();
+  $("#trSrc", TR.el).value = src; trCount();
+  const el = TR.el; el.hidden = false; requestAnimationFrame(()=>el.classList.add("in"));
+  document.body.classList.add("has-trp");
+  trRun(0);
+}
+function trClose(){ if (!TR.el || TR.el.hidden) return; TR.el.classList.remove("in"); document.body.classList.remove("has-trp"); TR.req++; setTimeout(()=>{ if (!TR.el.classList.contains("in")) TR.el.hidden = true; }, 220); }
+document.addEventListener("keydown", e=>{ if (e.key === "Escape" && TR.el && !TR.el.hidden && !(SP.el && !SP.el.hidden)) trClose(); });
+
+/* ---------- мини-плеер диалогов (синтез речи с перемоткой и словами) ---------- */
+const PLY = {el:null, d:null, words:[], lines:[], total:0, pos:0, wi:0, playing:false, speed:1, tok:0, tick:null, bnd:false, t0:0, show:false};
+try { PLY.show = ls.get("edito-ply-words") === "1"; } catch(e) {}
+const PLY_SPEEDS = [0.75, 1, 1.25, 1.5];
+const CPS = 13.5;          /* оценка: символов в секунду при скорости 1 */
+const LINE_GAP = .45;      /* пауза между репликами, с */
+const fmtT = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+function plyPrep(d){
+  const words = [], lines = []; let tt = 0;
+  d.lines.forEach(([who, text], li)=>{
+    const ws = [], re = /\S+/g; let m;
+    const l = {who, text, li, w0:words.length, t0:tt};
+    while ((m = re.exec(text))) { const dur = (m[0].length + 1) / CPS; ws.push({li, s:m.index, w:m[0], t0:tt, dur}); tt += dur; }
+    words.push(...ws); l.w1 = words.length; l.t1 = tt; lines.push(l); tt += LINE_GAP;
+  });
+  PLY.words = words; PLY.lines = lines; PLY.total = tt - LINE_GAP;
+}
+function plyVoices(lang){
+  if (!synth) return [];
+  const vs = synth.getVoices().filter(v=>v.lang && v.lang.toLowerCase().startsWith(lang));
+  const pref = lang === "fr" ? frVoice : esVoice;
+  const out = pref ? [pref] : []; vs.forEach(v=>{ if (!out.includes(v)) out.push(v); });
+  return out;
+}
+function plyBuild(){
+  const el = document.createElement("div");
+  el.className = "ply"; el.hidden = true; el.setAttribute("role", "region");
+  el.innerHTML = `<div class="ply-live" id="plyLive" hidden></div>
+  <div class="ply-bar">
+    <button type="button" class="ply-b" data-ply="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4v3.5H8"/><text x="12" y="15.2" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">5</text></svg></button>
+    <button type="button" class="ply-b ply-pp" data-ply="pp"></button>
+    <button type="button" class="ply-b" data-ply="fwd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v3.5H16"/><text x="12" y="15.2" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">5</text></svg></button>
+    <div class="ply-mid"><div class="ply-ti"><span class="ply-name"></span><span class="ply-time"></span></div><div class="ply-track" data-ply="seek"><i></i></div></div>
+    <button type="button" class="ply-b ply-sp" data-ply="speed"></button>
+    <button type="button" class="ply-b ply-cc" data-ply="words"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="3"/><path d="M7 11h4M13 11h4M7 14.5h7M16 14.5h1" stroke-linecap="round"/></svg></button>
+    <button type="button" class="ply-b" data-ply="close">${ICO_X}</button>
+  </div>`;
+  document.body.appendChild(el); PLY.el = el;
+  el.addEventListener("click", e=>{
+    const b = e.target.closest("[data-ply]"); if (!b) return;
+    const a = b.dataset.ply;
+    if (a === "pp") return PLY.playing ? plyPause() : plyPlay();
+    if (a === "back") return plySeek(PLY.pos - 5);
+    if (a === "fwd") return plySeek(PLY.pos + 5);
+    if (a === "speed") { PLY.speed = PLY_SPEEDS[(PLY_SPEEDS.indexOf(PLY.speed) + 1) % PLY_SPEEDS.length]; if (PLY.playing) plyPlay(); else plyPaint(); return; }
+    if (a === "words") { PLY.show = !PLY.show; try { ls.set("edito-ply-words", PLY.show ? "1" : "0"); } catch(_) {} return plyPaint(); }
+    if (a === "close") return plyClose();
+    if (a === "seek") { const r = b.getBoundingClientRect(); plySeek((e.clientX - r.left) / r.width * PLY.total); }
+  });
+}
+function plyOpen(id){
+  const d = DLG[id]; if (!d) return;
+  if (!PLY.el) plyBuild();
+  if (PLY.d !== d) { plyStop(); PLY.d = d; plyPrep(d); PLY.pos = 0; PLY.wi = 0; }
+  const el = PLY.el; el.hidden = false; requestAnimationFrame(()=>el.classList.add("in"));
+  document.body.classList.add("has-ply");
+  plyPlay();
+}
+function plyClose(){ if (!PLY.el) return; plyStop(); PLY.el.classList.remove("in"); document.body.classList.remove("has-ply"); setTimeout(()=>{ if (!PLY.el.classList.contains("in")) PLY.el.hidden = true; }, 220); }
+function plyStop(){ PLY.tok++; PLY.playing = false; clearInterval(PLY.tick); try { synth && synth.cancel(); } catch(e) {} }
+function plyPause(){ plyStop(); plyPaint(); }
+function plyWordAt(sec){ const ws = PLY.words; let i = 0; while (i < ws.length - 1 && ws[i + 1].t0 <= sec + 1e-6) i++; return i; }
+function plySeek(sec){
+  sec = Math.max(0, Math.min(PLY.total - .01, sec));
+  PLY.wi = plyWordAt(sec); PLY.pos = PLY.words[PLY.wi].t0;
+  if (PLY.playing) plyPlay(); else plyPaint();
+}
+/* говорим реплику начиная с текущего слова; позиция — по событиям boundary, а если их нет — по таймеру */
+function plyPlay(){
+  if (!synth || !PLY.d) return;
+  plyStop();
+  if (PLY.wi >= PLY.words.length - 1 && PLY.pos >= PLY.total - .05) { PLY.wi = 0; PLY.pos = 0; }
+  const tok = PLY.tok, w = PLY.words[PLY.wi], line = PLY.lines[w.li];
+  const text = line.text.slice(w.s);
+  const u = new SpeechSynthesisUtterance(text);
+  const vs = plyVoices(PLY.d.lang), spk = PLY.d.lines.findIndex(x=>x[0] === line.who) % 2;
+  u.lang = VOICE_LANG[PLY.d.lang];
+  if (vs.length > 1) u.voice = vs[spk % vs.length]; else { if (vs[0]) u.voice = vs[0]; u.pitch = spk ? .85 : 1.15; }
+  u.rate = .9 * PLY.speed;
+  PLY.playing = true; PLY.bnd = false; PLY.t0 = performance.now(); const base = w.t0, wi0 = PLY.wi;
+  u.onboundary = ev => { if (tok !== PLY.tok || ev.name && ev.name !== "word") return; PLY.bnd = true; const ci = ev.charIndex + w.s; let i = wi0; while (i + 1 < line.w1 && PLY.words[i + 1].s <= ci) i++; PLY.wi = i; PLY.pos = PLY.words[i].t0; plyPaint(); };
+  u.onend = () => {
+    if (tok !== PLY.tok) return;
+    clearInterval(PLY.tick);
+    if (line.li + 1 >= PLY.lines.length) { PLY.playing = false; PLY.pos = PLY.total; PLY.wi = PLY.words.length - 1; plyPaint(true); return; }
+    PLY.wi = PLY.lines[line.li + 1].w0; PLY.pos = PLY.lines[line.li + 1].t0; plyPaint();
+    setTimeout(()=>{ if (tok === PLY.tok) plyPlay(); }, LINE_GAP * 1000 / PLY.speed);
+  };
+  u.onerror = ev => { if (tok !== PLY.tok) return; if (ev.error === "interrupted" || ev.error === "canceled") { PLY.playing = false; clearInterval(PLY.tick); plyPaint(); } else u.onend(); };
+  PLY.tick = setInterval(()=>{
+    if (tok !== PLY.tok || PLY.bnd) return;
+    const el = (performance.now() - PLY.t0) / 1000 * PLY.speed;
+    PLY.pos = Math.min(base + el, line.t1 - .01); PLY.wi = Math.max(wi0, Math.min(plyWordAt(PLY.pos), line.w1 - 1)); plyPaint();
+  }, 120);
+  try { synth.cancel(); synth.speak(u); } catch(e) { PLY.playing = false; }
+  plyPaint();
+}
+/* на компьютере плеер по центру белой панели, на телефоне сверху; его высота сдвигает кнопку «Темы» */
+function plyPlace(){
+  const el = PLY.el; if (!el || el.hidden) return;
+  const p = $(".panel"), mob = window.innerWidth <= 760;
+  if (!mob && p) { const r = p.getBoundingClientRect(); el.style.left = Math.round(r.left + r.width / 2) + "px"; el.style.width = Math.round(Math.min(640, r.width - 32)) + "px"; }
+  else { el.style.left = ""; el.style.width = ""; }
+  document.documentElement.style.setProperty("--ply-h", (el.offsetHeight + 8) + "px");
+}
+window.addEventListener("resize", ()=>plyPlace());
+function plyPaint(done){
+  const el = PLY.el; if (!el || !PLY.d) return;
+  const pp = $(".ply-pp", el);
+  pp.innerHTML = PLY.playing ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.2-6.5a1 1 0 0 0 0-1.7L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg>';
+  const lbl = (sel, k) => { const b = $(sel, el); b.setAttribute("aria-label", t(k)); b.title = t(k); };
+  lbl(".ply-pp", PLY.playing ? "plyPause" : "plyPlay"); lbl('[data-ply="back"]', "plyBack"); lbl('[data-ply="fwd"]', "plyFwd"); lbl(".ply-sp", "plySpeed"); lbl(".ply-cc", "plyWords"); lbl('[data-ply="close"]', "plyClose");
+  el.setAttribute("aria-label", PLY.d.title || t("plyDlg"));
+  $(".ply-sp", el).textContent = String(PLY.speed).replace(".", LANG === "en" ? "." : ",") + "×";
+  $(".ply-cc", el).classList.toggle("on", PLY.show); $(".ply-cc", el).setAttribute("aria-pressed", PLY.show);
+  $(".ply-name", el).textContent = PLY.d.title || "";
+  $(".ply-time", el).textContent = `${fmtT(PLY.pos / PLY.speed)} / ${fmtT(PLY.total / PLY.speed)}`;
+  $(".ply-track i", el).style.width = (PLY.total ? Math.min(100, PLY.pos / PLY.total * 100) : 0).toFixed(1) + "%";
+  const live = $("#plyLive", el); live.hidden = !PLY.show;
+  if (PLY.show) {
+    const w = PLY.words[PLY.wi], line = PLY.lines[w ? w.li : 0];
+    const cur = done ? -1 : PLY.wi;
+    live.innerHTML = `<b class="ply-who">${esc(line.who)}</b><span class="ply-ln">${PLY.words.slice(line.w0, line.w1).map((x, k)=>`<span class="${line.w0 + k < cur ? "past" : line.w0 + k === cur ? "now" : ""}">${esc(x.w)}</span>`).join(" ")}</span>`;
+  }
+  plyPlace();
+}
+document.addEventListener("click", e=>{ const b = e.target.closest("[data-dlg]"); if (b) { e.preventDefault(); plyOpen(b.dataset.dlg); } });
 
 
 
