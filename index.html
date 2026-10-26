@@ -10672,6 +10672,85 @@ WHY2_ADD({"u2-test": [
 })();
 
 /* =========================================================
+   FRANÇAIS — Tutor: задания от репетитора (sec:"tutor", массив TUT в движке).
+   Двуязычная сборка через TF (FRL из fr-u3.js). Темы добавляются в конец
+   TOPICS / TOPICS_EN; группируются по юниту, к которому относится тема.
+   Новые задания — новой темой (или в конец существующей) + запись в WHY2.
+   ========================================================= */
+function FR_TUTOR(L){
+  const keepHL = HL, keepFRL = FRL; FRL = L; HL = L;
+  try { return FR_TUTOR_TOPICS(); } finally { HL = keepHL; FRL = keepFRL; }
+}
+function FR_TUTOR_TOPICS(){
+const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name} →</a>`;
+return [
+{
+id:"t-possessifs-1", sec:"tutor", unit:"2", kind:TF("Задание репетитора", "Tutor’s task"),
+title:"Les adjectifs possessifs", ru:TF("Вставь притяжательное прилагательное: 15 предложений", "Fill in the possessive adjective: 15 sentences"), page:"",
+theory:`
+${RULE(TF("Как выбрать форму", "How to pick the form"), `<p>${TF(
+"Сначала смотри, <b>чьё</b> это (je, tu, il/elle, nous, vous, ils/elles), потом на то, <b>что</b> это: м. р., ж. р. или мн. ч. Род владельца не важен: «son livre» — и его, и её книга.",
+"First look at <b>whose</b> it is (je, tu, il/elle, nous, vous, ils/elles), then at <b>what</b> it is: masculine, feminine or plural. The owner’s gender doesn’t matter: «son livre» is both his and her book.")}</p>
+${TBL([TF("Чьё","Whose"), TF("м. р.","masc."), TF("ж. р.","fem."), TF("мн. ч.","plural")], [
+["je", F("mon"), F("ma"), F("mes")],
+["tu", F("ton"), F("ta"), F("tes")],
+["il / elle", F("son"), F("sa"), F("ses")],
+["nous", F("notre"), F("notre"), F("nos")],
+["vous", F("votre"), F("votre"), F("vos")],
+["ils / elles", F("leur"), F("leur"), F("leurs")]
+])}`)}
+${NOTE(TF("Перед словом ж. р. на гласную или немую h вместо ma, ta, sa ставят mon, ton, son: <span class=\"fr\">son amie</span>, <span class=\"fr\">mon école</span>.",
+"Before a feminine word starting with a vowel or silent h, use mon, ton, son instead of ma, ta, sa: <span class=\"fr\">son amie</span>, <span class=\"fr\">mon école</span>."))}
+<p class="cah-links">${link("u2-possessifs", "Les adjectifs possessifs")}</p>
+`,
+ex:[
+{t:"fill", h:TF("Écrivez l’adjectif possessif approprié: mon, ma, mes, ton, ta, tes, son, sa, ses, notre, nos, votre, vos, leur, leurs", "Écrivez l’adjectif possessif approprié: mon, ma, mes, ton, ta, tes, son, sa, ses, notre, nos, votre, vos, leur, leurs"), items:[
+{q:"C’est le livre de Robert. C’est ___ livre.", a:["son"]},
+{q:"C’est la sœur de Robert. C’est ___ sœur.", a:["sa"]},
+{q:"C’est la petite amie de Robert. C’est ___ amie.", a:["son"]},
+{q:"Ce sont les parents de Mireille et de Marie-Laure. Ce sont ___ parents.", a:["leurs"]},
+{q:"C’est la classe des étudiants. C’est ___ classe.", a:["leur"]},
+{q:"J’ai une radio. C’est ___ radio.", a:["ma"]},
+{q:"Nous avons une maison. C’est ___ maison.", a:["notre"]},
+{q:"Tu as des amis. Ce sont ___ amis.", a:["tes"]},
+{q:"Vous avez des problèmes. Ce sont ___ problèmes.", a:["vos"]},
+{q:"Tu as un stylo. C’est ___ stylo.", a:["ton"]},
+{q:"Vous avez une voiture. C’est ___ voiture.", a:["votre"]},
+{q:"J’ai des idées. Ce sont ___ idées.", a:["mes"]},
+{q:"Nous avons des amis. Ce sont ___ amis.", a:["nos"]},
+{q:"J’ai un appartement. C’est ___ appartement.", a:["mon"]},
+{q:"Michel a des cousins. Ce sont ___ cousins.", a:["ses"]}
+]}
+]}
+];
+}
+
+WHY2_ADD({"t-possessifs-1": [
+{r:["Форма зависит от двух вещей: чьё (je → mon/ma/mes, tu → ton/ta/tes, il/elle → son/sa/ses, nous → notre/nos, vous → votre/vos, ils/elles → leur/leurs) и что (м. р., ж. р., мн. ч.). Род владельца не важен. Перед ж. р. на гласную: mon, ton, son.",
+"The form depends on two things: whose (je → mon/ma/mes, tu → ton/ta/tes, il/elle → son/sa/ses, nous → notre/nos, vous → votre/vos, ils/elles → leur/leurs) and what (masc., fem., plural). The owner’s gender doesn’t matter. Before a feminine word with a vowel: mon, ton, son."],
+ i:[["Владелец Robert = il, livre м. р. ед. ч. → son livre.","The owner Robert = il, livre is masc. sing. → son livre."],
+    ["Robert = il, sœur ж. р. → sa sœur. Род Robert не важен, важен род слова sœur.","Robert = il, sœur is feminine → sa sœur. Robert’s gender doesn’t matter, the gender of sœur does."],
+    ["amie ж. р., но начинается с гласной → не sa, а son: son‿amie [n].","amie is feminine but starts with a vowel → not sa but son: son‿amie [n]."],
+    ["Владельцев двое (Mireille et Marie-Laure = elles), родителей несколько → leurs parents.","Two owners (Mireille et Marie-Laure = elles), several parents → leurs parents."],
+    ["Владельцы — студенты (ils), но класс один → leur classe (без -s).","The owners are students (ils), but there’s one class → leur classe (no -s)."],
+    ["Владелец je, radio ж. р. (la radio) на согласную → ma radio.","Owner je, radio is feminine (la radio) with a consonant → ma radio."],
+    ["Владелец nous, дом один → notre maison (у notre одна форма для м. и ж. р.).","Owner nous, one house → notre maison (notre is the same for masc. and fem.)."],
+    ["Владелец tu, друзей несколько → tes amis (связывание tes‿amis [z]).","Owner tu, several friends → tes amis (liaison tes‿amis [z])."],
+    ["Владелец vous, проблем несколько → vos problèmes.","Owner vous, several problems → vos problèmes."],
+    ["Владелец tu, stylo м. р. ед. ч. → ton stylo.","Owner tu, stylo is masc. sing. → ton stylo."],
+    ["Владелец vous, машина одна → votre voiture.","Owner vous, one car → votre voiture."],
+    ["Владелец je, идей несколько → mes idées (mes‿idées [z]).","Owner je, several ideas → mes idées (mes‿idées [z])."],
+    ["Владелец nous, друзей несколько → nos amis (nos‿amis [z]).","Owner nous, several friends → nos amis (nos‿amis [z])."],
+    ["Владелец je, appartement м. р. → mon appartement (mon‿appartement [n]).","Owner je, appartement is masculine → mon appartement (mon‿appartement [n])."],
+    ["Michel = il, кузенов несколько → ses cousins.","Michel = il, several cousins → ses cousins."]]}
+]});
+
+(function(){
+  const ru = FR_TUTOR("ru"), en = FR_TUTOR("en");
+  ru.forEach((tp, k)=>{ if (!WHY[tp.id]) WHY[tp.id] = tp.ex.map(()=>["",""]); TOPICS.push(tp); TOPICS_EN.push(en[k]); });
+})();
+
+/* =========================================================
    FRANÇAIS — «почему здесь так» для каждого вопроса + правило
    (Livre и справочник). Формат — см. why2.js.
    ========================================================= */
@@ -15077,7 +15156,7 @@ function kindIco(tp){
   const k = String(tp.kind || "").toLowerCase();
   const id = /^(communication|общение|communic)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
     : /phon|произн|pronun/.test(k) ? "sound" : /спряж|conjug/.test(k) ? "conj" : /нуля|scratch/.test(k) ? "spark" : /полезно|good to know/.test(k) ? "bulb"
-    : /delf|^test/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" ? "pencil" : "doc";
+    : /delf|^test/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" || tp.sec === "tutor" ? "pencil" : "doc";
   return KIND_ICO[id];
 }
 /* цвет группы: юнит 0–4, грамматика, справочник */
@@ -15288,7 +15367,7 @@ const ES_CACHE = {};
 const OKW = () => COURSE === "es" ? "¡Correcto!" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
-let TOP, BOOK, GRAM, REF, CAH, ORDER, byId, POOLX, CHEATX;
+let TOP, BOOK, GRAM, REF, CAH, TUT, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
     const esPool = L => ES_POOL_BUILD(L).concat(ES_POOL_EXTRA(L), ES_POOL_U4(L));
@@ -15297,7 +15376,7 @@ function setData(){
     if (!c.why) { WHYP_APPLY("es", ES_CACHE.ruPool, c.pool, LANG === "en" ? 1 : 0); c.why = 1; }
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
-  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
+  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); TUT = TOP.filter(x=>x.sec==="tutor"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
   document.documentElement.lang = LANG;
   document.title = LANG === "en" ? "Learn languages step by step" : "Учим языки шаг за шагом";
@@ -15306,7 +15385,7 @@ function setData(){
 setData();
 /* французский: Livre / Cahier / Tutor */
 let FRMODE = ["livre","cahier","tutor"].includes(ls.get("edito-frmode")) ? ls.get("edito-frmode") : "livre";
-const seqOf = tp => tp && tp.sec === "cahier" ? CAH : ORDER;
+const seqOf = tp => tp && tp.sec === "cahier" ? CAH : tp && tp.sec === "tutor" ? TUT : ORDER;
 
 /* =========================================================
    STORE: local cache + cloud (db) under data/users/<id>/
@@ -16317,8 +16396,8 @@ function navGroup(key, head, links, opts){
 const unitBadge = (u, hue) => `<span class="ng-n" data-hue="${hue}">${u}</span>`;
 function navTopics(units, unitW, uname){
   const es = COURSE === "es";
-  if (!es && FRMODE === "tutor") return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
-  const cah = !es && FRMODE === "cahier", list = cah ? CAH : BOOK;
+  if (!es && FRMODE === "tutor" && !TUT.length) return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
+  const tut = !es && FRMODE === "tutor", cah = (!es && FRMODE === "cahier") || tut, list = tut ? TUT : cah ? CAH : BOOK;
   const first = units.find(u=>list.some(x=>x.unit===u));
   let h = units.map(u=>{ const g = list.filter(x=>x.unit===u); return g.length ? navGroup("u" + u, `${unitBadge(u, u)}<span class="ng-t"><b>${unitW} ${u}</b><i>${uname(u)}</i></span>`, g.map(navLink).join(""), {open: u === first}) : ""; }).join("");
   if (!cah) h += `<div class="nav-sec">${t("navMore")}</div>`
@@ -16336,7 +16415,7 @@ function navSearchHTML(){
 }
 function navWhere(tp){
   const es = COURSE === "es";
-  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
+  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
 }
 function pagesOf(tp){
   const src = String(tp.page || "").replace(/(Unidad|Unité)\s*\d+/g, ""), out = [];
@@ -16348,7 +16427,7 @@ function navSearchRun(q){
   const f = fold(q).trim();
   if (!f) { box.hidden = true; groups.hidden = false; box.innerHTML = ""; return; }
   const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
-  const tps = [...BOOK, ...CAH, ...GRAM, ...REF];
+  const tps = [...BOOK, ...CAH, ...TUT, ...GRAM, ...REF];
   const hit = s => fold(s).includes(f);
   /* число → темы с этой страницей учебника / тетради */
   if (/^\d{1,3}$/.test(f)) {
@@ -16620,9 +16699,9 @@ function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
   const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3","4"] : ["0","1","2","3"];
-  const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
+  const seq = !es && FRMODE === "cahier" ? CAH : !es && FRMODE === "tutor" ? TUT : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
-  const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE !== "cahier" ? t("unit0note") : "");
+  const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE === "livre" ? t("unit0note") : "");
   const uHead = u => `<h3 class="unit-h"><span class="ng-n u-pill" data-hue="${u}">${unitW} ${u}</span><small>${uname(u)}</small></h3>`;
   if (!es || !["all","ref",...units].includes(HOME_U)) HOME_U = "all";
   const showU = k => !es || HOME_U === "all" || HOME_U === k;
@@ -16635,7 +16714,9 @@ function renderHome(){
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span>${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
   <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act">${cta}</div></div>
-  ${!es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
+  ${!es && FRMODE === "tutor" && TUT.length ? `
+  <div class="sec-h"><h2>Tutor</h2><p>${t("tutorSub")}</p></div>
+  ${units.map(u=>{ const g = TUT.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : !es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
   <div class="sec-h"><h2>Cahier d’activités</h2><p>${t("cahierSub")}</p></div>
   ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
   ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2></div>`}
@@ -16647,7 +16728,7 @@ function renderHome(){
 }
 function renderTopic(tp){
   const seq = seqOf(tp), idx = seq.indexOf(tp), prev = seq[idx-1], next = seq[idx+1], es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
@@ -17667,7 +17748,7 @@ Object.assign(I18N.ru, {
   listenHint:"Пиши цифры и нажми Enter",
   bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
   heroLead:n=>`Теория из учебника, задания рабочей тетради, ${n} ${plural(n,["упражнение","упражнения","упражнений"])}, карточки Quizlet и самопроверка по юнитам 0–3.`,
-  frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
+  frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorSub:"Задания от репетитора, по юнитам учебника.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
   esHeroLead:n=>`Теория, ${n} ${plural(n,["упражнение","упражнения","упражнений"])}, лексика и самопроверка по юнитам 1–4.`,
   homeCont:"Продолжить", homeStart:"Начать с первой темы",
   testSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Оценка — из 20 баллов.`, esTestSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Результат — в процентах.`,
@@ -17687,7 +17768,7 @@ Object.assign(I18N.en, {
   listenHint:"Type the digits and press Enter",
   bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
   heroLead:n=>`Textbook theory, workbook exercises, ${n} tasks, Quizlet flashcards and a self-check for units 0–3.`,
-  frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
+  frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorSub:"Tasks from the tutor, grouped by textbook unit.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
   esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a self-check for units 1–4.`,
   homeCont:"Continue", homeStart:"Start with the first topic",
   testSub:n=>`Random questions from the bank (${n}) across all topics. Graded out of 20.`, esTestSub:n=>`Random questions from the bank (${n}) across all topics. Scored in percent.`,
@@ -17727,7 +17808,7 @@ let BANK = null;
 function renderBank(){
   const cfg = bankCfg(), items = bankItems(), cnt = {};
   items.forEach(x=>{ cnt[x.tid] = (cnt[x.tid] || 0) + 1; });
-  const tops = [...ORDER, ...CAH].filter(tp=>cnt[tp.id]);
+  const tops = [...ORDER, ...CAH, ...TUT].filter(tp=>cnt[tp.id]);
   if (!cfg.sel) cfg.sel = tops.map(x=>x.id);
   /* новые темы (например, добавленный юнит) включаем по умолчанию */
   if (!cfg.seen) cfg.seen = cfg.sel.slice();
@@ -17739,6 +17820,7 @@ function renderBank(){
   const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
   const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);
   units.forEach(u=>{ const g = tops.filter(x=>x.sec === "cahier" && x.unit === u); if (g.length) groups.push([`Cahier · ${t("unitW")} ${u}`, g]); });
+  const tu = tops.filter(x=>x.sec === "tutor"); if (tu.length) groups.push(["Tutor", tu]);
   main.innerHTML = `<div class="col" style="max-width:980px">
   <header class="t-head seyes"><p class="eyebrow">${COURSES[COURSE].name} · ${COURSES[COURSE].book}</p><h1>${t("bank")}</h1><p class="t-ru">${t("bankSub")}</p></header>
   <div class="bank-set">
@@ -17765,7 +17847,7 @@ function renderBank(){
     const by = {}; pool.forEach(x=>(by[x.tid] = by[x.tid] || []).push(x)); Object.values(by).forEach(shuffle);
     const ids = shuffle(Object.keys(by)), pick = [];
     while (pick.length < Math.min(cfg.n, pool.length)) { let add = false; for (const id of ids) if (by[id].length && pick.length < cfg.n) { pick.push(by[id].pop()); add = true; } if (!add) break; }
-    const all = [...ORDER, ...CAH], ord = id => all.findIndex(x=>x.id === id);
+    const all = [...ORDER, ...CAH, ...TUT], ord = id => all.findIndex(x=>x.id === id);
     if (cfg.mix) shuffle(pick); else pick.sort((a, b)=>ord(a.tid) - ord(b.tid));
     bankRun(pick);
   });
@@ -17857,7 +17939,7 @@ function openDeck(tp, start){
   if (CLOSING) { const c = CLOSING; CLOSING = null; deckRestore(c); c.el.remove(); }
   DECK_TP = tp;
   const parts = deckCards(tp), es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   /* настоящие блоки заданий переезжают из страницы в карточки и возвращаются при закрытии */
   const exEls = $$(".exs > .exb", main), moved = exEls.map(el=>{ const ph = document.createComment("dk"); el.before(ph); return {el, ph}; });
   const nT = 1 + parts.length, hasEx = moved.length > 0;
@@ -18206,7 +18288,7 @@ function route(keepScroll){
   if (want && want !== COURSE) setCourse(want, true);
   if ((h === "zh") !== VIEW_ZH) { VIEW_ZH = h === "zh"; const keep = nav.classList.contains("open"); buildNav(); if (keep) nav.classList.add("open"); }
   const y = window.scrollY;
-  if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
+  if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : byId[h].sec === "tutor" ? "tutor" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
   if (byId[h]) renderTopic(byId[h]);
   else if (h === "test") renderTest();
   else if (h === "shpargalka") renderCheat();

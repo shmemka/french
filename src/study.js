@@ -14,7 +14,7 @@ Object.assign(I18N.ru, {
   listenHint:"Пиши цифры и нажми Enter",
   bankSub:"Выбери темы и количество — задания пойдут по одному.", bankCount:"Сколько", bankMode:"Порядок",
   heroLead:n=>`Теория из учебника, задания рабочей тетради, ${n} ${plural(n,["упражнение","упражнения","упражнений"])}, карточки Quizlet и самопроверка по юнитам 0–3.`,
-  frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
+  frModeL:"Раздел", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Задания рабочей тетради, юниты 0–3. Задания на аудио и картинки пропущены.", tutorSub:"Задания от репетитора, по юнитам учебника.", tutorH:"Tutor", tutorEmpty:"Здесь пока ничего нет — раздел появится позже.", tutorEmptyS:"Пока пусто.",
   esHeroLead:n=>`Теория, ${n} ${plural(n,["упражнение","упражнения","упражнений"])}, лексика и самопроверка по юнитам 1–4.`,
   homeCont:"Продолжить", homeStart:"Начать с первой темы",
   testSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Оценка — из 20 баллов.`, esTestSub:n=>`Случайные вопросы из банка (${n}) по всем темам. Результат — в процентах.`,
@@ -34,7 +34,7 @@ Object.assign(I18N.en, {
   listenHint:"Type the digits and press Enter",
   bankSub:"Pick topics and how many — tasks come one at a time.", bankCount:"How many", bankMode:"Order",
   heroLead:n=>`Textbook theory, workbook exercises, ${n} tasks, Quizlet flashcards and a self-check for units 0–3.`,
-  frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
+  frModeL:"Section", frModes:{livre:"Livre", cahier:"Cahier", tutor:"Tutor"}, cahierSub:"Workbook exercises, units 0–3. Audio and picture tasks are left out.", tutorSub:"Tasks from the tutor, grouped by textbook unit.", tutorH:"Tutor", tutorEmpty:"Nothing here yet — this section is coming later.", tutorEmptyS:"Nothing here yet.",
   esHeroLead:n=>`Theory, ${n} exercises, vocabulary and a self-check for units 1–4.`,
   homeCont:"Continue", homeStart:"Start with the first topic",
   testSub:n=>`Random questions from the bank (${n}) across all topics. Graded out of 20.`, esTestSub:n=>`Random questions from the bank (${n}) across all topics. Scored in percent.`,
@@ -74,7 +74,7 @@ let BANK = null;
 function renderBank(){
   const cfg = bankCfg(), items = bankItems(), cnt = {};
   items.forEach(x=>{ cnt[x.tid] = (cnt[x.tid] || 0) + 1; });
-  const tops = [...ORDER, ...CAH].filter(tp=>cnt[tp.id]);
+  const tops = [...ORDER, ...CAH, ...TUT].filter(tp=>cnt[tp.id]);
   if (!cfg.sel) cfg.sel = tops.map(x=>x.id);
   /* новые темы (например, добавленный юнит) включаем по умолчанию */
   if (!cfg.seen) cfg.seen = cfg.sel.slice();
@@ -86,6 +86,7 @@ function renderBank(){
   const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
   const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);
   units.forEach(u=>{ const g = tops.filter(x=>x.sec === "cahier" && x.unit === u); if (g.length) groups.push([`Cahier · ${t("unitW")} ${u}`, g]); });
+  const tu = tops.filter(x=>x.sec === "tutor"); if (tu.length) groups.push(["Tutor", tu]);
   main.innerHTML = `<div class="col" style="max-width:980px">
   <header class="t-head seyes"><p class="eyebrow">${COURSES[COURSE].name} · ${COURSES[COURSE].book}</p><h1>${t("bank")}</h1><p class="t-ru">${t("bankSub")}</p></header>
   <div class="bank-set">
@@ -112,7 +113,7 @@ function renderBank(){
     const by = {}; pool.forEach(x=>(by[x.tid] = by[x.tid] || []).push(x)); Object.values(by).forEach(shuffle);
     const ids = shuffle(Object.keys(by)), pick = [];
     while (pick.length < Math.min(cfg.n, pool.length)) { let add = false; for (const id of ids) if (by[id].length && pick.length < cfg.n) { pick.push(by[id].pop()); add = true; } if (!add) break; }
-    const all = [...ORDER, ...CAH], ord = id => all.findIndex(x=>x.id === id);
+    const all = [...ORDER, ...CAH, ...TUT], ord = id => all.findIndex(x=>x.id === id);
     if (cfg.mix) shuffle(pick); else pick.sort((a, b)=>ord(a.tid) - ord(b.tid));
     bankRun(pick);
   });
@@ -204,7 +205,7 @@ function openDeck(tp, start){
   if (CLOSING) { const c = CLOSING; CLOSING = null; deckRestore(c); c.el.remove(); }
   DECK_TP = tp;
   const parts = deckCards(tp), es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   /* настоящие блоки заданий переезжают из страницы в карточки и возвращаются при закрытии */
   const exEls = $$(".exs > .exb", main), moved = exEls.map(el=>{ const ph = document.createComment("dk"); el.before(ph); return {el, ph}; });
   const nT = 1 + parts.length, hasEx = moved.length > 0;

@@ -41,7 +41,7 @@ function kindIco(tp){
   const k = String(tp.kind || "").toLowerCase();
   const id = /^(communication|общение|communic)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
     : /phon|произн|pronun/.test(k) ? "sound" : /спряж|conjug/.test(k) ? "conj" : /нуля|scratch/.test(k) ? "spark" : /полезно|good to know/.test(k) ? "bulb"
-    : /delf|^test/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" ? "pencil" : "doc";
+    : /delf|^test/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" || tp.sec === "tutor" ? "pencil" : "doc";
   return KIND_ICO[id];
 }
 /* цвет группы: юнит 0–4, грамматика, справочник */
@@ -252,7 +252,7 @@ const ES_CACHE = {};
 const OKW = () => COURSE === "es" ? "¡Correcto!" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
-let TOP, BOOK, GRAM, REF, CAH, ORDER, byId, POOLX, CHEATX;
+let TOP, BOOK, GRAM, REF, CAH, TUT, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
     const esPool = L => ES_POOL_BUILD(L).concat(ES_POOL_EXTRA(L), ES_POOL_U4(L));
@@ -261,7 +261,7 @@ function setData(){
     if (!c.why) { WHYP_APPLY("es", ES_CACHE.ruPool, c.pool, LANG === "en" ? 1 : 0); c.why = 1; }
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
-  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); ORDER = [...BOOK, ...GRAM, ...REF];
+  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); TUT = TOP.filter(x=>x.sec==="tutor"); ORDER = [...BOOK, ...GRAM, ...REF];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
   document.documentElement.lang = LANG;
   document.title = LANG === "en" ? "Learn languages step by step" : "Учим языки шаг за шагом";
@@ -270,7 +270,7 @@ function setData(){
 setData();
 /* французский: Livre / Cahier / Tutor */
 let FRMODE = ["livre","cahier","tutor"].includes(ls.get("edito-frmode")) ? ls.get("edito-frmode") : "livre";
-const seqOf = tp => tp && tp.sec === "cahier" ? CAH : ORDER;
+const seqOf = tp => tp && tp.sec === "cahier" ? CAH : tp && tp.sec === "tutor" ? TUT : ORDER;
 
 /* =========================================================
    STORE: local cache + cloud (db) under data/users/<id>/
@@ -1281,8 +1281,8 @@ function navGroup(key, head, links, opts){
 const unitBadge = (u, hue) => `<span class="ng-n" data-hue="${hue}">${u}</span>`;
 function navTopics(units, unitW, uname){
   const es = COURSE === "es";
-  if (!es && FRMODE === "tutor") return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
-  const cah = !es && FRMODE === "cahier", list = cah ? CAH : BOOK;
+  if (!es && FRMODE === "tutor" && !TUT.length) return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
+  const tut = !es && FRMODE === "tutor", cah = (!es && FRMODE === "cahier") || tut, list = tut ? TUT : cah ? CAH : BOOK;
   const first = units.find(u=>list.some(x=>x.unit===u));
   let h = units.map(u=>{ const g = list.filter(x=>x.unit===u); return g.length ? navGroup("u" + u, `${unitBadge(u, u)}<span class="ng-t"><b>${unitW} ${u}</b><i>${uname(u)}</i></span>`, g.map(navLink).join(""), {open: u === first}) : ""; }).join("");
   if (!cah) h += `<div class="nav-sec">${t("navMore")}</div>`
@@ -1300,7 +1300,7 @@ function navSearchHTML(){
 }
 function navWhere(tp){
   const es = COURSE === "es";
-  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
+  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
 }
 function pagesOf(tp){
   const src = String(tp.page || "").replace(/(Unidad|Unité)\s*\d+/g, ""), out = [];
@@ -1312,7 +1312,7 @@ function navSearchRun(q){
   const f = fold(q).trim();
   if (!f) { box.hidden = true; groups.hidden = false; box.innerHTML = ""; return; }
   const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
-  const tps = [...BOOK, ...CAH, ...GRAM, ...REF];
+  const tps = [...BOOK, ...CAH, ...TUT, ...GRAM, ...REF];
   const hit = s => fold(s).includes(f);
   /* число → темы с этой страницей учебника / тетради */
   if (/^\d{1,3}$/.test(f)) {
@@ -1584,9 +1584,9 @@ function renderHome(){
   const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
   const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3","4"] : ["0","1","2","3"];
-  const seq = !es && FRMODE === "cahier" ? CAH : ORDER;
+  const seq = !es && FRMODE === "cahier" ? CAH : !es && FRMODE === "tutor" ? TUT : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
-  const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE !== "cahier" ? t("unit0note") : "");
+  const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE === "livre" ? t("unit0note") : "");
   const uHead = u => `<h3 class="unit-h"><span class="ng-n u-pill" data-hue="${u}">${unitW} ${u}</span><small>${uname(u)}</small></h3>`;
   if (!es || !["all","ref",...units].includes(HOME_U)) HOME_U = "all";
   const showU = k => !es || HOME_U === "all" || HOME_U === k;
@@ -1599,7 +1599,9 @@ function renderHome(){
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span>${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
   <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act">${cta}</div></div>
-  ${!es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
+  ${!es && FRMODE === "tutor" && TUT.length ? `
+  <div class="sec-h"><h2>Tutor</h2><p>${t("tutorSub")}</p></div>
+  ${units.map(u=>{ const g = TUT.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : !es && FRMODE === "tutor" ? `<div class="empty-st"><div class="empty-i">✎</div><h2>${t("tutorH")}</h2><p>${t("tutorEmpty")}</p></div>` : !es && FRMODE === "cahier" ? `
   <div class="sec-h"><h2>Cahier d’activités</h2><p>${t("cahierSub")}</p></div>
   ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
   ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2></div>`}
@@ -1611,7 +1613,7 @@ function renderHome(){
 }
 function renderTopic(tp){
   const seq = seqOf(tp), idx = seq.indexOf(tp), prev = seq[idx-1], next = seq[idx+1], es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
@@ -2192,7 +2194,7 @@ function route(keepScroll){
   if (want && want !== COURSE) setCourse(want, true);
   if ((h === "zh") !== VIEW_ZH) { VIEW_ZH = h === "zh"; const keep = nav.classList.contains("open"); buildNav(); if (keep) nav.classList.add("open"); }
   const y = window.scrollY;
-  if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
+  if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : byId[h].sec === "tutor" ? "tutor" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
   if (byId[h]) renderTopic(byId[h]);
   else if (h === "test") renderTest();
   else if (h === "shpargalka") renderCheat();
