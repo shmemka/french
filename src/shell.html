@@ -1761,6 +1761,13 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
   .trp-hd{padding-top:8px}
   .trp-box textarea,.trp-out{min-height:70px}
 }
+/* кнопка переводчика в правом нижнем углу */
+.tr-fab{position:fixed;z-index:80;right:max(20px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));width:48px;height:48px;border:0;border-radius:14px;background:var(--sheet);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 1px var(--line-2),0 8px 24px rgba(20,24,50,.14);transition:transform .15s,box-shadow .15s}
+.tr-fab:hover{transform:translateY(-1px);box-shadow:0 0 0 1px var(--line-3,var(--line-2)),0 10px 28px rgba(20,24,50,.18)}
+.tr-fab:focus-visible{outline:none;box-shadow:0 0 0 2px var(--encre),0 8px 24px rgba(20,24,50,.14)}
+.tr-fab svg{width:23px;height:23px}
+body.gated .tr-fab,body.has-trp .tr-fab{display:none}
+@media (max-width:760px){.tr-fab{right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));width:46px;height:46px}}
 /* мини-плеер диалогов: снизу по центру, на телефоне сверху */
 .ply{position:fixed;z-index:85;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));width:min(640px,calc(100vw - 32px));display:flex;flex-direction:column;gap:8px;transform:translate(-50%,12px);opacity:0;transition:transform .22s var(--ease),opacity .22s}
 .ply.in{transform:translate(-50%,0);opacity:1}
@@ -1832,6 +1839,15 @@ body.has-ply .main{padding-bottom:120px}
 .seg button{border-radius:8px;padding:6px 12px;font-size:13.5px;font-weight:500;color:var(--ink-2);transition:background .15s,color .15s}
 .seg button:hover:not(.on){color:var(--ink)}
 .seg button.on,.frmode button.on{background:var(--sheet);color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--line-2),0 1px 2px rgba(20,24,50,.08)}
+/* все сегментированные переключатели — как на главной: подложка --fill, радиус 11, внутри кнопки с радиусом 8 */
+.seg,.seg.big,.lang-sw,.qz-modes{background:var(--fill);border-radius:11px;padding:4px;gap:2px;box-shadow:none}
+.seg.big button,.lang-sw button,.qz-modes button{border-radius:8px}
+.seg.big button{padding:7px 14px;font-size:14px;font-weight:500;color:var(--ink-2)}
+.lang-sw button{padding:6px 10px;font-size:13.5px;font-weight:500;color:var(--ink-2)}
+.qz-modes button{padding:7px 14px;font-size:14px;font-weight:500;color:var(--ink-2)}
+.lang-sw button:hover:not(.on),.qz-modes button:hover:not(.on){color:var(--ink)}
+.seg.big button.on,.lang-sw button.on,.qz-modes button.on{background:var(--sheet);color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--line-2),0 1px 2px rgba(20,24,50,.08)}
+@media (max-width:760px){.qz-modes{border-radius:11px}.qz-modes button{border-radius:8px;padding:7px 4px;font-size:13px}}
 
 /* шапки страниц: без карточки, как заголовок раздела */
 .panel .t-head.seyes{background:none;box-shadow:none;border-radius:0;padding:0 0 24px;margin:0 0 34px;border-bottom:1px solid var(--line-2)}

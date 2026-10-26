@@ -69,6 +69,7 @@ function trBuild(){
 }
 function trCount(){ const s = $("#trSrc", TR.el).value; $("#trCnt", TR.el).textContent = s.length ? `${s.length} / 1500` : ""; }
 function trPaint(){
+  trFabPaint();
   const el = TR.el, L = t("trLangs"), opts = v => trLangs().map(k=>`<option value="${k}"${k === v ? " selected" : ""}>${L[k]}</option>`).join("");
   $(".trp-t", el).textContent = t("trTitle");
   $("#trFrom", el).innerHTML = opts(TR.from); $("#trTo", el).innerHTML = opts(TR.to);
@@ -112,6 +113,21 @@ function trOpen(text){
 }
 function trClose(){ if (!TR.el || TR.el.hidden) return; TR.el.classList.remove("in"); document.body.classList.remove("has-trp"); TR.req++; setTimeout(()=>{ if (!TR.el.classList.contains("in")) TR.el.hidden = true; }, 220); }
 document.addEventListener("keydown", e=>{ if (e.key === "Escape" && TR.el && !TR.el.hidden && !(SP.el && !SP.el.hidden)) trClose(); });
+/* плавающая кнопка переводчика в правом нижнем углу */
+const TR_FAB = (()=>{
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "tr-fab"; b.innerHTML = f7("globe");
+  b.addEventListener("click", ()=>{
+    if (TR.el && !TR.el.hidden) return trClose();
+    let sel = ""; try { sel = String(window.getSelection() || "").trim(); } catch(e) {}
+    trOpen(sel);
+    if (!sel) setTimeout(()=>{ const ta = $("#trSrc", TR.el); if (ta) ta.focus(); }, 80);
+  });
+  document.body.appendChild(b);
+  return b;
+})();
+function trFabPaint(){ TR_FAB.setAttribute("aria-label", t("trTitle")); TR_FAB.title = t("trTitle"); }
+trFabPaint();
 
 /* ---------- мини-плеер диалогов (синтез речи с перемоткой и словами) ---------- */
 const PLY = {el:null, d:null, words:[], lines:[], total:0, pos:0, wi:0, playing:false, speed:1, tok:0, tick:null, bnd:false, t0:0, show:false};

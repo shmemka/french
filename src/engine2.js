@@ -1550,7 +1550,7 @@ function paintNavProgress(){
 function setLang(l){
   if (l === LANG) return;
   LANG = l; ls.set("edito-lang", l); setData(); touch("settings");
-  buildNav(); $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav"); rerender();
+  buildNav(); $("#menuLbl").textContent = t("topics"); $("#navShow").lastChild.textContent = t("showNav"); trFabPaint(); rerender();
 }
 function setNavHidden(h){ app.classList.toggle("nav-off", h); document.body.classList.toggle("nav-off", h); ls.set("edito-nav", h ? "off" : "on"); }
 setNavHidden(ls.get("edito-nav") === "off");
