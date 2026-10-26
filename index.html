@@ -15330,30 +15330,14 @@ function hasData(k){
   return false;
 }
 function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}}; persistLocal(); }
-function initCloud(){
-  const prev = Cloud.initing || Promise.resolve();
-  const run = prev.catch(()=>{}).then(()=>initCloudRun());
-  Cloud.initing = run.finally(()=>{ if (Cloud.initing === run2) Cloud.initing = null; });
-  const run2 = Cloud.initing;
-  return run2;
-}
-async function initCloudRun(){
-  if (Cloud.kind === "none") { setCloud("local"); return; }
-  Cloud.inits++;
-  setCloud("loading");
-  let changed = false, langChanged = false;
-  try {
-    const be = await withTimeout(Cloud.kind === "supabase" ? supaBackend() : claudeBackend(), 25000);
-    paintAccount();
-    if (!be) { Cloud.be = null; Cloud.uid = null; setCloud(Cloud.kind === "supabase" ? "signedout" : "local"); if (location.hash === "#account") rerender(); return; }
-    /* другой аккаунт на этом же устройстве — не смешиваем чужой прогресс */
-    const owner = ls.get("edito-owner");
-    if (owner && owner !== be.uid) { resetLocal(); changed = true; }
-    ls.set("edito-owner", be.uid);
-    const docs = await withTimeout(be.list(), 20000);
+/* слить облачные документы с локальными; pull = подтягивание на лету (без смены языка и курса) */
+function mergeDocs(docs, pull, changed){
+  changed = !!changed; let langChanged = false;
     const cloudKeys = new Set();
     docs.forEach(({id:k, data:v})=>{
-      v = v || {}; cloudKeys.add(k);
+      cloudKeys.add(k);
+      if (pull && k === "settings") return;   /* язык и курс на этом устройстве не трогаем */
+      v = v || {};
       const lt = S.ts[k] || 0, ct = v.ts || 0;
       if (k === "progress") {
         let up = false;
@@ -15376,6 +15360,58 @@ async function initCloudRun(){
       } else if (lt > ct) Cloud.dirty.add(k);
     });
     ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
+  return {changed, langChanged};
+}
+/* подтягиваем изменения с других устройств, когда возвращаешься на вкладку */
+function pullSafe(){
+  if (typeof DECK !== "undefined" && DECK) return false;
+  if (document.body.classList.contains("gated")) return false;
+  const h = decodeURIComponent((location.hash||"").slice(1));
+  if (["test","bank","quizlet"].includes(h)) return false;
+  const a = document.activeElement;
+  if (a && main.contains(a) && /^(INPUT|TEXTAREA)$/.test(a.tagName) && a.value) return false;
+  return true;
+}
+async function pullCloud(){
+  const be = Cloud.be;
+  if (!be || Cloud.pulling || Cloud.initing || document.visibilityState === "hidden" || Date.now() - (Cloud.pulledAt || 0) < 4000) return;
+  Cloud.pulling = true; Cloud.pulledAt = Date.now();
+  try {
+    if (Cloud.dirty.size) await flush();
+    const docs = await withTimeout(be.list(), 15000);
+    if (Cloud.be !== be) return;
+    const r = mergeDocs(docs, true);
+    persistLocal();
+    if (Cloud.dirty.size) flush();
+    if (r.changed) { paintNavProgress(); applyLook(); paintMe(); if (pullSafe()) rerender(); }
+  } catch(e) { try { console.warn("[cloud] pull failed:", e && e.code, e && e.message); } catch(_) {} }
+  finally { Cloud.pulling = false; }
+}
+document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState === "visible") pullCloud(); });
+window.addEventListener("focus", ()=>pullCloud());
+window.addEventListener("online", ()=>pullCloud());
+function initCloud(){
+  const prev = Cloud.initing || Promise.resolve();
+  const run = prev.catch(()=>{}).then(()=>initCloudRun());
+  Cloud.initing = run.finally(()=>{ if (Cloud.initing === run2) Cloud.initing = null; });
+  const run2 = Cloud.initing;
+  return run2;
+}
+async function initCloudRun(){
+  if (Cloud.kind === "none") { setCloud("local"); return; }
+  Cloud.inits++;
+  setCloud("loading");
+  let changed = false, langChanged = false;
+  try {
+    const be = await withTimeout(Cloud.kind === "supabase" ? supaBackend() : claudeBackend(), 25000);
+    paintAccount();
+    if (!be) { Cloud.be = null; Cloud.uid = null; setCloud(Cloud.kind === "supabase" ? "signedout" : "local"); if (location.hash === "#account") rerender(); return; }
+    /* другой аккаунт на этом же устройстве — не смешиваем чужой прогресс */
+    const owner = ls.get("edito-owner");
+    if (owner && owner !== be.uid) { resetLocal(); changed = true; }
+    ls.set("edito-owner", be.uid);
+    const docs = await withTimeout(be.list(), 20000);
+    ({changed, langChanged} = mergeDocs(docs, false, changed));
     persistLocal();
     Cloud.be = be; Cloud.uid = be.uid; Cloud.fails = 0; Cloud.lastOk = Date.now(); Cloud.lastErr = null;
     setCloud(Cloud.dirty.size ? "saving" : "saved");
