@@ -6,14 +6,14 @@ Object.assign(I18N.ru, {
   trTitle:"Переводчик", trBtn:"Перевести", trSrcPh:"Введи или вставь текст", trCopy:"Копировать", trCopied:"Скопировано", trClear:"Очистить",
   trSwap:"Поменять языки", trListen:"Слушать", trClose:"Закрыть", trFrom:"С языка", trTo:"На язык", trFail:"Не получилось перевести. Проверь интернет и попробуй ещё раз.",
   trEmpty:"Здесь появится перевод", trAuto:"машинный перевод", trLangs:{fr:"Французский", es:"Испанский", ru:"Русский", en:"Английский"},
-  plyPlay:"Слушать", plyPause:"Пауза", plyBack:"Назад на 5 секунд", plyFwd:"Вперёд на 5 секунд", plySpeed:"Скорость", plyWords:"Показывать слова", plyClose:"Закрыть плеер",
+  plyPlay:"Слушать", plyPause:"Пауза", plyBack:"Назад на 5 секунд", plyFwd:"Вперёд на 5 секунд", plySpeed:"Скорость", plyWords:"Показывать слова", plyWords2:"Слова и перевод", plyWords0:"Скрыть слова", plyClose:"Закрыть плеер",
   plyDlg:"Слушать диалог"
 });
 Object.assign(I18N.en, {
   trTitle:"Translator", trBtn:"Translate", trSrcPh:"Type or paste text", trCopy:"Copy", trCopied:"Copied", trClear:"Clear",
   trSwap:"Swap languages", trListen:"Listen", trClose:"Close", trFrom:"From", trTo:"To", trFail:"Couldn’t translate. Check your connection and try again.",
   trEmpty:"The translation will appear here", trAuto:"machine translation", trLangs:{fr:"French", es:"Spanish", ru:"Russian", en:"English"},
-  plyPlay:"Play", plyPause:"Pause", plyBack:"Back 5 seconds", plyFwd:"Forward 5 seconds", plySpeed:"Speed", plyWords:"Show the words", plyClose:"Close the player",
+  plyPlay:"Play", plyPause:"Pause", plyBack:"Back 5 seconds", plyFwd:"Forward 5 seconds", plySpeed:"Speed", plyWords:"Show the words", plyWords2:"Words and translation", plyWords0:"Hide the words", plyClose:"Close the player",
   plyDlg:"Play the dialogue"
 });
 const ICO_X = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg>';
@@ -115,8 +115,11 @@ document.addEventListener("keydown", e=>{ if (e.key === "Escape" && TR.el && !TR
 
 /* ---------- мини-плеер диалогов (синтез речи с перемоткой и словами) ---------- */
 const PLY = {el:null, d:null, words:[], lines:[], total:0, pos:0, wi:0, playing:false, speed:1, tok:0, tick:null, bnd:false, t0:0, show:false};
-try { PLY.show = ls.get("edito-ply-words") === "1"; } catch(e) {}
-const PLY_SPEEDS = [0.75, 1, 1.25, 1.5];
+/* PLY.show: 0 — слов нет, 1 — слова в реальном времени, 2 — слова + перевод реплики */
+try { PLY.show = Math.max(0, Math.min(2, +ls.get("edito-ply-words") || 0)); } catch(e) {}
+PLY.tr = {};
+const PLY_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
+const spdTxt = v => String(v).replace(".", LANG === "en" ? "." : ",") + "×";
 const CPS = 13.5;          /* оценка: символов в секунду при скорости 1 */
 const LINE_GAP = .45;      /* пауза между репликами, с */
 const fmtT = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
@@ -146,19 +149,27 @@ function plyBuild(){
     <button type="button" class="ply-b ply-pp" data-ply="pp"></button>
     <button type="button" class="ply-b" data-ply="fwd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v3.5H16"/><text x="12" y="15.2" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">5</text></svg></button>
     <div class="ply-mid"><div class="ply-ti"><span class="ply-name"></span><span class="ply-time"></span></div><div class="ply-track" data-ply="seek"><i></i></div></div>
-    <button type="button" class="ply-b ply-sp" data-ply="speed"></button>
-    <button type="button" class="ply-b ply-cc" data-ply="words"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="3"/><path d="M7 11h4M13 11h4M7 14.5h7M16 14.5h1" stroke-linecap="round"/></svg></button>
+    <span class="ply-spw"><button type="button" class="ply-b ply-sp" data-ply="speed" aria-haspopup="menu" aria-expanded="false"></button><div class="ply-menu" role="menu" hidden></div></span>
+    <button type="button" class="ply-b ply-cc" data-ply="words"><i class="ply-cc-n" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="3"/><path d="M7 11h4M13 11h4M7 14.5h7M16 14.5h1" stroke-linecap="round"/></svg></button>
     <button type="button" class="ply-b" data-ply="close">${ICO_X}</button>
   </div>`;
   document.body.appendChild(el); PLY.el = el;
+  document.addEventListener("click", e=>{ if (PLY.menu && !e.target.closest(".ply-spw")) plyMenu(false); });
+  document.addEventListener("keydown", e=>{
+    if (!PLY.menu) return;
+    const its = $$(".ply-menu [data-v]", el), i = its.indexOf(document.activeElement);
+    if (e.key === "Escape") { e.preventDefault(); plyMenu(false); $(".ply-sp", el).focus(); }
+    else if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); const n = its[(i + (e.key === "ArrowDown" ? 1 : -1) + its.length) % its.length]; if (n) n.focus(); }
+  });
   el.addEventListener("click", e=>{
     const b = e.target.closest("[data-ply]"); if (!b) return;
     const a = b.dataset.ply;
     if (a === "pp") return PLY.playing ? plyPause() : plyPlay();
     if (a === "back") return plySeek(PLY.pos - 5);
     if (a === "fwd") return plySeek(PLY.pos + 5);
-    if (a === "speed") { PLY.speed = PLY_SPEEDS[(PLY_SPEEDS.indexOf(PLY.speed) + 1) % PLY_SPEEDS.length]; if (PLY.playing) plyPlay(); else plyPaint(); return; }
-    if (a === "words") { PLY.show = !PLY.show; try { ls.set("edito-ply-words", PLY.show ? "1" : "0"); } catch(_) {} return plyPaint(); }
+    if (a === "speed") return plyMenu(!PLY.menu);
+    if (a === "spd") { PLY.speed = +b.dataset.v; plyMenu(false); $(".ply-sp", el).focus(); if (PLY.playing) plyPlay(); else plyPaint(); return; }
+    if (a === "words") { PLY.show = (PLY.show + 1) % 3; try { ls.set("edito-ply-words", String(PLY.show)); } catch(_) {} return plyPaint(); }
     if (a === "close") return plyClose();
     if (a === "seek") { const r = b.getBoundingClientRect(); plySeek((e.clientX - r.left) / r.width * PLY.total); }
   });
@@ -171,7 +182,7 @@ function plyOpen(id){
   document.body.classList.add("has-ply");
   plyPlay();
 }
-function plyClose(){ if (!PLY.el) return; plyStop(); PLY.el.classList.remove("in"); document.body.classList.remove("has-ply"); setTimeout(()=>{ if (!PLY.el.classList.contains("in")) PLY.el.hidden = true; }, 220); }
+function plyClose(){ if (!PLY.el) return; plyMenu(false); plyStop(); PLY.el.classList.remove("in"); document.body.classList.remove("has-ply"); setTimeout(()=>{ if (!PLY.el.classList.contains("in")) PLY.el.hidden = true; }, 220); }
 function plyStop(){ PLY.tok++; PLY.playing = false; clearInterval(PLY.tick); try { synth && synth.cancel(); } catch(e) {} }
 function plyPause(){ plyStop(); plyPaint(); }
 function plyWordAt(sec){ const ws = PLY.words; let i = 0; while (i < ws.length - 1 && ws[i + 1].t0 <= sec + 1e-6) i++; return i; }
@@ -219,23 +230,43 @@ function plyPlace(){
   document.documentElement.style.setProperty("--ply-h", (el.offsetHeight + 8) + "px");
 }
 window.addEventListener("resize", ()=>plyPlace());
+/* выпадающее меню скорости: на компьютере открывается вверх, на телефоне вниз */
+function plyMenu(open){
+  const el = PLY.el; if (!el) return;
+  const m = $(".ply-menu", el), b = $(".ply-sp", el);
+  PLY.menu = !!open; b.setAttribute("aria-expanded", PLY.menu); b.classList.toggle("on", PLY.menu);
+  if (!PLY.menu) { m.hidden = true; return; }
+  m.innerHTML = PLY_SPEEDS.map(v=>`<button type="button" role="menuitemradio" aria-checked="${v === PLY.speed}" class="${v === PLY.speed ? "on" : ""}" data-ply="spd" data-v="${v}"><span>${spdTxt(v)}</span>${v === PLY.speed ? '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg>' : ""}</button>`).join("");
+  m.hidden = false;
+  const cur = $(".on", m) || $("button", m); if (cur) cur.focus({preventScroll:true});
+}
+/* перевод реплики: из данных диалога ([кто, текст, ru, en]) или автоперевод */
+function plyTr(li){
+  const L = LANG === "en" ? "en" : "ru", line = PLY.d.lines[li], own = line[L === "ru" ? 2 : 3];
+  if (own) return own;
+  const k = L + li;
+  if (PLY.tr[k] === undefined) { PLY.tr[k] = null; remoteTr(line[1], L, PLY.d.lang).then(r=>{ PLY.tr[k] = r || ""; plyPaint(); }); }
+  return PLY.tr[k];
+}
 function plyPaint(done){
   const el = PLY.el; if (!el || !PLY.d) return;
   const pp = $(".ply-pp", el);
   pp.innerHTML = PLY.playing ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.2-6.5a1 1 0 0 0 0-1.7L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg>';
   const lbl = (sel, k) => { const b = $(sel, el); b.setAttribute("aria-label", t(k)); b.title = t(k); };
-  lbl(".ply-pp", PLY.playing ? "plyPause" : "plyPlay"); lbl('[data-ply="back"]', "plyBack"); lbl('[data-ply="fwd"]', "plyFwd"); lbl(".ply-sp", "plySpeed"); lbl(".ply-cc", "plyWords"); lbl('[data-ply="close"]', "plyClose");
+  lbl(".ply-pp", PLY.playing ? "plyPause" : "plyPlay"); lbl('[data-ply="back"]', "plyBack"); lbl('[data-ply="fwd"]', "plyFwd"); lbl(".ply-sp", "plySpeed"); lbl(".ply-cc", ["plyWords", "plyWords2", "plyWords0"][PLY.show]); lbl('[data-ply="close"]', "plyClose");
   el.setAttribute("aria-label", PLY.d.title || t("plyDlg"));
-  $(".ply-sp", el).textContent = String(PLY.speed).replace(".", LANG === "en" ? "." : ",") + "×";
-  $(".ply-cc", el).classList.toggle("on", PLY.show); $(".ply-cc", el).setAttribute("aria-pressed", PLY.show);
+  $(".ply-sp", el).textContent = spdTxt(PLY.speed);
+  const cc = $(".ply-cc", el); cc.classList.toggle("on", PLY.show > 0); cc.classList.toggle("dual", PLY.show === 2); cc.setAttribute("aria-pressed", PLY.show > 0);
+  $(".ply-cc-n", el).textContent = PLY.show === 2 ? (LANG === "en" ? "EN" : "RU") : "";
   $(".ply-name", el).textContent = PLY.d.title || "";
   $(".ply-time", el).textContent = `${fmtT(PLY.pos / PLY.speed)} / ${fmtT(PLY.total / PLY.speed)}`;
   $(".ply-track i", el).style.width = (PLY.total ? Math.min(100, PLY.pos / PLY.total * 100) : 0).toFixed(1) + "%";
-  const live = $("#plyLive", el); live.hidden = !PLY.show;
+  const live = $("#plyLive", el); live.hidden = !PLY.show; live.classList.toggle("dual", PLY.show === 2);
   if (PLY.show) {
     const w = PLY.words[PLY.wi], line = PLY.lines[w ? w.li : 0];
     const cur = done ? -1 : PLY.wi;
-    live.innerHTML = `<b class="ply-who">${esc(line.who)}</b><span class="ply-ln">${PLY.words.slice(line.w0, line.w1).map((x, k)=>`<span class="${line.w0 + k < cur ? "past" : line.w0 + k === cur ? "now" : ""}">${esc(x.w)}</span>`).join(" ")}</span>`;
+    live.innerHTML = `<b class="ply-who">${esc(line.who)}</b><span class="ply-ln">${PLY.words.slice(line.w0, line.w1).map((x, k)=>`<span class="${line.w0 + k < cur ? "past" : line.w0 + k === cur ? "now" : ""}">${esc(x.w)}</span>`).join(" ")}</span>`
+      + (PLY.show === 2 ? (tr => `<span class="ply-tr${tr ? "" : " load"}">${tr ? esc(tr) : "…"}</span>`)(plyTr(line.li)) : "");
   }
   plyPlace();
 }

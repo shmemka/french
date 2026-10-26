@@ -10,15 +10,16 @@ function FR_TEST_U2(L){
   try { return FR_TEST_U2_TOPIC(); } finally { HL = keepHL; FRL = keepFRL; }
 }
 const FR_U2_DIALOG = [
-  ["Astrid", "Allô ? Oncle Armand ? C’est Astrid."],
-  ["Armand", "Oh, Astrid, ma chérie ! Comment vas-tu ?"],
-  ["Astrid", "Très, très bien. Je prépare mon mariage !"],
-  ["Armand", "Bravo, c’est fantastique ! Avec… oh, comment il s’appelle… euh… Hector ?"],
-  ["Astrid", "Non, oncle Armand, c’est Victor !"],
-  ["Armand", "Oui, pardon. Victor, pas Hector. Félicitations !"],
-  ["Astrid", "Merci. Je t’invite. C’est en mai."],
-  ["Armand", "Oui, mais…"],
-  ["Astrid", "Oui, tu adores le cinéma… Mais, oncle Armand, c’est mon mariage !"]
+  /* [кто, реплика, перевод ru, перевод en] — перевод показывается в плеере в режиме «слова + перевод» */
+  ["Astrid", "Allô ? Oncle Armand ? C’est Astrid.", "Алло? Дядя Арман? Это Астрид.", "Hello? Uncle Armand? It’s Astrid."],
+  ["Armand", "Oh, Astrid, ma chérie ! Comment vas-tu ?", "О, Астрид, дорогая! Как ты?", "Oh, Astrid, my dear! How are you?"],
+  ["Astrid", "Très, très bien. Je prépare mon mariage !", "Очень-очень хорошо. Я готовлюсь к свадьбе!", "Very, very well. I’m getting ready for my wedding!"],
+  ["Armand", "Bravo, c’est fantastique ! Avec… oh, comment il s’appelle… euh… Hector ?", "Браво, это потрясающе! С… ох, как его зовут… э-э… Гектором?", "Bravo, that’s fantastic! With… oh, what’s his name… er… Hector?"],
+  ["Astrid", "Non, oncle Armand, c’est Victor !", "Нет, дядя Арман, это Виктор!", "No, Uncle Armand, it’s Victor!"],
+  ["Armand", "Oui, pardon. Victor, pas Hector. Félicitations !", "Да, извини. Виктор, не Гектор. Поздравляю!", "Yes, sorry. Victor, not Hector. Congratulations!"],
+  ["Astrid", "Merci. Je t’invite. C’est en mai.", "Спасибо. Я тебя приглашаю. Это в мае.", "Thanks. I’m inviting you. It’s in May."],
+  ["Armand", "Oui, mais…", "Да, но…", "Yes, but…"],
+  ["Astrid", "Oui, tu adores le cinéma… Mais, oncle Armand, c’est mon mariage !", "Да, ты обожаешь кино… Но, дядя Арман, это же моя свадьба!", "Yes, you love cinema… But, Uncle Armand, it’s my wedding!"]
 ];
 DLG["fr-u2-test"] = {lang:"fr", title:"Test unité 2 · Compréhension orale", lines:FR_U2_DIALOG};
 function FR_TEST_U2_TOPIC(){

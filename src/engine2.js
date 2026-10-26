@@ -6,6 +6,7 @@ const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"
 const plural = (n, f) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? f[2] : b > 1 && b < 5 ? f[1] : b === 1 ? f[0] : f[2]; };
 const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 const ls = { get(k){ try { return localStorage.getItem(k); } catch(e) { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e) {} } };
+const ICO_TROPHY = '<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7v4.2a3.5 3.5 0 0 1-7 0z"/><path d="M6.5 5H4a2.2 2.2 0 0 0 2.6 3.1M13.5 5H16a2.2 2.2 0 0 1-2.6 3.1M10 11.2v2.8M7 16.5h6M8 14h4"/></svg>';
 const ICON_PLAY = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><path d="M10.5 5.2a3.8 3.8 0 0 1 0 5.6M12.4 3.4a6.3 6.3 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
 const ICO = {
   home:'<svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9.5 10 4l7 5.5V16a1 1 0 0 1-1 1h-3.5v-4.5h-5V17H4a1 1 0 0 1-1-1z"/></svg>',
@@ -81,7 +82,7 @@ ru:{
   back:"← назад", next:"дальше →",
   doneOf:(d,n,p)=>`${d} / ${n} заданий · ${p}%`,
   label:{mc:"Выбор ответа", tf:"Vrai ou faux", fill:"Впиши ответ", conj:"Спряжение", match:"Соедини пары", sort:"Распредели", order:"Собери фразу", listen:"Аудирование", cards:"Карточки", drill:"Читаем вслух"},
-  best:p=>`лучший: ${p}%`, again:"Заново", showAnswers:"Показать ответы", shuffleAgain:"Перемешать заново",
+  best:p=>`лучший: ${p}%`, bestT:p=>`Лучший результат: ${p}%`, again:"Заново", showAnswers:"Показать ответы", shuffleAgain:"Перемешать заново",
   vrai:"Vrai — верно", faux:"Faux — неверно",
   answerN:n=>`Ответь на ${n} вопр.`, mcProg:(a,n,c)=>`${a} / ${n} · верно: ${c}`,
   instantHint:"Ответ проверяется сразу: Enter, Tab или клик в другое поле. Засчитывается первая попытка.",
@@ -156,7 +157,7 @@ en:{
   back:"← back", next:"next →",
   doneOf:(d,n,p)=>`${d} / ${n} exercises · ${p}%`,
   label:{mc:"Multiple choice", tf:"Vrai ou faux", fill:"Type the answer", conj:"Conjugation", match:"Match the pairs", sort:"Sort", order:"Build the sentence", listen:"Listening", cards:"Flashcards", drill:"Read aloud"},
-  best:p=>`best: ${p}%`, again:"Start over", showAnswers:"Show answers", shuffleAgain:"Shuffle again",
+  best:p=>`best: ${p}%`, bestT:p=>`Best result: ${p}%`, again:"Start over", showAnswers:"Show answers", shuffleAgain:"Shuffle again",
   vrai:"Vrai — true", faux:"Faux — false",
   answerN:n=>`Answer ${n} questions`, mcProg:(a,n,c)=>`${a} / ${n} · correct: ${c}`,
   instantHint:"Answers are checked instantly: Enter, Tab or click another field. Your first attempt counts.",
@@ -943,7 +944,7 @@ function makeBlock(tp, ex, i){
     saved: (S.ans[tp.id] || {})[i] || null,
     save(obj){ (S.ans[tp.id] || (S.ans[tp.id] = {}))[i] = obj; api.saved = obj; touch("ans-" + tp.id); },
     clear(){ if (S.ans[tp.id] && S.ans[tp.id][i] !== undefined) { delete S.ans[tp.id][i]; touch("ans-" + tp.id); } api.saved = null; },
-    showBest(){ const p = (S.p[tp.id]||{})[i]; $(".exb-best", el).textContent = p ? t("best", Math.round(p.b*100)) : ""; },
+    showBest(){ const p = (S.p[tp.id]||{})[i], b = $(".exb-best", el); if (!p) { b.innerHTML = ""; b.removeAttribute("title"); return; } const pc = Math.round(p.b*100); b.innerHTML = `${ICO_TROPHY}<span>${pc}%</span>`; b.title = t("bestT", pc); b.setAttribute("aria-label", b.title); b.classList.toggle("full", pc >= 100); },
     finish(got, total, msg, restoring){ if (!restoring) setScore(tp.id, i, got, total); const r = total ? got/total : 1; api.score.innerHTML = msg || `<b>${got} / ${total}</b> · <span class="pen">${praise(r)}</span>`; api.showBest(); },
     status(txt){ api.score.innerHTML = txt; },
     button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; },

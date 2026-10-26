@@ -1773,6 +1773,25 @@ button.si{font:inherit;color:inherit;border:0;cursor:pointer}
 .ply-ln span.now{color:var(--encre);background:var(--encre-soft);border-radius:5px;box-shadow:0 0 0 2px var(--encre-soft)}
 body.has-ply .main{padding-bottom:120px}
 .dlg-btn svg{margin-right:2px}
+/* плеер: меню скорости и режим «слова + перевод» */
+.ply-spw{position:relative;flex:none;display:inline-flex}
+.ply-sp.on{background:var(--fill);color:var(--ink)}
+.ply-menu{position:absolute;right:0;bottom:calc(100% + 10px);z-index:2;min-width:112px;display:grid;gap:2px;padding:5px;background:var(--sheet);border-radius:12px;box-shadow:0 0 0 1px var(--line-2),0 14px 34px rgba(20,24,50,.18)}
+.ply-menu[hidden]{display:none}
+.ply-menu button{display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;background:transparent;border-radius:8px;padding:8px 10px;font:inherit;font-size:14px;font-weight:500;color:var(--ink);cursor:pointer;text-align:left;font-variant-numeric:tabular-nums}
+.ply-menu button:hover,.ply-menu button:focus-visible{background:var(--fill);outline:none}
+.ply-menu button.on{font-weight:700}
+.ply-menu svg{color:var(--encre)}
+.ply-cc{position:relative}
+.ply-cc-n{position:absolute;right:1px;bottom:2px;font-style:normal;font-size:8.5px;font-weight:800;line-height:1;padding:2px 3px;border-radius:4px;background:var(--encre);color:var(--on-encre,#fff)}
+.ply-cc-n:empty{display:none}
+.ply-tr{display:block;margin-top:6px;padding-top:6px;border-top:1px solid var(--line-2);font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.ply-tr.load{color:var(--ink-3)}
+@media (max-width:760px){.ply-menu{bottom:auto;top:calc(100% + 8px)}}
+/* «лучший результат» в шапке задания — как кнопка «Заново»: квадратная, иконка + процент */
+.exb-best{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:6px 11px;font-size:13.5px;font-weight:600;color:var(--ink);background:var(--sheet);box-shadow:0 0 0 1px var(--line-2),var(--lift);font-variant-numeric:tabular-nums}
+.exb-best svg{flex:none;color:var(--ink-3)}
+.exb-best.full svg{color:var(--ok)}
 @media (max-width:760px){
   .ply{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto;width:calc(100vw - 16px);transform:translate(-50%,-12px)}
   .ply-live{order:2;font-size:16px}
