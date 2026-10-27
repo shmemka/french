@@ -7,14 +7,16 @@ Object.assign(I18N.ru, {
   trSwap:"Поменять языки", trListen:"Слушать", trClose:"Закрыть", trFrom:"С языка", trTo:"На язык", trFail:"Не получилось перевести. Проверь интернет и попробуй ещё раз.",
   trEmpty:"Здесь появится перевод", trAuto:"машинный перевод", trLangs:{fr:"Французский", es:"Испанский", ru:"Русский", en:"Английский"},
   plyPlay:"Слушать", plyPause:"Пауза", plyBack:"Назад на 5 секунд", plyFwd:"Вперёд на 5 секунд", plySpeed:"Скорость", plyWords:"Показывать слова", plyWords2:"Слова и перевод", plyWords0:"Скрыть слова", plyClose:"Закрыть плеер",
-  plyDlg:"Слушать диалог"
+  plyDlg:"Слушать диалог",
+  cntOk:"Верно", cntKnow:"Знаю", cntRead:"Прочитано", cntPairs:"Пары", cntPlaced:"Разложено", hintFirst:"Засчитывается первая попытка.", mcHint5:"Выбери вариант: ответ сразу проверится. Засчитывается первая попытка.", almostS:"Почти, проверь акценты:", gapN:n=>`Пропуск в предложении ${n}`, answerPh:"Ответ"
 });
 Object.assign(I18N.en, {
   trTitle:"Translator", trBtn:"Translate", trSrcPh:"Type or paste text", trCopy:"Copy", trCopied:"Copied", trClear:"Clear",
   trSwap:"Swap languages", trListen:"Listen", trClose:"Close", trFrom:"From", trTo:"To", trFail:"Couldn’t translate. Check your connection and try again.",
   trEmpty:"The translation will appear here", trAuto:"machine translation", trLangs:{fr:"French", es:"Spanish", ru:"Russian", en:"English"},
   plyPlay:"Play", plyPause:"Pause", plyBack:"Back 5 seconds", plyFwd:"Forward 5 seconds", plySpeed:"Speed", plyWords:"Show the words", plyWords2:"Words and translation", plyWords0:"Hide the words", plyClose:"Close the player",
-  plyDlg:"Play the dialogue"
+  plyDlg:"Play the dialogue",
+  cntOk:"Correct", cntKnow:"Known", cntRead:"Read", cntPairs:"Pairs", cntPlaced:"Sorted", hintFirst:"Your first attempt counts.", mcHint5:"Pick an option: it’s checked right away. Your first attempt counts.", almostS:"Almost, check the accents:", gapN:n=>`Gap in sentence ${n}`, answerPh:"Answer"
 });
 const ICO_X = f7("xmark");
 const ICO_COPY = f7("doc_on_doc");

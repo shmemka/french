@@ -930,35 +930,74 @@ const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" sp
    exercise blocks (with saved answers)
    ========================================================= */
 function praise(r){ if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
+/* заголовок блока: «Упр. 1 · Grammaire — выбери артикль» → заголовок «Упр. 1 · Grammaire» + подзаголовок «Выбери артикль» */
+function exHead(ex, i){
+  const h = String(ex.h || ""), m = h.match(/^(.*?)\s+—\s+([\s\S]+)$/);
+  let title = m ? m[1] : h, sub = m ? m[2] : "";
+  if (!/^(\d|Упр|Ex\b|Ex\.|[IVX]+\.|Unit|Unidad|Unité)/.test(title.replace(/<[^>]+>/g, ""))) title = `${i+1}. ${title}`;
+  if (sub) sub = sub.replace(/^(<[^>]+>)*([a-zа-яё])/i, (x, tag, ch) => (tag || "") + ch.toUpperCase());
+  return {title, sub};
+}
+const CONFETTI = () => `<div class="cf-layer" aria-hidden="true">${Array.from({length:18}, (_, k)=>`<span class="cf cf${k}"></span>`).join("")}</div>`;
 function makeBlock(tp, ex, i){
-  const el = document.createElement("section"); el.className = "exb"; el.dataset.i = i;
-  el.innerHTML = `<header class="exb-h"><span class="exb-n">${i+1}</span><div><span class="exb-k">${exLabel(ex)}</span><h4>${ex.h}</h4></div><span class="exb-best"></span></header><div class="exb-b"></div><footer class="exb-f"><span class="exb-score"></span><div class="exb-btns"></div></footer>`;
+  const el = document.createElement("section"); el.className = "exb exb5"; el.dataset.i = i; el.dataset.t = ex.t;
+  const hd = exHead(ex, i);
+  el.innerHTML = `<header class="exb-h"><div class="exb-ht"><h4 class="exb-title">${hd.title}</h4>${hd.sub ? `<p class="exb-sub">${hd.sub}</p>` : ""}</div><div class="exb-cnt" hidden><span class="exb-cl"></span><b><span class="exb-got">0</span> <i>/ <span class="exb-tot">0</span></i></b></div></header><div class="exb-b"></div><footer class="exb-f"><div class="exb-fl"><span class="exb-best"></span><span class="exb-score"></span></div><div class="exb-btns"></div></footer>`;
   const api = {
     el, body: $(".exb-b", el), score: $(".exb-score", el), btns: $(".exb-btns", el),
     saved: (S.ans[tp.id] || {})[i] || null,
     save(obj){ (S.ans[tp.id] || (S.ans[tp.id] = {}))[i] = obj; api.saved = obj; touch("ans-" + tp.id); },
-    clear(){ if (S.ans[tp.id] && S.ans[tp.id][i] !== undefined) { delete S.ans[tp.id][i]; touch("ans-" + tp.id); } api.saved = null; },
+    clear(){ if (S.ans[tp.id] && S.ans[tp.id][i] !== undefined) { delete S.ans[tp.id][i]; touch("ans-" + tp.id); } api.saved = null; el.classList.remove("perfect"); const c = $(".cf-layer", el); if (c) c.remove(); $(".exb-cnt", el).classList.remove("a-glow"); },
     showBest(){ const p = (S.p[tp.id]||{})[i], b = $(".exb-best", el); if (!p) { b.innerHTML = ""; b.removeAttribute("title"); return; } const pc = Math.round(p.b*100); b.innerHTML = `${ICO_TROPHY}<span>${pc}%</span>`; b.title = t("bestT", pc); b.setAttribute("aria-label", b.title); b.classList.toggle("full", pc >= 100); },
-    finish(got, total, msg, restoring){ if (!restoring) setScore(tp.id, i, got, total); const r = total ? got/total : 1; api.score.innerHTML = msg || `<b>${got} / ${total}</b> · <span class="pen">${praise(r)}</span>`; api.showBest(); },
+    /* счётчик в правом верхнем углу: «Верно 3 / 5» */
+    count(got, total, label){ const c = $(".exb-cnt", el); c.hidden = false; $(".exb-cl", c).textContent = label || t("cntOk"); $(".exb-got", c).textContent = got; $(".exb-tot", c).textContent = total; },
+    finish(got, total, msg, restoring){
+      if (!restoring) setScore(tp.id, i, got, total);
+      const r = total ? got/total : 1;
+      api.score.innerHTML = msg || `<span class="pen">${praise(r)}</span>`;
+      if (!msg) api.count(got, total);
+      api.showBest();
+      if (!restoring && total && got === total && !el.classList.contains("perfect")) {
+        el.classList.add("perfect"); el.insertAdjacentHTML("afterbegin", CONFETTI()); const c = $(".exb-cnt", el); c.classList.add("a-glow");
+        setTimeout(()=>{ const l = $(".cf-layer", el); if (l) l.remove(); }, 2600);
+      }
+    },
     status(txt){ api.score.innerHTML = txt; },
     button(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = "btn sm " + cls; b.textContent = label; b.addEventListener("click", fn); api.btns.appendChild(b); return b; },
     tid: tp.id, ei: i,
     ans(k, st, restoring){ if (!restoring) gameAnswer(tp.id + "|" + i, k, st); },
+    rule(){ return ruleFor(tp.id, i); },
     whyItem(answer, e){ return whyHTML(answer, e, ruleFor(tp.id, i)); },
-    whyFoot(){ if ($(".why-foot", el)) return; const f = $(".exb-f", el); f.insertAdjacentHTML("beforeend", `<div class="why-foot">${whyHTML("", taskFor(tp.id, i), ruleFor(tp.id, i))}</div>`); }
+    whyFoot(){ if ($(".why-foot", el)) return; const h = whyHTML("", taskFor(tp.id, i), ruleFor(tp.id, i)); if (!h) return; const f = $(".exb-f", el); f.insertAdjacentHTML("beforeend", `<div class="why-foot">${h}</div>`); }
   };
   api.showBest();
   return api;
 }
+/* строка списка заданий: номер · содержимое · статус и «?»; под строкой — разбор */
+function itemRow(k, inner, side){
+  const li = document.createElement("li"); li.className = "it it5" + (side ? " it-side" : "");
+  li.innerHTML = `<div class="it-g"><span class="it-n">${k+1}</span><div class="it-c">${inner}</div><div class="it-r"><span class="it-note" aria-live="polite"></span><button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button></div></div><div class="why-p" hidden></div>`;
+  return li;
+}
+function rowNote(li, kind, html){ const n = $(".it-note", li); n.className = "it-note" + (kind ? " n-" + kind : ""); n.innerHTML = html || ""; if (kind) { n.classList.remove("a-note"); void n.offsetWidth; n.classList.add("a-note"); } }
+function rowWhy(li, answer, e, rule){ const p = $(".why-p", li), h = whyPanel(answer, e, rule); p.innerHTML = h; const b = $(".why-b", li); b.hidden = !h; if (!h) { p.hidden = true; b.classList.remove("on"); b.setAttribute("aria-expanded", "false"); } }
+function animIn(el, cls){ el.classList.remove("a-ok", "a-bad"); void el.offsetWidth; el.classList.add(cls); }
 function ruleFor(tid, ei){ const w = WHY[tid] && WHY[tid][ei]; return w ? (LANG === "en" ? w[1] : w[0]) : ""; }
 function taskFor(tid, ei){ const w = WHYT[tid] && WHYT[tid][ei]; return w ? (LANG === "en" ? w[1] : w[0]) : ""; }
+/* разбор: Ответ → Почему здесь так → (линия) → Правило */
+function whyPanel(answer, e, rule){
+  const a = answer !== "" && answer != null ? `<p class="why-a"><b>${t("answerIs")}</b> ${esc(answer)}</p>` : "";
+  const c = e ? `<p class="why-c"><b>${t("whyHere").trim()}</b> ${e}</p>` : "";
+  const r = rule ? `<p class="why-r"><b>${t("whyRule").trim()}</b> ${rule}</p>` : "";
+  return a || c || r ? a + c + ((a || c) && r ? `<i class="why-hr"></i>` : "") + r : "";
+}
 function whyHTML(answer, e, rule){
-  if (!answer && !e && !rule) return "";
-  return `<button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button><div class="why-p" hidden>${answer !== "" && answer != null ? `<p class="why-a"><b>${t("answerIs")}</b> ${esc(answer)}</p>` : ""}${e ? `<p class="why-c"><span>${t("whyHere")}</span>${e}</p>` : ""}${rule ? `<p class="why-r"><span>${t("whyRule")}</span>${rule}</p>` : ""}</div>`;
+  const p = whyPanel(answer, e, rule); if (!p) return "";
+  return `<button type="button" class="why-b" aria-expanded="false" aria-label="${esc(t("whyA"))}" title="${esc(t("whyA"))}">?</button><div class="why-p" hidden>${p}</div>`;
 }
 document.addEventListener("click", e=>{
   const b = e.target.closest(".why-b"); if (!b) return;
-  const p = b.nextElementSibling; if (!p || !p.classList.contains("why-p")) return;
+  const li = b.closest(".it5"), p = li ? $(":scope > .why-p", li) : b.nextElementSibling; if (!p || !p.classList.contains("why-p")) return;
   const open = p.hidden; p.hidden = !open; b.setAttribute("aria-expanded", open); b.classList.toggle("on", open);
 });
 const fbHtml = (state, answers) => {
@@ -978,20 +1017,23 @@ INIT.mc = (api, ex) => {
     const row = rows[k], it = items[k];
     if (!row || row.dataset.done) return; row.dataset.done = "1";
     const ok = j === it.a; answered++; if (ok) correct++;
-    $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); });
-    const fb = $(".fb", row); fb.hidden = false;
-    fb.innerHTML = (ok ? `<span class="ok-t">${OKW()}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${it.o[it.a]}</span>`) + api.whyItem(it.o[it.a], it.e);
+    $$(".opt", row).forEach(x=>{ x.disabled = true; const jj = +x.dataset.j; if (jj === it.a) x.classList.add("is-ok"); else if (jj === j) x.classList.add("is-bad"); if (!restoring && jj === j) animIn(x, ok ? "a-ok" : "a-bad"); });
+    rowNote(row, ok ? "ok" : "bad", ok ? OKW() : `${t("answerIs")} ${it.o[it.a]}`);
+    rowWhy(row, it.o[it.a], it.e, api.rule());
     sel[k] = j; if (!restoring) { api.save({sel}); api.ans(k, ok ? "ok" : "bad"); }
-    if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcProg", answered, items.length, correct));
+    api.count(correct, items.length);
+    if (answered === items.length) api.finish(correct, items.length, null, restoring); else api.status(t("mcHint5"));
   };
   const build = restore => {
-    answered = 0; correct = 0; sel = {}; rows = []; api.body.innerHTML = ""; api.status(t("answerN", items.length));
+    answered = 0; correct = 0; sel = {}; rows = [];
+    api.body.innerHTML = `<ol class="its"></ol>`; const list = $(".its", api.body);
+    api.status(t("mcHint5")); api.count(0, items.length);
     items.forEach((it,k)=>{
-      const row = document.createElement("div"); row.className = "it";
       const opts = it.o.map((o,j)=>({o,j})); if (!it.keep) shuffle(opts);
-      row.innerHTML = `<p class="q">${qhtml(it.q)}</p><div class="opts">${opts.map(x=>`<button type="button" class="opt" data-j="${x.j}">${x.o}</button>`).join("")}</div><div class="fb" hidden></div>`;
+      const row = itemRow(k, `<p class="q">${qhtml(it.q)}</p><div class="opts">${opts.map(x=>`<button type="button" class="opt" data-j="${x.j}">${x.o}</button>`).join("")}</div>`);
+      rowWhy(row, "", "", api.rule());
       $$(".opt", row).forEach(b=>b.addEventListener("click", ()=>choose(k, +b.dataset.j, false)));
-      api.body.appendChild(row); rows.push(row);
+      list.appendChild(row); rows.push(row);
     });
     if (restore && restore.sel) Object.keys(restore.sel).forEach(k=>choose(+k, +restore.sel[k], true));
   };
@@ -1007,11 +1049,12 @@ function wireInstant(slots, onFirst, init, onSave, onAns){
   const paint = k => {
     const s = slots[k], st = judge(s.inp.value, s.a);
     if (st === "empty") return st;
-    s.inp.classList.remove("r-ok","r-bad","r-acc"); s.inp.classList.add(st==="ok"?"r-ok":st==="acc"?"r-acc":"r-bad");
+    s.inp.classList.remove("r-ok","r-bad","r-acc","r-shown"); s.inp.classList.add(st==="ok"?"r-ok":st==="acc"?"r-acc":"r-bad");
     s.show(st); return st;
   };
   const mark = k => {
     const st = paint(k); if (st === "empty") return st;
+    animIn(slots[k].inp, st === "bad" ? "a-bad" : "a-ok");
     if (!first[k]) { first[k] = st; onFirst(first, false); if (onAns) onAns(k, st); }
     save(); return st;
   };
@@ -1026,26 +1069,36 @@ function wireInstant(slots, onFirst, init, onSave, onAns){
   onFirst(first, true);
   return {
     first,
-    reveal(){ slots.forEach((s,k)=>{ s.inp.value = s.a[0]; s.inp.classList.remove("r-ok","r-bad","r-acc"); s.inp.classList.add("r-ok"); s.show("shown"); if (!first[k]) first[k] = "gave"; }); onFirst(first, false); save(); }
+    reveal(){ slots.forEach((s,k)=>{ if (first[k] === "ok") return; s.inp.value = s.a[0]; s.inp.classList.remove("r-ok","r-bad","r-acc"); s.inp.classList.add("r-shown"); s.show("shown"); if (!first[k]) first[k] = "gave"; }); onFirst(first, false); save(); }
   };
 }
 const reporter = (api, n) => (first, restoring) => {
   const done = first.filter(Boolean).length, got = first.filter(x=>x==="ok").length;
+  api.count(got, n);
   if (done === n) api.finish(got, n, null, restoring);
-  else if (done) api.status(t("reporter", got, done, n));
+  else api.status(t("hintFirst"));
 };
 
+/* статус строки для заданий с вводом: Juste ! / Почти: … / Ответ: … */
+function fillNote(li, st, answers){
+  const right = esc(answers[0]);
+  if (st === "ok") rowNote(li, "ok", OKW());
+  else if (st === "acc") rowNote(li, "acc", `${t("almostS")} <b>${right}</b>`);
+  else if (st === "shown") rowNote(li, "shown", `${t("answerIs")} ${right}`);
+  else rowNote(li, "bad", `${t("answerIs")} ${right}`);
+}
 INIT.fill = (api, ex) => {
   let ctl;
   const build = restore => {
-    api.body.innerHTML = accBar(); api.status(t("instantHint"));
+    api.body.innerHTML = accBar() + `<ol class="its"></ol>`; const list = $(".its", api.body);
+    api.status(t("hintFirst"));
     const slots = ex.items.map((it,k)=>{
-      const row = document.createElement("div"); row.className = "it";
-      const inp = `<input class="ans${it.long?" wide":""}" ${inputAttrs} aria-label="${k+1}">`;
-      row.innerHTML = `<p class="fillq">${it.q.includes("___") ? it.q.replace("___", inp).replace(/___/g,"…") : `${it.q} ${inp}`}</p><div class="fb" hidden></div>`;
-      api.body.appendChild(row);
-      const fb = $(".fb", row);
-      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fb.hidden = false; fb.innerHTML = fbHtml(st, it.a) + api.whyItem(it.a[0], it.e); }, hide: () => { fb.hidden = true; }};
+      const inp = `<input class="ans${it.long?" wide":""}" ${inputAttrs} placeholder="…" aria-label="${esc(t("gapN", k+1))}">`;
+      const inline = it.q.includes("___");
+      const row = itemRow(k, inline ? `<p class="fillq">${it.q.replace("___", inp).replace(/___/g,"…")}</p>` : `<label class="it-q">${it.q.replace(/\s*→\s*$/, "")}</label>${inp.replace('placeholder="…"', `placeholder="${esc(t("answerPh"))}"`)}`, !inline);
+      rowWhy(row, "", "", api.rule());
+      list.appendChild(row);
+      return {inp: $(".ans", row), a: it.a, long: it.long, show: st => { fillNote(row, st, it.a); rowWhy(row, it.a[0], it.e, api.rule()); }, hide: () => { rowNote(row, "", ""); }};
     });
     ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
@@ -1058,7 +1111,7 @@ INIT.conj = (api, ex) => {
   let ctl;
   const build = restore => {
     api.body.innerHTML = accBar() + `<div class="conj-grid">${ex.items.map((it,v)=>`<div class="conj-card"><h5><span class="fr">${it.v}</span></h5>${it.f.map((f,k)=>`<div class="conj-row"><label for="c-${api.el.dataset.i}-${v}-${k}">${it.p[k]}</label><input id="c-${api.el.dataset.i}-${v}-${k}" class="ans" ${inputAttrs} data-v="${v}" data-k="${k}"></div>`).join("")}</div>`).join("")}</div>`;
-    api.status(t("conjHint"));
+    api.status(t("hintFirst"));
     const slots = $$(".ans", api.body).map(inp=>{
       const f = ex.items[+inp.dataset.v].f[+inp.dataset.k], row = inp.parentNode;
       const clear = () => $$(".pen,.acc-t", row).forEach(n=>n.remove());
@@ -1075,14 +1128,18 @@ INIT.listen = (api, ex) => {
   const items = ex.items; let ctl;
   const build = restore => {
     const tts = !!synth;
-    api.body.innerHTML = (tts ? "" : `<p class="q" style="color:var(--ink-3)">${t("listenNoTts")}</p>`) +
-      items.map((it,k)=>`<div class="it"><div class="lis">${tts ? `<button type="button" class="play" data-k="${k}">${ICON_PLAY} ${t("listen")}</button><button type="button" class="play slow" data-k="${k}">${t("slow")}</button>` : `<span class="read">${esc(it.say)}</span>`}<input class="ans" ${inputAttrs} inputmode="numeric" style="width:6em" aria-label="${esc(t("numberN", k+1))}"></div><div class="fb" hidden></div></div>`).join("");
+    api.body.innerHTML = (tts ? "" : `<p class="q" style="color:var(--ink-3)">${t("listenNoTts")}</p>`) + `<ol class="its"></ol>`;
+    const list = $(".its", api.body);
+    const rows = items.map((it,k)=>{
+      const row = itemRow(k, `<div class="lis">${tts ? `<button type="button" class="play" data-k="${k}">${ICON_PLAY}<span>${t("listen")}</span></button><button type="button" class="play slow" data-k="${k}">${t("slow")}</button>` : `<span class="read">${esc(it.say)}</span>`}</div><input class="ans" ${inputAttrs} inputmode="numeric" placeholder="${esc(t("answerPh"))}" aria-label="${esc(t("numberN", k+1))}">`, true);
+      rowWhy(row, "", "", api.rule()); list.appendChild(row); return row;
+    });
     $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>speak(items[+b.dataset.k].say, b.classList.contains("slow") ? .55 : .9)));
     api.status(t("listenHint"));
-    const slots = $$(".it", api.body).map((row,k)=>{ const fb = $(".fb", row), it = items[k];
+    const slots = rows.map((row,k)=>{ const it = items[k];
       return {inp: $(".ans", row), a: it.a, minAdv: 2,
-        show: st => { fb.hidden = false; fb.innerHTML = (st === "ok" ? `<span class="ok-t">${OKW()}</span> <span class="fr">${esc(it.say)}</span>` : `<span class="pen">${f7("arrow_right", "f7-in")}${esc(it.a[0])}</span> <span class="fr">${esc(it.say)}</span>`) + api.whyItem(it.a[0] + " — " + it.say, ""); },
-        hide: () => { fb.hidden = true; }}; });
+        show: st => { fillNote(row, st, it.a); rowWhy(row, it.a[0] + " — " + it.say, "", api.rule()); },
+        hide: () => { rowNote(row, "", ""); }}; });
     ctl = wireInstant(slots, reporter(api, slots.length), restore, st=>api.save(st), (k, st)=>api.ans(k, st));
   };
   api.button(t("showAnswers"), "sec", ()=>ctl.reveal());
@@ -1096,7 +1153,8 @@ INIT.match = (api, ex) => {
   const n = ex.pairs.length;
   const lockPair = k => { $$(`.opt[data-k="${k}"]`, api.body).forEach(x=>{ x.classList.remove("sel"); x.classList.add("is-ok"); x.disabled = true; }); };
   const report = restoring => {
-    if (matched === n) api.finish(Math.max(0, n - mistakes), n, `${t("matchDone", mistakes)} · <span class="pen">${praise((n-mistakes)/n)}</span>`, restoring);
+    api.count(matched, n, t("cntPairs"));
+    if (matched === n) { api.finish(Math.max(0, n - mistakes), n, `${t("matchDone", mistakes)} · <span class="pen">${praise((n-mistakes)/n)}</span>`, restoring); api.count(matched, n, t("cntPairs")); }
     else api.status(matched || mistakes ? t("matchProg", matched, n, mistakes) : t("matchHint"));
   };
   const build = restore => {
@@ -1128,7 +1186,7 @@ INIT.match = (api, ex) => {
 INIT.sort = (api, ex) => {
   let sel = null, wrong, placed, firstWrong, pl;
   const n = ex.items.length;
-  const report = restoring => { const got = n - firstWrong.size; if (placed === n) api.finish(got, n, null, restoring); else api.status(placed || firstWrong.size ? t("sortProg", placed, n, firstWrong.size) : t("sortHint")); };
+  const report = restoring => { const got = n - firstWrong.size; api.count(placed, n, t("cntPlaced")); if (placed === n) api.finish(got, n, null, restoring); else api.status(placed || firstWrong.size ? t("sortProg", placed, n, firstWrong.size) : t("sortHint")); };
   const lockIn = (chip, binEl) => { $(".bin-l", binEl).appendChild(chip); chip.classList.add("is-ok"); chip.classList.remove("sel"); chip.draggable = false; $$(".pen", chip).forEach(x=>x.remove()); };
   const persist = () => api.save({pl, fw:[...firstWrong], w:wrong});
   const tryPlace = (chip, binEl) => {
@@ -1176,17 +1234,19 @@ INIT.sort = (api, ex) => {
 INIT.order = (api, ex) => {
   let res;
   const n = ex.items.length;
-  const report = restoring => { const done = res.filter(r=>r.done).length, got = res.filter(r=>r.done && r.mis===0).length; if (done === n) api.finish(got, n, null, restoring); else api.status(done || res.some(r=>r.mis) ? t("orderProg", done, n, got) : t("orderHint")); };
+  const report = restoring => { const done = res.filter(r=>r.done).length, got = res.filter(r=>r.done && r.mis===0).length; api.count(got, n); if (done === n) api.finish(got, n, null, restoring); else api.status(done || res.some(r=>r.mis) ? t("orderProg", done, n, got) : t("orderHint")); };
   const build = restore => {
-    api.body.innerHTML = ""; res = ex.items.map((_,k)=> restore && restore.r && restore.r[k] ? {...restore.r[k]} : {pos:0, mis:0, done:false});
+    api.body.innerHTML = `<ol class="its"></ol>`; const list = $(".its", api.body);
+    res = ex.items.map((_,k)=> restore && restore.r && restore.r[k] ? {...restore.r[k]} : {pos:0, mis:0, done:false});
     ex.items.forEach((it,k)=>{
       const words = it.sep ? it.s.split(it.sep) : it.s.split(" "), said = it.sep ? words.join(", ") : it.s;
       let toks = shuffle(words.slice()); let guard = 0;
       while (words.length > 2 && toks.join("\u0001") === words.join("\u0001") && guard++ < 10) toks = shuffle(toks);
-      const row = document.createElement("div"); row.className = "it ord" + (it.sep ? " ord-seq" : "");
-      row.innerHTML = `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div><div class="fb" hidden></div>`;
-      const line = $(".ord-line", row), fb = $(".fb", row), bank = $(".ord-bank", row);
-      const finishRow = () => { line.classList.add("r-ok"); fb.hidden = false; const r = res[k]; fb.innerHTML = (r.mis ? `<span class="ok-t">${t("collected")}</span> <span class="ex-e">${t("errorsOnWay", r.mis)}</span>` : `<span class="ok-t">${OKW()}</span>`) + api.whyItem(said, it.ru); };
+      const row = itemRow(k, `<p class="ru">${it.ru}</p><div class="ord-line" aria-label="${esc(t("yourSentence"))}"></div><div class="ord-bank">${toks.map(w=>`<button type="button" class="tok">${esc(w)}</button>`).join("")}</div>`);
+      row.classList.add("ord"); if (it.sep) row.classList.add("ord-seq");
+      rowWhy(row, "", "", api.rule());
+      const line = $(".ord-line", row), bank = $(".ord-bank", row);
+      const finishRow = () => { line.classList.add("r-ok"); bank.hidden = true; const r = res[k]; rowNote(row, r.mis ? "acc" : "ok", r.mis ? `${t("collected")} · ${t("errorsOnWay", r.mis)}` : OKW()); rowWhy(row, said, it.ru, api.rule()); };
       for (let p = 0; p < res[k].pos; p++) { const tk = $$(".tok", bank).find(x=>x.textContent === words[p]); if (tk) line.appendChild(tk); }
       if (res[k].done) finishRow();
       row.addEventListener("click", e=>{
@@ -1194,14 +1254,14 @@ INIT.order = (api, ex) => {
         if (!tk || r.done) return;
         if (tk.textContent === words[r.pos]) {
           line.appendChild(tk); r.pos++;
-          if (r.pos === words.length) { r.done = true; finishRow(); speak(said); api.ans(k, r.mis ? "bad" : "ok"); }
+          if (r.pos === words.length) { r.done = true; finishRow(); speak(said); api.ans(k, r.mis ? "bad" : "ok"); } else rowNote(row, "", "");
         } else {
-          r.mis++; tk.classList.add("is-bad","flash"); setTimeout(()=>tk.classList.remove("is-bad","flash"), 550);
-          fb.hidden = false; fb.innerHTML = `<span class="pen">${t("wrongWord")}</span> <span class="ex-e">${t("errorsN", r.mis)}</span>`;
+          r.mis++; tk.classList.add("is-bad"); animIn(tk, "a-bad"); setTimeout(()=>tk.classList.remove("is-bad"), 550);
+          rowNote(row, "bad", `${t("wrongWord")} · ${t("errorsN", r.mis)}`);
         }
         api.save({r: res}); report(false);
       });
-      api.body.appendChild(row);
+      list.appendChild(row);
     });
     report(true);
   };
@@ -1221,7 +1281,7 @@ INIT.cards = (api, ex) => {
   const draw = restoring => {
     if (!queue.length) {
       api.body.innerHTML = `<div class="cards-x"><div class="fcard seyes"><span class="front">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span><span class="back">${t("deckDoneN", ex.items.length)}</span></div></div>`;
-      api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">${praise(1)}</span>`, restoring); return;
+      api.finish(1, 1, `<b>${t("deckDone")}</b> · <span class="pen">${praise(1)}</span>`, restoring); api.count(known.length, ex.items.length, t("cntKnow")); return;
     }
     const [fr, tr] = ex.items[queue[0]];
     const front = dir === "fr" ? fr : tr, back = dir === "fr" ? tr : fr;
@@ -1236,7 +1296,7 @@ INIT.cards = (api, ex) => {
     $$(".seg button", api.body).forEach(b=>b.addEventListener("click", ()=>{ dir = b.dataset.d; flipped = false; persist(); draw(); }));
     $('[data-a="know"]', api.body).addEventListener("click", ()=>{ const k = queue.shift(); known.push(k); api.ans(k, "self"); api.whyFoot(); flipped = false; persist(); draw(); });
     $('[data-a="again"]', api.body).addEventListener("click", ()=>{ queue.push(queue.shift()); flipped = false; draw(); });
-    api.status(t("cardsHint"));
+    api.status(t("cardsHint")); api.count(known.length, ex.items.length, t("cntKnow"));
   };
   api.button(t("shuffleAgain"), "sec", ()=>{ api.clear(); build(null); });
   build(api.saved);
@@ -1248,7 +1308,7 @@ INIT.drill = (api, ex) => {
   const build = restore => {
     seen = restore && restore.seen ? restore.seen.slice() : [];
     api.body.innerHTML = `<div class="drill">${ex.items.map(([w,tx],k)=>`<div class="dr"><b>${esc(w)}</b><span class="tx" ${seen.includes(k)?"":"hidden"}>${esc(tx)}</span><button type="button" class="play" data-k="${k}" ${seen.includes(k)?"data-seen":""}>${ICON_PLAY} ${t("check")}</button></div>`).join("")}</div>`;
-    const upd = restoring => { if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
+    const upd = restoring => { api.count(seen.length, ex.items.length, t("cntRead")); if (seen.length === ex.items.length) api.finish(1, 1, `${t("allRead")} · <span class="pen">${COURSE === "es" ? "¡Bravo!" : "Bravo !"}</span>`, restoring); else api.status(t("readN", seen.length, ex.items.length)); };
     $$(".play", api.body).forEach(b=>b.addEventListener("click", ()=>{
       const k = +b.dataset.k; b.previousElementSibling.hidden = false; b.dataset.seen = "1"; speak(ex.items[k][0], .8);
       if (!seen.includes(k)) { seen.push(k); api.save({seen}); api.ans(k, "self"); api.whyFoot(); upd(false); }
