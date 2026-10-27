@@ -9,7 +9,7 @@ function FR_TUTOR(L){
   try { return FR_TUTOR_TOPICS(); } finally { HL = keepHL; FRL = keepFRL; }
 }
 function FR_TUTOR_TOPICS(){
-const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name} →</a>`;
+const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name}${f7("arrow_right", "f7-arr")}</a>`;
 return [
 {
 id:"t-possessifs-1", sec:"tutor", unit:"2", kind:TF("Задание репетитора", "Tutor’s task"),

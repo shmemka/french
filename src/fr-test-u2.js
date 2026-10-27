@@ -24,7 +24,7 @@ const FR_U2_DIALOG = [
 DLG["fr-u2-test"] = {lang:"fr", title:"Test unité 2 · Compréhension orale", lines:FR_U2_DIALOG};
 function FR_TEST_U2_TOPIC(){
 const N = n => TF("Упр. ", "Ex. ") + n + " · ";
-const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name} →</a>`;
+const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name}${f7("arrow_right", "f7-arr")}</a>`;
 const DIALOG = `<span class="t2-aud"><button type="button" class="btn sm sec dlg-btn" data-dlg="fr-u2-test">${f7("play_fill")}${TF("Слушать диалог", "Play the dialogue")}</button></span>
 <details class="t2-tr"><summary>${TF("Текст диалога (открой, если не расслышал)", "Dialogue text (open if you didn’t catch it)")}</summary>${FR_U2_DIALOG.map(([who, s])=>`<span class="t2-l"><b>${who}</b> <span class="fr">${s}</span></span>`).join("")}</details><br>`;
 const THIAGO = "Bonjour, moi c’est Thiago ! Je suis portugais et j’ai 38 ans. J’ai une grande famille. J’ai trois frères et une sœur. Mes deux frères, Paulo et Mateo, sont célibataires. Mon frère Leo a deux filles, elles s’appellent Vanessa et Victoria. Ma sœur, Amanda, a un fils, João. Il est fils unique. Mes parents sont âgés : mon père a 79 ans et ma mère a 76 ans. Ma famille habite à 5 minutes de la mer. Mais moi, j’habite en ville, à Paris, avec ma femme Alice. Elle est française et elle a 37 ans.";

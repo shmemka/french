@@ -11,7 +11,7 @@ function CAHIER(L){
 const CPG = s => TF("с. ", "p. ") + s;
 const CX = n => TF("Упр. ", "Ex. ") + n + ". ";
 /* памятка + ссылка на тему учебника */
-const MEMO = (rule, links) => `${rule}<p class="cah-links">${links.map(([id, name])=>`<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name} →</a>`).join(" ")}</p>`;
+const MEMO = (rule, links) => `${rule}<p class="cah-links">${links.map(([id, name])=>`<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name}${f7("arrow_right", "f7-arr")}</a>`).join(" ")}</p>`;
 
 function CAHIER_PARTS(){ return [
 

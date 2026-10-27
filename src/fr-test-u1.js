@@ -10,7 +10,7 @@ function FR_TEST_U1(L){
 }
 function FR_TEST_U1_TOPIC(){
 const N = n => TF("Упр. ", "Ex. ") + n + " · ";
-const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name} →</a>`;
+const link = (id, name) => `<a class="btn sm sec" href="#${id}">${TF("Теория", "Theory")}: ${name}${f7("arrow_right", "f7-arr")}</a>`;
 const ARTH = "Bonjour ! Je m’appelle Arthur et j’ai 26 ans. J’aime la musique, le sport et l’art. Je suis français et italien et je parle quatre langues. Je cherche un covoiturage pour le 25 avril pour Paris. J’habite à Nice.";
 return {
 id:"u1-test", sec:"book", unit:"1", kind:"Test",
