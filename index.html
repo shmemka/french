@@ -2586,6 +2586,10 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
   .qq-actions .btn.qq-ib span{display:none}
   .qq-actions .btn.qq-ib{flex:0 0 44px;padding:0}
 }
+
+/* варианты ответа: протянуть мышью по словам — перевод (подсветка ::highlight), долгое нажатие — перевод варианта (30.10.2026) */
+::highlight(ans-sel){background-color:rgba(64,110,255,.26);color:inherit}
+@media (pointer:coarse){ #main .opt,#main .chip,#main .tok{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} }
 /* ============ окошко перевода по выделению v2 (29.10.2026) ============ */
 .selpop.selpop{flex-direction:column;align-items:stretch;gap:2px;min-width:200px;max-width:min(320px,calc(100vw - 16px));padding:10px 10px 12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--x-line);border-radius:12px;box-shadow:0 12px 32px rgba(20,24,50,.14),0 2px 6px rgba(20,24,50,.06);font-size:14px}
 .selpop.selpop::after{width:12px;height:12px;left:calc(var(--ax,50%) - 6px);bottom:-7px;background:var(--sheet);border:1px solid var(--x-line);border-top:0;border-left:0;border-radius:0 0 3px 0;z-index:auto}
@@ -16712,7 +16716,7 @@ function spPaintFav(){
   s.hidden = !synth;
   const ready = !!(SP.entry && (esC ? SP.entry.es : SP.entry.fr)); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
 }
-function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; }
+function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; SP.manual = 0; if (typeof hlClear === "function") hlClear(); }
 function spPlace(){
   if (!SP.el || SP.el.hidden || !SP.range) return;
   const rs = SP.range.getClientRects(); const r = rs.length ? rs[0] : SP.range.getBoundingClientRect();
@@ -16791,8 +16795,9 @@ function esPop(o){
   remote("es", to, false);
 }
 
-function spCheck(){
-  const sel = window.getSelection ? window.getSelection() : null;
+function spCheck(fake){
+  const sel = fake || (window.getSelection ? window.getSelection() : null);
+  if (!fake) SP.manual = 0;
   if (!sel || sel.isCollapsed || !sel.rangeCount) { spHide(); return; }
   const raw = sel.getRangeAt(0).toString().replace(/\s+/g, " ").trim();
   const txt = raw.replace(/^[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+|[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+$/g, "");
@@ -16874,7 +16879,72 @@ function spCheck(){
   if (EN_FN.test(txt) && !FR_FN.test(txt)) return remoteRev("en");
   fromFr(null);
 }
-document.addEventListener("selectionchange", ()=>{ clearTimeout(SP.timer); SP.timer = setTimeout(spCheck, 260); });
+document.addEventListener("selectionchange", ()=>{ clearTimeout(SP.timer); SP.timer = setTimeout(()=>{ const sel = window.getSelection(); if (SP.manual && sel && sel.isCollapsed && Date.now() - SP.manual < 900) return; spCheck(); }, 260); });
+/* --- перевод вариантов ответа в заданиях (кнопки .opt / .chip / .tok).
+   Текст внутри кнопки браузер выделить не даёт, поэтому выделение делаем сами:
+   протянул мышью по словам — слова подсвечиваются (CSS Highlight API) и появляется перевод;
+   долгое нажатие (телефон и компьютер) — перевод всего варианта. Ответ при этом не засчитывается. --- */
+const ANS_EL = ".opt, .chip, .tok";
+const ansEl = t => { const el = t && t.closest && t.closest(ANS_EL); return el && main.contains(el) && !el.closest(".qq-col") ? el : null; };
+const LP = {timer:null, x:0, y:0, fired:0, el:null, a:null, drag:false};
+const HL_OK = typeof CSS !== "undefined" && CSS.highlights && typeof Highlight === "function";
+const hlClear = () => { if (HL_OK) CSS.highlights.delete("ans-sel"); };
+const caretAt = (x, y) => {
+  if (document.caretPositionFromPoint) { const p = document.caretPositionFromPoint(x, y); return p && p.offsetNode ? {node:p.offsetNode, off:p.offset} : null; }
+  if (document.caretRangeFromPoint) { const r = document.caretRangeFromPoint(x, y); return r ? {node:r.startContainer, off:r.startOffset} : null; }
+  return null;
+};
+const WCH = /[\p{L}\p{M}\p{N}'’-]/u;
+function ansRange(el, a, b){
+  if (!a || !b || !el.contains(a.node) || !el.contains(b.node)) return null;
+  const r = document.createRange();
+  try { r.setStart(a.node, a.off); r.setEnd(a.node, a.off); if (r.comparePoint(b.node, b.off) < 0) r.setStart(b.node, b.off); else r.setEnd(b.node, b.off); } catch(e) { return null; }
+  let n = r.startContainer, o = r.startOffset; if (n.nodeType === 3) { while (o > 0 && WCH.test(n.data[o - 1])) o--; r.setStart(n, o); }
+  n = r.endContainer; o = r.endOffset; if (n.nodeType === 3) { while (o < n.data.length && WCH.test(n.data[o])) o++; r.setEnd(n, o); }
+  return r.toString().trim() ? r : null;
+}
+function spShowRange(el, r){
+  if (!r || !r.toString().trim()) return;
+  try { window.getSelection().removeAllRanges(); } catch(e) {}
+  SP.manual = Date.now();
+  spCheck({isCollapsed:false, rangeCount:1, getRangeAt:()=>r, anchorNode:el});
+}
+function spShowFor(el){ const r = document.createRange(); r.selectNodeContents(el); hlClear(); spShowRange(el, r); }
+document.addEventListener("pointerdown", e=>{
+  if (SP.manual && SP.el && !SP.el.hidden && !(e.target.closest && e.target.closest(".selpop"))) spHide();
+  const el = ansEl(e.target); clearTimeout(LP.timer); LP.el = null; LP.drag = false; if (!el || e.button > 0) return;
+  LP.el = el; LP.x = e.clientX; LP.y = e.clientY;
+  /* протягивание мышью (кроме фишек сортировки — их перетаскивают мышью) */
+  LP.a = e.pointerType === "mouse" && !el.draggable ? caretAt(e.clientX, e.clientY) : null;
+  LP.timer = setTimeout(()=>{ LP.fired = Date.now(); spShowFor(el); }, 480);
+}, true);
+document.addEventListener("pointermove", e=>{
+  if (!LP.el) return;
+  if (Math.hypot(e.clientX - LP.x, e.clientY - LP.y) > 6) {
+    clearTimeout(LP.timer);
+    if (LP.a && e.buttons & 1) {
+      LP.drag = true;
+      const r = ansRange(LP.el, LP.a, caretAt(e.clientX, e.clientY));
+      if (HL_OK) { if (r) CSS.highlights.set("ans-sel", new Highlight(r)); else hlClear(); }
+      e.preventDefault();
+    }
+  }
+}, true);
+document.addEventListener("pointerup", e=>{
+  clearTimeout(LP.timer);
+  if (LP.el && LP.drag) {
+    const r = ansRange(LP.el, LP.a, caretAt(e.clientX, e.clientY));
+    LP.fired = Date.now();   /* это выделение, а не ответ */
+    if (r) spShowRange(LP.el, r); else hlClear();
+  }
+  LP.el = null; LP.drag = false;
+}, true);
+["pointercancel", "dragstart"].forEach(ev=>document.addEventListener(ev, ()=>{ clearTimeout(LP.timer); LP.el = null; LP.drag = false; }, true));
+document.addEventListener("click", e=>{
+  if (!ansEl(e.target)) return;
+  if (Date.now() - LP.fired < 900) { LP.fired = 0; e.preventDefault(); e.stopImmediatePropagation(); }
+}, true);
+document.addEventListener("contextmenu", e=>{ if (ansEl(e.target) && Date.now() - LP.fired < 900) e.preventDefault(); }, true);
 window.addEventListener("scroll", ()=>{ if (SP.el && !SP.el.hidden) requestAnimationFrame(spPlace); }, {passive:true, capture:true});
 window.addEventListener("resize", ()=>{ if (SP.el && !SP.el.hidden) spPlace(); });
 document.addEventListener("keydown", e=>{ if (e.key === "Escape") spHide(); });

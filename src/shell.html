@@ -2578,6 +2578,10 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
   .qq-actions .btn.qq-ib span{display:none}
   .qq-actions .btn.qq-ib{flex:0 0 44px;padding:0}
 }
+
+/* варианты ответа: протянуть мышью по словам — перевод (подсветка ::highlight), долгое нажатие — перевод варианта (30.10.2026) */
+::highlight(ans-sel){background-color:rgba(64,110,255,.26);color:inherit}
+@media (pointer:coarse){ #main .opt,#main .chip,#main .tok{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} }
 /* ============ окошко перевода по выделению v2 (29.10.2026) ============ */
 .selpop.selpop{flex-direction:column;align-items:stretch;gap:2px;min-width:200px;max-width:min(320px,calc(100vw - 16px));padding:10px 10px 12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--x-line);border-radius:12px;box-shadow:0 12px 32px rgba(20,24,50,.14),0 2px 6px rgba(20,24,50,.06);font-size:14px}
 .selpop.selpop::after{width:12px;height:12px;left:calc(var(--ax,50%) - 6px);bottom:-7px;background:var(--sheet);border:1px solid var(--x-line);border-top:0;border-left:0;border-radius:0 0 3px 0;z-index:auto}
