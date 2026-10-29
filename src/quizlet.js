@@ -82,6 +82,85 @@ Object.assign(I18N.en, {
   qqFavSub:"Words you marked with a heart"
 });
 
+Object.assign(I18N.ru, {
+  qqTab:{learn:"Учить", my:"Мои сеты", lib:"Библиотека"},
+  qqLead:"Учи слова из учебника и свои собственные. Каждый день немного новых, а выученные возвращаются, когда начинаешь их забывать.",
+  qqBook:"Наборы из учебника", qqSetsSub:"Открой набор: там список слов, карточки и игра на скорость.",
+  qqNewSet:"Создать сет", qqNewSetSub:"Свои слова: из урока, сериала, песни", qqNoSet:"Такого сета нет. Возможно, его удалили.",
+  qqTip:["Ты ещё не начинал учить эти слова. Они будут появляться в занятии по несколько штук в день.",
+         "Ты уже познакомился со словом, но ещё не прошёл все шаги: выбрать перевод, выбрать слово и написать самому. Сюда же возвращаются слова, в которых ты ошибся на повторении.",
+         "Слово прошло все шаги и теперь в повторениях: оно вернётся через день, потом через 3, 7 дней и реже. Если ошибёшься, снова попадёт в «Учу»."],
+  qqTipDue:"Срок повторения наступил: слово ждёт тебя в занятии на сегодня.", qqTipNext:s=>`Следующее повторение ${s}.`,
+  qqFromLib:"из библиотеки", qqVisShort:{public:"в библиотеке", link:"по ссылке"},
+  qqNWords:n=>`${n} ${plural(n, ["слово", "слова", "слов"])}`, qqBy:a=>`автор: ${a}`, qqAnon:"без имени",
+  qqMyEmptyH:"Создай свой первый сет", qqMyEmptyP:"Добавь слова, которые хочешь выучить: из урока, сериала или песни. Свой сет учится так же, как наборы из учебника, а ещё им можно поделиться с друзьями.",
+  qqFindLib:"Найти в библиотеке",
+  qqLibPh:"Тема, слово или автор", qqLibFound:q=>`Результаты по запросу «${q}»`, qqLibPopular:"Популярные сеты",
+  qqLibErr:{off:["Библиотека недоступна", "Она работает только при входе в аккаунт."], setup:["Библиотека скоро заработает", "Её ещё подключают. Свои сеты можно создавать уже сейчас."],
+    offline:["Нет интернета", "Подключись к сети и попробуй ещё раз."], err:["Не получилось загрузить", "Попробуй ещё раз чуть позже."],
+    empty:["Ничего не нашлось", "Попробуй другое слово или создай такой сет сам и опубликуй его."], first:["Пока здесь пусто", "Опубликуй свой сет, и он станет первым в библиотеке."],
+    gone:["Сет не найден", "Возможно, автор удалил его или закрыл доступ."]},
+  qqLoading:"Загружаем…", qqMineMark:"твой", qqSaves:n=>`сохранили ${n}`,
+  qqFromLibBy:a=>`Из библиотеки · ${a}`, qqMySet:"Мой сет", qqLibBy:a=>`Библиотека · ${a}`,
+  qqOpenMine:"Открыть в моих сетах", qqSaveSet:"Сохранить себе", qqLearnMy:"Учить этот сет", qqShare:"Поделиться", qqEdit:"Изменить",
+  qqSavedT:"Сет сохранён в «Мои сеты»",
+  qqShareH:"Поделиться сетом", qqShareLibP:t=>`Отправь ссылку на сет «${t}»: открыв её, человек сможет посмотреть слова и сохранить сет себе.`,
+  qqWhoSees:"Кто видит сет", qqLinkA:"Ссылка на сет", qqCopy:"Скопировать", qqCopied:"Скопировано", qqSendVia:"Отправить через…", qqShareText:t=>`Учи со мной французские слова: «${t}»`,
+  qqVis:{private:["Только я", "Сет видишь только ты"], link:["По ссылке", "Открыть сет сможет любой, у кого есть ссылка"], public:["В библиотеке", "Сет можно найти в поиске, автор подписан твоим именем"]},
+  qqPublishing:"Сохраняем…", qqVisDone:{private:"Готово: сет снова видишь только ты.", link:"Готово: сет доступен по ссылке.", public:"Готово: сет опубликован в библиотеке."},
+  qqNoName:"В библиотеке автор будет подписан «без имени». Имя можно указать в личном кабинете.",
+  qqNewH:"Новый сет", qqEditH:"Изменить сет", qqEdLead:"Слово по-французски и перевод. Если перевод оставить пустым, сайт подскажет его сам.",
+  qqFTitle:"Название", qqFTitlePh:"Например: Слова из сериала Lupin", qqFDesc:"Описание", qqOptional:"необязательно", qqFDescPh:"О чём сет и откуда слова",
+  qqImport:"Вставить списком", qqImportHint:"Каждое слово с новой строки: «слово — перевод». Подойдёт и экспорт из Quizlet (слово и перевод через Tab).",
+  qqImportPh:"la pomme — яблоко\nle fromage — сыр", qqImportGo:"Добавить в сет", qqCancel:"Отмена",
+  qqFFr:"Французский", qqFM:"Перевод", qqAddWord:"Добавить слово", qqRemoveWord:"Убрать слово",
+  qqEdTip:"Enter — к следующему полю. Пустые строки не сохраняются.", qqTrLoading:"Подбираем перевод…",
+  qqDelete:"Удалить сет", qqDeleteSure:"Точно удалить? Нажми ещё раз", qqDeleted:"Сет удалён",
+  qqSaveChanges:"Сохранить", qqCreate:"Создать сет", qqImported:n=>`Добавлено: ${n}`,
+  qqErrTitle:"Назови сет.", qqErrHalf:"В выделенных строках не хватает слова или перевода.", qqErrFew:"Добавь хотя бы 2 слова.", qqErrMany:"В сете может быть не больше 500 слов.",
+  qqRepubFail:"Сет сохранён, но обновить его в библиотеке не получилось", qqSavedChanges:"Изменения сохранены", qqCreated:"Сет создан"
+});
+Object.assign(I18N.en, {
+  qqTab:{learn:"Learn", my:"My sets", lib:"Library"},
+  qqLead:"Learn words from the textbook and your own. A few new ones every day, and the ones you know come back just as you start to forget them.",
+  qqBook:"Textbook sets", qqSetsSub:"Open a set to see its words, flip cards or play a speed game.",
+  qqNewSet:"Create a set", qqNewSetSub:"Your own words: from a lesson, a series, a song", qqNoSet:"This set doesn’t exist. It may have been deleted.",
+  qqTip:["You haven’t started these words yet. A few of them will appear in your session every day.",
+         "You’ve met the word but haven’t gone through all the steps yet: pick the translation, pick the word and type it yourself. Words you got wrong in a review also come back here.",
+         "The word has passed every step and is now in review: it comes back tomorrow, then in 3 and 7 days, and less often after that. Get it wrong and it goes back to “Learning”."],
+  qqTipDue:"It’s time to review this word: it’s waiting in today’s session.", qqTipNext:s=>`Next review ${s}.`,
+  qqFromLib:"from the library", qqVisShort:{public:"in the library", link:"via link"},
+  qqNWords:n=>`${n} ${n === 1 ? "word" : "words"}`, qqBy:a=>`by ${a}`, qqAnon:"anonymous",
+  qqMyEmptyH:"Create your first set", qqMyEmptyP:"Add the words you want to learn: from a lesson, a series or a song. Your set works just like the textbook sets, and you can share it with friends.",
+  qqFindLib:"Browse the library",
+  qqLibPh:"Topic, word or author", qqLibFound:q=>`Results for “${q}”`, qqLibPopular:"Popular sets",
+  qqLibErr:{off:["The library is unavailable", "It only works when you’re signed in."], setup:["The library is coming soon", "It’s still being set up. You can already create your own sets."],
+    offline:["No internet", "Connect and try again."], err:["Couldn’t load", "Please try again a bit later."],
+    empty:["Nothing found", "Try another word, or create this set yourself and publish it."], first:["Nothing here yet", "Publish your set and it will be the first one in the library."],
+    gone:["Set not found", "The author may have deleted it or made it private."]},
+  qqLoading:"Loading…", qqMineMark:"yours", qqSaves:n=>`saved ${n}×`,
+  qqFromLibBy:a=>`From the library · ${a}`, qqMySet:"My set", qqLibBy:a=>`Library · ${a}`,
+  qqOpenMine:"Open in my sets", qqSaveSet:"Save to my sets", qqLearnMy:"Learn this set", qqShare:"Share", qqEdit:"Edit",
+  qqSavedT:"The set is saved to “My sets”",
+  qqShareH:"Share the set", qqShareLibP:t=>`Send a link to “${t}”: whoever opens it can see the words and save the set.`,
+  qqWhoSees:"Who can see the set", qqLinkA:"Link to the set", qqCopy:"Copy", qqCopied:"Copied", qqSendVia:"Send via…", qqShareText:t=>`Learn French words with me: “${t}”`,
+  qqVis:{private:["Only me", "Only you can see the set"], link:["Anyone with the link", "Anyone who has the link can open the set"], public:["In the library", "Anyone can find the set; it’s signed with your name"]},
+  qqPublishing:"Saving…", qqVisDone:{private:"Done: only you can see the set now.", link:"Done: the set is available via link.", public:"Done: the set is published in the library."},
+  qqNoName:"In the library the author will show as “anonymous”. You can set your name in your account.",
+  qqNewH:"New set", qqEditH:"Edit set", qqEdLead:"A French word and its translation. Leave the translation empty and the site will suggest one.",
+  qqFTitle:"Title", qqFTitlePh:"For example: Words from Lupin", qqFDesc:"Description", qqOptional:"optional", qqFDescPh:"What the set is about and where the words come from",
+  qqImport:"Paste a list", qqImportHint:"One word per line: “word — translation”. A Quizlet export (word and translation separated by Tab) works too.",
+  qqImportPh:"la pomme — apple\nle fromage — cheese", qqImportGo:"Add to the set", qqCancel:"Cancel",
+  qqFFr:"French", qqFM:"Translation", qqAddWord:"Add a word", qqRemoveWord:"Remove the word",
+  qqEdTip:"Enter moves to the next field. Empty rows aren’t saved.", qqTrLoading:"Finding a translation…",
+  qqDelete:"Delete set", qqDeleteSure:"Delete for sure? Click again", qqDeleted:"Set deleted",
+  qqSaveChanges:"Save", qqCreate:"Create set", qqImported:n=>`Added: ${n}`,
+  qqErrTitle:"Give the set a title.", qqErrHalf:"The highlighted rows are missing a word or a translation.", qqErrFew:"Add at least 2 words.", qqErrMany:"A set can have at most 500 words.",
+  qqRepubFail:"The set is saved, but updating it in the library failed", qqSavedChanges:"Changes saved", qqCreated:"Set created"
+});
+
+/* ссылка на сет из библиотеки, с которой человек пришёл на сайт (до входа и онбординга) */
+let QZ_DEEP = /^#quizlet\/s\/[a-z0-9]{8,24}$/.test(location.hash) ? location.hash : "";
 let QZ = {scope:"all", perDay:10, dir:"fr", shuf:false};
 try { const q = JSON.parse(ls.get("edito-qz") || "null"); if (q) { if (+q.perDay) QZ.perDay = +q.perDay; ["scope", "dir", "shuf"].forEach(k=>{ if (q[k] !== undefined) QZ[k] = q[k]; }); } } catch(e) {}
 const saveQZ = () => ls.set("edito-qz", JSON.stringify(QZ));
@@ -91,6 +170,8 @@ const UORD = u => u === "1–2" ? 1.5 : (+u || 0);
 
 /* ---------- слова и их состояние ---------- */
 function qWords(scope){
+  if (scope === "mine") { const seen = new Set(), out = []; qWords("fav").concat(...qzUsets().map(s=>qWords("c:" + s.id))).forEach(w=>{ if (!seen.has(w.fr)) { seen.add(w.fr); out.push(w); } }); return out; }
+  if (/^[cp]:/.test(scope)) { const s = scope[0] === "c" ? qzUset(scope.slice(2)) : PUBC.get(scope.slice(2)); return s ? qzUniq(s.w).map(([fr, m])=>({fr, m:m || "…", set:scope, unit:""})) : []; }
   if (scope === "fav") return (S.quiz.fav || []).map(f=>({fr:f.fr, m:(LANG === "en" ? (f.en || f.ru) : (f.ru || f.en)) || qMeaning(f.fr) || "…", set:"fav", unit:""}));
   const sets = scope === "all" ? QSETS : /^u:/.test(scope) ? QSETS.filter(s=>String(s.unit).split("–").includes(scope.slice(2))) : QSETS.filter(s=>s.id === scope);
   const seen = new Set(), out = [];
@@ -144,7 +225,7 @@ const srsDueCount = (scope, now = Date.now()) => qWords(scope).filter(w=>{ const
 function sdToday(){ const k = dayKey(), sd = S.quiz.sd || {}; return sd.d === k ? Object.assign({n:0, a:0, x:0}, sd) : {d:k, n:0, a:0, x:0}; }
 function updSrsBadge(){
   const b = document.getElementById("srsBadge"); if (!b || COURSE !== "fr") return;
-  const n = srsDueCount("all"); b.hidden = !n; b.textContent = n > 99 ? "99+" : String(n); b.title = `${n} ${t("srsBadge")}`;
+  const now = Date.now(), n = qzPool("all").filter(w=>{ const r = qR(w.fr); return r && r.due <= now; }).length; b.hidden = !n; b.textContent = n > 99 ? "99+" : String(n); b.title = `${n} ${t("srsBadge")}`;
 }
 /* прогресс старых режимов (lv без r) → в повторения; звёздочки → в Избранное */
 let QZ_MIG = null;
@@ -161,8 +242,15 @@ function qzMigrate(){
   });
   if (ch) touch("quiz");
 }
+/* «все юниты» = слова учебника + уже начатые слова из своих сетов и избранного (их повторения тоже приходят в занятие) */
+function qzPool(scope){
+  const ws = qWords(scope); if (scope !== "all") return ws;
+  const seen = new Set(ws.map(w=>w.fr));
+  qWords("mine").forEach(w=>{ if (!seen.has(w.fr) && qR(w.fr)) { seen.add(w.fr); ws.push(w); } });
+  return ws;
+}
 function qzCounts(scope){
-  const now = Date.now(), ws = qWords(scope); let nw = 0, lr = 0, kn = 0, due = 0;
+  const now = Date.now(), ws = qzPool(scope); let nw = 0, lr = 0, kn = 0, due = 0;
   ws.forEach(w=>{ const r = qR(w.fr); if (!r) nw++; else if (r.st === 2) { kn++; if (r.due <= now) due++; } else { lr++; due++; } });
   return {n:ws.length, nw, lr, kn, due};
 }
@@ -217,7 +305,7 @@ const qzBindSay = root => $$("[data-say]", root).forEach(b=>b.addEventListener("
 function qzOpts(w, field){
   const n = x => dk(x[field]), long = x => x[field].split(" ").length > 2, shape = x => long(x) === long(w);
   const ok = x => x.fr !== w.fr && n(x) !== n(w) && dk(x.m) !== dk(w.m);
-  const all = qWords("all").concat(w.set === "fav" ? qWords("fav") : []);
+  const all = qWords("all").concat(/^(fav|[cp]:)/.test(w.set) ? qWords(w.set) : []);
   const same = all.filter(x=>x.set === w.set && ok(x)), other = all.filter(x=>x.set !== w.set && ok(x));
   const out = [];
   for (const g of [shuffle(same.filter(shape)), shuffle(same.slice()), shuffle(other.filter(shape)), shuffle(other.slice())])
@@ -251,102 +339,462 @@ function qzJudge(inp, fr){
 const qzLong = w => w.fr.split(/\s+/).length > 3 || /…/.test(w.fr);
 
 /* =========================================================
-   страницы: главная Quizlet и страница набора
+   страницы Quizlet (v3, 30.10.2026)
+   #quizlet — вкладки «Учить» / «Мои сеты» (#quizlet/my) / «Библиотека» (#quizlet/lib),
+   переключаются на месте (qzSoft), без перерисовки страницы.
+   #quizlet/<id> и #quizlet/fav — набор из учебника / избранное,
+   #quizlet/c/<id> — свой сет, #quizlet/new и #quizlet/edit/<id> — редактор,
+   #quizlet/s/<id> — сет из библиотеки (по ссылке).
    ========================================================= */
 let QS = null;   /* текущее занятие */
+const QZTABS = ["learn", "my", "lib"];
+const qzTabOf = sub => sub === "my" ? "my" : sub === "lib" ? "lib" : "learn";
 function renderQuizlet(sub){
-  QS = null; qzKeys(null); clearInterval(qzTimer);
+  QS = null; qzKeys(null); clearInterval(qzTimer); qzTipHide(); qzModalClose();
   qzMigrate();
   sub = sub || "";
-  if (sub && (sub === "fav" || QSETS.some(s=>s.id === sub))) return qzSetView(sub);
+  let m;
+  if (sub === "new") return qzEditor(null);
+  if ((m = sub.match(/^edit\/(.+)$/))) return qzEditor(m[1]);
+  if ((m = sub.match(/^c\/(.+)$/))) return qzUset(m[1]) ? qzSetView("c:" + m[1]) : qzMissing();
+  if ((m = sub.match(/^s\/(.+)$/))) return qzPubView(m[1]);
+  if (sub === "fav" || QSETS.some(s=>s.id === sub)) return qzSetView(sub);
   if (!/^(all|u:[0-9])$/.test(QZ.scope)) QZ.scope = "all";
-  qzHome();
+  qzHome(qzTabOf(sub));
 }
+function qzSoft(sub){
+  if (QS || !$(".qq-home", main) || !["", "my", "lib"].includes(sub)) return false;
+  qzTipHide(); qzModalClose(); qzTab(qzTabOf(sub)); return true;
+}
+function qzMissing(){
+  main.innerHTML = `<div class="col qq-col"><a class="qq-backl" href="#quizlet/my">${ARL}${t("qqTab").my}</a><div class="qq-empty"><span class="qq-ico">${f7("question")}</span><h3>${t("qqNoSet")}</h3></div></div>`;
+}
+
+/* ---------- полоска прогресса с подсказками ---------- */
 function qzStack(c, big){
   const p = x => c.n ? (x / c.n * 100).toFixed(1) + "%" : "0";
-  return `<div class="qq-stack${big ? " big" : ""}"><span class="qq-bar3"><i class="k" style="width:${p(c.kn)}"></i><i class="l" style="width:${p(c.lr)}"></i></span>${big ? `<span class="qq-leg"><span><i class="k"></i>${t("qqSt")[2]} <b>${c.kn}</b></span><span><i class="l"></i>${t("qqSt")[1]} <b>${c.lr}</b></span><span><i></i>${t("qqSt")[0]} <b>${c.nw}</b></span></span>` : ""}</div>`;
+  const li = (cls, k, n) => `<span class="qq-legi" tabindex="0" data-tip="${esc(t("qqTip")[k])}"><i class="${cls}"></i><u>${t("qqSt")[k]}</u> <b>${n}</b></span>`;
+  return `<div class="qq-stack${big ? " big" : ""}"><span class="qq-bar3"><i class="k" style="width:${p(c.kn)}"></i><i class="l" style="width:${p(c.lr)}"></i></span>${big ? `<span class="qq-leg">${li("k", 2, c.kn)}${li("l", 1, c.lr)}${li("", 0, c.nw)}</span>` : ""}</div>`;
 }
-function qzHome(){
-  const scope = QZ.scope, c = qzCounts(scope), nNew = qzNewToday(scope, c), mins = Math.max(1, Math.round(c.due * 0.2 + nNew * 0.8));
+function qzChip(fr, now){
+  const s = qSt(fr), r = qR(fr);
+  if (s === 2 && r.due <= now) return `<span class="qq-chip due" tabindex="0" data-tip="${esc(t("qqTipDue"))}">${t("qqRevNow")}</span>`;
+  return `<span class="qq-chip s${s}" tabindex="0" data-tip="${esc(t("qqTip")[s] + (s === 2 ? " " + t("qqTipNext", srsWhenTxt(r.due)) : ""))}">${t("qqStOne")[s]}</span>`;
+}
+/* ---------- карточки наборов ---------- */
+const qzVisBadge = s => s.src ? `<span class="qq-vis">${f7("bookmark")}${t("qqFromLib")}</span>` : s.vis === "public" ? `<span class="qq-vis pub">${f7("globe")}${t("qqVisShort").public}</span>` : s.vis === "link" ? `<span class="qq-vis">${f7("link")}${t("qqVisShort").link}</span>` : "";
+function qzSetCard(href, title, sub, scope, extra){
+  const c = qzCounts(scope);
+  return `<a class="qq-set${extra && extra.cls ? " " + extra.cls : ""}" href="${href}"><span class="qq-set-t">${extra && extra.ico || ""}${esc(title)}</span>${sub ? `<span class="qq-set-s">${sub}</span>` : ""}${extra && extra.badge || ""}${qzStack(c)}<span class="qq-set-m">${t("qqKnownOf", c.kn, c.n)}${c.due ? ` · <em>${t("qqDueN", c.due)}</em>` : ""}</span></a>`;
+}
+
+/* ---------- главная: вкладки ---------- */
+function qzHome(tab){
+  main.innerHTML = `<div class="col qq-col qq-home">
+  <header class="qq-head qq-head-row"><div class="qq-head-t"><h1>Quizlet</h1><p class="qq-lead">${t("qqLead")}</p></div><a class="btn sec qq-newb" href="#quizlet/new">${f7("plus")}${t("qqNewSet")}</a></header>
+  <div class="qq-tabs seg big" role="tablist">${QZTABS.map(k=>`<button type="button" role="tab" data-tab="${k}" aria-controls="qqp-${k}">${t("qqTab")[k]}${k === "my" ? `<span class="qq-tabn">${qzUsets().length || ""}</span>` : ""}</button>`).join("")}</div>
+  ${QZTABS.map(k=>`<section class="qq-pane" id="qqp-${k}" data-pane="${k}" role="tabpanel" hidden></section>`).join("")}
+  </div>`;
+  $$("[data-tab]", main).forEach(b=>b.addEventListener("click", ()=>{
+    const h = "#quizlet" + (b.dataset.tab === "learn" ? "" : "/" + b.dataset.tab);
+    if (location.hash !== h) { history.pushState(null, "", h); ROUTE_PREV = h.slice(1); markActive(); }
+    qzTab(b.dataset.tab);
+  }));
+  qzTab(tab);
+}
+function qzTab(tab){
+  $$("[data-tab]", main).forEach(b=>{ const on = b.dataset.tab === tab; b.classList.toggle("on", on); b.setAttribute("aria-selected", on ? "true" : "false"); });
+  $$(".qq-pane", main).forEach(p=>{
+    const on = p.dataset.pane === tab; p.hidden = !on;
+    if (on && !p.dataset.ready) { p.dataset.ready = "1"; ({learn:qzPaneLearn, my:qzPaneMy, lib:qzPaneLib})[tab](p); }
+  });
+  if (tab === "lib") { const i = $(".qq-sin", main); if (i && window.matchMedia("(pointer:fine)").matches) i.focus({preventScroll:true}); }
+}
+
+/* --- вкладка «Учить»: занятие на сегодня + наборы из учебника --- */
+function qzPaneLearn(p){
   const units = [...new Set(QSETS.flatMap(s=>String(s.unit).split("–")))].sort();
   const scopes = [["all", t("qqScopeAll")], ...units.map(u=>["u:" + u, `<span class="qq-uw">Unité </span>${u}`])];
-  const has = c.due + nNew > 0;
-  let nextDue = null; if (!has) qWords(scope).forEach(w=>{ const r = qR(w.fr); if (r && (!nextDue || r.due < nextDue)) nextDue = r.due; });
-  const empty = scope === "fav" && !c.n;
-  const today = empty ? `<div class="qq-done-msg"><span class="qq-ico fav">${ICO_HEART}</span><div><h3>${t("qzFavEmptyH")}</h3><p>${t("qzFavEmpty")}</p></div></div>`
-    : has ? `<div class="qq-nums"><div><b>${c.due}</b><span>${t("qqDue")}</span></div><div><b>${nNew}</b><span>${t("qqNew")}</span></div><div class="qq-min">${t("qqMin", mins)}</div></div>
-      <button type="button" class="btn pri qq-startb" data-start>${t("qqStart")}${ARR}</button>`
-    : `<div class="qq-done-msg"><span class="qq-ico ok">${f7("checkmark_alt")}</span><div><h3>${c.nw || nextDue ? t("qqAllDone") : t("qqAllLearned")}</h3>${nextDue ? `<p>${t("qqAllDoneP", srsWhenTxt(nextDue))}</p>` : ""}</div></div>
-      ${c.nw ? `<button type="button" class="btn sec" data-more>${t("qqMoreNew", Math.min(5, c.nw))}</button>` : ""}`;
   const groups = [];
   QSETS.forEach(s=>{ let g = groups.find(x=>x.u === s.unit); if (!g) groups.push(g = {u:s.unit, sets:[]}); g.sets.push(s); });
   groups.sort((a, b)=>UORD(a.u) - UORD(b.u));
-  const setCard = (id, title, sub, fav) => { const sc = qzCounts(id); return `<a class="qq-set${fav ? " is-fav" : ""}" href="#quizlet/${id}"><span class="qq-set-t">${fav ? ICO_HEART : ""}${esc(title)}</span>${sub ? `<span class="qq-set-s">${esc(sub)}</span>` : ""}${qzStack(sc)}<span class="qq-set-m">${t("qqKnownOf", sc.kn, sc.n)}${sc.due ? ` · <em>${t("qqDueN", sc.due)}</em>` : ""}</span></a>`; };
-  main.innerHTML = `<div class="col qq-col">
-  <header class="qq-head"><h1>Quizlet</h1><p class="qq-lead">${t("qqLead")}</p></header>
-  <section class="qq-today">
+  p.innerHTML = `<section class="qq-today">
     <div class="qq-tl">
       <p class="qq-eye">${t("qqToday")}</p>
-      <div class="qq-scope seg" role="tablist">${scopes.map(([id, l])=>`<button type="button" role="tab" data-scope="${id}" class="${scope === id ? "on" : ""}">${l}</button>`).join("")}</div>
-      <div class="qq-main">${today}</div>
-      ${empty ? "" : qzStack(c, true)}
+      <div class="qq-scope seg" role="group">${scopes.map(([id, l])=>`<button type="button" data-scope="${id}" class="${QZ.scope === id ? "on" : ""}" aria-pressed="${QZ.scope === id}">${l}</button>`).join("")}</div>
+      <div class="qq-tbody"></div>
     </div>
     <div class="qq-tr">
       <p class="qq-eye">${t("qqHowH")}</p>
-      <ol class="qq-how">${t("qqHow").map(([h, p])=>`<li><b>${h}</b><span>${p}</span></li>`).join("")}</ol>
+      <ol class="qq-how">${t("qqHow").map(([h, d])=>`<li><b>${h}</b><span>${d}</span></li>`).join("")}</ol>
       <div class="qq-per"><span>${t("qqPerDay")}</span><span class="seg">${[5, 10, 15, 20].map(n=>`<button type="button" data-per="${n}" class="${(QZ.perDay || 10) === n ? "on" : ""}">${n}</button>`).join("")}</span></div>
     </div>
   </section>
-  <div class="qq-sec-h"><h2>${t("qqSets")}</h2><p>${t("qqSetsSub")}</p></div>
-  <div class="qq-group"><h3 class="qq-gh">${t("qqMine")}</h3><div class="qq-sets">${setCard("fav", t("qzFav"), t("qqFavSub"), true)}</div></div>
-  ${groups.map(g=>`<div class="qq-group"><h3 class="qq-gh"><span class="qq-upill">${g.u.includes("–") ? "Unités " + g.u : "Unité " + g.u}</span></h3><div class="qq-sets">${g.sets.map(s=>setCard(s.id, s.t, LANG === "en" ? s.en : s.ru)).join("")}</div></div>`).join("")}
-  </div>`;
-  $$("[data-scope]", main).forEach(b=>b.addEventListener("click", ()=>{ QZ.scope = b.dataset.scope; saveQZ(); qzHome(); }));
-  $$("[data-per]", main).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.per; saveQZ(); qzHome(); }));
-  const st = $("[data-start]", main); if (st) st.addEventListener("click", ()=>qzSession(scope, null, ""));
-  const mo = $("[data-more]", main); if (mo) mo.addEventListener("click", ()=>{ const sd = sdToday(); sd.x += 5; S.quiz.sd = sd; touch("quiz"); qzSession(scope, Math.min(5, c.nw), ""); });
+  <div class="qq-sec-h"><h2>${t("qqBook")}</h2><p>${t("qqSetsSub")}</p></div>
+  ${groups.map(g=>`<div class="qq-group"><h3 class="qq-gh"><span class="qq-upill">${g.u.includes("–") ? "Unités " + g.u : "Unité " + g.u}</span></h3><div class="qq-sets">${g.sets.map(s=>qzSetCard("#quizlet/" + s.id, s.t, esc(LANG === "en" ? s.en : s.ru), s.id)).join("")}</div></div>`).join("")}`;
+  $$("[data-scope]", p).forEach(b=>b.addEventListener("click", ()=>{
+    QZ.scope = b.dataset.scope; saveQZ();
+    $$("[data-scope]", p).forEach(x=>{ x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    qzPaintToday(p);
+  }));
+  $$("[data-per]", p).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.per; saveQZ(); $$("[data-per]", p).forEach(x=>x.classList.toggle("on", x === b)); qzPaintToday(p); }));
+  qzPaintToday(p);
+}
+function qzPaintToday(p){
+  const body = $(".qq-tbody", p); if (!body) return;
+  const scope = QZ.scope, c = qzCounts(scope), nNew = qzNewToday(scope, c), mins = Math.max(1, Math.round(c.due * 0.2 + nNew * 0.8));
+  const has = c.due + nNew > 0;
+  let nextDue = null; if (!has) qzPool(scope).forEach(w=>{ const r = qR(w.fr); if (r && (!nextDue || r.due < nextDue)) nextDue = r.due; });
+  body.innerHTML = `<div class="qq-main">${has
+    ? `<div class="qq-nums"><div><b>${c.due}</b><span>${t("qqDue")}</span></div><div><b>${nNew}</b><span>${t("qqNew")}</span></div><div class="qq-min">${t("qqMin", mins)}</div></div>
+      <button type="button" class="btn pri qq-startb" data-start>${t("qqStart")}${ARR}</button>`
+    : `<div class="qq-done-msg"><span class="qq-ico ok">${f7("checkmark_alt")}</span><div><h3>${c.nw || nextDue ? t("qqAllDone") : t("qqAllLearned")}</h3>${nextDue ? `<p>${t("qqAllDoneP", srsWhenTxt(nextDue))}</p>` : ""}</div></div>
+      ${c.nw ? `<button type="button" class="btn sec" data-more>${t("qqMoreNew", Math.min(5, c.nw))}</button>` : ""}`}</div>${qzStack(c, true)}`;
+  const st = $("[data-start]", body); if (st) st.addEventListener("click", ()=>qzSession(scope, null, ""));
+  const mo = $("[data-more]", body); if (mo) mo.addEventListener("click", ()=>{ const sd = sdToday(); sd.x += 5; S.quiz.sd = sd; touch("quiz"); qzSession(scope, Math.min(5, c.nw), ""); });
 }
 
-function qzSetView(id){
-  const isFavSet = id === "fav", set = QSETS.find(s=>s.id === id);
-  const title = isFavSet ? t("qzFav") : set.t, sub = isFavSet ? t("qqFavSub") : (LANG === "en" ? set.en : set.ru);
-  const ws = qWords(id), c = qzCounts(id), now = Date.now();
-  const row = w => {
-    const s = qSt(w.fr), r = qR(w.fr);
-    const chip = s === 2 ? (r.due <= now ? `<span class="qq-chip due">${t("qqRevNow")}</span>` : `<span class="qq-chip s2" title="${esc(t("qqRevIn", srsWhenTxt(r.due)))}">${t("qqStOne")[2]}</span>`) : `<span class="qq-chip s${s}">${t("qqStOne")[s]}</span>`;
-    return `<div class="qq-row">${qzSayBtn(w.fr, "sm")}<span class="qq-rfr fr">${qzFrHtml(w.fr)}</span><span class="qq-rm">${esc(w.m)}</span>${chip}<button type="button" class="qz-heart${isFav(w.fr) ? " on" : ""}" data-fav="${esc(w.fr)}" aria-label="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}" title="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}">${ICO_HEART}</button></div>`;
-  };
+/* --- вкладка «Мои сеты» --- */
+function qzPaneMy(p){
+  const sets = qzUsets().slice().sort((a, b)=>(b.up || 0) - (a.up || 0));
+  const fav = qzSetCard("#quizlet/fav", t("qzFav"), esc(t("qqFavSub")), "fav", {cls:"is-fav", ico:ICO_HEART});
+  const card = s => qzSetCard("#quizlet/c/" + s.id, s.t, esc(t("qqNWords", qzUniq(s.w).length)) + (s.src && s.src.a ? " · " + esc(t("qqBy", s.src.a)) : ""), "c:" + s.id, {badge:qzVisBadge(s)});
+  p.innerHTML = `${sets.length ? "" : `<div class="qq-empty qq-empty-my"><span class="qq-ico">${f7("rectangle_stack_badge_plus")}</span><div><h3>${t("qqMyEmptyH")}</h3><p>${t("qqMyEmptyP")}</p><div class="qq-acts left"><a class="btn pri" href="#quizlet/new">${f7("plus")}${t("qqNewSet")}</a><a class="btn sec" href="#quizlet/lib">${f7("search")}${t("qqFindLib")}</a></div></div></div>`}
+    <div class="qq-sets qq-sets-my">${sets.length ? `<a class="qq-set qq-set-new" href="#quizlet/new"><span class="qq-ico">${f7("plus")}</span><b>${t("qqNewSet")}</b><span>${t("qqNewSetSub")}</span></a>` : ""}${fav}${sets.map(card).join("")}</div>`;
+}
+
+/* --- вкладка «Библиотека» --- */
+const QLIB = {req:0, timer:null, q:""};
+function qzPaneLib(p){
+  p.innerHTML = `<div class="qq-libtop"><label class="qq-search"><span class="qq-sico">${f7("search")}</span><input type="search" class="qq-sin" ${inputAttrs} placeholder="${esc(t("qqLibPh"))}" aria-label="${esc(t("qqLibPh"))}" value="${esc(QLIB.q)}"></label></div>
+    <p class="qq-libh"></p><div class="qq-libres" aria-live="polite"></div>`;
+  const inp = $(".qq-sin", p);
+  inp.addEventListener("input", ()=>{ clearTimeout(QLIB.timer); QLIB.timer = setTimeout(()=>qzLibLoad(p, inp.value), 320); });
+  inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); clearTimeout(QLIB.timer); qzLibLoad(p, inp.value); } });
+  qzLibLoad(p, QLIB.q);
+}
+const qzLibMissing = e => /PGRST20[25]|42P01|42883|could not find|does not exist/i.test(((e && e.code) || "") + " " + ((e && e.message) || ""));
+function qzLibMsg(kind){
+  const m = t("qqLibErr")[kind] || t("qqLibErr").err;
+  return `<div class="qq-empty"><span class="qq-ico">${(kind === "empty" ? f7("search") : f7("cloud"))}</span><div><h3>${m[0]}</h3><p>${m[1]}</p>${kind === "empty" ? `<div class="qq-acts left"><a class="btn sec" href="#quizlet/new">${f7("plus")}${t("qqNewSet")}</a></div>` : ""}</div></div>`;
+}
+async function qzLibLoad(p, q){
+  if (document.body.classList.contains("gated") || (sb && !Cloud.uid)) { const r0 = $(".qq-libres", p); if (r0 && !r0.children.length) r0.innerHTML = `<div class="qq-loading">${t("qqLoading")}</div>`; return qzWhenReady(()=>{ if (document.body.contains(p)) qzLibLoad(p, q); }); }
+  q = String(q || "").trim().slice(0, 60); QLIB.q = q;
+  const res = $(".qq-libres", p), head = $(".qq-libh", p), req = ++QLIB.req;
+  head.textContent = q ? t("qqLibFound", q) : t("qqLibPopular");
+  if (!sb) { res.innerHTML = qzLibMsg("off"); return; }
+  res.classList.add("busy");
+  if (!res.children.length) res.innerHTML = `<div class="qq-loading">${t("qqLoading")}</div>`;
+  let r; try { r = await withTimeout(sb.rpc("qset_search", {p_q:q, p_lang:"fr", p_lim:30}), 12000); } catch(e) { r = {error:e}; }
+  if (req !== QLIB.req || !document.body.contains(res)) return;
+  res.classList.remove("busy");
+  if (r.error) { res.innerHTML = qzLibMsg(qzLibMissing(r.error) ? "setup" : navigator.onLine === false ? "offline" : "err"); return; }
+  const list = r.data || [];
+  if (!list.length) { res.innerHTML = qzLibMsg(q ? "empty" : "first"); return; }
+  res.innerHTML = `<div class="qq-sets qq-lib">${list.map(x=>`<a class="qq-set qq-lcard" href="#quizlet/s/${esc(x.id)}">
+    <span class="qq-set-t">${esc(x.title)}</span>
+    <span class="qq-set-s">${esc(t("qqBy", x.author || t("qqAnon")))}${x.mine ? ` · <em class="qq-mine">${t("qqMineMark")}</em>` : ""}</span>
+    <span class="qq-chips">${(x.sample || []).map(w=>`<span class="qq-wchip">${esc(Array.isArray(w) ? w[0] : "")}</span>`).join("")}</span>
+    <span class="qq-set-m">${t("qqNWords", x.n)}${x.saves ? ` · ${t("qqSaves", x.saves)}` : ""}</span></a>`).join("")}</div>`;
+}
+
+/* ---------- страница набора: учебник, избранное, свой сет, сет из библиотеки ---------- */
+function qzSetView(scope, pub){
+  const kind = pub ? "pub" : scope === "fav" ? "fav" : scope.startsWith("c:") ? "my" : "book";
+  const set = kind === "book" ? QSETS.find(s=>s.id === scope) : kind === "my" ? qzUset(scope.slice(2)) : pub || null;
+  const title = kind === "fav" ? t("qzFav") : kind === "book" ? set.t : set.t;
+  const sub = kind === "fav" ? t("qqFavSub") : kind === "book" ? (LANG === "en" ? set.en : set.ru) : (set.d || "");
+  const eye = kind === "book" ? (String(set.unit).includes("–") ? "Unités " : "Unité ") + set.unit
+    : kind === "fav" ? t("qqTab").my : kind === "my" ? (set.src ? t("qqFromLibBy", set.src.a || t("qqAnon")) : t("qqMySet")) : t("qqLibBy", set.a || t("qqAnon"));
+  const back = kind === "book" ? ["#quizlet", t("qqTab").learn] : kind === "pub" ? ["#quizlet/lib", t("qqTab").lib] : ["#quizlet/my", t("qqTab").my];
+  const origin = kind === "book" || kind === "fav" ? scope : kind === "my" ? "c/" + set.id : "";
+  const ws = qWords(scope), c = qzCounts(scope), now = Date.now();
+  const saved = kind === "pub" ? qzUsets().find(s=>s.src && s.src.id === set.id) : null;
+  const row = w => `<div class="qq-row" data-row="${esc(w.fr)}">${qzSayBtn(w.fr, "sm")}<span class="qq-rfr fr">${qzFrHtml(w.fr)}</span><span class="qq-rm">${esc(w.m)}</span>${qzChip(w.fr, now)}<button type="button" class="qz-heart${isFav(w.fr) ? " on" : ""}" data-fav="${esc(w.fr)}" aria-label="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}" title="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}">${ICO_HEART}</button></div>`;
+  const primary = kind === "pub"
+    ? (saved ? `<a class="btn pri" href="#quizlet/c/${saved.id}">${t("qqOpenMine")}${ARR}</a>` : `<button type="button" class="btn pri" data-a="save">${f7("plus")}${t("qqSaveSet")}</button>`)
+    : `<button type="button" class="btn pri" data-a="learn">${kind === "book" ? t("qqLearnSet") : t("qqLearnMy")}${ARR}</button>`;
+  const shareB = kind === "my" || kind === "pub" ? `<button type="button" class="btn sec" data-a="share">${f7("square_arrow_up")}${t("qqShare")}</button>` : "";
+  const editB = kind === "my" ? `<a class="btn sec qq-ib" href="#quizlet/edit/${set.id}" aria-label="${esc(t("qqEdit"))}" title="${esc(t("qqEdit"))}">${f7("pencil")}<span>${t("qqEdit")}</span></a>` : "";
   main.innerHTML = `<div class="col qq-col">
-  <a class="qq-backl" href="#quizlet">${ARL}${t("qqBack")}</a>
-  <header class="qq-head"><p class="qq-eye">${isFavSet ? t("qqMine") : (String(set.unit).includes("–") ? "Unités " : "Unité ") + set.unit}</p><h1>${isFavSet ? ICO_HEART : ""}${esc(title)}</h1><p class="qq-lead">${esc(sub)}</p></header>
+  <a class="qq-backl" href="${back[0]}">${ARL}${back[1]}</a>
+  <header class="qq-head"><p class="qq-eye">${esc(eye)}${kind === "my" ? qzVisBadge(set) : ""}</p><h1>${kind === "fav" ? ICO_HEART : ""}${esc(title)}</h1>${sub ? `<p class="qq-lead">${esc(sub)}</p>` : ""}${kind === "pub" ? `<p class="qq-meta">${t("qqNWords", ws.length)}${set.saves ? ` · ${t("qqSaves", set.saves)}` : ""}</p>` : ""}</header>
   ${ws.length ? `${qzStack(c, true)}
-  <div class="qq-actions"><button type="button" class="btn pri" data-a="learn">${t("qqLearnSet")}${ARR}</button><button type="button" class="btn sec" data-a="cards">${f7("rectangle_stack")}${t("qqCards")}</button>${ws.length >= 3 ? `<button type="button" class="btn sec" data-a="match">${f7("timer")}${t("qqMatch")}</button>` : ""}</div>
+  <div class="qq-actions">${primary}<button type="button" class="btn sec" data-a="cards">${f7("rectangle_stack")}${t("qqCards")}</button>${ws.length >= 3 ? `<button type="button" class="btn sec" data-a="match">${f7("timer")}${t("qqMatch")}</button>` : ""}${shareB}${editB}</div>
   <section class="qq-tool" hidden></section>
-  <div class="qq-sec-h"><h2>${t("qqWords")} <span>${ws.length}</span></h2></div>
+  <div class="qq-sec-h"><h2>${t("qqWords")} <span class="qq-wn">${ws.length}</span></h2></div>
   <div class="qq-list">${ws.map(row).join("")}</div>`
-  : `<div class="qq-done-msg"><span class="qq-ico fav">${ICO_HEART}</span><div><h3>${t("qzFavEmptyH")}</h3><p>${t("qzFavEmpty")}</p></div></div>`}
+  : `<div class="qq-empty"><span class="qq-ico fav">${ICO_HEART}</span><div><h3>${t("qzFavEmptyH")}</h3><p>${t("qzFavEmpty")}</p></div></div>`}
   </div>`;
   qzBindSay(main);
   $$("[data-fav]", main).forEach(b=>b.addEventListener("click", ()=>{
     const fr = b.dataset.fav, w = ws.find(x=>x.fr === fr) || {fr, m:""};
     let e = {fr}; if (!isFav(fr)) { if (!DICT) buildDict(); const d = DICT.get(dk(fr)); e = d ? {fr, ru:d.ru, en:d.en} : {fr, ru:LANG === "en" ? "" : w.m, en:LANG === "en" ? w.m : ""}; }
     const on = toggleFav(e); toast(on ? t("favAdded") : t("favRemoved"));
-    if (isFavSet) { const y = window.scrollY; qzSetView(id); window.scrollTo(0, y); } else { b.classList.toggle("on", on); b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label"); }
+    if (kind === "fav" && !on) {   /* убираем строку на месте */
+      const r = b.closest(".qq-row"); r.remove(); const n = $(".qq-wn", main); if (n) n.textContent = $$(".qq-row", main).length;
+      if (!$$(".qq-row", main).length) qzSetView("fav");
+      return;
+    }
+    b.classList.toggle("on", on); b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label");
   }));
   const tool = $(".qq-tool", main);
   const open = (mode, btn) => {
     const was = tool.dataset.mode === mode && !tool.hidden;
-    $$("[data-a]", main).forEach(x=>x.classList.toggle("on", false));
+    $$('[data-a="cards"],[data-a="match"]', main).forEach(x=>x.classList.remove("on"));
     qzKeys(null); clearInterval(qzTimer);
     if (was) { tool.hidden = true; tool.dataset.mode = ""; return; }
     tool.hidden = false; tool.dataset.mode = mode; btn.classList.add("on");
-    (mode === "cards" ? qzCards : qzMatch)(tool, id);
+    (mode === "cards" ? qzCards : qzMatch)(tool, scope);
     tool.scrollIntoView({behavior:"smooth", block:"nearest"});
   };
-  $$("[data-a]", main).forEach(b=>b.addEventListener("click", ()=>{ if (b.dataset.a === "learn") qzSession(id, null, id); else open(b.dataset.a, b); }));
+  $$("[data-a]", main).forEach(b=>b.addEventListener("click", ()=>{
+    const a = b.dataset.a;
+    if (a === "learn") qzSession(scope, null, origin);
+    else if (a === "cards" || a === "match") open(a, b);
+    else if (a === "share") kind === "my" && !set.src ? qzShare(set) : qzShareLink(kind === "pub" ? set.id : set.src.id, set.t);
+    else if (a === "save") qzSaveCopy(set);
+  }));
 }
 /* сердечко в окошке перевода: обновить страницу набора, если она открыта */
-function qzRefreshList(){ if (QS) return; const h = decodeURIComponent(location.hash.slice(1)); if (!/^quizlet/.test(h)) return; const y = window.scrollY; renderQuizlet(h.slice(8)); window.scrollTo(0, y); }
+function qzRefreshList(){ if (QS) return; const h = decodeURIComponent(location.hash.slice(1)); if (!/^quizlet\/./.test(h) || /^quizlet\/(my|lib)$/.test(h)) return; const y = window.scrollY; renderQuizlet(h.slice(8)); window.scrollTo(0, y); }
+
+/* ---------- свои сеты: хранение и публикация ---------- */
+const qzUsets = () => (S.usets && S.usets.sets) || [];
+const qzUset = id => qzUsets().find(s=>s.id === id) || null;
+const qzNewId = () => { let s = ""; const a = "abcdefghijklmnopqrstuvwxyz0123456789"; const r = crypto.getRandomValues(new Uint8Array(12)); r.forEach(x=>s += a[x % 36]); return s; };
+const qzUniq = w => { const seen = new Set(); return (w || []).filter(x=>Array.isArray(x) && x[0] && !seen.has(x[0]) && seen.add(x[0])); };
+const qzLink = id => location.origin + location.pathname + "#quizlet/s/" + id;
+function qzSaveUsets(){ S.usets = {sets:qzUsets()}; touch("usets"); }
+async function qzPublish(set, vis){
+  if (!sb) return {err:"off"};
+  let r;
+  try {
+    r = vis === "private"
+      ? await withTimeout(sb.from("qsets").delete().eq("id", set.id), 12000)
+      : await withTimeout(sb.from("qsets").upsert({id:set.id, author:(S.prof.name || "").slice(0, 40), lang:"fr", title:set.t.slice(0, 80), descr:(set.d || "").slice(0, 300), words:qzUniq(set.w).slice(0, 500), vis}, {onConflict:"id"}), 12000);
+  } catch(e) { r = {error:e}; }
+  if (r.error) return {err:qzLibMissing(r.error) ? "setup" : navigator.onLine === false ? "offline" : "err", e:r.error};
+  set.vis = vis; set.pubAt = Date.now(); qzSaveUsets();
+  return {ok:true};
+}
+async function qzSaveCopy(pub){
+  const id = qzNewId();
+  qzUsets().push({id, t:pub.t, d:pub.d || "", w:qzUniq(pub.w), at:Date.now(), up:Date.now(), vis:"private", src:{id:pub.id, a:pub.a || ""}});
+  qzSaveUsets(); toast(t("qqSavedT"));
+  try { sb && sb.rpc("qset_saved", {p_id:pub.id}).then(()=>{}, ()=>{}); } catch(e) {}
+  location.hash = "#quizlet/c/" + id;
+}
+
+/* ---------- окно (поделиться) ---------- */
+function qzModalClose(){ const m = $(".qq-modal"); if (m) { m.remove(); document.removeEventListener("keydown", qzModalKey, true); } }
+function qzModalKey(e){ if (e.key === "Escape") { e.stopPropagation(); e.preventDefault(); qzModalClose(); } }
+function qzModal(html){
+  qzModalClose();
+  const el = document.createElement("div"); el.className = "qq-modal";
+  el.innerHTML = `<div class="qq-mbg" data-x></div><div class="qq-mbox" role="dialog" aria-modal="true" aria-labelledby="qqMh">${html}</div>`;
+  document.body.appendChild(el);
+  el.addEventListener("click", e=>{ if (e.target.closest("[data-x]")) qzModalClose(); });
+  document.addEventListener("keydown", qzModalKey, true);
+  requestAnimationFrame(()=>el.classList.add("in"));
+  return el;
+}
+window.addEventListener("hashchange", ()=>qzModalClose());
+const qzShareRow = id => `<div class="qq-linkrow"><input class="qq-linkin" readonly value="${esc(qzLink(id))}" aria-label="${esc(t("qqLinkA"))}"><button type="button" class="btn pri" data-copy>${f7("doc_on_doc")}<span>${t("qqCopy")}</span></button></div>${navigator.share ? `<button type="button" class="btn sec qq-native" data-native>${f7("square_arrow_up")}${t("qqSendVia")}</button>` : ""}`;
+function qzBindShareRow(el, id, title){
+  const c = $("[data-copy]", el), n = $("[data-native]", el), inp = $(".qq-linkin", el);
+  if (inp) inp.addEventListener("focus", ()=>inp.select());
+  if (c) c.addEventListener("click", async ()=>{
+    let ok = false; try { await navigator.clipboard.writeText(qzLink(id)); ok = true; } catch(e) { try { inp.select(); ok = document.execCommand("copy"); } catch(_) {} }
+    $("span", c).textContent = ok ? t("qqCopied") : t("qqCopy"); if (ok) setTimeout(()=>{ if (document.body.contains(c)) $("span", c).textContent = t("qqCopy"); }, 1800);
+  });
+  if (n) n.addEventListener("click", ()=>{ navigator.share({title, text:t("qqShareText", title), url:qzLink(id)}).catch(()=>{}); });
+}
+function qzShareLink(id, title){
+  const el = qzModal(`<div class="qq-mh"><h3 id="qqMh">${t("qqShareH")}</h3><button type="button" class="qq-mx" data-x aria-label="${esc(t("trClose"))}">${f7("xmark")}</button></div>
+    <p class="qq-mlead">${t("qqShareLibP", esc(title))}</p>${qzShareRow(id)}`);
+  qzBindShareRow(el, id, title);
+}
+function qzShare(set){
+  const vis = ["private", "link", "public"];
+  const el = qzModal(`<div class="qq-mh"><h3 id="qqMh">${t("qqShareH")}</h3><button type="button" class="qq-mx" data-x aria-label="${esc(t("trClose"))}">${f7("xmark")}</button></div>
+    <p class="qq-mlead">«${esc(set.t)}» · ${t("qqNWords", qzUniq(set.w).length)}</p>
+    <p class="qq-mlab">${t("qqWhoSees")}</p>
+    <div class="qq-visopts" role="radiogroup">${vis.map(v=>`<button type="button" role="radio" class="qq-visopt" data-vis="${v}"><span class="qq-vico">${(v === "private" ? f7("lock") : v === "link" ? f7("link") : f7("globe"))}</span><span><b>${t("qqVis")[v][0]}</b><small>${t("qqVis")[v][1]}</small></span></button>`).join("")}</div>
+    <div class="qq-sharebox"></div>
+    <p class="qq-mst" aria-live="polite"></p>
+    ${S.prof.name ? "" : `<p class="qq-mnote">${t("qqNoName")}</p>`}`);
+  const box = $(".qq-sharebox", el), st = $(".qq-mst", el);
+  const paint = () => {
+    const v = set.vis || "private";
+    $$("[data-vis]", el).forEach(b=>{ const on = b.dataset.vis === v; b.classList.toggle("on", on); b.setAttribute("aria-checked", on ? "true" : "false"); });
+    box.innerHTML = v === "private" ? "" : qzShareRow(set.id);
+    if (v !== "private") qzBindShareRow(box, set.id, set.t);
+  };
+  const apply = async v => {
+    if ((set.vis || "private") === v) return;
+    $$("[data-vis]", el).forEach(b=>b.disabled = true); st.className = "qq-mst"; st.textContent = t("qqPublishing");
+    const r = await qzPublish(set, v);
+    if (!document.body.contains(el)) return;
+    $$("[data-vis]", el).forEach(b=>b.disabled = false);
+    if (r.ok) { st.textContent = t("qqVisDone")[v]; paint(); const b = $(".qq-eye .qq-vis", main), eye = $(".qq-eye", main); if (eye) { if (b) b.remove(); eye.insertAdjacentHTML("beforeend", qzVisBadge(set)); } }
+    else { st.className = "qq-mst bad"; st.textContent = t("qqLibErr")[r.err] ? t("qqLibErr")[r.err][0] + ". " + t("qqLibErr")[r.err][1] : t("qqLibErr").err[0]; }
+  };
+  $$("[data-vis]", el).forEach(b=>b.addEventListener("click", ()=>apply(b.dataset.vis)));
+  paint();
+  /* нажали «Поделиться» у личного сета — сразу открываем доступ по ссылке */
+  if ((set.vis || "private") === "private") apply("link");
+}
+
+/* ---------- сет из библиотеки ---------- */
+const PUBC = new Map();
+/* пока не вошли (экран входа / онбординг), библиотеку не спрашиваем: ждём и повторяем */
+function qzWhenReady(fn){
+  const h0 = location.hash, t0 = Date.now();
+  const tick = () => { if (location.hash !== h0) return; if (!document.body.classList.contains("gated") && (Cloud.uid || Cloud.kind === "none" || Date.now() - t0 > 15000)) return fn(); setTimeout(tick, 400); };
+  tick();
+}
+async function qzPubView(id){
+  main.innerHTML = `<div class="col qq-col"><a class="qq-backl" href="#quizlet/lib">${ARL}${t("qqTab").lib}</a><div class="qq-loading">${t("qqLoading")}</div></div>`;
+  if (document.body.classList.contains("gated") || (sb && !Cloud.uid)) return qzWhenReady(()=>qzPubView(id));
+  const mine = qzUset(id);
+  if (mine && !mine.src) { location.replace("#quizlet/c/" + id); return; }
+  const h0 = location.hash;
+  let r; if (!sb) r = {error:{code:"off"}}; else { try { r = await withTimeout(sb.rpc("qset_get", {p_id:id}), 12000); } catch(e) { r = {error:e}; } }
+  if (location.hash !== h0) return;
+  const x = r && !r.error && r.data && r.data[0];
+  if (!x) {
+    const kind = !r || !r.error ? "gone" : !sb ? "off" : qzLibMissing(r.error) ? "setup" : navigator.onLine === false ? "offline" : "err";
+    $(".qq-loading", main).outerHTML = qzLibMsg(kind); return;
+  }
+  const pub = {id:x.id, t:x.title, d:x.descr, a:x.author, w:qzUniq(x.words), saves:x.saves, vis:x.vis, mine:x.mine};
+  PUBC.set(id, pub);
+  qzSetView("p:" + id, pub);
+}
+
+/* ---------- редактор сета ---------- */
+function qzEditor(id){
+  const set = id ? qzUset(id) : null;
+  if (id && !set) return qzMissing();
+  const rows0 = set ? qzUniq(set.w).map(x=>[x[0], x[1] || ""]) : [["", ""], ["", ""], ["", ""]];
+  main.innerHTML = `<div class="col qq-col qq-edcol">
+  <a class="qq-backl" href="${set ? "#quizlet/c/" + set.id : "#quizlet/my"}">${ARL}${set ? esc(set.t) : t("qqTab").my}</a>
+  <header class="qq-head"><h1>${set ? t("qqEditH") : t("qqNewH")}</h1><p class="qq-lead">${t("qqEdLead")}</p></header>
+  <section class="qq-ed">
+    <label class="qq-f"><span>${t("qqFTitle")}</span><input class="qq-in2" id="qqT" maxlength="80" ${inputAttrs} placeholder="${esc(t("qqFTitlePh"))}" value="${esc(set ? set.t : "")}"></label>
+    <label class="qq-f"><span>${t("qqFDesc")} <i>${t("qqOptional")}</i></span><textarea class="qq-in2" id="qqD" maxlength="300" rows="2" placeholder="${esc(t("qqFDescPh"))}">${esc(set ? set.d || "" : "")}</textarea></label>
+  </section>
+  <section class="qq-ed">
+    <div class="qq-edh"><h2>${t("qqWords")} <span class="qq-wn"></span></h2><button type="button" class="btn sec sm" data-imp>${f7("doc_plaintext")}${t("qqImport")}</button></div>
+    <div class="qq-imp" hidden><p class="qq-hint">${t("qqImportHint")}</p><textarea class="qq-in2" rows="5" id="qqImp" placeholder="${esc(t("qqImportPh"))}"></textarea><div class="qq-acts left"><button type="button" class="btn pri sm" data-impgo>${t("qqImportGo")}</button><button type="button" class="btn sec sm" data-imp>${t("qqCancel")}</button></div></div>
+    <div class="qq-edhead" aria-hidden="true"><span></span><span>${t("qqFFr")}</span><span>${t("qqFM")}</span><span></span></div>
+    <ol class="qq-erows"></ol>
+    <button type="button" class="qq-addrow" data-add>${f7("plus")}${t("qqAddWord")}</button>
+    <p class="qq-hint">${t("qqEdTip")}</p>
+  </section>
+  <p class="qq-ederr" aria-live="polite"></p>
+  <div class="qq-edbar"><div class="qq-edbar-l">${set ? `<button type="button" class="qq-del" data-del>${f7("trash")}${t("qqDelete")}</button>` : ""}</div><div class="qq-edbar-r"><a class="btn sec" href="${set ? "#quizlet/c/" + set.id : "#quizlet/my"}">${t("qqCancel")}</a><button type="button" class="btn pri" data-save>${set ? t("qqSaveChanges") : t("qqCreate")}</button></div></div>
+  </div>`;
+  const list = $(".qq-erows", main), err = $(".qq-ederr", main);
+  const count = () => { const n = $$(".qq-er", list).filter(r=>$(".e-fr", r).value.trim() && $(".e-m", r).value.trim()).length; $(".qq-wn", main).textContent = n || ""; };
+  const autoTr = async (r) => {
+    const f = $(".e-fr", r), m = $(".e-m", r), fr = f.value.trim();
+    if (!fr || m.value.trim()) return;
+    const hit = lookup(fr);
+    let tr = hit ? (LANG === "en" ? (hit.en || hit.ru) : (hit.ru || hit.en)) : "";
+    if (!tr && navigator.onLine !== false) { m.placeholder = t("qqTrLoading"); try { tr = await remoteTr(fr, LANG === "en" ? "en" : "ru", "fr") || ""; } catch(e) {} m.placeholder = t("qqFM"); }
+    if (tr && !m.value.trim() && f.value.trim() === fr) { m.value = tr; m.classList.add("auto"); count(); }
+  };
+  const addRow = (fr, mm, focus) => {
+    const li = document.createElement("li"); li.className = "qq-er";
+    li.innerHTML = `<span class="qq-ern"></span><input class="qq-in2 e-fr ans" ${inputAttrs} placeholder="${esc(t("qqFFr"))}" aria-label="${esc(t("qqFFr"))}" value="${esc(fr || "")}"><input class="qq-in2 e-m" ${inputAttrs} placeholder="${esc(t("qqFM"))}" aria-label="${esc(t("qqFM"))}" value="${esc(mm || "")}"><button type="button" class="qq-erx" aria-label="${esc(t("qqRemoveWord"))}" title="${esc(t("qqRemoveWord"))}">${f7("xmark")}</button>`;
+    list.appendChild(li);
+    const f = $(".e-fr", li), m = $(".e-m", li);
+    f.addEventListener("blur", ()=>autoTr(li));
+    f.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); m.focus(); } });
+    m.addEventListener("input", ()=>m.classList.remove("auto"));
+    m.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); const nx = li.nextElementSibling; if (nx) $(".e-fr", nx).focus(); else addRow("", "", true); } });
+    [f, m].forEach(x=>x.addEventListener("input", ()=>{ li.classList.remove("bad"); count(); }));
+    $(".qq-erx", li).addEventListener("click", ()=>{ li.remove(); if (!$$(".qq-er", list).length) addRow("", "", true); count(); });
+    if (focus) f.focus();
+    return li;
+  };
+  rows0.forEach(([a, b])=>addRow(a, b));
+  count();
+  $("[data-add]", main).addEventListener("click", ()=>addRow("", "", true));
+  const imp = $(".qq-imp", main);
+  $$("[data-imp]", main).forEach(b=>b.addEventListener("click", ()=>{ imp.hidden = !imp.hidden; if (!imp.hidden) $("#qqImp", main).focus(); }));
+  $("[data-impgo]", main).addEventListener("click", ()=>{
+    const lines = $("#qqImp", main).value.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+    let n = 0;
+    lines.forEach(l=>{
+      const m = l.split(/\t|\s+[—–=-]\s+|\s*[;|]\s*/);
+      const fr = (m[0] || "").trim(), tr = m.slice(1).join(", ").trim(); if (!fr) return;
+      const empty = $$(".qq-er", list).find(r=>!$(".e-fr", r).value.trim() && !$(".e-m", r).value.trim());
+      if (empty) { $(".e-fr", empty).value = fr; $(".e-m", empty).value = tr; if (!tr) autoTr(empty); } else { const r = addRow(fr, tr); if (!tr) autoTr(r); }
+      n++;
+    });
+    $("#qqImp", main).value = ""; imp.hidden = true; count(); toast(t("qqImported", n));
+  });
+  /* вставка списка прямо в поле слова: «слово — перевод» на нескольких строках */
+  list.addEventListener("paste", e=>{
+    const txt = (e.clipboardData || window.clipboardData).getData("text"); if (!/\n/.test(txt.trim())) return;
+    e.preventDefault(); $("#qqImp", main).value = txt; $("[data-impgo]", main).click();
+  });
+  const del = $("[data-del]", main);
+  if (del) del.addEventListener("click", ()=>{
+    if (!del.classList.contains("arm")) { del.classList.add("arm"); del.lastChild.textContent = t("qqDeleteSure"); setTimeout(()=>{ if (document.body.contains(del)) { del.classList.remove("arm"); del.lastChild.textContent = t("qqDelete"); } }, 4000); return; }
+    const was = set.vis && set.vis !== "private" && !set.src;
+    S.usets.sets = qzUsets().filter(s=>s.id !== set.id); qzSaveUsets();
+    if (was && sb) sb.from("qsets").delete().eq("id", set.id).then(()=>{}, ()=>{});
+    toast(t("qqDeleted")); location.hash = "#quizlet/my";
+  });
+  $("[data-save]", main).addEventListener("click", async ()=>{
+    const title = $("#qqT", main).value.trim(), d = $("#qqD", main).value.trim();
+    err.textContent = ""; $("#qqT", main).classList.remove("bad");
+    const w = [], seen = new Set(); let bad = 0;
+    $$(".qq-er", list).forEach(r=>{
+      const fr = $(".e-fr", r).value.trim().replace(/\s+/g, " "), m = $(".e-m", r).value.trim().replace(/\s+/g, " ");
+      r.classList.remove("bad");
+      if (!fr && !m) return;
+      if (!fr || !m) { r.classList.add("bad"); bad++; return; }
+      if (seen.has(fr)) return; seen.add(fr); w.push([fr.slice(0, 120), m.slice(0, 160)]);
+    });
+    if (!title) { $("#qqT", main).classList.add("bad"); $("#qqT", main).focus(); err.textContent = t("qqErrTitle"); return; }
+    if (bad) { err.textContent = t("qqErrHalf"); const r = $(".qq-er.bad", list); if (r) $(".e-fr", r).value ? $(".e-m", r).focus() : $(".e-fr", r).focus(); return; }
+    if (w.length < 2) { err.textContent = t("qqErrFew"); return; }
+    if (w.length > 500) { err.textContent = t("qqErrMany"); return; }
+    const now = Date.now();
+    let s = set;
+    if (s) Object.assign(s, {t:title.slice(0, 80), d:d.slice(0, 300), w, up:now});
+    else { s = {id:qzNewId(), t:title.slice(0, 80), d:d.slice(0, 300), w, at:now, up:now, vis:"private"}; qzUsets().push(s); }
+    qzSaveUsets();
+    if (s.vis && s.vis !== "private" && !s.src) qzPublish(s, s.vis).then(r=>{ if (!r.ok) toast(t("qqRepubFail")); });
+    toast(set ? t("qqSavedChanges") : t("qqCreated"));
+    location.hash = "#quizlet/c/" + s.id;
+  });
+  if (!set) $("#qqT", main).focus();
+}
+
+/* ---------- подсказки (Знаю / Учу / Новые, статусы слов) ---------- */
+const QTIP = {el:null, on:null};
+function qzTipHide(){ if (QTIP.el) QTIP.el.hidden = true; QTIP.on = null; }
+function qzTipShow(target){
+  if (!QTIP.el) { QTIP.el = document.createElement("div"); QTIP.el.className = "qq-tipbox"; QTIP.el.setAttribute("role", "tooltip"); QTIP.el.hidden = true; document.body.appendChild(QTIP.el); }
+  const el = QTIP.el; QTIP.on = target;
+  el.textContent = target.dataset.tip; el.hidden = false; el.style.left = "0px"; el.style.top = "0px";
+  const r = target.getBoundingClientRect(), w = el.offsetWidth, h = el.offsetHeight, vw = document.documentElement.clientWidth;
+  let top = r.top - h - 8, below = false; if (top < 8) { top = r.bottom + 8; below = true; }
+  const left = Math.max(8, Math.min(vw - w - 8, r.left + r.width / 2 - w / 2));
+  el.style.left = left + "px"; el.style.top = top + "px"; el.classList.toggle("below", below);
+  el.style.setProperty("--ax", Math.max(12, Math.min(w - 12, r.left + r.width / 2 - left)) + "px");
+}
+document.addEventListener("mouseover", e=>{ const tg = e.target.closest && e.target.closest("[data-tip]"); if (tg && tg !== QTIP.on) qzTipShow(tg); else if (!tg && QTIP.on) qzTipHide(); });
+document.addEventListener("focusin", e=>{ const tg = e.target.closest && e.target.closest("[data-tip]"); if (tg) qzTipShow(tg); });
+document.addEventListener("focusout", e=>{ if (QTIP.on && e.target === QTIP.on) qzTipHide(); });
+document.addEventListener("click", e=>{ const tg = e.target.closest && e.target.closest("[data-tip]"); if (tg) { if (QTIP.on === tg && !QTIP.el.hidden && e.pointerType !== "mouse") qzTipHide(); else qzTipShow(tg); } else if (QTIP.on) qzTipHide(); });
+window.addEventListener("scroll", ()=>{ if (QTIP.on) qzTipHide(); }, {passive:true, capture:true});
 
 /* =========================================================
    занятие
@@ -363,7 +811,7 @@ function qzPickNew(fresh, n){
   return out;
 }
 function qzSession(scope, extraNew, origin){
-  const now = Date.now(), ws = qWords(scope), learn = [], rev = [], fresh = [];
+  const now = Date.now(), ws = qzPool(scope), learn = [], rev = [], fresh = [];
   ws.forEach(w=>{ const r = qR(w.fr); if (!r) fresh.push(w); else if (r.st === 2) { if (r.due <= now) rev.push(w); } else learn.push(w); });
   rev.sort((a, b)=>qR(a.fr).due - qR(b.fr).due);
   const nNew = extraNew != null ? extraNew : qzNewToday(scope, {nw:fresh.length});
@@ -565,7 +1013,7 @@ function qzFinish(early){
   const c = qzCounts(scope), more = !qzIsSet(scope) && c.nw ? Math.min(5, c.nw) : qzIsSet(scope) && c.nw ? Math.min(10, c.nw) : 0;
   const miss = [...s.miss.values()];
   main.innerHTML = `<div class="col qq-col"><section class="qq-ses qq-sum">
-    <span class="qq-ico ${early && left ? "pause" : "ok"}">${f7(early && left ? "pause_fill" : "checkmark_alt")}</span>
+    <span class="qq-ico ${early && left ? "pause" : "ok"}">${(early && left ? f7("pause_fill") : f7("checkmark_alt"))}</span>
     <h2>${early && left ? t("qqPauseH") : t("qqDoneH")}</h2>
     ${s.st.n || s.st.nw ? `<div class="qq-sumn"><div><b>${s.st.nw}</b><span>${t("qqSumNew")}</span></div><div><b>${s.st.rv}</b><span>${t("qqSumRev")}</span></div><div><b>${acc}%</b><span>${t("qqSumAcc")}</span></div></div>` : ""}
     ${nextDue && nextDue > Date.now() ? `<p class="qq-lead">${t("qqNextRev", srsWhenTxt(nextDue))}</p>` : ""}

@@ -2439,6 +2439,145 @@ body.has-ply .main{padding-bottom:120px}
   .qq-actions .btn.pri{flex-basis:100%}
   .qq-actions .btn.sec{flex:1 1 0}
 }
+
+/* ============ Quizlet v3: вкладки, свои сеты, библиотека (30.10.2026) ============ */
+.qq-head-row{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.qq-head-t{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1 1 360px}
+.qq-newb{height:42px;padding:0 16px;border-radius:9px;font-size:14.5px;font-weight:600;gap:6px;text-decoration:none;flex:none}
+.qq-newb svg{width:16px;height:16px}
+.qq-tabs{display:flex;align-self:flex-start;margin:0 0 20px;width:max-content;max-width:100%}
+.qq-tabs button{padding:8px 16px;font-size:14.5px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.qq-tabn{font-size:12px;font-weight:600;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--x-line2);color:var(--ink-2);display:inline-flex;align-items:center;justify-content:center}
+.qq-tabn:empty{display:none}
+.qq-tabs button.on .qq-tabn{background:var(--fill)}
+.qq-pane[hidden]{display:none}
+.qq-pane>.qq-sec-h:first-child{margin-top:0}
+/* подсказки */
+.qq-legi{display:inline-flex;align-items:center;gap:6px;cursor:help;border-radius:6px;outline-offset:2px}
+.qq-legi u{text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,var(--ink-3) 60%,transparent);text-underline-offset:3px}
+.qq-chip[data-tip]{cursor:help}
+.qq-tipbox{position:fixed;z-index:120;max-width:min(300px,calc(100vw - 16px));padding:10px 12px;border-radius:10px;background:var(--ink);color:var(--sheet);font-size:13px;line-height:1.45;box-shadow:0 10px 28px rgba(20,24,50,.22);pointer-events:none}
+.qq-tipbox[hidden]{display:none}
+.qq-tipbox::after{content:"";position:absolute;left:calc(var(--ax,50%) - 5px);bottom:-5px;width:10px;height:10px;background:inherit;transform:rotate(45deg);border-radius:2px}
+.qq-tipbox.below::after{bottom:auto;top:-5px}
+/* мои сеты */
+.qq-vis{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink-3);text-transform:none;letter-spacing:0;margin-left:8px;vertical-align:1px}
+.qq-set .qq-vis{margin:0}
+.qq-vis svg{width:13px;height:13px}
+.qq-vis.pub{color:var(--x-ok-t)}
+.qq-set-new{border-style:dashed;align-items:flex-start;justify-content:center;gap:4px;background:transparent}
+.qq-set-new .qq-ico{width:36px;height:36px;border-radius:10px;margin-bottom:4px}
+.qq-set-new .qq-ico svg{width:18px;height:18px}
+.qq-set-new b{font-size:15px}
+.qq-set-new>span:last-child{font-size:13px;color:var(--ink-3);line-height:1.35}
+.qq-empty{display:flex;align-items:flex-start;gap:16px;padding:24px;border:1px solid var(--x-line);border-radius:12px;background:var(--sheet)}
+.qq-empty h3{margin:2px 0 6px;font-size:18px}
+.qq-empty p{margin:0;color:var(--ink-3);font-size:14.5px;line-height:1.5;max-width:60ch}
+.qq-empty-my{margin-bottom:16px}
+.qq-acts.left{justify-content:flex-start;margin-top:14px}
+.qq-acts.left .btn{height:42px;font-size:14.5px;text-decoration:none}
+.qq-acts .btn svg{width:16px;height:16px}
+/* библиотека */
+.qq-libtop{margin-bottom:6px}
+.qq-search{display:flex;align-items:center;gap:10px;height:48px;padding:0 14px;border:1px solid var(--x-line);border-radius:10px;background:var(--sheet);max-width:560px;cursor:text}
+.qq-search:focus-within{border-color:var(--ink-3);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 8%,transparent)}
+.qq-sico{color:var(--ink-3);display:inline-flex}.qq-sico svg{width:18px;height:18px}
+.qq-sin{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:16px;color:var(--ink);outline:none}
+.qq-sin::-webkit-search-cancel-button{cursor:pointer}
+.qq-libh{margin:18px 0 10px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.qq-libres.busy{opacity:.55;transition:opacity .2s}
+.qq-loading{padding:28px 0;color:var(--ink-3);font-size:14.5px}
+.qq-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.qq-wchip{font-size:12.5px;padding:2px 7px;border-radius:6px;background:var(--fill);color:var(--ink-2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qq-mine{font-style:normal;color:var(--encre);font-weight:600}
+.qq-lcard .qq-set-m{margin-top:auto;padding-top:4px}
+.qq-meta{margin:2px 0 0;font-size:14px;color:var(--ink-3)}
+.qq-ib span{display:inline}
+/* окно «поделиться» */
+.qq-modal{position:fixed;inset:0;z-index:110;display:flex;align-items:center;justify-content:center;padding:16px}
+.qq-mbg{position:absolute;inset:0;background:rgba(15,18,35,.38);opacity:0;transition:opacity .18s}
+.qq-mbox{position:relative;width:min(480px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--sheet);border:1px solid var(--x-line);border-radius:14px;padding:22px 24px 24px;box-shadow:0 24px 60px rgba(15,18,35,.25);display:flex;flex-direction:column;gap:12px;transform:translateY(8px) scale(.98);opacity:0;transition:transform .2s cubic-bezier(.2,.8,.2,1),opacity .18s}
+.qq-modal.in .qq-mbg{opacity:1}
+.qq-modal.in .qq-mbox{transform:none;opacity:1}
+.qq-mh{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qq-mh h3{margin:0;font-size:20px;color:var(--ink)}
+.qq-mx{width:34px;height:34px;border-radius:9px;border:0;background:transparent;color:var(--ink-3);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.qq-mx:hover{background:var(--fill);color:var(--ink)}.qq-mx svg{width:16px;height:16px}
+.qq-mlead{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.5}
+.qq-mlab{margin:6px 0 0;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.qq-visopts{display:flex;flex-direction:column;gap:6px}
+.qq-visopt{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--x-line);border-radius:10px;background:var(--sheet);font:inherit;color:var(--ink);text-align:left;cursor:pointer;transition:border-color .12s,background .12s}
+.qq-visopt:hover:not(:disabled){background:var(--x-soft)}
+.qq-visopt.on{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.qq-visopt:disabled{cursor:progress;opacity:.7}
+.qq-vico{flex:none;width:34px;height:34px;border-radius:9px;background:var(--fill);color:var(--ink-2);display:inline-flex;align-items:center;justify-content:center}
+.qq-vico svg{width:17px;height:17px}
+.qq-visopt.on .qq-vico{background:var(--ink);color:var(--sheet)}
+.qq-visopt b{display:block;font-size:14.5px;font-weight:600}
+.qq-visopt small{display:block;font-size:13px;color:var(--ink-3);line-height:1.4;margin-top:1px}
+.qq-sharebox:empty{display:none}
+.qq-sharebox,.qq-mbox>.qq-linkrow{display:flex;flex-direction:column;gap:8px}
+.qq-linkrow{display:flex;gap:8px}
+.qq-linkin{flex:1;min-width:0;height:44px;padding:0 12px;border:1px solid var(--x-line);border-radius:9px;background:var(--x-soft);font:inherit;font-size:14px;color:var(--ink-2)}
+.qq-linkrow .btn{height:44px;padding:0 14px;border-radius:9px;font-weight:600;gap:6px;flex:none}
+.qq-linkrow .btn svg,.qq-native svg{width:16px;height:16px}
+.qq-native{height:42px;border-radius:9px;justify-content:center;gap:6px;font-weight:600}
+.qq-mst{margin:0;font-size:13.5px;color:var(--x-ok-t);min-height:1.2em}
+.qq-mst.bad{color:var(--x-bad-t)}
+.qq-mnote{margin:0;font-size:13px;color:var(--ink-3);line-height:1.45}
+/* редактор */
+.qq-edcol{max-width:820px}
+.qq-ed{border:1px solid var(--x-line);border-radius:12px;background:var(--sheet);padding:22px 24px;display:flex;flex-direction:column;gap:14px;margin-bottom:14px}
+.qq-f{display:flex;flex-direction:column;gap:6px}
+.qq-f>span{font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.qq-f i{font-style:normal;font-weight:400;color:var(--ink-3)}
+.qq-in2{width:100%;box-sizing:border-box;height:44px;padding:0 12px;border:1px solid var(--x-line);border-radius:9px;background:var(--sheet);font:inherit;font-size:15.5px;color:var(--ink);box-shadow:none}
+textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
+.qq-in2:focus{outline:none;border-color:var(--ink-3);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 8%,transparent)}
+.qq-in2.bad,.qq-er.bad .qq-in2:placeholder-shown{border-color:var(--x-bad);background:var(--x-bad-bg)}
+.qq-in2.auto{color:var(--ink-2);font-style:italic}
+.qq-edh{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qq-edh h2{margin:0;font-size:18px}
+.qq-edh .qq-wn{color:var(--ink-3);font-weight:500;margin-left:4px}
+.qq-edh .btn{gap:6px}.qq-edh .btn svg{width:15px;height:15px}
+.qq-imp{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:10px;background:var(--x-soft);border:1px solid var(--x-line2)}
+.qq-imp .qq-acts{margin-top:0}
+.qq-hint{margin:0;font-size:13px;color:var(--ink-3);line-height:1.45}
+.qq-edhead,.qq-er{display:grid;grid-template-columns:24px minmax(0,1fr) minmax(0,1fr) 36px;gap:8px;align-items:center}
+.qq-edhead{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin-bottom:-6px}
+.qq-erows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:er}
+.qq-er{counter-increment:er}
+.qq-ern::before{content:counter(er);font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.qq-er .qq-in2{height:42px}
+.qq-erx{width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--ink-3);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.qq-erx:hover{background:var(--fill);color:var(--x-bad-t)}.qq-erx svg{width:15px;height:15px}
+.qq-addrow{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border:1px dashed var(--x-in);border-radius:9px;background:transparent;font:inherit;font-size:14px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.qq-addrow:hover{background:var(--x-soft);color:var(--ink)}.qq-addrow svg{width:15px;height:15px}
+.qq-ederr{margin:0 0 10px;color:var(--x-bad-t);font-size:14px;min-height:1px}
+.qq-edbar{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0 16px;background:linear-gradient(to top,var(--sheet) 75%,transparent)}
+.qq-edbar-r{display:flex;gap:8px}
+.qq-edbar .btn{height:44px;padding:0 20px;border-radius:9px;font-weight:600;text-decoration:none}
+.qq-del{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;border-radius:9px;background:transparent;font:inherit;font-size:14px;font-weight:500;color:var(--ink-3);cursor:pointer}
+.qq-del:hover{color:var(--x-bad-t);background:var(--x-bad-bg)}
+.qq-del.arm{color:#fff;background:var(--x-bad)}
+.qq-del svg{width:15px;height:15px}
+@media (max-width:640px){
+  .qq-head-row{flex-direction:column;align-items:stretch}.qq-head-t{flex:none}
+  .qq-newb{justify-content:center}
+  .qq-tabs{width:100%;align-self:stretch}.qq-tabs button{flex:1 1 auto;justify-content:center;padding:8px 6px;font-size:14px;gap:5px}.qq-tabn{min-width:18px;height:18px;font-size:11px;padding:0 5px}
+  .qq-empty{flex-direction:column;padding:18px}
+  .qq-acts.left{flex-direction:column;align-items:stretch;width:100%}
+  .qq-modal{align-items:flex-end;padding:0}
+  .qq-mbox{width:100%;border-radius:16px 16px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));max-height:88vh;transform:translateY(24px)}
+  .qq-linkrow{flex-direction:column}.qq-linkrow .btn{justify-content:center}.qq-linkin{flex:none}
+  .qq-ed{padding:16px}
+  .qq-edhead{display:none}
+  .qq-er{grid-template-columns:20px minmax(0,1fr) 32px;grid-template-areas:"n f x" "n m x";row-gap:6px;padding-bottom:10px;border-bottom:1px solid var(--x-line2)}
+  .qq-ern{grid-area:n;align-self:start;padding-top:12px}.qq-er .e-fr{grid-area:f}.qq-er .e-m{grid-area:m}.qq-erx{grid-area:x}
+  .qq-edbar{flex-direction:column-reverse;align-items:stretch}.qq-edbar-r .btn{flex:1;justify-content:center}
+  .qq-actions .btn.qq-ib span{display:none}
+  .qq-actions .btn.qq-ib{flex:0 0 44px;padding:0}
+}
 /* ============ окошко перевода по выделению v2 (29.10.2026) ============ */
 .selpop.selpop{flex-direction:column;align-items:stretch;gap:2px;min-width:200px;max-width:min(320px,calc(100vw - 16px));padding:10px 10px 12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--x-line);border-radius:12px;box-shadow:0 12px 32px rgba(20,24,50,.14),0 2px 6px rgba(20,24,50,.06);font-size:14px}
 .selpop.selpop::after{width:12px;height:12px;left:calc(var(--ax,50%) - 6px);bottom:-7px;background:var(--sheet);border:1px solid var(--x-line);border-top:0;border-left:0;border-radius:0 0 3px 0;z-index:auto}

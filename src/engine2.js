@@ -273,11 +273,12 @@ const seqOf = tp => tp && tp.sec === "cahier" ? CAH : tp && tp.sec === "tutor" ?
 const LKEY = "edito-a1-revisions-v2";
 const normProf = o => { o = o || {}; return {name: typeof o.name === "string" ? o.name.slice(0, 40) : "", emoji: o.emoji || "", bg: o.bg || "", own: Array.isArray(o.own) ? o.own.slice() : [], eq: Object.assign({frame:"", cursor:"", theme:"", pattern:""}, o.eq || {}), theme: ["light","dark","system"].includes(o.theme) ? o.theme : "system", fx: o.fx !== false, ob: o.ob === 0 ? 0 : 1, lvl: o.lvl && typeof o.lvl === "object" ? Object.assign({}, o.lvl) : {}, at: o.at || 0}; };
 const normGame = o => { o = o || {}; return {xp: +o.xp || 0, coins: o.coins == null ? 50 : +o.coins || 0, aw: o.aw && typeof o.aw === "object" ? o.aw : {}, day: Object.assign({d:"", n:0, q:{}}, o.day || {}), streak: Object.assign({cur:0, best:0, last:""}, o.streak || {}), hist: o.hist && typeof o.hist === "object" ? o.hist : {}, promo: Array.isArray(o.promo) ? o.promo : []}; };
-let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}};
+const normUsets = o => ({sets: o && Array.isArray(o.sets) ? o.sets.filter(x=>x && x.id && Array.isArray(x.w)) : []});
+let S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, usets:normUsets(), prof:normProf(), game:normGame(), ts:{}};
 (function loadLocal(){
   try {
     const raw = ls.get(LKEY);
-    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], esfav:(o.quiz&&o.quiz.esfav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === "object") S = {p:o.p||{}, tests:o.tests||[], ans:o.ans||{}, quiz:{c:(o.quiz&&o.quiz.c)||{}, best:(o.quiz&&o.quiz.best)||{}, fav:(o.quiz&&o.quiz.fav)||[], esfav:(o.quiz&&o.quiz.esfav)||[], sd:(o.quiz&&o.quiz.sd)||{}}, usets:normUsets(o.usets), prof:normProf(o.prof), game:normGame(o.game), ts:o.ts||{}}; }
     else { const old = ls.get("edito-a1-revisions-v1"); if (old) { const o = JSON.parse(old); S.p = o.p || {}; S.tests = o.tests || []; S.ts.progress = Date.now(); } }
   } catch(e) {}
 })();
@@ -319,6 +320,7 @@ function docFor(key){
   if (key === "progress") return {p:S.p, tests:S.tests, ts:S.ts.progress||0};
   if (key === "settings") return {lang:LANG, course:COURSE, ts:S.ts.settings||0};
   if (key === "quiz") return {c:S.quiz.c, best:S.quiz.best, fav:S.quiz.fav||[], esfav:S.quiz.esfav||[], sd:S.quiz.sd||{}, ts:S.ts.quiz||0};
+  if (key === "usets") return {sets:S.usets.sets, ts:S.ts.usets||0};
   if (key === "profile") return Object.assign({}, S.prof, {ts:S.ts.profile||0});
   if (key === "game") return Object.assign({}, S.game, {ts:S.ts.game||0});
   if (key.startsWith("ans-")) return {ex:S.ans[key.slice(4)]||{}, ts:S.ts[key]||0};
@@ -365,12 +367,13 @@ function hasData(k){
   if (k === "progress") return Object.keys(S.p).length || S.tests.length;
   if (k === "quiz") return Object.keys(S.quiz.c).length || Object.keys(S.quiz.best).length || (S.quiz.fav||[]).length || (S.quiz.esfav||[]).length;
   if (k === "settings") return LANG !== "ru" || COURSE !== "fr";
+  if (k === "usets") return S.usets.sets.length > 0;
   if (k === "profile") return !!S.prof.name;
   if (k === "game") return Object.keys(S.game.hist).length > 0;
   if (k.startsWith("ans-")) return S.ans[k.slice(4)] && Object.keys(S.ans[k.slice(4)]).length;
   return false;
 }
-function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, prof:normProf(), game:normGame(), ts:{}}; persistLocal(); }
+function resetLocal(){ S = {p:{}, tests:[], ans:{}, quiz:{c:{}, best:{}, fav:[], sd:{}}, usets:normUsets(), prof:normProf(), game:normGame(), ts:{}}; persistLocal(); }
 /* слить облачные документы с локальными; pull = подтягивание на лету (без смены языка и курса) */
 function mergeDocs(docs, pull, changed){
   changed = !!changed; let langChanged = false;
@@ -395,12 +398,13 @@ function mergeDocs(docs, pull, changed){
         if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
         else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], esfav:Array.isArray(v.esfav) ? v.esfav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
+        else if (k === "usets") S.usets = normUsets(v);
         else if (k === "profile") S.prof = normProf(v);
         else if (k === "game") S.game = normGame(v);
         S.ts[k] = ct; changed = true;
       } else if (lt > ct) Cloud.dirty.add(k);
     });
-    ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
+    ["progress","quiz","usets","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (!cloudKeys.has(k) && hasData(k)) Cloud.dirty.add(k); });
   return {changed, langChanged};
 }
 /* подтягиваем изменения с других устройств, когда возвращаешься на вкладку */
@@ -477,7 +481,7 @@ function cloudDiag(){
 }
 async function syncNow(){
   if (Cloud.kind === "none") return;
-  ["progress","quiz","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
+  ["progress","quiz","usets","settings","profile","game", ...Object.keys(S.ans).map(id=>"ans-" + id)].forEach(k=>{ if (hasData(k)) Cloud.dirty.add(k); });
   if (!Cloud.be) { Cloud.inits = 0; await initCloud(); }
   if (Cloud.be) { Cloud.fails = 0; await flush(); }
 }
@@ -1858,8 +1862,12 @@ function markActive(){
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
   const cur = $(`#navGroups a.nl[data-id="${id}"]`); if (cur) { const g = cur.closest(".ng"); if (g && !g.classList.contains("open")) navOpenGroup(g, true, false); }
 }
+let ROUTE_PREV = "";
 function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
+  const inQz = /^quizlet(\/|$)/.test(h), fromQz = /^quizlet(\/|$)/.test(ROUTE_PREV); ROUTE_PREV = h;
+  /* вкладки Quizlet переключаются на месте, без перерисовки страницы */
+  if (inQz && fromQz && COURSE === "fr" && !VIEW_ZH && qzSoft(h.slice(8))) { markActive(); return; }
   if (synth) try { synth.cancel(); } catch(e) {}
   if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
   clearInterval(qzTimer); closeDeck(true);
@@ -1881,7 +1889,7 @@ function route(keepScroll){
   else if (h === "zh") renderZh();
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
-  if (!keepScroll) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
+  if (!keepScroll && !(inQz && fromQz)) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }
   window.scrollTo(0, keepScroll ? y : 0);
 }
 /* в теории и разборах встречаются значки ✓ ✗ ★ ✦ — показываем их иконками Framework7 */

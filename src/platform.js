@@ -224,7 +224,8 @@ function plDone(start){
   const first = BOOK.find(x=>x.unit === (start == null ? PL_UNITS[PL.c].first : start)) || BOOK[0];
   PL.on = false; PL.step = "lang";
   buildNav(); paintNavProgress();
-  if (first) location.hash = first.id;
+  /* пришёл по ссылке на сет Quizlet — после онбординга открываем её, а не первую тему */
+  if (QZ_DEEP) { location.hash = QZ_DEEP; QZ_DEEP = ""; } else if (first) location.hash = first.id;
   gateCheck();
 }
 function plPaint(){
