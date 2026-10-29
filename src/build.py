@@ -13,7 +13,7 @@ f7js=('const F7 = '+json.dumps(F7I, ensure_ascii=False)+';\n'
  '/* пара иконок «выкл / вкл» — видна та, что соответствует классу .on у родителя */\n'
  'const f7on = (off, on, c) => f7(off, "f7-off" + (c ? " " + c : "")) + f7(on, "f7-on" + (c ? " " + c : ""));\n')
 # модули платформы встраиваются внутрь движка (общая область видимости)
-mods=''.join(open(f).read()+'\n' for f in ['game.js','platform.js','study.js','tools.js'])
+mods=''.join(open(f).read()+'\n' for f in ['game.js','platform.js','study.js','tools.js','quizlet.js'])
 assert js.count('/*@@MODULES@@*/')==1
 js=js.replace('/*@@MODULES@@*/', mods)
 shell=open('shell.html').read()

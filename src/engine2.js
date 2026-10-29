@@ -409,7 +409,7 @@ function pullSafe(){
   if (document.body.classList.contains("gated")) return false;
   if (typeof PLY !== "undefined" && PLY.playing) return false;
   const h = decodeURIComponent((location.hash||"").slice(1));
-  if (["test","bank","quizlet"].includes(h)) return false;
+  if (["test","bank"].includes(h) || /^quizlet/.test(h)) return false;
   const a = document.activeElement;
   if (a && main.contains(a) && /^(INPUT|TEXTAREA)$/.test(a.tagName) && a.value) return false;
   return true;
@@ -706,7 +706,7 @@ const ICO_HEART = f7on("heart", "heart_fill");
 function spBuild(){
   const el = document.createElement("div");
   el.className = "selpop"; el.hidden = true; el.setAttribute("role", "dialog");
-  el.innerHTML = `<div class="sp-tx"><span class="sp-fr"></span><span class="sp-m"></span><span class="sp-note"></span></div><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button><button type="button" class="sp-go"></button></div>`;
+  el.innerHTML = `<div class="sp-top"><span class="sp-fr"></span><div class="sp-btns"><button type="button" class="sp-say">${ICON_PLAY}</button><button type="button" class="sp-fav">${ICO_HEART}</button><button type="button" class="sp-go"></button></div></div><div class="sp-m"></div><div class="sp-note"></div>`;
   el.addEventListener("mousedown", e=>e.preventDefault());
   el.addEventListener("pointerdown", e=>{ if (e.pointerType !== "mouse") e.preventDefault(); });
   $(".sp-say", el).addEventListener("click", ()=>{ if (SP.entry && SP.entry.say) speak(SP.entry.say); });
@@ -716,7 +716,7 @@ function spBuild(){
     if (COURSE === "es") { if (!e.es) return; const on = toggleEsFav(e); spPaintFav(); toast(on ? t("favAddedEs") : t("favRemoved")); if (location.hash === "#lexico") lexPaintFav(); return; }
     if (!e.fr) return;
     const on = toggleFav(e); spPaintFav(); toast(on ? t("favAdded") : t("favRemoved"));
-    if (location.hash === "#quizlet") qzRefreshList();
+    if (/^#quizlet/.test(location.hash)) qzRefreshList();
   });
   document.body.appendChild(el); SP.el = el;
 }
@@ -752,7 +752,7 @@ function spPlace(){
 }
 function spAllowed(sel){
   const h = location.hash.slice(1);
-  if (h === "test" || h === "quizlet") return false;
+  if (h === "test" || /^quizlet/.test(h)) return false;
   const n = sel.anchorNode; const el = n && (n.nodeType === 1 ? n : n.parentElement);
   if (!el || el.closest("input,textarea,.selpop,.trp,.ply,.nav,.topbar,[contenteditable]")) return false;
   return true;
@@ -831,7 +831,7 @@ function spCheck(){
     const full = raw.slice(0, 1500);
     SP.entry = {sel:q, long:full, say: trDetect(full) === trCourse() ? full : ""};
     mEl.textContent = ""; nEl.textContent = ""; el.dataset.st = "ok"; el.dataset.dir = "fr";
-    const g = $(".sp-go", el); g.textContent = t("trBtn");
+    const g = $(".sp-go", el); g.innerHTML = f7("globe") + `<span>${esc(t("trBtn"))}</span>`;
     return show();
   }
   if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
@@ -914,7 +914,7 @@ document.addEventListener("focusin", e=>{ if (e.target.classList && e.target.cla
 document.addEventListener("mousedown", e=>{ if (e.target.closest(".acc")) e.preventDefault(); });
 document.addEventListener("click", e=>{
   const b = e.target.closest(".acc"); if (!b) return;
-  const block = b.closest(".exb, .qz-stage") || document; let inp = lastInput;
+  const block = b.closest(".exb, .qz-stage, .qq-q") || document; let inp = lastInput;
   if (!inp || !block.contains(inp)) inp = $(".ans", block);
   if (!inp || inp.disabled) return;
   const s = inp.selectionStart ?? inp.value.length, en = inp.selectionEnd ?? inp.value.length;
@@ -1839,384 +1839,6 @@ function gradeTest(box, now, res){
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
-/* =========================================================
-   QUIZLET
-   ========================================================= */
-let QZ = {set:"all", mode:"review", perDay:15, dir:"fr", shuf:false, star:false};
-try { const q = JSON.parse(ls.get("edito-qz") || "null"); if (q) QZ = Object.assign(QZ, q); } catch(e) {}
-const saveQZ = () => ls.set("edito-qz", JSON.stringify(QZ));
-let qzKeyHandler = null, qzTimer = null;
-function qWords(setId){
-  if (setId === "fav") return (S.quiz.fav || []).map(f=>({fr:f.fr, m: (LANG==="en" ? (f.en || f.ru) : (f.ru || f.en)) || qMeaning(f.fr) || "…", set:"fav"}));
-  const sets = setId === "all" ? QSETS : QSETS.filter(s=>s.id===setId);
-  const seen = new Set(), out = [];
-  sets.forEach(s=>s.w.forEach(w=>{ if (seen.has(w[0])) return; seen.add(w[0]); out.push({fr:w[0], m: LANG==="en" ? w[2] : w[1], set:s.id}); }));
-  return out;
-}
-const qLv = fr => (S.quiz.c[qKey(fr)] || {}).lv || 0;
-const qStar = fr => !!(S.quiz.c[qKey(fr)] || {}).s;
-function qSet(fr, patch){ const k = qKey(fr); S.quiz.c[k] = Object.assign({lv:0, s:0}, S.quiz.c[k], patch); touch("quiz"); }
-function qMeta(setId){ const st = qSetStats(setId), d = srsDueCount(setId); return `${st.learned}/${st.n}` + (d ? ` · ${t("srsDue", d)}` : ""); }
-function qSetStats(setId){ const ws = qWords(setId); const learned = ws.filter(w=>qLv(w.fr)>=3).length; return {n:ws.length, learned, starred: ws.filter(w=>qStar(w.fr)).length, pct: ws.length ? learned/ws.length : 0}; }
-
-/* ---------- интервальное повторение (SM-2, как в Anki) ----------
-   r = {st:0 новое|1 учу|2 повтор|3 переучиваю, step, due(ms), ivl(дни), ef, reps, lap} хранится в S.quiz.c[k].r */
-const MIN = 60000, DAY = 864e5;
-const SRS = {learn:[1, 10], relearn:[10], grad:1, easy:4};
-const dayStart = (ms = Date.now()) => { const d = new Date(ms - 4*3600e3); d.setHours(4, 0, 0, 0); return d.getTime(); };
-const dayKey = () => String(dayStart());
-const qR = fr => (S.quiz.c[qKey(fr)] || {}).r || null;
-function srsNext(r0, g, now = Date.now()){
-  const r = r0 ? Object.assign({}, r0) : {st:0, step:0, ivl:0, ef:2.5, reps:0, lap:0, due:now};
-  const grad = d => { r.st = 2; r.step = 0; r.ivl = d; r.due = dayStart(now) + d*DAY; };
-  const fuzz = d => d < 3 ? d : Math.round(d * (0.95 + Math.random()*0.1));
-  if (r.st === 2) {
-    const late = Math.max(0, Math.round((dayStart(now) - dayStart(r.due)) / DAY));
-    if (g === 1) { r.lap++; r.ef = Math.max(1.3, r.ef - .2); r.ivl = Math.max(1, Math.round(r.ivl * .5)); r.st = 3; r.step = 0; r.due = now + SRS.relearn[0]*MIN; }
-    else {
-      const hard = Math.max(r.ivl + 1, Math.round(r.ivl * 1.2));
-      const good = Math.max(hard + 1, Math.round((r.ivl + late/2) * r.ef));
-      const easy = Math.max(good + 1, Math.round((r.ivl + late) * r.ef * 1.3));
-      if (g === 2) r.ef = Math.max(1.3, r.ef - .15); else if (g === 4) r.ef += .15;
-      grad(fuzz(g === 2 ? hard : g === 3 ? good : easy));
-    }
-  } else {
-    const steps = r.st === 3 ? SRS.relearn : SRS.learn;
-    if (r.st === 0) r.st = 1;
-    if (g === 1) { r.step = 0; r.due = now + steps[0]*MIN; }
-    else if (g === 2) { const m = steps.length > 1 && r.step === 0 ? (steps[0] + steps[1]) / 2 : steps[r.step] * (steps.length === 1 ? 1.5 : 1); r.due = now + Math.round(m)*MIN; }
-    else if (g === 3) { if (r.step + 1 < steps.length) { r.step++; r.due = now + steps[r.step]*MIN; } else grad(r.st === 3 ? r.ivl : SRS.grad); }
-    else grad(r.st === 3 ? r.ivl + 1 : SRS.easy);
-  }
-  r.reps++; r.last = now;
-  return r;
-}
-function srsIvlTxt(r, now){
-  const u = t("srsU"), dec = x => (Math.round(x*10)/10).toString().replace(".", LANG === "ru" ? "," : ".");
-  const sp = LANG === "ru" ? " " : "";
-  if (r.st === 2) { const d = r.ivl; return d < 30 ? `${d}${sp}${u.d}` : d < 365 ? `${dec(d/30)}${sp}${u.mo}` : `${dec(d/365)}${sp}${u.y}`; }
-  const m = Math.round((r.due - now) / MIN);
-  return m < 1 ? u.lt : m < 60 ? `${m}${sp}${u.m}` : `${dec(m/60)}${sp}${u.h}`;
-}
-function srsWhenTxt(due, now = Date.now()){
-  if (due <= now) return t("srsNow");
-  const dd = Math.round((dayStart(due) - dayStart(now)) / DAY);
-  if (dd <= 0) { const m = Math.round((due - now) / MIN), u = t("srsU"), sp = LANG === "ru" ? " " : ""; return t("srsIn", m < 1 ? u.lt : m < 60 ? `${m}${sp}${u.m}` : `${Math.round(m/60)}${sp}${u.h}`); }
-  return dd === 1 ? t("srsTmrw") : t("srsIn", t("srsDays", dd));
-}
-const srsDueCount = (setId, now = Date.now()) => qWords(setId).filter(w=>{ const r = qR(w.fr); return r && r.due <= now; }).length;
-function sdToday(){ const k = dayKey(), sd = S.quiz.sd || {}; return sd.d === k ? Object.assign({n:0, a:0, x:0}, sd) : {d:k, n:0, a:0, x:0}; }
-function updSrsBadge(){
-  const b = document.getElementById("srsBadge"); if (!b || COURSE !== "fr") return;
-  const n = srsDueCount("all"); b.hidden = !n; b.textContent = n > 99 ? "99+" : String(n); b.title = `${n} ${t("srsBadge")}`;
-}
-
-function renderQuizlet(){
-  if (!QSETS.some(s=>s.id===QZ.set) && QZ.set !== "all" && QZ.set !== "fav") QZ.set = "all";
-  const all = qSetStats("all");
-  main.innerHTML = `<div class="col" style="max-width:980px">
-  <header class="t-head seyes"><p class="eyebrow">Quizlet · Unités 0–3</p><h1>Quizlet</h1><p class="t-ru">${t("qzSub")}</p>
-    <div class="stats"><span><b>${all.n}</b>${t("qzWords")}</span><span><b>${all.learned}</b>${t("qzLearned")}</span><span><b>${all.starred}</b>${t("qzStarred")}</span></div></header>
-  <div class="qz-sets">${[{id:"all", t:t("qzAll"), sub:""}, {id:"fav", t:t("qzFav"), sub:t("qzFavSub"), fav:true}].concat(QSETS.map(s=>({id:s.id, t:s.t, sub: LANG==="en" ? s.en : s.ru}))).map(s=>{ const st = qSetStats(s.id); return `<button type="button" class="qz-set${QZ.set===s.id?" on":""}${s.fav?" is-fav":""}" data-set="${s.id}"><b>${s.fav ? ICO_HEART : ""}${s.t}</b>${s.sub?`<small>${s.sub}</small>`:""}<span class="qz-meta">${qMeta(s.id)}</span><span class="bar"><i style="width:${(st.pct*100).toFixed(0)}%"></i></span></button>`; }).join("")}</div>
-  <div class="qz-modes" role="tablist">${["review","cards","learn","write","match"].map(m=>`<button type="button" role="tab" class="${QZ.mode===m?"on":""}" data-mode="${m}"><span class="m-l">${t("qzModes")[m]}</span><span class="m-s">${t("qzModesS")[m]}</span></button>`).join("")}</div>
-  <section class="qz-stage exb"></section>
-  <div class="sec-h"><h2>${t("qzList")}</h2><p class="qz-count"></p></div>
-  <div class="qz-list"></div>
-  </div>`;
-  $$("[data-set]", main).forEach(b=>b.addEventListener("click", ()=>{ QZ.set = b.dataset.set; saveQZ(); renderQuizlet(); }));
-  $$("[data-mode]", main).forEach(b=>b.addEventListener("click", ()=>{ QZ.mode = b.dataset.mode; saveQZ(); $$("[data-mode]", main).forEach(x=>x.classList.toggle("on", x===b)); qzStage(); }));
-  qzStage(); qzList();
-}
-function qzList(){
-  const box = $(".qz-list", main); if (!box) return;
-  const ws = qWords(QZ.set);
-  $(".qz-count", main).textContent = `${ws.length} ${t("qzWords")}`;
-  box.innerHTML = ws.map(w=>{ const lv = qLv(w.fr); return `<div class="qz-row"><button type="button" class="star${qStar(w.fr)?" on":""}" data-star="${esc(w.fr)}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button><span class="fr qz-fr">${esc(w.fr)}</span><span class="qz-m">${esc(w.m)}</span><span class="lv lv${Math.min(lv,3)}"${qR(w.fr) ? ` title="${esc(t("srsWhen", srsWhenTxt(qR(w.fr).due)))}"` : ""}>${t("qzLvShort")[Math.min(lv,3)]}</span><button type="button" class="qz-heart${isFav(w.fr)?" on":""}" data-fav="${esc(w.fr)}" aria-label="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}" title="${esc(isFav(w.fr) ? t("spUnfav") : t("spFav"))}">${ICO_HEART}</button></div>`; }).join("") || (QZ.set === "fav" ? `<p class="muted qz-favempty">${t("qzFavEmpty")}</p>` : "");
-  $$("[data-fav]", box).forEach(b=>b.addEventListener("click", ()=>{ const fr = b.dataset.fav; const w = ws.find(x=>x.fr === fr) || {fr}; let e = {fr}; if (!isFav(fr)) { if (!DICT) buildDict(); const d = DICT.get(dk(fr)); e = d ? {fr, ru:d.ru, en:d.en} : {fr, ru: LANG==="en" ? "" : w.m, en: LANG==="en" ? w.m : ""}; } toggleFav(e); if (QZ.set === "fav") { qzRefreshList(); qzStage(); } else { b.classList.toggle("on", isFav(fr)); qzRefreshFav(); } }));
-  $$("[data-star]", box).forEach(b=>b.addEventListener("click", ()=>{ const fr = b.dataset.star; qSet(fr, {s: qStar(fr) ? 0 : 1}); b.classList.toggle("on", qStar(fr)); }));
-}
-function qzStage(){
-  const stage = $(".qz-stage", main); if (!stage) return;
-  if (qzKeyHandler) { document.removeEventListener("keydown", qzKeyHandler); qzKeyHandler = null; }
-  clearInterval(qzTimer);
-  stage.dataset.tok = String(Math.random());
-  if (!qWords(QZ.set).length) { stage.innerHTML = `<div class="qz-pad center qz-favpad"><span class="qz-favico">${ICO_HEART}</span><h3 class="qz-done">${t("qzFavEmptyH")}</h3><p class="muted">${t("qzFavEmpty")}</p></div>`; return; }
-  (({review:qzReview, cards:qzCards, learn:qzLearn, write:qzWrite, match:qzMatch})[QZ.mode] || qzReview)(stage);
-}
-function qzRefreshFav(){ const b = $('.qz-set[data-set="fav"]', main); if (!b) return; const st = qSetStats("fav"); $(".qz-meta", b).textContent = qMeta(b.dataset.set); $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }
-const qzRefreshList = () => { qzList(); $$(".qz-set", main).forEach(b=>{ const st = qSetStats(b.dataset.set); $(".qz-meta", b).textContent = qMeta(b.dataset.set); $(".bar i", b).style.width = (st.pct*100).toFixed(0) + "%"; }); };
-
-/* mode 0: spaced repetition */
-function qzReview(stage){
-  const tok = stage.dataset.tok, alive = () => stage.dataset.tok === tok && document.body.contains(stage);
-  const rk = new Map(), hist = [];
-  let cur = null, flipped = false, last = null, served = 0;
-  const rnd = fr => { if (!rk.has(fr)) rk.set(fr, Math.random()); return rk.get(fr); };
-  const queue = (now = Date.now()) => {
-    const lrn = [], rev = [], fresh = [], all = qWords(QZ.set);
-    all.forEach(w=>{ const r = qR(w.fr); if (!r) fresh.push(w); else if (r.st === 2) { if (r.due <= now) rev.push(w); } else lrn.push(w); });
-    const sd = sdToday(), left = Math.max(0, (QZ.perDay || 15) + sd.x - sd.n);
-    lrn.sort((a,b)=>qR(a.fr).due - qR(b.fr).due);
-    rev.sort((a,b)=>dayStart(qR(a.fr).due) - dayStart(qR(b.fr).due) || rnd(a.fr) - rnd(b.fr));
-    return {all, lrnNow: lrn.filter(w=>qR(w.fr).due <= now), lrnLater: lrn.filter(w=>qR(w.fr).due > now), lrn, rev, fresh: fresh.slice(0, left), freshAll: fresh, sd};
-  };
-  const pick = () => {
-    const q = queue(), useNew = q.fresh.length && (!q.rev.length || served % 4 === 3);
-    const cand = [...q.lrnNow, ...(useNew ? [q.fresh[0], ...q.rev] : [...q.rev, ...q.fresh.slice(0, 1)]), ...q.lrnLater];
-    return cand.find(w=>w.fr !== last) || cand[0] || null;
-  };
-  const counts = q => `<span class="srs-cnt"><span><b class="c-new">${q.fresh.length}</b> ${t("srsNew")}</span><span><b class="c-lrn">${q.lrn.length}</b> ${t("srsLrn")}</span><span><b class="c-rev">${q.rev.length}</b> ${t("srsRev")}</span></span>`;
-  const dirSeg = () => `<span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
-  const undoBtn = () => hist.length ? `<button type="button" class="chip-t" data-undo>${f7("arrow_uturn_left", "f7-in")}${t("srsUndo")}</button>` : "";
-  const foot = () => `<div class="srs-foot"><label class="srs-per"><span>${t("srsPerDay")}</span><span class="seg">${[5,10,15,20,30].map(n=>`<button type="button" data-per="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</span></label>
-    <details class="srs-how"><summary>${t("srsHowS")}</summary><p>${t("srsHow")}</p></details></div>`;
-  const bind = () => {
-    $$("[data-dir]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.dir = b.dataset.dir; saveQZ(); flipped = false; draw(true); }));
-    $$("[data-per]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.perDay = +b.dataset.per; saveQZ(); if (!cur) next(); else draw(false); qzRefreshList(); }));
-    const u = $("[data-undo]", stage); if (u) u.addEventListener("click", undo);
-  };
-  const forecast = q => {
-    const now = Date.now(), d0 = dayStart(now), c = [0,0,0,0,0,0,0];
-    q.all.forEach(w=>{ const r = qR(w.fr); if (!r) return; const i = Math.max(0, Math.round((dayStart(r.due) - d0) / DAY)); if (i < 7) c[i]++; });
-    const mx = Math.max(1, ...c), fmt = new Intl.DateTimeFormat(LANG === "en" ? "en-GB" : "ru-RU", {weekday:"short"});
-    return `<p class="srs-fch">${t("srsFc")}</p><div class="srs-fc">${c.map((n,i)=>`<div><b>${n || ""}</b><i class="${n?"":"z"}" style="height:${n ? Math.max(6, Math.round(n/mx*64)) : 3}px"></i><span>${i < 2 ? t("srsDay")[i] : fmt.format(new Date(d0 + i*DAY + 12*3600e3))}</span></div>`).join("")}</div>`;
-  };
-  const doneView = q => {
-    const nexts = q.all.map(w=>qR(w.fr)).filter(Boolean).map(r=>r.due).sort((a,b)=>a-b);
-    stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar">${counts(q)}${undoBtn()}</div><div class="center srs-done">
-      <span class="srs-ok">${f7("checkmark_alt")}</span>
-      <h3 class="qz-done">${t("srsDoneH")}</h3>
-      ${q.sd.a ? `<p class="muted">${t("srsToday", q.sd.a, q.sd.n)}</p>` : ""}
-      ${nexts.length ? `<p class="muted">${t("srsNext", srsWhenTxt(nexts[0]))}</p>${forecast(q)}` : ""}
-      ${q.freshAll.length ? `<button type="button" class="btn ${nexts.length ? "sec" : "pri"}" id="srsMore">${t("srsMore", Math.min(10, q.freshAll.length))}</button>` : ""}
-    </div>${foot()}</div>`;
-    bind();
-    const m = $("#srsMore", stage); if (m) m.addEventListener("click", ()=>{ const sd = sdToday(); sd.x += Math.max(0, sd.n - (QZ.perDay||15) - sd.x) + 10; S.quiz.sd = sd; touch("quiz"); next(); });
-  };
-  const draw = speakIt => {
-    if (!alive()) return;
-    const q = queue();
-    if (!cur) return doneView(q);
-    const w = cur, r = qR(w.fr), now = Date.now();
-    const front = QZ.dir === "fr" ? w.fr : w.m, back = QZ.dir === "fr" ? w.m : w.fr;
-    const sideF = QZ.dir === "fr" ? "FR" : (LANG === "en" ? "EN" : "RU"), sideB = QZ.dir === "fr" ? (LANG === "en" ? "EN" : "RU") : "FR";
-    const tag = r ? r.st : 0;
-    stage.innerHTML = `<div class="qz-pad">
-      <div class="qz-toolbar">${counts(q)}${dirSeg()}${undoBtn()}</div>
-      <div class="qz-card srs-card${flipped ? " flipped" : ""}" role="button" tabindex="0" aria-label="${esc(t("srsShow"))}">
-        <div class="qz-face"><span class="qz-side">${sideF}</span><span class="qz-text${QZ.dir === "fr" ? "" : " is-m"}">${esc(front)}</span>
-        ${flipped ? `<span class="srs-sep"></span><span class="qz-side">${sideB}</span><span class="srs-back${QZ.dir === "fr" ? "" : " is-fr"}">${esc(back)}</span>` : ""}</div>
-        <button type="button" class="star qz-cstar${qStar(w.fr)?" on":""}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button>
-        <button type="button" class="qz-say" aria-label="${esc(t("qzSay"))}">${ICON_PLAY}</button>
-        <span class="lv srs-tag t${tag} qz-clv">${t("srsTag")[tag]}</span>
-      </div>
-      ${flipped ? `<div class="srs-grade">${[1,2,3,4].map(g=>`<button type="button" class="srs-g" data-g="${g}">${t("srsG")[g-1]}<small>${srsIvlTxt(srsNext(r, g, now), now)}</small></button>`).join("")}</div>`
-                : `<div class="srs-show"><button type="button" class="btn pri" id="srsShow">${t("srsShow")}</button></div>`}
-      <p class="qz-keys">${t("srsKeys")}</p>
-      ${foot()}</div>`;
-    bind();
-    $(".qz-card", stage).addEventListener("click", e=>{ if (e.target.closest("button")) return; if (!flipped) show(); });
-    $(".qz-cstar", stage).addEventListener("click", ()=>{ qSet(w.fr, {s: qStar(w.fr) ? 0 : 1}); draw(false); qzRefreshList(); });
-    $(".qz-say", stage).addEventListener("click", ()=>speak(w.fr));
-    const sb = $("#srsShow", stage); if (sb) sb.addEventListener("click", show);
-    $$(".srs-g", stage).forEach(b=>b.addEventListener("click", ()=>grade(+b.dataset.g)));
-    if (speakIt && QZ.dir === "fr" && !flipped) speak(w.fr);
-  };
-  const show = () => { if (!cur || flipped) return; flipped = true; draw(false); if (QZ.dir !== "fr") speak(cur.fr); const g = $('.srs-g[data-g="3"]', stage); if (g) g.focus({preventScroll:true}); };
-  const next = () => { cur = pick(); flipped = false; draw(true); };
-  const grade = g => {
-    if (!cur || !flipped) return;
-    const w = cur, k = qKey(w.fr), r0 = qR(w.fr);
-    hist.push({w, k, prevC: S.quiz.c[k] ? JSON.parse(JSON.stringify(S.quiz.c[k])) : null, prevSd: JSON.parse(JSON.stringify(S.quiz.sd || {}))});
-    if (hist.length > 30) hist.shift();
-    const r = srsNext(r0, g), sd = sdToday(); sd.a++; if (!r0) sd.n++; S.quiz.sd = sd;
-    const lv = qLv(w.fr);
-    qSet(w.fr, {r, lv: g === 1 ? 1 : Math.max(lv, r.st === 2 ? (r.ivl >= 4 ? 3 : 2) : 1)});
-    gameAnswer("q|" + k, null, g >= 2 ? "ok" : "bad", {daily:true, xp:2});
-    served++; last = w.fr; qzRefreshList(); updSrsBadge(); next();
-  };
-  const undo = () => {
-    const h = hist.pop(); if (!h) return;
-    if (h.prevC) S.quiz.c[h.k] = h.prevC; else delete S.quiz.c[h.k];
-    S.quiz.sd = h.prevSd; touch("quiz");
-    served = Math.max(0, served - 1); cur = h.w; last = null; flipped = false; draw(false); qzRefreshList(); updSrsBadge();
-  };
-  qzKeyHandler = e => {
-    if (location.hash.slice(1) !== "quizlet" || QZ.mode !== "review" || !alive() || e.metaKey || e.ctrlKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||"")) return;
-    if (e.key === " " || e.key === "Enter") { if ((e.target||{}).tagName === "BUTTON" && e.key === "Enter") return; e.preventDefault(); if (!flipped) show(); else grade(3); }
-    else if (flipped && /^[1-4]$/.test(e.key)) { e.preventDefault(); grade(+e.key); }
-  };
-  document.addEventListener("keydown", qzKeyHandler);
-  next();
-}
-
-/* mode 1: flashcards */
-function qzCards(stage){
-  let deck = qWords(QZ.set); if (QZ.star) deck = deck.filter(w=>qStar(w.fr)); if (QZ.shuf) deck = shuffle(deck.slice());
-  let i = 0, flipped = false;
-  const draw = () => {
-    if (!deck.length) { stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar">${tools()}</div><p class="muted qz-empty">${t("qzEmpty")}</p></div>`; bindTools(); return; }
-    const w = deck[i], front = QZ.dir === "fr" ? w.fr : w.m, back = QZ.dir === "fr" ? w.m : w.fr;
-    stage.innerHTML = `<div class="qz-pad">
-      <div class="qz-toolbar">${tools()}<span class="qz-ctr">${i+1} / ${deck.length}</span></div>
-      <div class="qz-card${flipped?" flipped":""}" role="button" tabindex="0" aria-label="${esc(t("flipA"))}">
-        <div class="qz-face"><span class="qz-side">${flipped ? (QZ.dir==="fr" ? (LANG==="en"?"EN":"RU") : "FR") : (QZ.dir==="fr" ? "FR" : (LANG==="en"?"EN":"RU"))}</span><span class="qz-text">${esc(flipped ? back : front)}</span>${flipped?"":`<span class="hint">${esc(t("flip"))}</span>`}</div>
-        <button type="button" class="star qz-cstar${qStar(w.fr)?" on":""}" aria-label="${esc(t("qzStar"))}">${ICO.star}</button>
-        <button type="button" class="qz-say" aria-label="${esc(t("qzSay"))}">${ICON_PLAY}</button>
-        <span class="lv lv${Math.min(qLv(w.fr),3)} qz-clv">${t("qzLvShort")[Math.min(qLv(w.fr),3)]}</span>
-      </div>
-      <div class="qz-nav"><button type="button" class="btn sec" data-q="prev">${ARL}${t("qzPrev")}</button><button type="button" class="btn sec still" data-q="still">${t("qzStill")}</button><button type="button" class="btn pri" data-q="know">${t("qzKnow")}</button><button type="button" class="btn sec" data-q="next">${t("qzNext")}${ARR}</button></div>
-      <p class="qz-keys">${t("qzKeys")}</p></div>`;
-    bindTools();
-    const cardEl = $(".qz-card", stage);
-    cardEl.addEventListener("click", e=>{ if (e.target.closest("button")) return; flip(); });
-    $(".qz-cstar", stage).addEventListener("click", ()=>{ qSet(w.fr, {s: qStar(w.fr) ? 0 : 1}); draw(); qzRefreshList(); });
-    $(".qz-say", stage).addEventListener("click", ()=>speak(w.fr));
-    $('[data-q="prev"]', stage).addEventListener("click", ()=>go(-1));
-    $('[data-q="next"]', stage).addEventListener("click", ()=>go(1));
-    $('[data-q="still"]', stage).addEventListener("click", ()=>{ qSet(w.fr, {lv:1}); qzRefreshList(); go(1); });
-    $('[data-q="know"]', stage).addEventListener("click", ()=>{ qSet(w.fr, {lv:3}); qzRefreshList(); go(1); });
-  };
-  const flip = () => { flipped = !flipped; draw(); if (flipped || QZ.dir === "fr") speak(deck[i].fr); };
-  const go = d => { if (!deck.length) return; i = (i + d + deck.length) % deck.length; flipped = false; draw(); };
-  const tools = () => `<button type="button" class="chip-t${QZ.shuf?" on":""}" data-t="shuf">${t("qzShuffle")}</button><button type="button" class="chip-t${QZ.star?" on":""}" data-t="star">${f7("star_fill", "f7-in")}${t("qzStarOnly")}</button><span class="seg"><button type="button" data-dir="fr" class="${QZ.dir==="fr"?"on":""}">${t("dirFr")}</button><button type="button" data-dir="m" class="${QZ.dir==="m"?"on":""}">${t("dirRu")}</button></span>`;
-  const bindTools = () => {
-    $$("[data-t]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ[b.dataset.t] = !QZ[b.dataset.t]; saveQZ(); qzCards(stage); }));
-    $$("[data-dir]", stage).forEach(b=>b.addEventListener("click", ()=>{ QZ.dir = b.dataset.dir; saveQZ(); flipped = false; draw(); }));
-  };
-  qzKeyHandler = e => {
-    if (location.hash.slice(1) !== "quizlet" || QZ.mode !== "cards" || /INPUT|TEXTAREA/.test((e.target||{}).tagName||"")) return;
-    if (e.key === " ") { e.preventDefault(); flip(); } else if (e.key === "ArrowRight") go(1); else if (e.key === "ArrowLeft") go(-1);
-  };
-  document.addEventListener("keydown", qzKeyHandler);
-  draw();
-}
-
-/* mode 2: learn (adaptive: choice → typing) */
-function qzLearn(stage){
-  const tok = stage.dataset.tok, alive = () => stage.dataset.tok === tok && document.body.contains(stage);
-  const all = qWords(QZ.set);
-  let last = null;
-  const counts = () => { const c = [0,0,0,0]; all.forEach(w=>c[Math.min(qLv(w.fr),3)]++); return c; };
-  const head = () => { const c = counts(); return `<div class="qz-prog"><div class="qz-progbar">${c.map((n,k)=>`<i class="lv${k}" style="flex:${n}"></i>`).join("")}</div><div class="qz-legend">${c.map((n,k)=>`<span><i class="dot lv${k}"></i>${t("qzLv")[k]}: <b>${n}</b></span>`).join("")}</div></div>`; };
-  const nextQ = () => {
-    if (!alive()) return;
-    const pool = all.filter(w=>qLv(w.fr) < 3);
-    if (!pool.length) {
-      stage.innerHTML = `<div class="qz-pad center">${head()}<h3 class="qz-done">${t("qzLearnDone")}</h3><p class="muted">${t("qzLearnDoneSub")}</p><button type="button" class="btn sec" id="qzReset">${t("qzResetSet")}</button></div>`;
-      $("#qzReset", stage).addEventListener("click", ()=>{ all.forEach(w=>qSet(w.fr, {lv:0})); qzRefreshList(); nextQ(); });
-      return;
-    }
-    pool.sort((a,b)=>qLv(a.fr)-qLv(b.fr) || Math.random()-.5);
-    let cand = pool.slice(0, Math.min(7, pool.length)); let w = cand[Math.floor(Math.random()*cand.length)];
-    if (last && w.fr === last && pool.length > 1) w = cand.find(x=>x.fr !== last) || pool.find(x=>x.fr !== last) || w;
-    last = w.fr;
-    const lv = qLv(w.fr);
-    if (lv < 2) {
-      const others = shuffle((all.length >= 4 ? all : all.concat(qWords("all"))).filter(x=>x.fr !== w.fr && x.m !== w.m)).slice(0, 3);
-      const opts = shuffle([w, ...others]);
-      stage.innerHTML = `<div class="qz-pad">${head()}<div class="qz-q"><span class="qz-kind">${t("qzChoose")}</span><span class="qz-term fr">${esc(w.fr)}</span></div><div class="qz-opts">${opts.map(o=>`<button type="button" class="qz-opt" data-fr="${esc(o.fr)}">${esc(o.m)}</button>`).join("")}</div><div class="qz-fb"></div></div>`;
-      speak(w.fr);
-      $$(".qz-opt", stage).forEach(b=>b.addEventListener("click", ()=>{
-        if (stage.dataset.lock === "1") return; stage.dataset.lock = "1";
-        const ok = b.dataset.fr === w.fr;
-        $$(".qz-opt", stage).forEach(x=>{ x.disabled = true; if (x.dataset.fr === w.fr) x.classList.add("is-ok"); });
-        if (!ok) b.classList.add("is-bad");
-        result(w, ok, w.m);
-      }));
-    } else {
-      stage.innerHTML = `<div class="qz-pad">${head()}<div class="qz-q"><span class="qz-kind">${t("qzType")}</span><span class="qz-term">${esc(w.m)}</span></div>${accBar()}<div class="qz-write"><input class="ans wide" id="qzIn" ${inputAttrs} aria-label="${esc(t("qzType"))}"><button type="button" class="btn pri" id="qzChk">${t("qzCheck")}</button><button type="button" class="btn sec" id="qzIdk">${t("qzDontKnow")}</button></div><div class="qz-fb"></div></div>`;
-      const inp = $("#qzIn", stage); inp.focus();
-      const check = giveUp => {
-        if (stage.dataset.lock === "1") return;
-        const st = giveUp ? "bad" : judge(inp.value, [w.fr]); if (st === "empty") return;
-        stage.dataset.lock = "1"; inp.disabled = true;
-        inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
-        result(w, st !== "bad", w.fr, st === "acc");
-      };
-      inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); check(false); } });
-      $("#qzChk", stage).addEventListener("click", ()=>check(false));
-      $("#qzIdk", stage).addEventListener("click", ()=>check(true));
-    }
-    stage.dataset.lock = "";
-  };
-  const result = (w, ok, right, accWarn) => {
-    const lv = qLv(w.fr);
-    qSet(w.fr, {lv: ok ? Math.min(3, lv+1) : Math.max(0, lv-1)}); qzRefreshList();
-    gameAnswer("q|" + qKey(w.fr), null, ok ? "ok" : "bad", {daily:true, xp:2});
-    const fb = $(".qz-fb", stage);
-    if (ok) { fb.innerHTML = `<span class="ok-t">${t("qzCorrect")}</span>${accWarn ? ` <span class="acc-t">${t("almost")}</span> <b>${esc(w.fr)}</b>` : ""}`; speak(w.fr); setTimeout(nextQ, accWarn ? 1600 : 850); }
-    else { fb.innerHTML = `<span class="pen">${t("qzWrongIs")} ${esc(right)}</span> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; speak(w.fr); const go = $("#qzGo", stage); go.focus(); go.addEventListener("click", nextQ); }
-  };
-  nextQ();
-}
-
-/* mode 3: write */
-function qzWrite(stage){
-  const tok = stage.dataset.tok, alive = () => stage.dataset.tok === tok && document.body.contains(stage);
-  let round, i, got, wrong;
-  const start = list => { round = shuffle(list.slice()).slice(0, 20); i = 0; got = 0; wrong = []; step(); };
-  const step = () => {
-    if (!alive()) return;
-    if (i >= round.length) {
-      stage.innerHTML = `<div class="qz-pad center"><h3 class="qz-done">${t("qzWriteDone", got, round.length)}</h3><p class="pen big">${praise(round.length ? got/round.length : 1)}</p><div class="btns center">${wrong.length ? `<button type="button" class="btn pri" id="qzRetry">${t("qzRetryWrong")} (${wrong.length})</button>` : ""}<button type="button" class="btn sec" id="qzNew">${t("qzRoundAgain")}</button></div></div>`;
-      const r = $("#qzRetry", stage); if (r) r.addEventListener("click", ()=>start(wrong));
-      $("#qzNew", stage).addEventListener("click", ()=>start(qWords(QZ.set)));
-      return;
-    }
-    const w = round[i];
-    stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar"><span class="qz-ctr">${i+1} / ${round.length}</span><span class="qz-ctr ok">${f7("checkmark_alt", "f7-in")}${got}</span></div><div class="qz-q"><span class="qz-kind">${t("qzType")}</span><span class="qz-term">${esc(w.m)}</span></div>${accBar()}<div class="qz-write"><input class="ans wide" id="qzIn" ${inputAttrs} aria-label="${esc(t("qzType"))}"><button type="button" class="btn pri" id="qzChk">${t("qzCheck")}</button><button type="button" class="btn sec" id="qzIdk">${t("qzDontKnow")}</button></div><div class="qz-fb"></div></div>`;
-    const inp = $("#qzIn", stage); inp.focus();
-    let done = false;
-    const check = giveUp => {
-      if (done) { i++; step(); return; }
-      const st = giveUp ? "bad" : judge(inp.value, [w.fr]); if (st === "empty") return;
-      done = true; inp.disabled = true;
-      inp.classList.add(st === "ok" ? "r-ok" : st === "acc" ? "r-acc" : "r-bad");
-      const fb = $(".qz-fb", stage), lv = qLv(w.fr);
-      speak(w.fr); gameAnswer("q|" + qKey(w.fr), null, st, {daily:true, xp:3});
-      if (st === "ok") { got++; qSet(w.fr, {lv: Math.min(3, lv+1)}); fb.innerHTML = `<span class="ok-t">${OKW()}</span>`; setTimeout(()=>{ if (done && round[i] === w) { i++; step(); } }, 800); }
-      else { wrong.push(w); qSet(w.fr, {lv: Math.max(0, lv-1)}); fb.innerHTML = `${st === "acc" ? `<span class="acc-t">${t("almost")}</span>` : `<span class="pen">${t("qzWrongIs")}</span>`} <b>${esc(w.fr)}</b> <button type="button" class="btn sm pri" id="qzGo">${t("qzContinue")}</button>`; $("#qzGo", stage).addEventListener("click", ()=>{ i++; step(); }); $("#qzGo", stage).focus(); }
-      qzRefreshList();
-    };
-    inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); check(false); } });
-    $("#qzChk", stage).addEventListener("click", ()=>check(false));
-    $("#qzIdk", stage).addEventListener("click", ()=>check(true));
-  };
-  start(qWords(QZ.set));
-}
-
-/* mode 4: match game */
-function qzMatch(stage){
-  const ws = shuffle(qWords(QZ.set).slice()).slice(0, 6);
-  const tiles = shuffle(ws.flatMap((w,k)=>[{k, txt:w.fr, fr:true}, {k, txt:w.m, fr:false}]));
-  let first = null, left = ws.length, t0 = 0;
-  const best = S.quiz.best[QZ.set];
-  stage.innerHTML = `<div class="qz-pad"><div class="qz-toolbar"><span class="muted">${t("qzMatchHint")}</span><span class="qz-ctr" id="qzClock">0.0 s</span>${best ? `<span class="qz-ctr ok">${t("qzBest", best)}</span>` : ""}</div><div class="qz-grid">${tiles.map((x,i)=>`<button type="button" class="qz-tile${x.fr?" is-fr":""}" data-i="${i}">${esc(x.txt)}</button>`).join("")}</div></div>`;
-  const clock = $("#qzClock", stage);
-  $$(".qz-tile", stage).forEach(b=>b.addEventListener("click", ()=>{
-    if (b.classList.contains("gone")) return;
-    if (!t0) { t0 = performance.now(); qzTimer = setInterval(()=>{ clock.textContent = ((performance.now()-t0)/1000).toFixed(1) + " s"; }, 100); }
-    const x = tiles[+b.dataset.i];
-    if (x.fr) speak(x.txt);
-    if (!first) { first = b; b.classList.add("sel"); return; }
-    if (first === b) { b.classList.remove("sel"); first = null; return; }
-    const y = tiles[+first.dataset.i];
-    if (x.k === y.k && x.fr !== y.fr) {
-      [b, first].forEach(el=>{ el.classList.remove("sel"); el.classList.add("ok"); setTimeout(()=>el.classList.add("gone"), 250); });
-      first = null; left--;
-      if (!left) {
-        clearInterval(qzTimer); const s = +((performance.now()-t0)/1000).toFixed(1);
-        if (!best || s < best) { S.quiz.best[QZ.set] = s; touch("quiz"); }
-        setTimeout(()=>{ stage.innerHTML = `<div class="qz-pad center"><h3 class="qz-done">${t("qzMatchDone", String(s).replace(".", LANG==="ru"?",":"."))}</h3><p class="muted">${t("qzBest", S.quiz.best[QZ.set])}</p><button type="button" class="btn pri" id="qzAgain">${t("qzPlayAgain")}</button></div>`; $("#qzAgain", stage).addEventListener("click", ()=>qzMatch(stage)); }, 350);
-      }
-    } else {
-      const a = first; [b, a].forEach(el=>el.classList.add("bad","flash")); first = null;
-      setTimeout(()=>[b, a].forEach(el=>el.classList.remove("bad","flash","sel")), 450);
-    }
-  }));
-}
-
 /*@@MODULES@@*/
 
 /* =========================================================
@@ -2232,7 +1854,7 @@ function renderZh(){
 }
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
+  const id = /^quizlet\//.test(h) ? "quizlet" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
   const cur = $(`#navGroups a.nl[data-id="${id}"]`); if (cur) { const g = cur.closest(".ng"); if (g && !g.classList.contains("open")) navOpenGroup(g, true, false); }
 }
@@ -2243,7 +1865,7 @@ function route(keepScroll){
   clearInterval(qzTimer); closeDeck(true);
   /* ссылка ведёт в другой курс — переключаемся */
   let want = null;
-  if (h === "quizlet" || FR_IDS.has(h)) want = "fr";
+  if (/^quizlet(\/|$)/.test(h) || FR_IDS.has(h)) want = "fr";
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
   if (want && want !== COURSE) setCourse(want, true);
   if ((h === "zh") !== VIEW_ZH) { VIEW_ZH = h === "zh"; const keep = nav.classList.contains("open"); buildNav(); if (keep) nav.classList.add("open"); }
@@ -2252,7 +1874,7 @@ function route(keepScroll){
   if (byId[h]) renderTopic(byId[h]);
   else if (h === "test") renderTest();
   else if (h === "shpargalka") renderCheat();
-  else if (h === "quizlet") renderQuizlet();
+  else if (/^quizlet(\/|$)/.test(h)) renderQuizlet(h.slice(8));
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
   else if (h === "bank") renderBank();
