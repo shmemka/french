@@ -6,7 +6,7 @@
 var FRL = "ru";
 const TF = (ru, en) => FRL === "en" ? en : ru;
 const PG = s => TF("с. ", "p. ") + s;
-/* сравнение: по-русски показываем RU+EN, по-английски — только EN */
+/* сравнение (только если есть чёткая параллель): по-русски RU и/или EN, по-английски — только EN */
 const CMP2 = (ruRU, enRU, enEN) => FRL === "en" ? CMP("", enEN) : CMP(ruRU, enRU);
 
 function FR_U3(L){
@@ -39,7 +39,7 @@ CJ("acheter", TF("покупать","to buy"), ["j’ach<b>è</b>te","tu ach<b>�
 CJ("payer", TF("платить","to pay"), ["je pa<b>i</b>e / paye","tu pa<b>i</b>es / payes","il / elle / on pa<b>i</b>e / paye","nous payons","vous payez","ils / elles pa<b>i</b>ent / payent"])
 )}
 ${RULE(TF("Логика «ботинка»","The «boot» pattern"), `<p>${TF(`Окончания — как у обычных глаголов на -er. Меняется только основа в формах je, tu, il, ils (там окончание не читается): ${F("achet- → achèt-")}, ${F("pay- → pai-")}. У ${F("nous")} и ${F("vous")} основа обычная: ${F("nous achetons, vous payez")}.`, `The endings are those of ordinary -er verbs. Only the stem changes in the je, tu, il, ils forms (where the ending is silent): ${F("achet- → achèt-")}, ${F("pay- → pai-")}. With ${F("nous")} and ${F("vous")} the stem is regular: ${F("nous achetons, vous payez")}.`)}</p>`)}
-${CMP2(`«Я бы хотел» = ${F("je voudrais")}; «картой / наличными» = ${F("par carte / en espèces")} — запомни предлоги целиком, дословно они не переводятся.`, `${F("Je voudrais")} = <i>I would like</i>; ${F("Combien ça coûte ?")} = <i>How much is it?</i>; ${F("par carte / en espèces")} = <i>by card / in cash</i>.`, `${F("Je voudrais")} = <i>I would like</i>; ${F("Combien ça coûte ?")} = <i>How much is it?</i>; ${F("par carte / en espèces")} = <i>by card / in cash</i> — learn the prepositions as part of the phrase.`)}
+${CMP2(`«Я бы хотел» = ${F("je voudrais")}; «картой / наличными» = ${F("par carte / en espèces")} — запомни предлоги целиком, дословно они не переводятся.`, ``, `${F("Je voudrais")} = <i>I would like</i>; ${F("Combien ça coûte ?")} = <i>How much is it?</i>; ${F("par carte / en espèces")} = <i>by card / in cash</i> — learn the prepositions as part of the phrase.`)}
 ${NOTE(TF(`Во Франции в маленьких магазинах сначала здороваются: ${F("Bonjour !")} — и только потом просят товар. Без «bonjour» начинать невежливо.`, `In small French shops you greet first: ${F("Bonjour !")} — and only then ask for something. Starting without «bonjour» is impolite.`))}
 `,
 ex:[
@@ -109,7 +109,7 @@ ${TBL([TF("Слово кончается на…","Word ends in…"), TF("Мн. 
 ${NOTE(TF(`${F("un œuf")} [œf] → ${F("des œufs")} [ø]: во множественном числе f и s <b>не читаются</b>.`, `${F("un œuf")} [œf] → ${F("des œufs")} [ø]: in the plural both f and s are <b>silent</b>.`))}
 <h3>${TF("После числа и количества","After a number or a quantity")}</h3>
 ${EX([["J’achète trois croissants.", TF("после числа — мн. ч.","after a number — plural")],["un kilo de pommes", TF("считаемое — мн. ч.: яблок много","countable — plural: many apples")],["une bouteille de jus", TF("несчитаемое — ед. ч.","uncountable — singular")],["deux paquets de riz", TF("мн. ч. получает упаковка, а не рис","the packet goes plural, not the rice")]])}
-${CMP2(`Как в русском: «два пакета риса», «килограмм яблок». Только по-французски окончание пишется, но не слышно.`, `Like English <i>two packets of rice, a kilo of apples</i>.`, `Like English <i>two packets of rice, a kilo of apples</i> — but the French -s is written and not pronounced.`)}
+${CMP2(`Как в русском: «два пакета риса», «килограмм яблок». Только по-французски окончание пишется, но не слышно.`, ``, `Like English <i>two packets of rice, a kilo of apples</i> — but the French -s is written and not pronounced.`)}
 `,
 ex:[
 {t:"sort", h:TF("Единственное или множественное?","Singular or plural?"), cats:[TF("единственное","singular"),TF("множественное","plural")], w:[
@@ -174,7 +174,7 @@ ${WARN(TF(`✗ ${F("à le marché")}, ✗ ${F("à les caisses")} — так не
 <h3>${TF("Глагол aller — идти, ехать","The verb aller — to go")}</h3>
 ${CJS(CJ("aller", TF("идти, ехать","to go"), ["je vais","tu vas","il / elle / on va","nous allons","vous allez","ils / elles vont"]))}
 ${NOTE(TF(`${F("aller")} — неправильный глагол, хотя кончается на -er. Его формы просто учат: ${F("vais, vas, va, allons, allez, vont")}.`, `${F("aller")} is irregular even though it ends in -er. Just learn the forms: ${F("vais, vas, va, allons, allez, vont")}.`))}
-${CMP2(`${F("chez")} = «у кого-то / к кому-то»: ${F("chez le boucher")} — «к мяснику», ${F("chez moi")} — «у меня дома».`, `${F("chez le boulanger")} = <i>at the baker’s</i>, ${F("chez moi")} = <i>at my place</i>.`, `${F("chez le boulanger")} = <i>at the baker’s</i>, ${F("chez moi")} = <i>at my place</i> — chez is always about a person.`)}
+${CMP2(`${F("chez")} = «у кого-то / к кому-то»: ${F("chez le boucher")} — «к мяснику», ${F("chez moi")} — «у меня дома».`, ``, `${F("chez le boulanger")} = <i>at the baker’s</i>, ${F("chez moi")} = <i>at my place</i> — chez is always about a person.`)}
 `,
 ex:[
 {t:"mc", h:TF("à или chez?","à or chez?"), w:[
@@ -244,7 +244,7 @@ ${RULE(TF("После количества — только de","After a quantit
 ${FX(["un paquet","+","!de","+","riz"], TF("без артикля после de","no article after de"))}
 <h3>${TF("Как платить","How to pay")}</h3>
 ${EX([["par carte (bancaire / bleue)", TF("картой","by card")],["en espèces", TF("наличными","in cash")]])}
-${CMP2(`Как в русском родительный падеж: «пачка риса», «бутылка масла» — по-французски всё это делает одно слово ${F("de")}.`, `Like English <i>a packet of rice, a bottle of oil</i> — ${F("de")} = <i>of</i>.`, `Like English <i>a packet of rice, a bottle of oil</i>: ${F("de")} = <i>of</i>, with no article after it.`)}
+${CMP2(`Как в русском родительный падеж: «пачка риса», «бутылка масла» — по-французски всё это делает одно слово ${F("de")}.`, ``, `Like English <i>a packet of rice, a bottle of oil</i>: ${F("de")} = <i>of</i>, with no article after it.`)}
 `,
 ex:[
 {t:"sort", h:TF("Фрукты, овощи или молочное?","Fruit, vegetables or dairy?"), cats:[TF("фрукты","fruit"),TF("овощи","vegetables"),TF("молочное","dairy")], w:[
@@ -304,7 +304,7 @@ ${WARN(TF(`После ${F("beaucoup, un peu, pas")} — только ${F("de / d
 ${CJS(CJ("faire", TF("делать","to do, to make"), ["je fais","tu fais","il / elle / on fait","nous faisons","vous faites","ils / elles font"]))}
 ${EX([["Qu’est-ce qu’on mange ? / On mange quoi ?", TF("Что едим? — открытый вопрос","What are we eating? — open question")],["Est-ce qu’on a des tomates ? – Oui. / Non.", TF("закрытый вопрос: ответ да / нет","closed question: yes / no answer")],["On fait les courses ? On fait la cuisine ?", TF("faire les courses — ходить за покупками, faire la cuisine — готовить","faire les courses — do the shopping, faire la cuisine — cook")]])}
 ${NOTE(TF(`${F("nous faisons")} читается [fəzɔ̃] — как «фёзон», а ${F("vous faites")} без -ez: это одно из трёх исключений (${F("vous êtes, vous faites, vous dites")}).`, `${F("nous faisons")} is pronounced [fəzɔ̃], and ${F("vous faites")} has no -ez: it’s one of three exceptions (${F("vous êtes, vous faites, vous dites")}).`))}
-${CMP2(`В русском артикля нет: «я ем рыбу» → ${F("je mange du poisson")}, «я люблю рыбу» → ${F("j’aime le poisson")}. Подставь мысленно «немного» — если подходит, нужен du / de la.`, `Close to <i>some</i>: <i>I eat (some) fish</i> → ${F("je mange du poisson")}. But in French you can’t leave it out.`, `Close to <i>some</i>: <i>I eat (some) fish</i> → ${F("je mange du poisson")}. But in French you can’t leave it out, and <i>I like fish</i> → ${F("j’aime le poisson")}.`)}
+${CMP2(`Подставь мысленно «немного» — если подходит, нужен du / de la: «я ем рыбу» → ${F("je mange du poisson")}, но «я люблю рыбу» → ${F("j’aime le poisson")}.`, `Как <i>some</i>: <i>I eat (some) fish</i> → ${F("je mange du poisson")}, только во французском его нельзя опустить.`, `Close to <i>some</i>: <i>I eat (some) fish</i> → ${F("je mange du poisson")}. But in French you can’t leave it out, and <i>I like fish</i> → ${F("j’aime le poisson")}.`)}
 `,
 ex:[
 {t:"mc", h:TF("du, de la, de l’ или des?","du, de la, de l’ or des?"), w:[
@@ -374,7 +374,7 @@ ${TBL([TF("Часть","Part"), TF("Примеры","Examples")],[
 [F("le dessert"), F("la glace, la mousse au chocolat, le riz au lait, la tarte aux pommes")],
 [F("les boissons"), F("l’eau, le jus de fruits, le soda, le café, le café crème, le thé")]
 ])}
-${NOTE(TF(`${F("l’entrée")} — <b>закуска</b>, а не основное блюдо (как в американском английском). ${F("le plat du jour")} — блюдо дня, ${F("la formule")} — комплекс (например, entrée + plat). Графин воды ${F("une carafe d’eau")} во Франции бесплатный.`, `${F("l’entrée")} is the <b>starter</b>, not the main course (unlike American English). ${F("le plat du jour")} is the dish of the day, ${F("la formule")} is a set menu (e.g. entrée + plat). A ${F("carafe d’eau")} is free in France.`))}
+${NOTE(TF(`${F("l’entrée")} — <b>закуска</b>, а не основное блюдо. ${F("le plat du jour")} — блюдо дня, ${F("la formule")} — комплекс (например, entrée + plat). Графин воды ${F("une carafe d’eau")} во Франции бесплатный.`, `${F("l’entrée")} is the <b>starter</b>, not the main course. ${F("le plat du jour")} is the dish of the day, ${F("la formule")} is a set menu (e.g. entrée + plat). A ${F("carafe d’eau")} is free in France.`))}
 <h3>${TF("Заказать","Ordering")}</h3>
 ${EX([["Je voudrais de la blanquette de veau.", TF("Я бы хотел бланкет из телятины.","I’d like the veal blanquette.")],["Pour moi, un croque-monsieur végétarien.", TF("Мне — вегетарианский крок-месье.","For me, a vegetarian croque-monsieur.")],["Une carafe d’eau, s’il vous plaît !", TF("Графин воды, пожалуйста!","A jug of water, please!")],["L’addition, s’il vous plaît !", TF("Счёт, пожалуйста!","The bill, please!")]])}
 <h3>${TF("Оценить блюдо","Giving your opinion")}</h3>
@@ -384,7 +384,7 @@ ${WARN(TF(`${F("C’est pas mal")} — разговорная форма без 
 ${TBL(["Français", TF("Значение","Meaning")],[[F("l’assiette (f.)"), TF("тарелка","plate")],[F("le verre"), TF("стакан, бокал","glass")],[F("la carafe"), TF("графин","jug, carafe")],[F("le couteau"), TF("нож","knife")],[F("la fourchette"), TF("вилка","fork")],[F("la cuillère"), TF("ложка","spoon")]])}
 <h3>${TF("manger","manger")}</h3>
 ${CJS(CJ("manger", TF("есть, кушать","to eat"), ["je mange","tu manges","il / elle / on mange","nous mang<b>e</b>ons","vous mangez","ils / elles mangent"]))}
-${CMP2(`${F("nous mangeons")}: e нужна, чтобы g читалось мягко [ʒ], как в ${F("manger")}. Без неё было бы [g].`, `Same idea as in English <i>courageous</i>: the e keeps the g soft.`, `${F("nous mangeons")}: the e keeps the g soft [ʒ]; without it you’d read a hard [g].`)}
+${CMP2(`${F("nous mangeons")}: e нужна, чтобы g читалось мягко [ʒ], как в ${F("manger")}. Без неё было бы [g].`, ``, `${F("nous mangeons")}: the e keeps the g soft [ʒ]; without it you’d read a hard [g].`)}
 `,
 ex:[
 {t:"sort", h:TF("Закуска, блюдо, десерт или напиток?","Starter, main, dessert or drink?"), cats:[F("entrée"),F("plat"),F("dessert"),F("boisson")], w:[
@@ -440,7 +440,7 @@ CJ("finir", TF("заканчивать","to finish"), ["je fin<b>is</b>","tu fin
 ${SAME(["je choisis","tu choisis","il choisit"], "[ʃwazi]", [["nous choisissons","[ʃwazisɔ̃]"],["ils choisissent","[ʃwazis]"]])}
 ${RULE(TF("Как не перепутать с -er","How not to mix them up with -er"), `<p>${TF(`У je и tu здесь одинаковое окончание <b>-is</b> (у глаголов на -er — ${F("je parle / tu parles")}). Ловушка — ${F("il choisit")} с <b>-t</b> на конце, его не слышно.`, `Here je and tu share the ending <b>-is</b> (with -er verbs it’s ${F("je parle / tu parles")}). The trap is ${F("il choisit")} with a silent <b>-t</b>.`)}</p>`)}
 ${EX([["Je choisis le plat du jour.", TF("Я выбираю блюдо дня.","I’m choosing the dish of the day.")],["Vous choisissez quel dessert ?", TF("Какой десерт вы выбираете?","Which dessert are you choosing?")],["Tu ne finis pas ton assiette ?", TF("Ты не доедаешь?","Aren’t you finishing your plate?")],["Ils finissent leur jus et ils arrivent.", TF("Они допивают сок и идут.","They finish their juice and they’re coming.")]])}
-${CMP2(`Звук [s] во множественном числе помогает на слух: ${F("il finit")} [fini] ↔ ${F("ils finissent")} [finis].`, `Like <i>he finishes / they finish</i>, the plural is longer.`, `Listen for the [s]: ${F("il finit")} [fini] ↔ ${F("ils finissent")} [finis] — the plural is one syllable longer.`)}
+${CMP2(`Звук [s] во множественном числе помогает на слух: ${F("il finit")} [fini] ↔ ${F("ils finissent")} [finis].`, ``, `Listen for the [s]: ${F("il finit")} [fini] ↔ ${F("ils finissent")} [finis] — the plural is one syllable longer.`)}
 `,
 ex:[
 {t:"conj", h:TF("Проспрягай choisir и finir","Conjugate choisir and finir"), w:[
@@ -497,7 +497,7 @@ theory:`
 ${BIGC([["[i]", TF("губы растянуты, как в улыбке","lips spread, as in a smile"), "dix, midi, la liste", "m"],["[y]", TF("губы трубочкой, язык — как для [i]","lips rounded, tongue as for [i]"), "tu, du, légumes", "f"],["[u]", TF("губы трубочкой, язык назад","lips rounded, tongue pulled back"), "vous, douze, courses", "p"]])}
 ${TBL([TF("Звук","Sound"), TF("Пишется","Spelt"), TF("Примеры","Examples")],[["[i]", "i, y, î", F("lundi, midi, liste, stylo")],["[y]", "u, û", F("tu, du, lundi, légumes, menu")],["[u]", "ou, où, oû", F("vous, douze, beaucoup, courses, soupe")]])}
 ${WARN(TF(`Самая важная пара — [y] и [u]: ${F("du")} [dy] ≠ ${F("doux")} [du], ${F("tu")} [ty] ≠ ${F("tout")} [tu], ${F("vu")} ≠ ${F("vous")}. Буква <b>u</b> — это всегда [y], а «у» по-французски пишется <b>ou</b>.`, `The key pair is [y] vs [u]: ${F("du")} [dy] ≠ ${F("doux")} [du], ${F("tu")} [ty] ≠ ${F("tout")} [tu], ${F("vu")} ≠ ${F("vous")}. The letter <b>u</b> is always [y]; the sound [u] is spelt <b>ou</b>.`))}
-${CMP2(`[y] — как «ю» без «й» в начале: скажи «и» и, не двигая языком, вытяни губы трубочкой.`, `English has no [y]: say «ee» and round your lips without moving your tongue.`, `English has no [y]: say «ee» and round your lips as for «oo» without moving your tongue.`)}
+${CMP2(`[y] — как «ю» без «й» в начале: скажи «и» и, не двигая языком, вытяни губы трубочкой.`, ``, `Say «ee» and round your lips as for «oo» without moving your tongue.`)}
 <h3>${TF("Интонация: вопрос или утверждение","Intonation: question or statement")}</h3>
 ${TBL([TF("Голос","Voice"), TF("Значит","Means"), TF("Пишем","We write")],[[TF("поднимается ↗","rises ↗"), TF("вопрос","question"), "?"],[TF("опускается ↘","falls ↘"), TF("утверждение","statement"), "."]])}
 ${EX([["Tu es d’accord ? ↗", TF("вопрос без слов-маркеров — только интонация","a question with no question word — intonation only")],["On mange. ↘", TF("утверждение","statement")],["De la viande ↗ ou du poisson ? ↘", TF("в выборе «или» голос сначала идёт вверх, потом вниз","in an «or» choice the voice goes up, then down")]])}

@@ -24,7 +24,6 @@ ${VS({h:"Formel · neutral",big:F("Bonjour, madame.")+"<br>"+F("Vous allez bien 
 ${EX([["– Ça va ? – Oui, ça va, et toi ? – Ça va bien, merci !","– How are you? – Fine, and you? – Fine, thanks!"],["– Vous allez bien ? – Très bien, merci. Et vous ?","– How are you (formal)? – Very well, thank you. And you?"],["– Tu vas bien ? – Oui, merci.","– Are you OK? – Yes, thanks."]])}
 <h3>Tu or vous?</h3>
 ${FLOW([["Talking to several people at once?","vous","Vous allez bien, les amis ?"],["A stranger, a teacher, someone of higher status?","vous","Bonjour, madame. Vous allez bien ?"]],["Family, a friend, a child","tu","Salut ! Tu vas bien ?"])}
-${CMP("Exactly like «ты / вы» in Russian — Russian logic works 100% here.","English only has <i>you</i>, so English speakers often mix them up.")}
 ${NOTE("Je dis <b>vous</b> quand je ne connais pas la personne ou pour être poli(e). Je dis <b>tu</b> à ma famille, à un(e) ami(e) ou à un enfant. In France friends and family do <b>la bise</b> (a kiss on the cheek); you shake hands with strangers.")}
 <h3>Introducing yourself</h3>
 ${EX([["– Bonjour, je m’appelle Alex, et vous ?","– Hello, my name is Alex, and yours?"],["– Moi, je m’appelle Élisa.","– My name is Élisa."]])}
@@ -38,11 +37,9 @@ ${TBL(["Subject","Stressed form","Example"],[
 [F("vous"),F("vous"),F("Et vous ?")],
 [F("ils / elles"),F("eux / elles"),F("Eux, ils parlent anglais.")]
 ])}
-${CMP(`«А я…», «а ты?» — ${F("Moi, je…")}, ${F("Et toi ?")}`,`<i>Me, I’m…</i> / <i>And you?</i> — the stressed form works like English <i>me</i>.`)}
 <h3>The alphabet</h3>
-<p>Click the letters to hear them. The main trap is <b>G</b> and <b>J</b>: in French they are the other way round compared to English.</p>
+<p>Click the letters to hear them. The main trap is <b>G</b> [ʒe] and <b>J</b> [ʒi]: they are easy to mix up when you spell a name or an e-mail.</p>
 <div class="abc">${[["A","ah"],["B","bay"],["C","say"],["D","day"],["E","uh (ə)"],["F","eff"],["G","zhay"],["H","ahsh"],["I","ee"],["J","zhee"],["K","kah"],["L","ell"],["M","emm"],["N","enn"],["O","oh"],["P","pay"],["Q","kü"],["R","air"],["S","ess"],["T","tay"],["U","ü"],["V","vay"],["W","doobl-vay"],["X","eeks"],["Y","ee-grek"],["Z","zed"]].map(([l,r])=>`<span class="abc-l fr" data-say="${l.toLowerCase()}"><b>${l}</b><i>${r}</i></span>`).join('')}</div>
-${CMP("","EN: G = «jee», J = «jay». FR: G = «zhay», J = «zhee». E = [ə] (like the «uh» in «the»), I = [i]. Don’t mix them up when spelling a name or an e-mail!")}
 <h3>Classroom phrases (p. 16)</h3>
 ${TBL(["Français","In English"],[
 [F("S’il vous plaît ? / S’il te plaît ?"),"Please (asking for something)"],
@@ -96,15 +93,13 @@ title:"Aujourd’hui, c’est le…", ru:"Days of the week, months, saying the d
 theory:`
 <h3>Les jours de la semaine — days of the week</h3>
 <div class="week">${[["lundi","Mon"],["mardi","Tue"],["mercredi","Wed"],["jeudi","Thu"],["vendredi","Fri"],["samedi","Sat"],["dimanche","Sun"]].map(([d,r],k)=>`<div class="wd${k>4?" we":""}"><span class="fr">${d}</span><small>${r}</small></div>`).join("")}</div>
-<p class="hint-l">Memory tip: lundi — Lune (Moon), mardi — Mars, mercredi — Mercury, jeudi — Jupiter, vendredi — Venus. Just like English Monday — Moon day.</p>
+<p class="hint-l">Memory tip: lundi — Lune (Moon), mardi — Mars, mercredi — Mercury, jeudi — Jupiter, vendredi — Venus.</p>
 <h3>Les mois de l’année — months</h3>
 <div class="seasons">${[["l’hiver","winter",[["décembre","December"],["janvier","January"],["février","February"]]],["le printemps","spring",[["mars","March (s is pronounced)"],["avril","April"],["mai","May"]]],["l’été","summer",[["juin","June"],["juillet","July"],["août","August [ut]"]]],["l’automne","autumn",[["septembre","September"],["octobre","October"],["novembre","November"]]]].map(([s,r,ms],k)=>`<div class="ss s${k}"><h5><span class="fr">${s}</span><small>${r}</small></h5>${ms.map(([m,mr])=>`<p><span class="fr">${m}</span><small>${mr}</small></p>`).join("")}</div>`).join("")}</div>
-${CMP(`Days and months are written in lower case — like in Russian.`,`In English they are capitalised (Monday, January). Not in French: ${F("lundi")}, ${F("janvier")}.`)}
 <h3>Saying the date</h3>
 ${FXS(FX(["le","+","~21|day","+","octobre|month","+","~2026|year"],"le vingt et un octobre deux mille vingt-six"),FX(["le","+","!premier|1<sup>st</sup>","+","mai"],"only the 1st is an ordinal"))}
-${RULE("Formula",`<p><b>le + number + month (+ year)</b>: ${F("le 2 décembre")}, ${F("le 14 juillet 1789")}. Ordinary (cardinal) numbers, no «of» and no «-th».</p><p>The exception is the first: <b>le 1<sup>er</sup> = le premier</b>: ${F("le premier mai")}.</p>`)}
+${RULE("Formula",`<p><b>le + number + month (+ year)</b>: ${F("le 2 décembre")}, ${F("le 14 juillet 1789")}. Ordinary (cardinal) numbers.</p><p>The exception is the first: <b>le 1<sup>er</sup> = le premier</b>: ${F("le premier mai")}.</p>`)}
 ${EX([["Aujourd’hui, c’est mardi. Demain, c’est mercredi.","Today is Tuesday. Tomorrow is Wednesday."],["Quelle est la date aujourd’hui ? – C’est le 21 octobre.","What’s the date today? – It’s the 21st of October."],["Je suis né le 26 janvier 1999.","I was born on the 26th of January 1999."]])}
-${CMP(`In Russian all dates are ordinal («второе мая»). In French only premier is ordinal; after that it’s le deux, le trois…`,`EN: <i>the second of May</i>. FR: ${F("le deux mai")} — no «of» and no «second».`)}
 <h3>French holidays from the textbook</h3>
 ${TBL(["Holiday","Date"],[[F("la fête du Travail"),F("le premier mai")],[F("la fête de la Musique"),F("le vingt et un juin")],[F("la Fête nationale"),F("le quatorze juillet")],[F("le Mardi gras"),"February–March, the date changes"]])}
 <h3>Pronunciation: deux, trois, six, dix + month</h3>
@@ -150,19 +145,16 @@ CJ("parler","to speak",["je parl<b>e</b>","tu parl<b>es</b>","il / elle / on par
 )}
 <h3>Être — nationality, profession, description</h3>
 ${EX([["Je suis russe.","I’m Russian."],["Tu es hollandaise ?","Are you Dutch? (f.)"],["Il est étudiant.","He is a student."],["Vous êtes italien, Enzo ?","Are you Italian, Enzo?"]])}
-${CMP(`Like Russian: «Я студент» — no article. ${F("Je suis étudiant.")}`,`<i>I am <b>a</b> student</i> — but in French, after être, professions and nationalities take <b>no</b> article. Don’t write ✗ <i>Je suis un étudiant</i>.`)}
 <h3>Avoir — age!</h3>
-${VS({h:"✗ copied from English",big:"<s>Je suis 20 ans</s>",sub:"I am 20",tone:"bad"},{h:"✓ in French",big:F("J’ai 20 ans."),sub:"«I have 20 years» — avoir + number + ans",tone:"good"})}
+${VS({h:"✗ mistake",big:"<s>Je suis 20 ans</s>",sub:"age doesn’t take être",tone:"bad"},{h:"✓ in French",big:F("J’ai 20 ans."),sub:"«I have 20 years» — avoir + number + ans",tone:"good"})}
 ${RULE("Age = avoir + number + ans",`<p>${F("J’ai 30 ans.")} — literally «I have 30 years». ${F("Tu as quel âge ? / Vous avez quel âge ?")} — How old are you?</p>`)}
-${CMP(`«Мне 30 лет» — not «я есть 30» either, so the logic is closer to Russian.`,`<i>I am 30</i> is the trap! ✗ <i>Je suis 30 ans</i> is a serious mistake. Only ${F("j’ai 30 ans")}.`)}
 <h3>S’appeler — a reflexive verb</h3>
 ${FXS(FX(["je","+","!m’|myself","+","appelle|call"],"= my name is, «I call myself»"),FX(["~-ся","↔","!me · te · se · nous · vous · se"],"the reflexive pronoun changes with the person"))}
-<p>Literally «to call oneself»: ${F("je m’appelle")} = «I call myself». The little words <b>me, te, se, nous, vous, se</b> work like Russian «-ся»: зваться, называться.</p>
+<p>Literally «to call oneself»: ${F("je m’appelle")} = «I call myself». The little words <b>me, te, se, nous, vous, se</b> change with the person.</p>
 ${WARN(`Double <b>ll</b> in je, tu, il, ils (you hear [ɛl]): ${F("je m’appelle, ils s’appellent")}. Single <b>l</b> in nous and vous (you hear [ə]): ${F("nous nous appelons, vous vous appelez")}.`)}
 ${EX([["Comment tu t’appelles ? – Je m’appelle Andrea.","What’s your name? – My name is Andrea."],["Comment vous vous appelez ?","What’s your name? (formal)"],["Elle s’appelle Sanae.","Her name is Sanae."]])}
 <h3>Parler + language</h3>
 <p>After parler the language usually has <b>no article</b>: ${F("Je parle français.")} ${F("Il parle quatre langues.")} Language names are written in lower case.</p>
-${CMP(`«Говорить по-французски» = ${F("parler français")} — no preposition.`,`<i>to speak French</i> is capitalised in English; in French ${F("français")} is lower case.`)}
 <h3>Don’t confuse them by ear</h3>
 ${VS({h:"être · they are",big:F("ils sont"),sub:"[il<b>s</b>ɔ̃] — voiceless [s]"},{h:"avoir · they have",big:F("ils‿ont"),sub:"[il<b>z</b>ɔ̃] — voiced [z]"})}
 ${NOTE("je → j’ before a vowel: <b>j’ai</b>, but <b>je suis</b>. This is called élision — more in the Reference section.")}
@@ -286,7 +278,6 @@ ${TBL(["Masculin","Féminin","What happens"],[
 <p>+ s: ${F("ils sont italiens")}, ${F("elles sont allemandes")}. If it already ends in -s, add nothing: ${F("ils sont français")}.</p>
 <h3>Capital letter or not?</h3>
 ${TBL(["","Example","Letter"],[["adjective (what kind?)",F("Il est français."),"lower case"],["language",F("Je parle français."),"lower case"],["inhabitant (who?)",F("C’est un Français."),"capital"]])}
-${CMP("Same as Russian: «он француз», «французский язык» — lower case.","In English everything is capitalised (French). Not in French!")}
 <h3>Countries and nationalities (p. 27)</h3>
 ${TBL(["Pays","Nationalité (m / f)"],[
 [F("l’Algérie (f.)"),F("algérien / algérienne")],[F("l’Allemagne (f.)"),F("allemand / allemande")],[F("l’Argentine (f.)"),F("argentin / argentine")],[F("la Belgique"),F("belge")],[F("le Brésil"),F("brésilien / brésilienne")],[F("le Cameroun"),F("camerounais / camerounaise")],[F("le Canada"),F("canadien / canadienne")],[F("la Chine"),F("chinois / chinoise")],[F("la Colombie"),F("colombien / colombienne")],[F("le Congo"),F("congolais / congolaise")],[F("la Corée"),F("coréen / coréenne")],[F("l’Espagne (f.)"),F("espagnol / espagnole")],[F("les États-Unis"),F("américain / américaine")],[F("la France"),F("français / française")],[F("l’Inde (f.)"),F("indien / indienne")],[F("l’Italie (f.)"),F("italien / italienne")],[F("le Japon"),F("japonais / japonaise")],[F("le Maroc"),F("marocain / marocaine")],[F("le Mexique"),F("mexicain / mexicaine")],[F("la Pologne"),F("polonais / polonaise")],[F("les Pays-Bas"),F("hollandais / hollandaise")],[F("la Russie"),F("russe")],[F("le Sénégal"),F("sénégalais / sénégalaise")],[F("la Suisse"),F("suisse")],[F("la République tchèque"),F("tchèque")],[F("la Tunisie"),F("tunisien / tunisienne")],[F("le Vietnam"),F("vietnamien / vietnamienne")]
@@ -322,14 +313,12 @@ id:"u1-articles-def", sec:"book", unit:"1", kind:"Grammaire",
 title:"Les articles définis : le, la, l’, les", ru:"Definite articles", page:"p. 20, 22",
 theory:`
 <p>An article is a small word in front of a noun. It shows <b>gender</b> and <b>number</b>. In French a noun almost never stands «bare».</p>
-${CMP(`Russian has no articles, so they are easy to forget. Get used to it: «музыка» = ${F("la musique")}, not just «musique».`,`Similar to <i>the</i>, but <i>the</i> has one form and French has four.`)}
 ${GRID(["","Singulier","Pluriel"],[["Masculin","m:le / l’","p:les"],["Féminin","f:la / l’","p:les"]])}
 ${EX([["le cinéma, le sport","cinema, sport (m.)"],["la musique","music (f.)"],["les langues","languages (pl.)"],["l’art (m.), l’histoire (f.)","before a vowel and h — l’"]])}
 ${RULE("Élision: le / la → l’",`<p>Before a word starting with a <b>vowel</b> or a <b>silent h</b>: ${F("l’art")}, ${F("l’université")}, ${F("l’histoire")}, ${F("l’appartement")}. So l’ hides the gender — learn words together with their gender (in a dictionary: <i>n.m.</i> / <i>n.f.</i>).</p>`)}
 ${FXS(FX(["le","+","art","→","!l’art"]),FX(["la","+","histoire","→","!l’histoire"],"silent h counts as a vowel"),FX(["le","+","sport","→","le sport"],"before a consonant — no change"))}
 <h3>When we use them (Unité 1)</h3>
 ${RULE("General meaning",`<p>«On utilise les articles définis pour parler de quelque chose de <b>général</b>.» After <b>aimer, adorer, détester</b> — always le / la / les:</p>${EX([["J’aime le cinéma et le sport.","I like cinema and sport."],["J’aime l’art et les langues.","I like art and languages."],["Tu aimes la musique ?","Do you like music?"]])}`)}
-${CMP(``,`<i>I like music</i> — no article in English! In French ✗ <i>J’aime musique</i> is a mistake. Only ${F("J’aime la musique")}.`)}
 <h3>Articles with countries</h3>
 ${FLOW([["Does the name end in -s?","les","les États-Unis, les Pays-Bas"],["Does it end in -e? (except le Mexique, le Mozambique, le Cambodge, le Zimbabwe)","la / l’","la France, la Russie, l’Italie"]],["Everything else","le / l’","le Japon, le Canada, le Brésil, l’Iran"])}
 <p>Cities usually have no article: ${F("Paris")}, ${F("Moscou")}, ${F("Genève")}.</p>
@@ -362,14 +351,13 @@ TOPICS_EN.push({
 id:"u1-prepositions", sec:"book", unit:"1", kind:"Grammaire",
 title:"À, au, en, aux + ville / pays", ru:"Prepositions with cities and countries", page:"p. 25, 28",
 theory:`
-${CMP("Russian: «в Москве», «во Франции» — one preposition «в».","English: <i>in Paris, in France</i> — also just one. In French the preposition depends on <b>what</b> follows.")}
 ${BIGC([["à","a city","à Paris, à Moscou, à Genève"],["au","masculine country (le)","au Japon, au Canada, au Mexique","m"],["en","feminine country (la) or starting with a vowel","en France, en Russie, en Italie, en Iran","f"],["aux","plural country (les)","aux États-Unis, aux Pays-Bas","p"]])}
 <h3>A 3-second algorithm</h3>
 ${FLOW([["Is it a city?","à","à Lyon"],["Is the country plural (les …)?","aux","aux Philippines"],["Is the country feminine (la …) or does it start with a vowel?","en","en Espagne, en Angola"]],["Masculine country (le …)","au","au Brésil"])}
 ${FXS(FX(["à","+","le","=","!au"],"à le never exists"),FX(["à","+","les","=","!aux"],"à les never exists"))}
 ${WARN(`${F("à + le = au")}, ${F("à + les = aux")} — they always merge. ✗ <i>à le Japon</i>, ✗ <i>à les États-Unis</i>. And ✗ <i>en Japon</i> is the most common mistake: Japon is masculine → ${F("au Japon")}.`)}
 <h3>«Where» and «where to» — the same</h3>
-<p>${F("J’habite en France.")} (I live in France) and ${F("Je vais en France.")} (I’m going to France) use the same preposition. Russian uses different cases; French doesn’t.</p>
+<p>${F("J’habite en France.")} (I live in France) and ${F("Je vais en France.")} (I’m going to France) use the same preposition.</p>
 <h3>Being born / living</h3>
 ${EX([["Il est né le 27 septembre 1955 à Washington, aux États-Unis.","He was born on 27 September 1955 in Washington, in the USA."],["Il habite à Philadelphie, aux États-Unis.","He lives in Philadelphia, in the USA."],["Elle est née et elle habite à Miyazaki, au Japon.","She was born and lives in Miyazaki, in Japan."],["Il est né en Argentine en 1978.","He was born in Argentina in 1978."],["Elle est née à Sion, en Suisse.","She was born in Sion, in Switzerland."]])}
 <p>Years also take <b>en</b>: ${F("en 1978")}, ${F("en 2026")}.</p>
@@ -421,7 +409,6 @@ TOPICS_EN.push({
 id:"u1-quel", sec:"book", unit:"1", kind:"Grammaire",
 title:"L’adjectif interrogatif quel", ru:"Which? What?", page:"p. 26, 28",
 theory:`
-${CMP("«какой / какая / какие» changes with gender and number — exactly like quel!","<i>which / what</i> never changes. In French it does.")}
 ${GRID(["","Singulier","Pluriel"],[["Masculin","m:quel","m:quels"],["Féminin","f:quelle","f:quelles"]])}
 ${SAME(["quel","quelle","quels","quelles"],"[kɛl]")}
 ${WARN("All four forms sound <b>the same</b> [kɛl]. The difference is only in writing — look at the gender and number of the noun.")}
@@ -430,7 +417,7 @@ ${RULE("1. Quel + être + noun",EX([["Quel est ton numéro ?","What’s your num
 ${RULE("2. quel + noun",EX([["Tu as quel âge ?","How old are you? (âge — m.)"],["Tu habites dans quelle ville ?","Which city do you live in?"],["Tu parles quelles langues ?","Which languages do you speak?"],["Tu aimes quels auteurs ?","Which authors do you like?"],["Dans quel pays ?","In which country? (pays — m.!)"]]))}
 <h3>Gender of words often used in questions</h3>
 ${TBL(["Masculin → quel","Féminin → quelle"],[[F("l’âge"),F("l’adresse")],[F("le numéro"),F("la nationalité")],[F("le pays"),F("la ville")],[F("le prénom, le nom"),F("la date (de naissance)")],[F("le sport, le loisir"),F("la langue, la musique")]])}
-${NOTE(`${F("pays")} is masculine (unlike Russian «страна»). ${F("Dans quel pays ?")}`)}
+${NOTE(`${F("pays")} is masculine: ${F("le pays")}. ${F("Dans quel pays ?")}`)}
 `,
 ex:[
 {t:"mc", h:"Choose the right form (p. 26)", items:[
@@ -491,7 +478,7 @@ ${TBL(["Number","Logic","Written"],[
 ["100","",F("cent")]
 ])}
 ${RULE("Traps with vingt",`<p>${F("quatre-vingts")} (80) has an s because it’s «four twenties» with nothing after it. As soon as something is added, the s disappears: ${F("quatre-vingt-un")}, ${F("quatre-vingt-dix")}. And «et» only appears in 21, 31, 41, 51, 61, 71 — 81 and 91 have <b>no</b> et.</p>`)}
-${CMP("Russian «девяносто» is «four-twenty-ten» in French. Think of it as a formula: 97 = 4×20 + 17.","Old English counted in twenties too: <i>four score and seven</i> = 87.")}
+${NOTE("90 = 4×20 + 10: «four-twenty-ten». Think of it as a formula: 97 = 4×20 + 17.")}
 ${NOTE("In Belgium and Switzerland it’s simpler: <b>septante</b> (70), <b>nonante</b> (90), and in Switzerland also <b>huitante</b> (80).")}
 <h3>Pronunciation</h3>
 ${TBL(["Number","Alone","+ consonant","+ vowel"],[

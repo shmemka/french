@@ -38,7 +38,7 @@ ${VS({h:"Formel · нейтрально",big:F("Bonjour, madame.")+"<br>"+F("Vou
 ${EX([["– Ça va ? – Oui, ça va, et toi ? – Ça va bien, merci !","– Как дела? – Хорошо, а у тебя? – Хорошо, спасибо!"],["– Vous allez bien ? – Très bien, merci. Et vous ?","– Как вы поживаете? – Очень хорошо, спасибо. А вы?"],["– Tu vas bien ? – Oui, merci.","– Ты в порядке? – Да, спасибо."]])}
 <h3>Tu или vous?</h3>
 ${FLOW([["Говоришь сразу с несколькими людьми?","vous","Vous allez bien, les amis ?"],["Это незнакомый человек, преподаватель, кто-то старше по статусу?","vous","Bonjour, madame. Vous allez bien ?"]],["Семья, друг, ребёнок","tu","Salut ! Tu vas bien ?"])}
-${CMP("Ровно как «ты / вы» в русском. Это тот случай, когда русская логика работает на 100%.","В английском только <i>you</i>, поэтому англоязычные часто путаются. Тебе проще.")}
+${CMP("Ровно как «ты / вы» в русском.","")}
 ${NOTE("Je dis <b>vous</b> quand je ne connais pas la personne ou pour être poli(e). Je dis <b>tu</b> à ma famille, à un(e) ami(e) ou à un enfant. Во Франции друзья и родные делают <b>la bise</b> (целуются в щёку), незнакомым пожимают руку.")}
 <h3>Знакомство</h3>
 ${EX([["– Bonjour, je m’appelle Alex, et vous ?","– Здравствуйте, меня зовут Алекс, а вас?"],["– Moi, je m’appelle Élisa.","– А меня — Элиза."]])}
@@ -52,11 +52,9 @@ ${TBL(["Подлежащее","Ударная форма","Пример"],[
 [F("vous"),F("vous"),F("Et vous ?")],
 [F("ils / elles"),F("eux / elles"),F("Eux, ils parlent anglais.")]
 ])}
-${CMP(`«А я…», «а ты?» — ${F("Moi, je…")}, ${F("Et toi ?")}`,`<i>Me, I’m…</i> / <i>And you?</i> — ударная форма похожа на английское <i>me</i>.`)}
 <h3>Алфавит</h3>
-<p>Нажимай на буквы, чтобы услышать. Главная ловушка — <b>G</b> и <b>J</b>: во французском наоборот по сравнению с английским.</p>
+<p>Нажимай на буквы, чтобы услышать. Главная ловушка — <b>G</b> [ʒe] и <b>J</b> [ʒi]: их легко перепутать, когда диктуешь имя или e-mail.</p>
 <div class="abc">${[["A","а"],["B","бэ"],["C","сэ"],["D","дэ"],["E","ё (ə)"],["F","эф"],["G","жэ"],["H","аш"],["I","и"],["J","жи"],["K","ка"],["L","эль"],["M","эм"],["N","эн"],["O","о"],["P","пэ"],["Q","кю"],["R","эр"],["S","эс"],["T","тэ"],["U","ю (ü)"],["V","вэ"],["W","дубль-вэ"],["X","икс"],["Y","игрэк"],["Z","зэд"]].map(([l,r])=>`<span class="abc-l fr" data-say="${l.toLowerCase()}"><b>${l}</b><i>${r}</i></span>`).join('')}</div>
-${CMP("","EN: G = «джи», J = «джей». FR: G = «жэ», J = «жи». E = [ə] (как «ё» без «й»), I = [i]. Не перепутай, когда диктуешь имя или e-mail!")}
 <h3>Фразы на уроке (с. 16)</h3>
 ${TBL(["Français","По-русски"],[
 [F("S’il vous plaît ? / S’il te plaît ?"),"Пожалуйста (просьба)"],
@@ -110,15 +108,14 @@ title:"Aujourd’hui, c’est le…", ru:"Дни недели, месяцы, к�
 theory:`
 <h3>Les jours de la semaine — дни недели</h3>
 <div class="week">${[["lundi","пн"],["mardi","вт"],["mercredi","ср"],["jeudi","чт"],["vendredi","пт"],["samedi","сб"],["dimanche","вс"]].map(([d,r],k)=>`<div class="wd${k>4?" we":""}"><span class="fr">${d}</span><small>${r}</small></div>`).join("")}</div>
-<p class="hint-l">Подсказка: lundi — Lune (Луна), mardi — Mars, mercredi — Mercure, jeudi — Jupiter, vendredi — Vénus. Как в английском Monday — Moon day.</p>
+<p class="hint-l">Подсказка: lundi — Lune (Луна), mardi — Mars, mercredi — Mercure, jeudi — Jupiter, vendredi — Vénus.</p>
 <h3>Les mois de l’année — месяцы</h3>
 <div class="seasons">${[["l’hiver","зима",[["décembre","декабрь"],["janvier","январь"],["février","февраль"]]],["le printemps","весна",[["mars","март (s читается)"],["avril","апрель"],["mai","май"]]],["l’été","лето",[["juin","июнь"],["juillet","июль"],["août","август [ut]"]]],["l’automne","осень",[["septembre","сентябрь"],["octobre","октябрь"],["novembre","ноябрь"]]]].map(([s,r,ms],k)=>`<div class="ss s${k}"><h5><span class="fr">${s}</span><small>${r}</small></h5>${ms.map(([m,mr])=>`<p><span class="fr">${m}</span><small>${mr}</small></p>`).join("")}</div>`).join("")}</div>
-${CMP(`Дни и месяцы пишутся с маленькой буквы — как в русском.`,`В английском — с большой (Monday, January). Во французском <b>не</b> так: ${F("lundi")}, ${F("janvier")}.`)}
+${CMP(`Дни и месяцы пишутся с маленькой буквы — как в русском.`,``)}
 <h3>Как сказать дату</h3>
 ${FXS(FX(["le","+","~21|число","+","octobre|месяц","+","~2026|год"],"le vingt et un octobre deux mille vingt-six"),FX(["le","+","!premier|1<sup>er</sup>","+","mai"],"только первое число — порядковое"))}
-${RULE("Формула",`<p><b>le + число + месяц (+ год)</b>: ${F("le 2 décembre")}, ${F("le 14 juillet 1789")}. Числа обычные (количественные), без «of» и без «-ое».</p><p>Исключение — первое число: <b>le 1<sup>er</sup> = le premier</b>: ${F("le premier mai")}.</p>`)}
+${RULE("Формула",`<p><b>le + число + месяц (+ год)</b>: ${F("le 2 décembre")}, ${F("le 14 juillet 1789")}. Числа обычные (количественные).</p><p>Исключение — первое число: <b>le 1<sup>er</sup> = le premier</b>: ${F("le premier mai")}.</p>`)}
 ${EX([["Aujourd’hui, c’est mardi. Demain, c’est mercredi.","Сегодня вторник. Завтра среда."],["Quelle est la date aujourd’hui ? – C’est le 21 octobre.","Какое сегодня число? – 21 октября."],["Je suis né le 26 janvier 1999.","Я родился 26 января 1999 года."]])}
-${CMP(`«Первое мая» — порядковое, «второе мая» — тоже порядковое. Во французском порядковое <b>только</b> premier, дальше — le deux, le trois…`,`EN: <i>the second of May</i>. FR: ${F("le deux mai")} — без «of» и без «second».`)}
 <h3>Французские праздники из учебника</h3>
 ${TBL(["Праздник","Дата"],[[F("la fête du Travail"),F("le premier mai")],[F("la fête de la Musique"),F("le vingt et un juin")],[F("la Fête nationale"),F("le quatorze juillet")],[F("le Mardi gras"),"февраль–март, дата меняется"]])}
 <h3>Произношение: deux, trois, six, dix + месяц</h3>
@@ -166,11 +163,10 @@ CJ("parler","говорить",["je parl<b>e</b>","tu parl<b>es</b>","il / elle 
 )}
 <h3>Être — национальность, профессия, характеристика</h3>
 ${EX([["Je suis russe.","Я русский."],["Tu es hollandaise ?","Ты голландка?"],["Il est étudiant.","Он студент."],["Vous êtes italien, Enzo ?","Вы итальянец, Энцо?"]])}
-${CMP(`Как в русском: «Я студент» — без артикля. ${F("Je suis étudiant.")}`,`<i>I am <b>a</b> student</i> — но во французском после être профессия и национальность идут <b>без</b> артикля. Не пиши ✗ <i>Je suis un étudiant</i>.`)}
+${CMP(`Как в русском: «Я студент» — без артикля. ${F("Je suis étudiant.")}`,``)}
 <h3>Avoir — возраст!</h3>
-${VS({h:"✗ калька с английского",big:"<s>Je suis 20 ans</s>",sub:"I am 20",tone:"bad"},{h:"✓ по-французски",big:F("J’ai 20 ans."),sub:"«у меня 20 лет» — avoir + число + ans",tone:"good"})}
+${VS({h:"✗ ошибка",big:"<s>Je suis 20 ans</s>",sub:"возраст не через être",tone:"bad"},{h:"✓ по-французски",big:F("J’ai 20 ans."),sub:"«у меня 20 лет» — avoir + число + ans",tone:"good"})}
 ${RULE("Возраст = avoir + число + ans",`<p>${F("J’ai 30 ans.")} — буквально «у меня 30 лет». ${F("Tu as quel âge ? / Vous avez quel âge ?")} — Сколько тебе/вам лет?</p>`)}
-${CMP(`«Мне 30 лет» — тоже не «я есть 30». Логика ближе к русскому.`,`<i>I am 30</i> — это ловушка! ✗ <i>Je suis 30 ans</i> — грубая ошибка. Только ${F("j’ai 30 ans")}.`)}
 <h3>S’appeler — возвратный глагол</h3>
 ${FXS(FX(["je","+","!m’|себя","+","appelle|называю"],"= меня зовут, «я себя называю»"),FX(["~-ся","↔","!me · te · se · nous · vous · se"],"возвратная частица меняется по лицам"))}
 <p>Буквально «называть себя»: ${F("je m’appelle")} = «я себя называю». Частички <b>me, te, se, nous, vous, se</b> — это русское «-ся»: зваться, называться.</p>
@@ -178,7 +174,6 @@ ${WARN(`Двойная <b>ll</b> в формах je, tu, il, ils (там слы�
 ${EX([["Comment tu t’appelles ? – Je m’appelle Andrea.","Как тебя зовут? – Меня зовут Андреа."],["Comment vous vous appelez ?","Как вас зовут?"],["Elle s’appelle Sanae.","Её зовут Санаэ."]])}
 <h3>Parler + язык</h3>
 <p>После parler язык обычно <b>без артикля</b>: ${F("Je parle français.")} ${F("Il parle quatre langues.")} Названия языков — с маленькой буквы.</p>
-${CMP(`«Говорить по-французски» = ${F("parler français")} — предлога «по» нет.`,`<i>to speak French</i> — с большой буквы; во французском ${F("français")} — с маленькой.`)}
 <h3>Не перепутай на слух</h3>
 ${VS({h:"être · они есть",big:F("ils sont"),sub:"[il<b>s</b>ɔ̃] — глухое [s]"},{h:"avoir · у них есть",big:F("ils‿ont"),sub:"[il<b>z</b>ɔ̃] — звонкое [z]"})}
 ${NOTE("je → j’ перед гласной: <b>j’ai</b>, но <b>je suis</b>. Это называется élision — подробнее в разделе «Для справки».")}
@@ -302,7 +297,7 @@ ${TBL(["Masculin","Féminin","Что происходит"],[
 <p>+ s: ${F("ils sont italiens")}, ${F("elles sont allemandes")}. Если уже кончается на -s, ничего не добавляем: ${F("ils sont français")}.</p>
 <h3>Большая или маленькая буква?</h3>
 ${TBL(["","Пример","Буква"],[["прилагательное (какой?)",F("Il est français."),"маленькая"],["язык",F("Je parle français."),"маленькая"],["житель (кто?)",F("C’est un Français."),"большая"]])}
-${CMP("Совпадает с русским: «он француз», «французский язык» — с маленькой.","В английском всё с большой (French). Во французском — нет!")}
+${CMP("Совпадает с русским: «он француз», «французский язык» — с маленькой.","")}
 <h3>Страны и национальности (с. 27)</h3>
 ${TBL(["Pays","Nationalité (m / f)"],[
 [F("l’Algérie (f.)"),F("algérien / algérienne")],[F("l’Allemagne (f.)"),F("allemand / allemande")],[F("l’Argentine (f.)"),F("argentin / argentine")],[F("la Belgique"),F("belge")],[F("le Brésil"),F("brésilien / brésilienne")],[F("le Cameroun"),F("camerounais / camerounaise")],[F("le Canada"),F("canadien / canadienne")],[F("la Chine"),F("chinois / chinoise")],[F("la Colombie"),F("colombien / colombienne")],[F("le Congo"),F("congolais / congolaise")],[F("la Corée"),F("coréen / coréenne")],[F("l’Espagne (f.)"),F("espagnol / espagnole")],[F("les États-Unis"),F("américain / américaine")],[F("la France"),F("français / française")],[F("l’Inde (f.)"),F("indien / indienne")],[F("l’Italie (f.)"),F("italien / italienne")],[F("le Japon"),F("japonais / japonaise")],[F("le Maroc"),F("marocain / marocaine")],[F("le Mexique"),F("mexicain / mexicaine")],[F("la Pologne"),F("polonais / polonaise")],[F("les Pays-Bas"),F("hollandais / hollandaise")],[F("la Russie"),F("russe")],[F("le Sénégal"),F("sénégalais / sénégalaise")],[F("la Suisse"),F("suisse")],[F("la République tchèque"),F("tchèque")],[F("la Tunisie"),F("tunisien / tunisienne")],[F("le Vietnam"),F("vietnamien / vietnamienne")]
@@ -338,14 +333,12 @@ id:"u1-articles-def", sec:"book", unit:"1", kind:"Grammaire",
 title:"Les articles définis : le, la, l’, les", ru:"Определённые артикли", page:"с. 20, 22",
 theory:`
 <p>Артикль — маленькое служебное слово перед существительным. Он показывает <b>род</b> и <b>число</b>. Во французском существительное почти никогда не стоит «голым».</p>
-${CMP(`В русском артиклей нет — поэтому их легко забыть. Привыкай: «музыка» = ${F("la musique")}, не просто «musique».`,`Похоже на <i>the</i>, но у <i>the</i> одна форма, а здесь четыре.`)}
 ${GRID(["","Singulier","Pluriel"],[["Masculin","m:le / l’","p:les"],["Féminin","f:la / l’","p:les"]])}
 ${EX([["le cinéma, le sport","кино, спорт (м.р.)"],["la musique","музыка (ж.р.)"],["les langues","языки (мн.ч.)"],["l’art (m.), l’histoire (f.)","перед гласной и h — l’"]])}
 ${RULE("Élision: le / la → l’",`<p>Перед словом на <b>гласную</b> или <b>немую h</b>: ${F("l’art")}, ${F("l’université")}, ${F("l’histoire")}, ${F("l’appartement")}. Значит, по l’ род не видно — учи слова вместе с родом (в словаре: <i>n.m.</i> / <i>n.f.</i>).</p>`)}
 ${FXS(FX(["le","+","art","→","!l’art"]),FX(["la","+","histoire","→","!l’histoire"],"h немая — считается гласной"),FX(["le","+","sport","→","le sport"],"перед согласной — без изменений"))}
 <h3>Когда используем (Unité 1)</h3>
 ${RULE("Общее значение",`<p>«On utilise les articles définis pour parler de quelque chose de <b>général</b>.» После <b>aimer, adorer, détester</b> — всегда le / la / les:</p>${EX([["J’aime le cinéma et le sport.","Я люблю кино и спорт."],["J’aime l’art et les langues.","Я люблю искусство и языки."],["Tu aimes la musique ?","Ты любишь музыку?"]])}`)}
-${CMP(``,`<i>I like music</i> — в английском без артикля! Во французском ✗ <i>J’aime musique</i> — ошибка. Только ${F("J’aime la musique")}.`)}
 <h3>Артикль перед странами</h3>
 ${FLOW([["Название кончается на -s?","les","les États-Unis, les Pays-Bas"],["Кончается на -e? (кроме le Mexique, le Mozambique, le Cambodge, le Zimbabwe)","la / l’","la France, la Russie, l’Italie"]],["Всё остальное","le / l’","le Japon, le Canada, le Brésil, l’Iran"])}
 <p>Города — обычно без артикля: ${F("Paris")}, ${F("Moscou")}, ${F("Genève")}.</p>
@@ -378,14 +371,13 @@ TOPICS.push({
 id:"u1-prepositions", sec:"book", unit:"1", kind:"Grammaire",
 title:"À, au, en, aux + ville / pays", ru:"Предлоги перед городами и странами", page:"с. 25, 28",
 theory:`
-${CMP("Русский: «в Москве», «во Франции» — один предлог «в».","Английский: <i>in Paris, in France</i> — тоже один. Во французском предлог зависит от того, <b>что</b> идёт дальше.")}
 ${BIGC([["à","город","à Paris, à Moscou, à Genève"],["au","страна м.р. (le)","au Japon, au Canada, au Mexique","m"],["en","страна ж.р. (la) или на гласную","en France, en Russie, en Italie, en Iran","f"],["aux","страна мн.ч. (les)","aux États-Unis, aux Pays-Bas","p"]])}
 <h3>Алгоритм за 3 секунды</h3>
 ${FLOW([["Это город?","à","à Lyon"],["Страна во множественном числе (les …)?","aux","aux Philippines"],["Страна женского рода (la …) или начинается с гласной?","en","en Espagne, en Angola"]],["Страна мужского рода (le …)","au","au Brésil"])}
 ${FXS(FX(["à","+","le","=","!au"],"à le — не бывает"),FX(["à","+","les","=","!aux"],"à les — не бывает"))}
 ${WARN(`${F("à + le = au")}, ${F("à + les = aux")} — сливаются всегда. ✗ <i>à le Japon</i>, ✗ <i>à les États-Unis</i>. А ✗ <i>en Japon</i> — самая частая ошибка: Japon мужского рода → ${F("au Japon")}.`)}
 <h3>«Где» и «куда» — одинаково</h3>
-<p>${F("J’habite en France.")} (живу во Франции) и ${F("Je vais en France.")} (еду во Францию) — один и тот же предлог. В русском разные падежи, во французском — нет.</p>
+<p>${F("J’habite en France.")} (живу во Франции) и ${F("Je vais en France.")} (еду во Францию) — один и тот же предлог.</p>
 <h3>Родиться / жить</h3>
 ${EX([["Il est né le 27 septembre 1955 à Washington, aux États-Unis.","Он родился 27 сентября 1955 года в Вашингтоне, в США."],["Il habite à Philadelphie, aux États-Unis.","Он живёт в Филадельфии, в США."],["Elle est née et elle habite à Miyazaki, au Japon.","Она родилась и живёт в Миядзаки, в Японии."],["Il est né en Argentine en 1978.","Он родился в Аргентине в 1978 году."],["Elle est née à Sion, en Suisse.","Она родилась в Сьоне, в Швейцарии."]])}
 <p>Год — тоже с <b>en</b>: ${F("en 1978")}, ${F("en 2026")}.</p>
@@ -437,7 +429,7 @@ TOPICS.push({
 id:"u1-quel", sec:"book", unit:"1", kind:"Grammaire",
 title:"L’adjectif interrogatif quel", ru:"Какой? Какая? Какие?", page:"с. 26, 28",
 theory:`
-${CMP("«какой / какая / какие» — меняется по роду и числу. Точно так же quel!","<i>which / what</i> — не меняется. Во французском меняется.")}
+${CMP("«какой / какая / какие» — меняется по роду и числу. Точно так же quel!","")}
 ${GRID(["","Singulier","Pluriel"],[["Masculin","m:quel","m:quels"],["Féminin","f:quelle","f:quelles"]])}
 ${SAME(["quel","quelle","quels","quelles"],"[kɛl]")}
 ${WARN("Все четыре формы звучат <b>одинаково</b> [kɛl]. Разница только на письме — смотри на род и число существительного.")}
@@ -446,7 +438,7 @@ ${RULE("1. Quel + être + существительное",EX([["Quel est ton num
 ${RULE("2. quel + существительное",EX([["Tu as quel âge ?","Сколько тебе лет? (âge — м.р.)"],["Tu habites dans quelle ville ?","В каком городе ты живёшь?"],["Tu parles quelles langues ?","На каких языках ты говоришь?"],["Tu aimes quels auteurs ?","Каких авторов ты любишь?"],["Dans quel pays ?","В какой стране? (pays — м.р.!)"]]))}
 <h3>Род слов, которые часто бывают в вопросах</h3>
 ${TBL(["Masculin → quel","Féminin → quelle"],[[F("l’âge"),F("l’adresse")],[F("le numéro"),F("la nationalité")],[F("le pays"),F("la ville")],[F("le prénom, le nom"),F("la date (de naissance)")],[F("le sport, le loisir"),F("la langue, la musique")]])}
-${NOTE(`${F("pays")} — мужской род (в отличие от «страна»). ${F("Dans quel pays ?")}`)}
+${NOTE(`${F("pays")} — мужской род: ${F("le pays")}. ${F("Dans quel pays ?")}`)}
 `,
 ex:[
 {t:"mc", h:"Выбери правильную форму (с. 26)", items:[
@@ -507,7 +499,7 @@ ${TBL(["Число","Логика","Пишется"],[
 ["100","",F("cent")]
 ])}
 ${RULE("Ловушки с vingt",`<p>${F("quatre-vingts")} (80) — с s, потому что «четыре двадцатки» и после ничего нет. Как только что-то добавляется — s пропадает: ${F("quatre-vingt-un")}, ${F("quatre-vingt-dix")}. И «et» только у 21, 31, 41, 51, 61, 71 — у 81 и 91 его <b>нет</b>.</p>`)}
-${CMP("Русское «девяносто» французы говорят «четыре-двадцать-десять». Удобно думать формулой: 97 = 4×20 + 17.","В старом английском был похожий счёт двадцатками: <i>four score and seven</i> = 87.")}
+${NOTE("90 = 4×20 + 10: «четыре-двадцать-десять». Удобно думать формулой: 97 = 4×20 + 17.")}
 ${NOTE("В Бельгии и Швейцарии проще: <b>septante</b> (70), <b>nonante</b> (90), а в Швейцарии ещё и <b>huitante</b> (80).")}
 <h3>Произношение</h3>
 ${TBL(["Число","Одно","+ согласная","+ гласная"],[
@@ -546,7 +538,6 @@ theory:`
 ${RULE("Ударение во французском",`<p>Ударение падает на <b>последний произносимый слог ритмической группы</b>, а не каждого слова. Ритмическая группа (groupe rythmique) — несколько слов, которые образуют смысл и произносятся без паузы.</p>`)}
 ${RHY([["Je","m’a","ppelle","En","zo"],["je","suis","i","ta","lien"]],"2 группы → 2 ударения · нажми, чтобы послушать","Je m’appelle Enzo, je suis italien.")}
 ${RHY([["Je","m’a","ppelle","A","lice"],["j’ai","vingt","trois","ans"],["je","suis","al","le","mande"]],"3 группы → 3 ударения","Je m’appelle Alice, j’ai vingt-trois ans, je suis allemande.")}
-${CMP("В русском ударение у каждого слова своё и «гуляет» (мука́ / му́ка).","В английском тоже ударение в слове (PHOtograph / phoTOgraphy). Во французском слово само по себе ударения не имеет: photo-gra-PHIE. Не выделяй начало слов «по-английски».")}
 <p>Ударный слог чуть длиннее, остальные — ровные, одинаковой длины. Это и даёт французскую «пулемётную» мелодию.</p>
 <h3>Связывание с предлогами (с. 28)</h3>
 ${TBL(["Предлог + гласная","Слышим","Примеры"],[[F("en"),"[n]",F("en‿Argentine, en‿Italie, en‿Angola, en‿Europe, en‿Inde")],[F("aux"),"[z]",F("aux‿États-Unis, aux‿Émirats arabes unis")]])}
@@ -584,7 +575,7 @@ ${CJS(CJ("habiter","жить",["j’habit<b>e</b>","tu habit<b>es</b>","il / ell
 <p>h немая → ${F("j’habite")} (не «je habite»), и со связыванием: ${F("nous‿habitons")} [nuzabitɔ̃], ${F("vous‿habitez")}, ${F("ils‿habitent")}.</p>
 ${RULE("On = nous (в разговоре)",`<p>${F("On habite dans une rue calme.")} = ${F("Nous habitons dans une rue calme.")}</p><p>Глагол после on — в форме <b>il</b>: ${F("on habite, on aime, on est")}. ✗ <i>on habitons</i>.</p><p>Ещё on = «люди вообще»: ${F("En Belgique, on dit « septante ».")} — В Бельгии говорят «септант».</p>`)}
 ${FXS(FX(["on","+","~глагол в форме il","=","!on habite"]),FX(["on habite","=","nous habitons"],"в разговоре французы чаще говорят on"))}
-${CMP("Как русское безличное «говорят», «у нас живут…», но с формой глагола 3-го лица ед.ч.","Похоже на <i>we</i> в разговоре и на <i>one / people</i>.")}
+${CMP("Как русское безличное «говорят», «у нас живут…», но с формой глагола 3-го лица ед.ч.","")}
 <h3>Спросить и ответить</h3>
 ${TBL(["Вопрос","Ответ"],[
 [F("Tu habites où ? / Où tu habites ?"),F("Je suis à Lyon. / Moi, j’habite à Nice.")],
@@ -640,7 +631,7 @@ title:"Articles définis et indéfinis", ru:"un, une, des или le, la, les?", 
 theory:`
 ${GRID(["","м. ед.","ж. ед.","мн."],[["<b>Неопределённые</b><br><small>indéfinis</small>","m:un","f:une","p:des"],["<b>Определённые</b><br><small>définis</small>","m:le / l’","f:la / l’","p:les"]])}
 ${RULE("Главное правило",`<p><b>un / une / des</b> — предмет, человек, место <b>не определены</b>: «какой-то, один из, любой».<br><b>le / la / les</b> — <b>определены, известны</b>: «тот самый, конкретный» — или речь о чём-то в целом (J’aime le cinéma).</p>`)}
-${CMP(`Подставь мысленно: «какой-то» → un/une/des; «этот, тот самый» → le/la/les.`,`Почти как <i>a/an</i> ↔ <i>the</i>. Но у des нет пары в английском: <i>I live with friends</i> → ${F("J’habite avec des amies")}. Во мн.ч. без артикля во французском нельзя!`)}
+${CMP(`Подставь мысленно: «какой-то» → un/une/des; «этот, тот самый» → le/la/les.`,`Как <i>a/an</i> ↔ <i>the</i>.`)}
 ${VS({h:"un / une / des",big:F("un quartier"),sub:"какой-то, один из, впервые упоминаем"},{h:"le / la / les",big:F("le quartier Saint-Jean"),sub:"тот самый, известный, конкретный — или «вообще»"})}
 <h3>Когда un / une / des</h3>
 ${EX([["Tu habites dans un quartier sympa ?","в каком-то (любом) симпатичном районе"],["J’ai une guitare.","у меня есть гитара (какая-то, одна)"],["C’est une université.","это университет (один из)"],["J’habite un appartement avec des amies.","квартира, подруги — не конкретизированы"],["Il y a des instruments de musique ?","есть ли (какие-то) инструменты?"]])}
@@ -698,7 +689,6 @@ CJ("détester","ненавидеть",["je détest<b>e</b>","tu détest<b>es</b>
 )}
 ${WARN(`Окончания <b>-e, -es, -e, -ent</b> не читаются! ${F("je parle, tu parles, il parle, ils parlent")} звучат одинаково [paʁl]. Слышны только ${F("nous parlons")} [ɔ̃] и ${F("vous parlez")} [e]. Не читай -ent как «-ан»!`)}
 ${SAME(['je parl<span class="mute">e</span>','tu parl<span class="mute">es</span>','il parl<span class="mute">e</span>','ils parl<span class="mute">ent</span>'],"[paʁl]",[["nous parlons","[ɔ̃]"],["vous parlez","[e]"]])}
-${CMP("В русском каждое окончание слышно (люблю, любишь, любит…). Во французском на слух — 3 формы, на письме — 5.","Похоже на английский: на слух почти всё одинаково (I like / they like), только здесь ещё и на письме надо не забыть окончания.")}
 <h3>Глаголы на -er из юнитов 1–2</h3>
 ${TBL(["Глагол","Значение","Глагол","Значение"],[[F("aimer"),"любить",F("habiter"),"жить"],[F("adorer"),"обожать",F("parler"),"говорить"],[F("détester"),"ненавидеть",F("travailler"),"работать"],[F("danser"),"танцевать",F("écouter"),"слушать"],[F("marcher"),"ходить пешком",F("regarder"),"смотреть"],[F("nager"),"плавать",F("jouer"),"играть"],[F("skier"),"кататься на лыжах",F("étudier"),"учиться"],[F("inviter"),"приглашать",F("préparer"),"готовить"]])}
 <p>Мелкие особенности: ${F("nager → nous nageons")} (e сохраняет мягкое g), ${F("skier → je skie, nous skions")}, ${F("étudier → j’étudie, nous étudions")}.</p>
@@ -706,7 +696,6 @@ ${RULE("je → j’",`<p>Перед гласной или немой h: ${F("j�
 <h3>Отрицание: ne … pas</h3>
 ${RULE("Глагол — внутри «бутерброда»",`<p><b>ne + глагол + pas</b>: ${F("Je ne parle pas italien.")}<br>Перед гласной/h ne → <b>n’</b>: ${F("Manon n’aime pas la neige.")} ${F("Je n’habite pas à Paris.")}</p>`)}
 ${FXS(FX(["~подлежащее","!ne","~глагол","!pas"]),FX(["Je","!ne","parle","!pas","italien."]),FX(["Je","!n’","habite","!pas","à Paris."],"ne → n’ перед гласной"))}
-${CMP(`Русское «не» — одно слово перед глаголом. Во французском — две части вокруг глагола.`,`Вместо <i>don’t</i> — ne … pas, без вспомогательного глагола: ${F("Je ne skie pas")} = <i>I don’t ski</i>.`)}
 <h3>Aimer + существительное / инфинитив</h3>
 ${EX([["J’adore le cinéma.","aimer + le/la/les + сущ."],["Elle déteste skier.","aimer + инфинитив"],["Tu aimes danser ?","Ты любишь танцевать?"]])}
 `,
@@ -803,7 +792,6 @@ theory:`
 ${GRID(["Владелец","м. ед.","ж. ед.","мн."],[["je","m:mon","f:ma","p:mes"],["tu","m:ton","f:ta","p:tes"],["il / elle","m:son","f:sa","p:ses"],["nous","notre","notre","p:nos"],["vous","votre","votre","p:vos"],["ils / elles","leur","leur","p:leurs"]])}
 ${RULE("Согласуется с ПРЕДМЕТОМ, а не с владельцем",`<p>${F("son père")} = <b>его</b> отец <i>или</i> <b>её</b> отец. ${F("sa mère")} = его мать <i>или</i> её мать.</p><p>Важно только, какого рода <b>père</b> (м.) и <b>mère</b> (ж.). Кому они принадлежат — не важно.</p>${EX([["Nina et son frère","Нина и её брат (frère — м.р.)"],["Théo et sa cousine","Тео и его кузина (cousine — ж.р.)"],["Clara, son fils et sa fille","Клара, её сын и её дочь"]])}`)}
 ${VS({h:"Paul → его мать",big:F("sa mère"),sub:"mère — ж.р. → <b>sa</b>, хотя владелец мужчина"},{h:"Nina → её брат",big:F("son frère"),sub:"frère — м.р. → <b>son</b>, хотя владелец женщина"})}
-${CMP(`В русском «его/её» — по владельцу. Во французском — по предмету. А «свой» во французском нет: «Он любит свою маму» = ${F("Il aime sa mère")}.`,`<i>his mother / her father</i> — по владельцу. Во французском наоборот: ${F("sa mère")} (his/her mother), ${F("son père")} (his/her father).`)}
 ${WARN(`Перед словом <b>женского рода на гласную или немую h</b> — мужская форма: ${F("mon amie")}, ${F("ton adresse")}, ${F("son école")}, ${F("mon histoire")}. ✗ <i>ma amie</i> — два гласных подряд звучат плохо.`)}
 ${FX(["_ma","+","amie","→","!mon amie"],"две гласные подряд не ставим — берём mon")}
 <h3>leur или leurs?</h3>
@@ -830,7 +818,7 @@ ex:[
 {t:"mc", h:"son, sa, ses или leur(s)?", items:[
 {q:"Nina et ___ frère", o:["son","sa"], a:0},
 {q:"Théo et ___ cousine Clara", o:["sa","son"], a:0, e:"cousine — ж.р., неважно, что Тео мужчина."},
-{q:"Paul et ___ mère", o:["sa","son"], a:0, e:"По-английски his mother, но mère — ж.р. → sa."},
+{q:"Paul et ___ mère", o:["sa","son"], a:0, e:"mère — ж.р. → sa, хотя Paul — мужчина."},
 {q:"Sofia, son mari et ___ enfants (детей Софии и мужа)", o:["leurs","ses","leur"], a:0},
 {q:"___ amie Léa (моя)", o:["Mon","Ma"], a:0, e:"amie начинается с гласной → mon."},
 {q:"Quelle est ___ adresse ? (твой)", o:["ton","ta"], a:0, e:"adresse — ж.р., но на гласную → ton."}
@@ -929,7 +917,7 @@ ${MORPH([["-e → без изменений",[["fleuriste","fleuriste"],["journa
 ${NOTE("-ien → -ienne работает так же, как с национальностями: italien → italienne. Одна схема на два топика!")}
 ${RULE("Профессия после être — без артикля",`<p>${F("Il est infirmier.")} ${F("Elle est étudiante.")} ${F("Mon père est informaticien.")} ${F("Ma mère est professeure.")}</p><p>Но с <b>c’est</b> — с артиклем: ${F("C’est un infirmier.")} ${F("C’est une actrice.")}</p>`)}
 ${VS({h:"il / elle est + профессия",big:F("Il est infirmier."),sub:"без артикля",tone:"good"},{h:"c’est + артикль + профессия",big:F("C’est un infirmier."),sub:"с артиклем",tone:"good"},{h:"смешивать нельзя",big:"<s>Il est un infirmier.</s>",sub:"ошибка",tone:"bad"})}
-${CMP("Совпадает: «Она студентка».","<i>She is <b>a</b> student</i> — артикль <i>a</i> во французском не переводится.")}
+${CMP("Совпадает: «Она студентка».","")}
 <h3>Произношение</h3>
 <p>${F("étudiant")} [etydjɑ̃] → ${F("étudiante")} [etydjɑ̃t]; ${F("infirmier")} [ɛ̃fiʁmje] → ${F("infirmière")} [ɛ̃fiʁmjɛʁ]; ${F("informaticien")} [ɛ̃] → ${F("informaticienne")} [ɛn].</p>
 <h3>Лексика (с. 41)</h3>

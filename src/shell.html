@@ -2017,16 +2017,12 @@ body.has-ply .main{padding-bottom:120px}
 .exb5 .exb-ht{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1}
 .exb5 .exb-title{margin:4px 0 0;font-family:inherit;font-size:24px;line-height:1.25;font-weight:600;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
 .exb5 .exb-sub{margin:0;font-size:15px;line-height:1.45;color:var(--ink-3)}
-.exb5 .exb-cnt{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:10px 14px;border:1px solid var(--x-line);border-radius:8px;white-space:nowrap}
-.exb5 .exb-cnt[hidden]{display:none}
-.exb5 .exb-cl{font-size:12px;color:var(--ink-3)}
-.exb5 .exb-cnt b{font-size:18px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
-.exb5 .exb-cnt i{font-style:normal;font-weight:500;color:color-mix(in srgb,var(--ink-3) 70%,transparent)}
 .exb5 .exb-b{padding:0;display:flex;flex-direction:column;gap:24px}
 .exb5 .exb-f{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;padding:0}
 .exb5 .exb-fl{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
 .exb5 .exb-score{font-size:13px;color:var(--ink-3);line-height:1.45}
 .exb5 .exb-score .pen{font-family:inherit;font-size:13px;font-weight:600;color:var(--x-ok-t)}
+.exb5 .exb-score b{color:var(--ink);font-weight:600}
 .exb5 .exb-btns{display:flex;gap:8px;flex-wrap:wrap}
 .exb5 .exb-f .btn{height:44px;padding:0 18px;border-radius:8px;font-size:14px;font-weight:600;color:var(--ink-2);background:var(--sheet);box-shadow:none;border:1px solid var(--x-line)}
 .exb5 .exb-f .btn:hover{background:var(--x-soft);color:var(--ink)}
@@ -2143,12 +2139,10 @@ body.has-ply .main{padding-bottom:120px}
 @keyframes x-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
 @keyframes x-noteIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
 @keyframes x-hintIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-@keyframes x-glow{0%{transform:scale(1)}40%{transform:scale(1.08);border-color:#3BA55C}100%{transform:scale(1);border-color:color-mix(in srgb,#3BA55C 30%,var(--sheet));background:var(--x-ok-bg)}}
 .a-ok{animation:x-okPop .45s cubic-bezier(.2,.8,.2,1)}
 .a-bad{animation:x-shake .4s ease-in-out}
 .a-note{display:inline-block;animation:x-noteIn .3s ease-out both}
 .why-p:not([hidden]){animation:x-hintIn .25s cubic-bezier(.2,.8,.2,1) both}
-.exb5 .exb-cnt.a-glow{animation:x-glow .6s .2s cubic-bezier(.2,.8,.2,1) both}
 @keyframes cfA{0%{opacity:0;transform:translate(0,-10px) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translate(24px,360px) rotate(320deg)}}
 @keyframes cfB{0%{opacity:0;transform:translate(0,-10px) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translate(-24px,380px) rotate(-280deg)}}
 .cf-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:12px;z-index:2}
@@ -2171,7 +2165,7 @@ body.has-ply .main{padding-bottom:120px}
 .cf15{left:81.5%;width:5px;height:8px;background:#4A90E2;animation:cfA 1.7s .34s cubic-bezier(.25,.6,.4,1) both}
 .cf16{left:85.9%;width:7px;height:7px;background:#3BA55C;animation:cfB 1.8s .31s cubic-bezier(.25,.6,.4,1) both}
 .cf17{left:91.8%;width:7px;height:7px;background:#7C5CF0;animation:cfA 1.65s .17s cubic-bezier(.25,.6,.4,1) both}
-@media (prefers-reduced-motion:reduce){.a-ok,.a-bad,.a-note,.why-p,.exb5 .exb-cnt.a-glow,.cf{animation:none!important}.cf-layer{display:none}}
+@media (prefers-reduced-motion:reduce){.a-ok,.a-bad,.a-note,.why-p,.cf{animation:none!important}.cf-layer{display:none}}
 /* карточный режим: блок без рамки */
 .dk-exc .exb.exb5{border:0;padding:4px 0;background:transparent}
 /* телефон */
@@ -2180,8 +2174,6 @@ body.has-ply .main{padding-bottom:120px}
   .exb5 .exb-h{gap:12px}
   .exb5 .exb-title{font-size:20px}
   .exb5 .exb-sub{font-size:14px}
-  .exb5 .exb-cnt{padding:8px 10px}
-  .exb5 .exb-cnt b{font-size:16px}
   .exb5 .accbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%}
   .exb5 .accbar::-webkit-scrollbar{display:none}
   .exb5 .acc{flex:none}

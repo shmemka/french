@@ -20,7 +20,7 @@ ${S3([
 {k:"q", sym:"?", h:TF("Вопрос","Question"), f:["!Est-ce que", SUJ, VERB, REST, "!?"], ex:[["Tu parles français ?",TF("интонация ↗ — разговорный","rising intonation ↗ — spoken")],["Est-ce que tu parles français ?",TF("est-ce que — нейтральный, подходит всегда","est-ce que — neutral, always fine")],["Parles-tu français ?",TF("инверсия — письменный, вежливый","inversion — written, polite")]]}
 ])}
 ${RULE(TF("Подлежащее обязательно","The subject is required"), `<p>${TF(`Глагол никогда не стоит один: перед ним всегда ${F("je, tu, il, nous…")} или существительное. ✓ ${F("Je parle français.")} ✗ <s>Parle français.</s> Даже там, где «никого нет»: ${F("Il y a une plage.")} ${F("Il pleut.")}`, `A verb never stands alone: it always has ${F("je, tu, il, nous…")} or a noun in front of it. ✓ ${F("Je parle français.")} ✗ <s>Parle français.</s> Even when there’s «nobody»: ${F("Il y a une plage.")} ${F("Il pleut.")}`)}</p>`)}
-${CMP2(`В русском можно сказать «Говорю по-французски» без «я» и свободно переставлять слова. Во французском порядок жёсткий: подлежащее → глагол → остальное.`, `Как в английском: <i>I speak French</i> — подлежащее обязательно, порядок слов фиксированный.`, `Just like English: <i>I speak French</i> — the subject is required and the word order is fixed.`)}
+${CMP2(``, `Как в английском: <i>I speak French</i> — подлежащее обязательно, порядок слов фиксированный.`, `Just like English: <i>I speak French</i> — the subject is required and the word order is fixed.`)}
 
 <h3>${TF("Одна фраза — три формы","One sentence, three forms")}</h3>
 ${TBL([S3TH("pos","+",TF("утверждение","statement")), S3TH("neg","−",TF("отрицание","negative")), S3TH("q","?",TF("вопрос","question"))],[
@@ -63,8 +63,7 @@ ${TBL([TF("Вопрос","Question"), TF("Да","Yes"), TF("Нет","No")],[
 [F("Tu parles anglais ?"), F("Oui, je parle anglais."), F("Non, je ne parle pas anglais.")],
 [F("Tu ne parles pas anglais ?"), F("<b>Si</b>, je parle anglais !"), F("Non, je ne parle pas anglais.")]
 ])}
-${CMP2(`На «Ты не говоришь по-английски?» по-русски отвечают «Нет, говорю» — получается путаница. Французское <b>si</b> её снимает: это «да» в ответ на отрицание.`, `Как <i>Yes, I do!</i> в ответ на <i>Don’t you…?</i> — только одним коротким словом.`, `Like <i>Don’t you speak English? — Yes, I do!</i>: <b>si</b> is the «yes» that contradicts a negative question.`)}
-${CMP2(``, `В английском для вопроса и отрицания нужен помощник <i>do / does</i>: <i>Do you speak French? I don’t speak French.</i> Во французском помощника нет — работает сам глагол: ${F("Tu ne parles pas… Est-ce que tu parles… Parles-tu…")}`, `English needs the helper <i>do / does</i> for questions and negatives: <i>Do you speak French? I don’t speak French.</i> French has no helper — the verb itself does the work: ${F("Tu ne parles pas… Est-ce que tu parles… Parles-tu…")}`)}
+${CMP2(``, `Как <i>Yes, I do!</i> в ответ на <i>Don’t you…?</i> — только одним коротким словом.`, `Like <i>Don’t you speak English? — Yes, I do!</i>: <b>si</b> is the «yes» that contradicts a negative question.`)}
 ${ERRBOX([
 ["Je ne pas parle français.","Je ne parle pas français.",TF("pas стоит после глагола.","pas goes after the verb.")],
 ["Je ne aime pas le thé.","Je n’aime pas le thé.",TF("Перед гласной ne → n’.","ne → n’ before a vowel.")],

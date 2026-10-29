@@ -64,7 +64,7 @@ ru:{
   qzFav:"Избранное", qzFavSub:"Слова, отмеченные сердечком", qzFavEmptyH:"Здесь пока пусто", qzFavEmpty:"Выдели любое французское слово или фразу на сайте и нажми на сердечко — оно появится здесь. Ещё можно нажать на сердечко рядом со словом в любом наборе.",
   signOut:"Выйти", pwChange:"Сменить пароль", pwNewH:"Новый пароль", pwNew:"Новый пароль (от 6 символов)", pwSave:"Сохранить пароль", pwSaved:"Пароль изменён", cancel:"Отмена",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
-  heroLead:n=>`Вся грамматика и лексика первых двух юнитов: объяснения на русском с параллелями из английского, ${n} упражнений с мгновенной проверкой, карточки Quizlet и тест для самопроверки.`,
+  heroLead:n=>`Грамматика и лексика по юнитам: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, карточки Quizlet и тест для самопроверки.`,
   startFirst:"Начать с первой темы", solved:"из {n} заданий решено", bookTopics:"тем из учебника", refTopics:"тем для справки", lastTest:"последняя самопроверка",
   how:[["Темы из учебника","Иди по порядку: сначала теория, потом задания под ней."],["Quizlet","Учи слова карточками, режимами «Заучивание», «Письмо» и «Подбор»."],["Памятка","Все таблицы на одной странице — чтобы быстро освежить правило."],["Самопроверка","Случайные вопросы по всем темам — видно, что уже усвоено, а что стоит повторить."]],
   tipTts:"Нажимай на французский текст с синим пунктиром — компьютер его прочитает. Лучше всего звучит в Safari или Chrome на Mac.",
@@ -139,7 +139,7 @@ en:{
   qzFav:"Favourites", qzFavSub:"Words you’ve marked with a heart", qzFavEmptyH:"Nothing here yet", qzFavEmpty:"Select any French word or phrase on the site and tap the heart — it will appear here. You can also tap the heart next to a word in any set.",
   signOut:"Sign out", pwChange:"Change password", pwNewH:"New password", pwNew:"New password (6+ characters)", pwSave:"Save password", pwSaved:"Password changed", cancel:"Cancel",
   heroEyebrow:"Édito A1 · 2<sup>e</sup> édition · unités 0–3",
-  heroLead:n=>`All the grammar and vocabulary of the first two units: explanations in English with parallels from Russian, ${n} exercises with instant checking, Quizlet flashcards and a self-check test.`,
+  heroLead:n=>`Grammar and vocabulary unit by unit: clear explanations with diagrams and tables, ${n} exercises with instant checking, Quizlet flashcards and a self-check test.`,
   startFirst:"Start with the first topic", solved:"of {n} exercises done", bookTopics:"textbook topics", refTopics:"reference topics", lastTest:"last self-check",
   how:[["Textbook topics","Go in order: first the explanation, then the exercises below it."],["Quizlet","Learn words with flashcards, Learn, Write and Match modes."],["Quick reference","All the tables on one page — for a quick refresher."],["Self-check","Random questions across all topics — see what you’ve mastered and what to review."]],
   tipTts:"Click French text with a dotted blue underline and the computer will read it aloud. It sounds best in Safari or Chrome on a Mac.",
@@ -942,23 +942,22 @@ const CONFETTI = () => `<div class="cf-layer" aria-hidden="true">${Array.from({l
 function makeBlock(tp, ex, i){
   const el = document.createElement("section"); el.className = "exb exb5"; el.dataset.i = i; el.dataset.t = ex.t;
   const hd = exHead(ex, i);
-  el.innerHTML = `<header class="exb-h"><div class="exb-ht"><h4 class="exb-title">${hd.title}</h4>${hd.sub ? `<p class="exb-sub">${hd.sub}</p>` : ""}</div><div class="exb-cnt" hidden><span class="exb-cl"></span><b><span class="exb-got">0</span> <i>/ <span class="exb-tot">0</span></i></b></div></header><div class="exb-b"></div><footer class="exb-f"><div class="exb-fl"><span class="exb-best"></span><span class="exb-score"></span></div><div class="exb-btns"></div></footer>`;
+  el.innerHTML = `<header class="exb-h"><div class="exb-ht"><h4 class="exb-title">${hd.title}</h4>${hd.sub ? `<p class="exb-sub">${hd.sub}</p>` : ""}</div></header><div class="exb-b"></div><footer class="exb-f"><div class="exb-fl"><span class="exb-best"></span><span class="exb-score"></span></div><div class="exb-btns"></div></footer>`;
   const api = {
     el, body: $(".exb-b", el), score: $(".exb-score", el), btns: $(".exb-btns", el),
     saved: (S.ans[tp.id] || {})[i] || null,
     save(obj){ (S.ans[tp.id] || (S.ans[tp.id] = {}))[i] = obj; api.saved = obj; touch("ans-" + tp.id); },
-    clear(){ if (S.ans[tp.id] && S.ans[tp.id][i] !== undefined) { delete S.ans[tp.id][i]; touch("ans-" + tp.id); } api.saved = null; el.classList.remove("perfect"); const c = $(".cf-layer", el); if (c) c.remove(); $(".exb-cnt", el).classList.remove("a-glow"); },
+    clear(){ if (S.ans[tp.id] && S.ans[tp.id][i] !== undefined) { delete S.ans[tp.id][i]; touch("ans-" + tp.id); } api.saved = null; el.classList.remove("perfect"); const c = $(".cf-layer", el); if (c) c.remove(); },
     showBest(){ const p = (S.p[tp.id]||{})[i], b = $(".exb-best", el); if (!p) { b.innerHTML = ""; b.removeAttribute("title"); return; } const pc = Math.round(p.b*100); b.innerHTML = `${ICO_TROPHY}<span>${pc}%</span>`; b.title = t("bestT", pc); b.setAttribute("aria-label", b.title); b.classList.toggle("full", pc >= 100); },
-    /* счётчик в правом верхнем углу: «Верно 3 / 5» */
-    count(got, total, label){ const c = $(".exb-cnt", el); c.hidden = false; $(".exb-cl", c).textContent = label || t("cntOk"); $(".exb-got", c).textContent = got; $(".exb-tot", c).textContent = total; },
+    /* счётчик «Верно X / N» убран по просьбе Влада (29.10.2026); итог — в подвале после завершения */
+    count(){},
     finish(got, total, msg, restoring){
       if (!restoring) setScore(tp.id, i, got, total);
       const r = total ? got/total : 1;
-      api.score.innerHTML = msg || `<span class="pen">${praise(r)}</span>`;
-      if (!msg) api.count(got, total);
+      api.score.innerHTML = msg || `<b>${got} / ${total}</b> · <span class="pen">${praise(r)}</span>`;
       api.showBest();
       if (!restoring && total && got === total && !el.classList.contains("perfect")) {
-        el.classList.add("perfect"); el.insertAdjacentHTML("afterbegin", CONFETTI()); const c = $(".exb-cnt", el); c.classList.add("a-glow");
+        el.classList.add("perfect"); el.insertAdjacentHTML("afterbegin", CONFETTI());
         setTimeout(()=>{ const l = $(".cf-layer", el); if (l) l.remove(); }, 2600);
       }
     },

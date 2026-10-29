@@ -5,7 +5,6 @@ theory:`
 ${RULE("Stress in French",`<p>The stress falls on the <b>last pronounced syllable of a rhythm group</b>, not of every word. A rhythm group (groupe rythmique) is a few words that make sense together and are said without a pause.</p>`)}
 ${RHY([["Je","m’a","ppelle","En","zo"],["je","suis","i","ta","lien"]],"2 groups → 2 stresses · click to listen","Je m’appelle Enzo, je suis italien.")}
 ${RHY([["Je","m’a","ppelle","A","lice"],["j’ai","vingt","trois","ans"],["je","suis","al","le","mande"]],"3 groups → 3 stresses","Je m’appelle Alice, j’ai vingt-trois ans, je suis allemande.")}
-${CMP("In Russian every word has its own stress, and it moves around (мука́ / му́ка).","English has word stress too (PHOtograph / phoTOgraphy). A French word has no stress of its own: photo-gra-PHIE. Don’t stress the start of words the English way.")}
 <p>The stressed syllable is a little longer; the others are even and equal in length. That’s what gives French its «machine-gun» rhythm.</p>
 <h3>Liaison with prepositions (p. 28)</h3>
 ${TBL(["Preposition + vowel","We hear","Examples"],[[F("en"),"[n]",F("en‿Argentine, en‿Italie, en‿Angola, en‿Europe, en‿Inde")],[F("aux"),"[z]",F("aux‿États-Unis, aux‿Émirats arabes unis")]])}
@@ -41,7 +40,7 @@ ${CJS(CJ("habiter","to live",["j’habit<b>e</b>","tu habit<b>es</b>","il / elle
 <p>The h is silent → ${F("j’habite")} (not «je habite»), and with liaison: ${F("nous‿habitons")} [nuzabitɔ̃], ${F("vous‿habitez")}, ${F("ils‿habitent")}.</p>
 ${RULE("On = nous (in speech)",`<p>${F("On habite dans une rue calme.")} = ${F("Nous habitons dans une rue calme.")}</p><p>The verb after on takes the <b>il</b> form: ${F("on habite, on aime, on est")}. ✗ <i>on habitons</i>.</p><p>On also means «people in general»: ${F("En Belgique, on dit « septante ».")} — In Belgium people say «septante».</p>`)}
 ${FXS(FX(["on","+","~verb in the il form","=","!on habite"]),FX(["on habite","=","nous habitons"],"in conversation the French say on more often"))}
-${CMP("Like Russian impersonal «говорят», «у нас живут…», but with a 3rd-person singular verb.","Similar to conversational <i>we</i> and to <i>one / people</i>.")}
+${CMP("","Similar to conversational <i>we</i> and to <i>one / people</i>.")}
 <h3>Asking and answering</h3>
 ${TBL(["Question","Answer"],[
 [F("Tu habites où ? / Où tu habites ?"),F("Je suis à Lyon. / Moi, j’habite à Nice.")],
@@ -97,7 +96,7 @@ title:"Articles définis et indéfinis", ru:"un, une, des or le, la, les?", page
 theory:`
 ${GRID(["","m. sg","f. sg","pl."],[["<b>Indefinite</b><br><small>indéfinis</small>","m:un","f:une","p:des"],["<b>Definite</b><br><small>définis</small>","m:le / l’","f:la / l’","p:les"]])}
 ${RULE("The main rule",`<p><b>un / une / des</b> — the thing, person or place is <b>not identified</b>: «some, one of, any».<br><b>le / la / les</b> — <b>identified, known</b>: «that particular one» — or something in general (J’aime le cinéma).</p>`)}
-${CMP(`Mentally substitute: «какой-то» → un/une/des; «этот, тот самый» → le/la/les.`,`Almost like <i>a/an</i> ↔ <i>the</i>. But des has no English equivalent: <i>I live with friends</i> → ${F("J’habite avec des amies")}. In French a plural noun can’t go without an article!`)}
+${CMP("","Like <i>a/an</i> ↔ <i>the</i>.")}
 ${VS({h:"un / une / des",big:F("un quartier"),sub:"some, one of, mentioned for the first time"},{h:"le / la / les",big:F("le quartier Saint-Jean"),sub:"that one, known, specific — or «in general»"})}
 <h3>When to use un / une / des</h3>
 ${EX([["Tu habites dans un quartier sympa ?","in some (any) nice neighbourhood"],["J’ai une guitare.","I have a guitar (some guitar, one)"],["C’est une université.","it’s a university (one of many)"],["J’habite un appartement avec des amies.","a flat, (some) friends — not specified"],["Il y a des instruments de musique ?","are there (any) instruments?"]])}
@@ -155,7 +154,6 @@ CJ("détester","to hate",["je détest<b>e</b>","tu détest<b>es</b>","il / elle 
 )}
 ${WARN(`The endings <b>-e, -es, -e, -ent</b> are silent! ${F("je parle, tu parles, il parle, ils parlent")} all sound the same [paʁl]. You only hear ${F("nous parlons")} [ɔ̃] and ${F("vous parlez")} [e]. Don’t pronounce -ent as «-an»!`)}
 ${SAME(['je parl<span class="mute">e</span>','tu parl<span class="mute">es</span>','il parl<span class="mute">e</span>','ils parl<span class="mute">ent</span>'],"[paʁl]",[["nous parlons","[ɔ̃]"],["vous parlez","[e]"]])}
-${CMP("In Russian you hear every ending (люблю, любишь, любит…). In French you hear 3 forms but write 5.","Similar to English: almost everything sounds the same (I like / they like), but in French you still have to write the endings.")}
 <h3>-er verbs from units 1–2</h3>
 ${TBL(["Verb","Meaning","Verb","Meaning"],[[F("aimer"),"to like, love",F("habiter"),"to live"],[F("adorer"),"to adore",F("parler"),"to speak"],[F("détester"),"to hate",F("travailler"),"to work"],[F("danser"),"to dance",F("écouter"),"to listen"],[F("marcher"),"to walk",F("regarder"),"to watch"],[F("nager"),"to swim",F("jouer"),"to play"],[F("skier"),"to ski",F("étudier"),"to study"],[F("inviter"),"to invite",F("préparer"),"to prepare"]])}
 <p>Small details: ${F("nager → nous nageons")} (the e keeps the g soft), ${F("skier → je skie, nous skions")}, ${F("étudier → j’étudie, nous étudions")}.</p>
@@ -163,7 +161,6 @@ ${RULE("je → j’",`<p>Before a vowel or silent h: ${F("j’aime, j’adore, j
 <h3>Negation: ne … pas</h3>
 ${RULE("The verb goes inside a «sandwich»",`<p><b>ne + verb + pas</b>: ${F("Je ne parle pas italien.")}<br>Before a vowel/h ne → <b>n’</b>: ${F("Manon n’aime pas la neige.")} ${F("Je n’habite pas à Paris.")}</p>`)}
 ${FXS(FX(["~subject","!ne","~verb","!pas"]),FX(["Je","!ne","parle","!pas","italien."]),FX(["Je","!n’","habite","!pas","à Paris."],"ne → n’ before a vowel"))}
-${CMP(`Russian «не» is one word before the verb. French uses two parts around the verb.`,`Instead of <i>don’t</i> — ne … pas, with no helper verb: ${F("Je ne skie pas")} = <i>I don’t ski</i>.`)}
 <h3>Aimer + noun / infinitive</h3>
 ${EX([["J’adore le cinéma.","aimer + le/la/les + noun"],["Elle déteste skier.","aimer + infinitive"],["Tu aimes danser ?","Do you like dancing?"]])}
 `,
@@ -260,7 +257,6 @@ theory:`
 ${GRID(["Owner","m. sg","f. sg","pl."],[["je","m:mon","f:ma","p:mes"],["tu","m:ton","f:ta","p:tes"],["il / elle","m:son","f:sa","p:ses"],["nous","notre","notre","p:nos"],["vous","votre","votre","p:vos"],["ils / elles","leur","leur","p:leurs"]])}
 ${RULE("It agrees with the THING owned, not the owner",`<p>${F("son père")} = <b>his</b> father <i>or</i> <b>her</b> father. ${F("sa mère")} = his mother <i>or</i> her mother.</p><p>All that matters is the gender of <b>père</b> (m.) and <b>mère</b> (f.). Who they belong to doesn’t matter.</p>${EX([["Nina et son frère","Nina and her brother (frère — m.)"],["Théo et sa cousine","Théo and his cousin (cousine — f.)"],["Clara, son fils et sa fille","Clara, her son and her daughter"]])}`)}
 ${VS({h:"Paul → his mother",big:F("sa mère"),sub:"mère is f. → <b>sa</b>, even though the owner is a man"},{h:"Nina → her brother",big:F("son frère"),sub:"frère is m. → <b>son</b>, even though the owner is a woman"})}
-${CMP(`In Russian «его/её» depends on the owner; in French on the thing. And French has no «свой»: «Он любит свою маму» = ${F("Il aime sa mère")}.`,`<i>his mother / her father</i> depend on the owner. French is the opposite: ${F("sa mère")} (his/her mother), ${F("son père")} (his/her father).`)}
 ${WARN(`Before a <b>feminine word starting with a vowel or silent h</b> use the masculine form: ${F("mon amie")}, ${F("ton adresse")}, ${F("son école")}, ${F("mon histoire")}. ✗ <i>ma amie</i> — two vowels in a row sound bad.`)}
 ${FX(["_ma","+","amie","→","!mon amie"],"no two vowels in a row — use mon")}
 <h3>leur or leurs?</h3>
@@ -287,7 +283,7 @@ ex:[
 {t:"mc", h:"son, sa, ses or leur(s)?", items:[
 {q:"Nina et ___ frère", o:["son","sa"], a:0},
 {q:"Théo et ___ cousine Clara", o:["sa","son"], a:0, e:"cousine is f. — it doesn’t matter that Théo is a man."},
-{q:"Paul et ___ mère", o:["sa","son"], a:0, e:"In English «his mother», but mère is f. → sa."},
+{q:"Paul et ___ mère", o:["sa","son"], a:0, e:"mère is f. → sa, even though Paul is a man."},
 {q:"Sofia, son mari et ___ enfants (Sofia and her husband’s children)", o:["leurs","ses","leur"], a:0},
 {q:"___ amie Léa (my)", o:["Mon","Ma"], a:0, e:"amie starts with a vowel → mon."},
 {q:"Quelle est ___ adresse ? (your)", o:["ton","ta"], a:0, e:"adresse is f., but starts with a vowel → ton."}
@@ -386,7 +382,6 @@ ${MORPH([["-e → no change",[["fleuriste","fleuriste"],["journaliste","journali
 ${NOTE("-ien → -ienne works exactly as with nationalities: italien → italienne. One pattern, two topics!")}
 ${RULE("A job after être — no article",`<p>${F("Il est infirmier.")} ${F("Elle est étudiante.")} ${F("Mon père est informaticien.")} ${F("Ma mère est professeure.")}</p><p>But with <b>c’est</b> — with an article: ${F("C’est un infirmier.")} ${F("C’est une actrice.")}</p>`)}
 ${VS({h:"il / elle est + job",big:F("Il est infirmier."),sub:"no article",tone:"good"},{h:"c’est + article + job",big:F("C’est un infirmier."),sub:"with an article",tone:"good"},{h:"don’t mix them",big:"<s>Il est un infirmier.</s>",sub:"mistake",tone:"bad"})}
-${CMP("Same as Russian: «Она студентка».","<i>She is <b>a</b> student</i> — the article <i>a</i> is not translated into French.")}
 <h3>Pronunciation</h3>
 <p>${F("étudiant")} [etydjɑ̃] → ${F("étudiante")} [etydjɑ̃t]; ${F("infirmier")} [ɛ̃fiʁmje] → ${F("infirmière")} [ɛ̃fiʁmjɛʁ]; ${F("informaticien")} [ɛ̃] → ${F("informaticienne")} [ɛn].</p>
 <h3>Vocabulary (p. 41)</h3>

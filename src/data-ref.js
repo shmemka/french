@@ -7,7 +7,7 @@ title:"Правила чтения", ru:"Как читать французск�
 theory:`
 <p>Французское письмо кажется хаотичным, но оно очень правильное: одно и то же сочетание букв почти всегда читается одинаково. Выучи сочетания — и сможешь прочитать любое слово, даже незнакомое. Нажимай на примеры, чтобы услышать.</p>
 <h3>Пять главных принципов</h3>
-${RULE("1. Конечные согласные обычно НЕ читаются",`<p>${F("Paris")} [paʁi], ${F("français")}, ${F("petit")}, ${F("grand")}, ${F("vous")}, ${F("deux")}, ${F("sport")}.</p><p>Исключение — часто читаются <b>c, r, f, l</b> (запомни английское слово <b>CaReFuL</b>): ${F("avec")}, ${F("bonjour")}, ${F("neuf")}, ${F("espagnol")}. Но <b>-er</b> в глаголах и словах на -ier — [e]: ${F("parler")}, ${F("premier")}.</p>`)}
+${RULE("1. Конечные согласные обычно НЕ читаются",`<p>${F("Paris")} [paʁi], ${F("français")}, ${F("petit")}, ${F("grand")}, ${F("vous")}, ${F("deux")}, ${F("sport")}.</p><p>Исключение — часто читаются <b>c, r, f, l</b> (запомни: <b>CaReFuL</b>): ${F("avec")}, ${F("bonjour")}, ${F("neuf")}, ${F("espagnol")}. Но <b>-er</b> в глаголах и словах на -ier — [e]: ${F("parler")}, ${F("premier")}.</p>`)}
 ${RULE("2. Конечная -e не читается",`<p>${F("France")} [fʁɑ̃s], ${F("madame")}, ${F("rue")}. Зато она «включает» согласную перед собой: ${F("grand")} [gʁɑ̃] → ${F("grande")} [gʁɑ̃d].</p>`)}
 ${RULE("3. -ent в глаголах не читается",`<p>${F("ils parlent")} [il paʁl] — а не «парлан»! В других словах -ent = [ɑ̃]: ${F("souvent")}, ${F("un étudiant")}… (там -ant).</p>`)}
 ${RULE("4. H никогда не читается",`<p>${F("hôtel")} [otɛl], ${F("habiter")} [abite], ${F("histoire")}.</p>`)}
@@ -60,7 +60,7 @@ ${TBL(["Пишем","Звук","Правило","Примеры"],[
 [F("r"),"[ʁ]","гортанный, «картавый»",F("rue, Paris, merci")]
 ])}
 ${NOTE(`Исключения, которые встречаются в учебнике: ${F("ville")} [vil], ${F("mille")} [mil] — ll как [l]; ${F("monsieur")} [məsjø] — «мёсьё»; ${F("fils")} [fis]; ${F("août")} [ut]; ${F("second")} [səgɔ̃].`)}
-${CMP(`Французская r — не русская раскатистая «р». Похоже на звук, когда полощешь горло, очень мягко.`,`Английская привычка читать «u» как [ʌ] или [ju] здесь не работает: ${F("musique")} — [myzik].`)}
+${NOTE(`Французская r [ʁ] — мягкий звук в глубине горла, похож на очень тихое полоскание горла.`)}
 `,
 ex:[
 {t:"drill", h:"Прочитай вслух сам, потом нажми — проверь себя", items:[["bonjour","[bɔ̃ʒuʁ] бонжур"],["merci","[mɛʁsi] мэрси"],["rue","[ʁy] рю"],["vous","[vu] ву"],["moi","[mwa] муа"],["beaucoup","[boku] боку"],["quatre","[katʁ] катр"],["Espagne","[ɛspaɲ] эспань"],["guitare","[gitaʁ] гитар"],["famille","[famij] фамий"],["ville","[vil] виль"],["français","[fʁɑ̃sɛ] франсэ"],["française","[fʁɑ̃sɛz] франсэз"],["ils parlent","[il paʁl] иль парль"],["enfant","[ɑ̃fɑ̃] анфан"],["vingt","[vɛ̃] вэн"],["natation","[natasjɔ̃] натасьон"],["monsieur","[məsjø] мёсьё"],["Belgique","[bɛlʒik] бельжик"],["musique","[myzik] мюзик"]]},
@@ -171,8 +171,8 @@ TOPICS.push({
 id:"r-genre", sec:"ref", kind:"С нуля",
 title:"Genre et pluriel des noms", ru:"Род и множественное число существительных", page:"",
 theory:`
-<p>Во французском два рода: <b>мужской</b> и <b>женский</b>. Среднего нет. И род часто <b>не совпадает</b> с русским — поэтому учи каждое слово с артиклем.</p>
-${TBL(["Слово","Род во FR","В русском"],[[F("la mer"),Fe("ж."),"море — ср."],[F("la plage"),Fe("ж."),"пляж — м."],[F("le cinéma"),M("м."),"кино — ср."],[F("l’université"),Fe("ж."),"университет — м."],[F("la musique"),Fe("ж."),"музыка — ж."],[F("le pays"),M("м."),"страна — ж."],[F("la photo"),Fe("ж."),"фото — ср."]])}
+<p>Во французском два рода: <b>мужской</b> и <b>женский</b>. Среднего нет. Род нельзя угадать по смыслу — поэтому учи каждое слово с артиклем.</p>
+${TBL(["Слово","Род","Перевод"],[[F("la mer"),Fe("ж."),"море"],[F("la plage"),Fe("ж."),"пляж"],[F("le cinéma"),M("м."),"кино"],[F("l’université"),Fe("ж."),"университет"],[F("la musique"),Fe("ж."),"музыка"],[F("le pays"),M("м."),"страна"],[F("la photo"),Fe("ж."),"фото"]])}
 <h3>Подсказки по окончаниям</h3>
 ${TBL(["Обычно женский","Обычно мужской"],[
 [F("-tion, -sion")+": la nation, la natation",F("-ment")+": l’appartement"],
@@ -191,7 +191,7 @@ ${TBL(["Правило","Примеры"],[
 ["составные: обе части",F("le grand-père → les grands-pères, le petit-fils → les petits-fils")]
 ])}
 ${NOTE(`Исключение, которое может попасться: ${F("un festival → des festivals")} (не «festivaux»).`)}
-${CMP("В русском число слышно по окончанию (фильм / фильмы).","В английском s слышно (film / films). Во французском <b>не слышно</b> — число узнаём по артиклю: [lə film] / [le film].")}
+${NOTE("Конечная -s множественного числа не читается — число узнаём по артиклю: [lə film] / [le film].")}
 `,
 ex:[
 {t:"sort", h:"Мужской или женский?", cats:["masculin","féminin"], items:[["mer",1],["plage",1],["cinéma",0],["université",1],["appartement",0],["natation",1],["quartier",0],["photo",1],["pays",0],["nationalité",1],["mariage",0],["musique",1],["téléphone",0],["voiture",1]]},
@@ -213,7 +213,7 @@ ${TBL(["Подлежащее","Ударная форма","RU","EN"],[
 [F("je (j’)"),F("moi"),"я","I / me"],[F("tu"),F("toi"),"ты","you"],[F("il"),F("lui"),"он (и «оно» для вещей м.р.)","he / it"],[F("elle"),F("elle"),"она (и вещи ж.р.)","she / it"],[F("on"),F("—"),"мы (разг.), люди","we / one"],[F("nous"),F("nous"),"мы","we"],[F("vous"),F("vous"),"вы (вежл. и мн.ч.)","you"],[F("ils"),F("eux"),"они (м. или смешанная группа)","they"],[F("elles"),F("elles"),"они (только ж.)","they"]
 ])}
 ${RULE("il / elle для вещей",`<p>Нет «it» — вещи тоже «он» или «она» по роду: ${F("La rue ? Elle est calme.")} ${F("Le quartier ? Il est sympa.")}</p>`)}
-${CMP("Как в русском: «Улица? Она тихая».","<i>It is quiet</i> — во французском it не существует.")}
+${CMP("Как в русском: «Улица? Она тихая».","")}
 ${RULE("ils для смешанной группы",`<p>Даже если в группе 10 женщин и 1 мужчина — ${F("ils")}. ${F("elles")} — только если все женского рода.</p>`)}
 <h3>Когда нужны ударные формы (moi, toi…)</h3>
 ${TBL(["Случай","Пример"],[["выделение",F("Moi, je suis russe. Lui, il est italien.")],["после et, aussi, non plus",F("Et toi ? — Moi aussi ! — Moi non plus.")],["после предлогов",F("avec moi, chez lui, pour elle, à toi")],["после c’est",F("C’est moi ! C’est lui.")],["одно слово в ответе",F("Qui parle français ? — Moi !")]])}
@@ -243,7 +243,7 @@ ${TBL(["Способ","Стиль","Пример"],[
 ])}
 ${SCALE([["Tu habites où ?","интонация"],["Où est-ce que tu habites ?","est-ce que"],["Où habites-tu ?","инверсия"]],["разговорно","официально"])}
 ${CMP("Способ 1 — как в русском: те же слова, только голос вверх в конце.","Способ 3 похож на английский (<i>Are you…?</i>): глагол перед подлежащим, через дефис.")}
-${RULE("Est-ce que",`<p>«Est-ce que» [ɛskə] не переводится, это просто сигнал «сейчас будет вопрос», как русское «ли». Перед гласной → <b>est-ce qu’</b>: ${F("Est-ce qu’il parle anglais ?")}</p>`)}
+${RULE("Est-ce que",`<p>«Est-ce que» [ɛskə] не переводится, это просто сигнал «сейчас будет вопрос». Перед гласной → <b>est-ce qu’</b>: ${F("Est-ce qu’il parle anglais ?")}</p>`)}
 ${RULE("Инверсия и -t-",`<p>${F("Comment vous appelez-vous ?")} ${F("Parlez-vous français ?")}<br>Если глагол кончается на гласную, а дальше il/elle/on — вставляем <b>-t-</b> для благозвучия: ${F("Habite-t-il à Lyon ?")} ${F("Parle-t-elle anglais ?")} ${F("A-t-il un frère ?")}</p>`)}
 <h3>Вопросительные слова</h3>
 ${TBL(["Слово","Значение","Пример"],[
@@ -260,7 +260,7 @@ ${TBL(["Слово","Значение","Пример"],[
 <p>С вопросительным словом тоже три стиля: ${F("Tu habites où ?")} / ${F("Où est-ce que tu habites ?")} / ${F("Où habites-tu ?")}</p>
 <h3>Oui, non… и si!</h3>
 ${RULE("Si — «да» на отрицательный вопрос",`<p>${F("Tu n’aimes pas le sport ? — Si, j’aime le sport !")} (Ты не любишь спорт? — Нет, люблю!)</p>`)}
-${CMP("По-русски «нет, люблю» звучит путано. Во французском есть отдельное слово.","Похоже на <i>Yes, I do!</i> — но одно короткое si.")}
+${CMP("","Как <i>Yes, I do!</i> в ответ на отрицательный вопрос — только одним коротким si.")}
 `,
 ex:[
 {t:"match", h:"Вопросительное слово → значение", pairs:[["où","где"],["quand","когда"],["comment","как"],["combien","сколько"],["pourquoi","почему"],["qui","кто"],["qu’est-ce que","что"]]},
@@ -288,7 +288,6 @@ ${RULE("Основная схема",`<p><b>подлежащее + ne + глаг
 ${FXS(FX(["~подлежащее","!ne","~глагол","!pas"]),FX(["Je","!ne","m’appelle","!pas","Paul."],"me/te/se остаются рядом с глаголом"))}
 ${RULE("pas de — главная ловушка",`<p>После отрицания <b>un / une / des</b> → <b>de / d’</b>:</p>${FX(["un · une · des","→","!de / d’"])}${TBL(["Утверждение","Отрицание"],[[F("J’ai un frère."),F("Je n’ai pas de frère.")],[F("J’ai une guitare."),F("Je n’ai pas de guitare.")],[F("J’ai des enfants."),F("Je n’ai pas d’enfants.")],[F("Il y a une plage."),F("Il n’y a pas de plage.")]])}`)}
 ${TBL(["Не меняется","Пример"],[["le / la / les",F("J’aime le ski. → Je n’aime pas le ski.")],["после être",F("C’est un piano. → Ce n’est pas un piano.")]])}
-${CMP(`«У меня нет брата» — в русском тоже меняется форма (родительный падеж). Похожая логика: «нет + чего?» → pas de.`,`<i>I don’t have <b>a</b> brother / any brothers</i> → ${F("pas de frère")}.`)}
 <h3>Другие отрицания (для справки)</h3>
 ${TBL(["Français","По-русски","Пример"],[[F("ne… jamais"),"никогда",F("Je ne skie jamais.")],[F("ne… plus"),"больше не",F("Il n’habite plus à Lyon.")],[F("ne… rien"),"ничего",F("Je ne comprends rien.")],[F("ne… personne"),"никого",F("Je ne connais personne.")]])}
 ${NOTE(`В разговоре французы часто глотают ne: «J’aime pas…», «C’est pas grave». На письме всегда пиши <b>ne… pas</b>.`)}
@@ -327,7 +326,7 @@ ${TBL(["Конструкция","+ что","Примеры"],[
 ])}
 ${WARN(`✗ <i>Il est un acteur.</i> → ✓ ${F("C’est un acteur.")} или ✓ ${F("Il est acteur.")}`)}
 ${RULE("Il y a — «есть, имеется»",`<p>Неизменяемый оборот = <i>there is / there are</i>: ${F("À Nice, il y a la mer.")} ${F("Il y a des célébrités sur la fresque.")}</p><p>Отрицание: ${F("Il n’y a pas de plage.")} Вопрос: ${F("Qu’est-ce qu’il y a ?")} (Что там?)</p>`)}
-${CMP("«В Ницце есть море» — без глагола-связки в русском, а во французском нужно il y a.","<i>There is / there are</i> — одна форма il y a для ед. и мн.ч.")}
+${CMP("","<i>There is / there are</i> — одна форма il y a для ед. и мн.ч.")}
 `,
 ex:[
 {t:"mc", h:"C’est, il/elle est, ce sont или il y a?", items:[
@@ -401,7 +400,7 @@ ex:[
 
 TOPICS.push({
 id:"r-erreurs", sec:"ref", kind:"Полезно знать",
-title:"Erreurs typiques", ru:"Типичные ошибки русскоговорящих — проверь себя", page:"",
+title:"Erreurs typiques", ru:"Типичные ошибки — проверь себя", page:"",
 theory:`
 <div class="errs">
 ${[

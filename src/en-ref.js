@@ -5,7 +5,7 @@ title:"Reading rules", ru:"How to read French words: letters, letter combination
 theory:`
 <p>French spelling looks chaotic, but it is very regular: the same letter combination is almost always read the same way. Learn the combinations and you can read any word, even an unfamiliar one. Click the examples to hear them.</p>
 <h3>Five key principles</h3>
-${RULE("1. Final consonants are usually NOT pronounced",`<p>${F("Paris")} [paʁi], ${F("français")}, ${F("petit")}, ${F("grand")}, ${F("vous")}, ${F("deux")}, ${F("sport")}.</p><p>Exception — <b>c, r, f, l</b> are often pronounced (remember the English word <b>CaReFuL</b>): ${F("avec")}, ${F("bonjour")}, ${F("neuf")}, ${F("espagnol")}. But <b>-er</b> in verbs and words in -ier is [e]: ${F("parler")}, ${F("premier")}.</p>`)}
+${RULE("1. Final consonants are usually NOT pronounced",`<p>${F("Paris")} [paʁi], ${F("français")}, ${F("petit")}, ${F("grand")}, ${F("vous")}, ${F("deux")}, ${F("sport")}.</p><p>Exception — <b>c, r, f, l</b> are often pronounced (remember: <b>CaReFuL</b>): ${F("avec")}, ${F("bonjour")}, ${F("neuf")}, ${F("espagnol")}. But <b>-er</b> in verbs and words in -ier is [e]: ${F("parler")}, ${F("premier")}.</p>`)}
 ${RULE("2. Final -e is silent",`<p>${F("France")} [fʁɑ̃s], ${F("madame")}, ${F("rue")}. But it «switches on» the consonant before it: ${F("grand")} [gʁɑ̃] → ${F("grande")} [gʁɑ̃d].</p>`)}
 ${RULE("3. -ent in verbs is silent",`<p>${F("ils parlent")} [il paʁl] — not «parlant»! In other words -ent = [ɑ̃]: ${F("souvent")}, ${F("un étudiant")}… (there it’s -ant).</p>`)}
 ${RULE("4. H is never pronounced",`<p>${F("hôtel")} [otɛl], ${F("habiter")} [abite], ${F("histoire")}.</p>`)}
@@ -24,7 +24,7 @@ ${TBL(["Spelling","Sound","Roughly like","Examples"],[
 [F("oi"),"[wa]","wa",F("moi, toi, trois, voiture")],
 [F("ui"),"[ɥi]","a quick «wee» with rounded lips",F("huit, lui, nuit")]
 ])}
-${WARN(`The most important pair: ${F("u")} [y] and ${F("ou")} [u]. ${F("tu")} (you) ≠ ${F("tout")} (all); ${F("rue")} (street) ≠ ${F("roue")} (wheel). English has no [y] — practise: say «ee» without moving your tongue and round your lips.`)}
+${WARN(`The most important pair: ${F("u")} [y] and ${F("ou")} [u]. ${F("tu")} (you) ≠ ${F("tout")} (all); ${F("rue")} (street) ≠ ${F("roue")} (wheel). Practise: say «ee» without moving your tongue and round your lips.`)}
 ${VS({h:"u → [y]",big:F("tu · rue · salut"),sub:"lips for «oo», tongue for «ee»"},{h:"ou → [u]",big:F("vous · roue · tout"),sub:"plain «oo»"})}
 <h3>Nasal vowels</h3>
 <p>Vowel + <b>n</b> or <b>m</b> at the end of a word or before a consonant = a vowel said «through the nose», and the n/m itself is not pronounced.</p>
@@ -58,7 +58,7 @@ ${TBL(["Spelling","Sound","Rule","Examples"],[
 [F("r"),"[ʁ]","from the throat",F("rue, Paris, merci")]
 ])}
 ${NOTE(`Exceptions found in the textbook: ${F("ville")} [vil], ${F("mille")} [mil] — ll as [l]; ${F("monsieur")} [məsjø]; ${F("fils")} [fis]; ${F("août")} [ut]; ${F("second")} [səgɔ̃].`)}
-${CMP(`French r is not the rolled Russian «р». It sounds like a very soft gargle.`,`The English habit of reading «u» as [ʌ] or [ju] doesn’t work here: ${F("musique")} — [myzik].`)}
+${NOTE(`French r [ʁ] is a soft sound at the back of the throat, like a very gentle gargle.`)}
 `,
 ex:[
 {t:"drill", h:"Read it aloud yourself, then click to check", items:[["bonjour","[bɔ̃ʒuʁ] bohn-ZHOOR"],["merci","[mɛʁsi] mair-SEE"],["rue","[ʁy] rü"],["vous","[vu] voo"],["moi","[mwa] mwah"],["beaucoup","[boku] boh-KOO"],["quatre","[katʁ] katr"],["Espagne","[ɛspaɲ] es-PANY"],["guitare","[gitaʁ] gee-TAR"],["famille","[famij] fa-MEE-y"],["ville","[vil] veel"],["français","[fʁɑ̃sɛ] frahn-SEH"],["française","[fʁɑ̃sɛz] frahn-SEZ"],["ils parlent","[il paʁl] eel parl"],["enfant","[ɑ̃fɑ̃] ahn-FAHN"],["vingt","[vɛ̃] van"],["natation","[natasjɔ̃] na-ta-SYOHN"],["monsieur","[məsjø] muh-SYUH"],["Belgique","[bɛlʒik] bel-ZHEEK"],["musique","[myzik] mü-ZEEK"]]},
@@ -169,8 +169,8 @@ TOPICS_EN.push({
 id:"r-genre", sec:"ref", kind:"From scratch",
 title:"Genre et pluriel des noms", ru:"Gender and plural of nouns", page:"",
 theory:`
-<p>French has two genders: <b>masculine</b> and <b>feminine</b>. There is no neuter. And the gender often <b>doesn’t match</b> Russian — so learn every word with its article.</p>
-${TBL(["Word","Gender in FR","In Russian"],[[F("la mer"),Fe("f."),"море — n."],[F("la plage"),Fe("f."),"пляж — m."],[F("le cinéma"),M("m."),"кино — n."],[F("l’université"),Fe("f."),"университет — m."],[F("la musique"),Fe("f."),"музыка — f."],[F("le pays"),M("m."),"страна — f."],[F("la photo"),Fe("f."),"фото — n."]])}
+<p>French has two genders: <b>masculine</b> and <b>feminine</b>. There is no neuter. You can’t guess the gender from the meaning — so learn every word with its article.</p>
+${TBL(["Word","Gender","Meaning"],[[F("la mer"),Fe("f."),"sea"],[F("la plage"),Fe("f."),"beach"],[F("le cinéma"),M("m."),"cinema"],[F("l’université"),Fe("f."),"university"],[F("la musique"),Fe("f."),"music"],[F("le pays"),M("m."),"country"],[F("la photo"),Fe("f."),"photo"]])}
 <h3>Hints from endings</h3>
 ${TBL(["Usually feminine","Usually masculine"],[
 [F("-tion, -sion")+": la nation, la natation",F("-ment")+": l’appartement"],
@@ -189,7 +189,7 @@ ${TBL(["Rule","Examples"],[
 ["compounds: both parts",F("le grand-père → les grands-pères, le petit-fils → les petits-fils")]
 ])}
 ${NOTE(`An exception you might meet: ${F("un festival → des festivals")} (not «festivaux»).`)}
-${CMP("In Russian you hear the plural in the ending (фильм / фильмы).","In English you hear the s (film / films). In French you <b>don’t</b> — you hear the number in the article: [lə film] / [le film].")}
+${NOTE("The plural -s is silent — you hear the number in the article: [lə film] / [le film].")}
 `,
 ex:[
 {t:"sort", h:"Masculine or feminine?", cats:["masculin","féminin"], items:[["mer",1],["plage",1],["cinéma",0],["université",1],["appartement",0],["natation",1],["quartier",0],["photo",1],["pays",0],["nationalité",1],["mariage",0],["musique",1],["téléphone",0],["voiture",1]]},
@@ -211,7 +211,6 @@ ${TBL(["Subject","Stressed form","RU","EN"],[
 [F("je (j’)"),F("moi"),"я","I / me"],[F("tu"),F("toi"),"ты","you (informal)"],[F("il"),F("lui"),"он (also masculine things)","he / it"],[F("elle"),F("elle"),"она (also feminine things)","she / it"],[F("on"),F("—"),"мы (colloquial), люди","we / one"],[F("nous"),F("nous"),"мы","we"],[F("vous"),F("vous"),"вы (polite and plural)","you"],[F("ils"),F("eux"),"они (m. or mixed group)","they"],[F("elles"),F("elles"),"они (only f.)","they"]
 ])}
 ${RULE("il / elle for things",`<p>There is no «it» — things are «he» or «she» by gender: ${F("La rue ? Elle est calme.")} ${F("Le quartier ? Il est sympa.")}</p>`)}
-${CMP("Same as Russian: «Улица? Она тихая».","<i>It is quiet</i> — «it» doesn’t exist in French.")}
 ${RULE("ils for a mixed group",`<p>Even if the group has 10 women and 1 man — ${F("ils")}. ${F("elles")} only if they are all feminine.</p>`)}
 <h3>When you need stressed forms (moi, toi…)</h3>
 ${TBL(["Case","Example"],[["emphasis",F("Moi, je suis russe. Lui, il est italien.")],["after et, aussi, non plus",F("Et toi ? — Moi aussi ! — Moi non plus.")],["after prepositions",F("avec moi, chez lui, pour elle, à toi")],["after c’est",F("C’est moi ! C’est lui.")],["a one-word answer",F("Qui parle français ? — Moi !")]])}
@@ -240,8 +239,8 @@ ${TBL(["Way","Style","Example"],[
 ["3. Inversion","written, polite",F("Habites-tu à Paris ?")]
 ])}
 ${SCALE([["Tu habites où ?","intonation"],["Où est-ce que tu habites ?","est-ce que"],["Où habites-tu ?","inversion"]],["casual","formal"])}
-${CMP("Way 1 is like Russian: the same words, just raise your voice at the end.","Way 3 is like English (<i>Are you…?</i>): the verb goes before the subject, with a hyphen.")}
-${RULE("Est-ce que",`<p>«Est-ce que» [ɛskə] isn’t translated — it’s just a signal that «a question is coming», like Russian «ли». Before a vowel → <b>est-ce qu’</b>: ${F("Est-ce qu’il parle anglais ?")}</p>`)}
+${CMP("","Way 3 is like English (<i>Are you…?</i>): the verb goes before the subject, with a hyphen.")}
+${RULE("Est-ce que",`<p>«Est-ce que» [ɛskə] isn’t translated — it’s just a signal that «a question is coming». Before a vowel → <b>est-ce qu’</b>: ${F("Est-ce qu’il parle anglais ?")}</p>`)}
 ${RULE("Inversion and -t-",`<p>${F("Comment vous appelez-vous ?")} ${F("Parlez-vous français ?")}<br>If the verb ends in a vowel and il/elle/on follows, add <b>-t-</b> to make it sound smooth: ${F("Habite-t-il à Lyon ?")} ${F("Parle-t-elle anglais ?")} ${F("A-t-il un frère ?")}</p>`)}
 <h3>Question words</h3>
 ${TBL(["Word","Meaning","Example"],[
@@ -258,7 +257,7 @@ ${TBL(["Word","Meaning","Example"],[
 <p>Question words also come in three styles: ${F("Tu habites où ?")} / ${F("Où est-ce que tu habites ?")} / ${F("Où habites-tu ?")}</p>
 <h3>Oui, non… and si!</h3>
 ${RULE("Si — «yes» to a negative question",`<p>${F("Tu n’aimes pas le sport ? — Si, j’aime le sport !")} (Don’t you like sport? — Yes, I do!)</p>`)}
-${CMP("In Russian «нет, люблю» is confusing. French has a separate word.","Like <i>Yes, I do!</i> — but just one short si.")}
+${CMP("","Like <i>Yes, I do!</i> after a negative question — but just one short si.")}
 `,
 ex:[
 {t:"match", h:"Question word → meaning", pairs:[["où","where"],["quand","when"],["comment","how"],["combien","how much / many"],["pourquoi","why"],["qui","who"],["qu’est-ce que","what"]]},
@@ -286,7 +285,6 @@ ${RULE("The basic pattern",`<p><b>subject + ne + verb + pas</b></p>${EX([["Je ne
 ${FXS(FX(["~subject","!ne","~verb","!pas"]),FX(["Je","!ne","m’appelle","!pas","Paul."],"me/te/se stay next to the verb"))}
 ${RULE("pas de — the main trap",`<p>After a negative, <b>un / une / des</b> → <b>de / d’</b>:</p>${FX(["un · une · des","→","!de / d’"])}${TBL(["Affirmative","Negative"],[[F("J’ai un frère."),F("Je n’ai pas de frère.")],[F("J’ai une guitare."),F("Je n’ai pas de guitare.")],[F("J’ai des enfants."),F("Je n’ai pas d’enfants.")],[F("Il y a une plage."),F("Il n’y a pas de plage.")]])}`)}
 ${TBL(["No change","Example"],[["le / la / les",F("J’aime le ski. → Je n’aime pas le ski.")],["after être",F("C’est un piano. → Ce n’est pas un piano.")]])}
-${CMP(`«У меня нет брата» — the form changes in Russian too (genitive). Similar logic: «нет + чего?» → pas de.`,`<i>I don’t have <b>a</b> brother / any brothers</i> → ${F("pas de frère")}.`)}
 <h3>Other negatives (for reference)</h3>
 ${TBL(["Français","In English","Example"],[[F("ne… jamais"),"never",F("Je ne skie jamais.")],[F("ne… plus"),"no longer",F("Il n’habite plus à Lyon.")],[F("ne… rien"),"nothing",F("Je ne comprends rien.")],[F("ne… personne"),"nobody",F("Je ne connais personne.")]])}
 ${NOTE(`In conversation the French often drop ne: «J’aime pas…», «C’est pas grave». In writing, always write <b>ne… pas</b>.`)}
@@ -325,7 +323,7 @@ ${TBL(["Structure","+ what","Examples"],[
 ])}
 ${WARN(`✗ <i>Il est un acteur.</i> → ✓ ${F("C’est un acteur.")} or ✓ ${F("Il est acteur.")}`)}
 ${RULE("Il y a — «there is / there are»",`<p>An invariable phrase = <i>there is / there are</i>: ${F("À Nice, il y a la mer.")} ${F("Il y a des célébrités sur la fresque.")}</p><p>Negative: ${F("Il n’y a pas de plage.")} Question: ${F("Qu’est-ce qu’il y a ?")} (What’s there? / What’s up?)</p>`)}
-${CMP("«В Ницце есть море» has no linking verb in Russian; French needs il y a.","<i>There is / there are</i> — French uses one form il y a for singular and plural.")}
+${CMP("","<i>There is / there are</i> — French uses one form il y a for singular and plural.")}
 `,
 ex:[
 {t:"mc", h:"C’est, il/elle est, ce sont or il y a?", items:[
@@ -356,7 +354,7 @@ ${RULE("The «boot»",`<p>Changes in verbs like acheter, préférer, s’appeler
 ${BOOTS(CJ2("préférer","to prefer",["je préf<b>è</b>re","tu préf<b>è</b>res","il préf<b>è</b>re","nous préf<b>é</b>rons","vous préf<b>é</b>rez","ils préf<b>è</b>rent"],[0,1,2,5]),CJ2("acheter","to buy",["j’ach<b>è</b>te","tu ach<b>è</b>tes","il ach<b>è</b>te","nous achetons","vous achetez","ils ach<b>è</b>tent"],[0,1,2,5]),CJ2("s’appeler","to be called",["je m’appe<b>ll</b>e","tu t’appe<b>ll</b>es","il s’appe<b>ll</b>e","nous nous appelons","vous vous appelez","ils s’appe<b>ll</b>ent"],[0,1,2,5]))}
 ${FXS(FX(["manger","→","!nous mangeons|e keeps the [ʒ] sound"]),FX(["commencer","→","!nous commençons|ç keeps the [s] sound"]))}
 <h3>Reflexive verbs (se + verb)</h3>
-<p>Like Russian «-ся»: ${F("s’appeler")} — to be called, ${F("se présenter")} — to introduce oneself, ${F("se lever")} — to get up. The pronoun changes with the person: ${F("je me, tu te, il se, nous nous, vous vous, ils se")}.</p>
+<p>Reflexive verbs: ${F("s’appeler")} — to be called, ${F("se présenter")} — to introduce oneself, ${F("se lever")} — to get up. The pronoun changes with the person: ${F("je me, tu te, il se, nous nous, vous vous, ils se")}.</p>
 ${EX([["Je me présente : je m’appelle Anna.","Let me introduce myself: my name is Anna."],["Les personnes se présentent.","The people introduce themselves."]])}
 `,
 ex:[
