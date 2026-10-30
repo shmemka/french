@@ -205,7 +205,7 @@ Object.assign(I18N.ru, {
   esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · всё самое важное", esStart:"Начать с первой темы",
   esTestEyebrow:"Autoevaluación · unidades 1–4", esTestSub:n=>`Вопросы берутся случайно из банка (${n} шт.) по всем темам юнитов 1–3 и спряжению. Каждый раз — новый вариант. В конце — результат в процентах и разбор по темам.`,
   esVerdicts:[["¡Excelente!","Отлично — этот материал ты уже знаешь."],["¡Muy bien!","Хорошо, но некоторые темы стоит повторить — они внизу."],["Aprobado","Неплохо, но повтори темы с красными полосками."],["A repasar","Пройди темы с красными полосками ещё раз, потом попробуй новый вариант."]],
-  practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
+  practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad", unitWzh:"Урок", practiceZh:"Практика", zhHeroLead:n=>`HSK 2 по шагам: диалоги с пиньинем и озвучкой, грамматика на схемах, ${n} ${plural(n,["упражнение","упражнения","упражнений"])} с объяснениями и тренажёр иероглифов — смотри порядок черт и пиши сам.`, zhCheatEyebrow:"HSK 2 · уроки 1–15 · главное", zhTestEyebrow:"自测 · HSK 2 · уроки 1–15",
   tipTtsEs:"Нажимай на испанский текст с пунктиром — компьютер прочитает его с испанским произношением.",
   dirFr:()=>`${COURSE==="es"?"ES":"FR"} → RU`, dirRu:()=>`RU → ${COURSE==="es"?"ES":"FR"}`,
   cloud:{local:"Только в этом браузере", loading:"Подключаюсь…", saved:"Всё сохранено", saving:"Сохраняю…", error:"Нет связи — сохраню позже", readonly:"Сохраняю в браузере", signedout:"Войди, чтобы сохранять"},
@@ -226,7 +226,7 @@ Object.assign(I18N.en, {
   esBookSub:"Unidades 1–4, p. 14–69", esCheatEyebrow:"Unidades 1–4 · the essentials", esStart:"Start with the first topic",
   esTestEyebrow:"Autoevaluación · unidades 1–4", esTestSub:n=>`Questions are drawn at random from a bank of ${n} covering units 1–4 and conjugation. A new version every time. At the end you get a percentage and a breakdown by topic.`,
   esVerdicts:[["¡Excelente!","Excellent — you’ve got this material down."],["¡Muy bien!","Good, but some topics are worth reviewing — see below."],["Aprobado","Not bad, but review the topics with red bars."],["A repasar","Go through the topics with red bars again, then try a new version."]],
-  practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad",
+  practiceH:"Entraînement", practiceHes:"Práctica", unitW:"Unité", unitWes:"Unidad", unitWzh:"Lesson", practiceZh:"Practice", zhHeroLead:n=>`HSK 2 step by step: dialogues with pinyin and audio, grammar in diagrams, ${n} exercises with explanations and a character trainer — watch the stroke order and write it yourself.`, zhCheatEyebrow:"HSK 2 · lessons 1–15 · the essentials", zhTestEyebrow:"自测 · HSK 2 · lessons 1–15",
   tipTtsEs:"Click Spanish text with a dotted underline and the computer will read it with Spanish pronunciation.",
   dirFr:()=>`${COURSE==="es"?"ES":"FR"} → EN`, dirRu:()=>`EN → ${COURSE==="es"?"ES":"FR"}`,
   cloud:{local:"This browser only", loading:"Connecting…", saved:"All saved", saving:"Saving…", error:"Offline — will save later", readonly:"Saving in this browser", signedout:"Sign in to save"},
@@ -240,11 +240,18 @@ Object.assign(I18N.en, {
 });
 
 let LANG = ls.get("edito-lang") === "en" ? "en" : "ru";
-let COURSE = ls.get("edito-course") === "es" ? "es" : "fr";
-const COURSES = {fr:{code:"FR", name:"Français", book:"Édito A1"}, es:{code:"ES", name:"Español", book:"Aula 1"}};
+let COURSE = ["es","zh"].includes(ls.get("edito-course")) ? ls.get("edito-course") : "fr";
+const COURSES = {fr:{code:"FR", name:"Français", book:"Édito A1"}, es:{code:"ES", name:"Español", book:"Aula 1"}, zh:{code:"ZH", name:"中文", book:"HSK 2"}};
+const ZH_CACHE = {};
+/* испанский и китайский устроены одинаково: юниты учебника без Livre / Cahier / Tutor */
+const notFr = () => COURSE !== "fr";
+const UNITS = () => COURSE === "es" ? ["1","2","3","4"] : COURSE === "zh" ? Array.from({length:15}, (_, i)=>String(i + 1)) : ["0","1","2","3"];
+const unitWord = () => COURSE === "es" ? t("unitWes") : COURSE === "zh" ? t("unitWzh") : t("unitW");
+const unitName = u => COURSE === "es" ? t("esUnits")[u] : COURSE === "zh" ? zhUnitName(u) : t("units")[u];
+const zhUnitName = u => { const d = ZH_LS.find(x=>String(x.n) === String(u)); return d ? `<span lang="zh-CN">${d.zh}</span>` : ""; };
 const FR_IDS = new Set(TOPICS.map(x=>x.id));
 const ES_CACHE = {};
-const OKW = () => COURSE === "es" ? "¡Correcto!" : "Juste !";
+const OKW = () => COURSE === "es" ? "¡Correcto!" : COURSE === "zh" ? "对了！" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
 let TOP, BOOK, GRAM, REF, CAH, TUT, ORDER, byId, POOLX, CHEATX;
@@ -254,6 +261,11 @@ function setData(){
     if (!ES_CACHE.ruPool) ES_CACHE.ruPool = esPool("ru");
     const c = ES_CACHE[LANG] || (ES_CACHE[LANG] = {top: ES_BUILD(LANG), pool: esPool(LANG), cheat: ES_CHEAT(LANG)});
     if (!c.why) { WHYP_APPLY("es", ES_CACHE.ruPool, c.pool, LANG === "en" ? 1 : 0); c.why = 1; }
+    TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
+  } else if (COURSE === "zh") {
+    if (!ZH_CACHE.ru) { const top = ZH_BUILD("ru"); ZH_CACHE.ru = {top, pool:ZH_POOL_BUILD(top), cheat:null}; }
+    const c = ZH_CACHE[LANG] || (ZH_CACHE[LANG] = (()=>{ const top = ZH_BUILD(LANG); return {top, pool:ZH_POOL_BUILD(top), cheat:null}; })());
+    if (!c.cheat) c.cheat = ZH_CHEAT_BUILD(LANG);
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
   BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); TUT = TOP.filter(x=>x.sec==="tutor"); ORDER = [...BOOK, ...GRAM, ...REF];
@@ -395,7 +407,7 @@ function mergeDocs(docs, pull, changed){
         if (up) Cloud.dirty.add("progress");
         S.ts.progress = Math.max(lt, ct);
       } else if (ct > lt) {
-        if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if ((v.course === "es" || v.course === "fr") && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
+        if (k === "settings") { if ((v.lang === "en" || v.lang === "ru") && v.lang !== LANG) { LANG = v.lang; ls.set("edito-lang", LANG); langChanged = true; } if (["es","fr","zh"].includes(v.course) && v.course !== COURSE) { COURSE = v.course; ls.set("edito-course", COURSE); langChanged = true; } }
         else if (k === "quiz") S.quiz = {c:normQuiz(v.c), best:v.best||{}, fav:Array.isArray(v.fav) ? v.fav : [], esfav:Array.isArray(v.esfav) ? v.esfav : [], sd:v.sd||{}};
         else if (k.startsWith("ans-")) S.ans[k.slice(4)] = v.ex || {};
         else if (k === "usets") S.usets = normUsets(v);
@@ -537,17 +549,18 @@ function setScore(tid, ei, got, total){
   touch("progress"); paintNavProgress();
 }
 /* тест на уровень «закрывает» темы учебника и тетради до стартового юнита: S.prof.lvl = {fr:"2", es:"3"} */
-function closedTp(tp){ if (tp.sec !== "book" && tp.sec !== "cahier") return false; const l = S.prof.lvl && S.prof.lvl[tp.id.slice(0,2) === "es" ? "es" : "fr"]; return l != null && +tp.unit < +l; }
+function closedTp(tp){ if (tp.sec !== "book" && tp.sec !== "cahier") return false; const l = S.prof.lvl && S.prof.lvl[["es","zh"].includes(tp.id.slice(0,2)) ? tp.id.slice(0,2) : "fr"]; return l != null && +tp.unit < +l; }
 function topicPct(tp){ if (closedTp(tp)) return {pct:1, done:tp.ex.length, n:tp.ex.length, closed:true}; const p = S.p[tp.id] || {}; let s = 0, d = 0; tp.ex.forEach((_,i)=>{ if (p[i]) { s += p[i].b; d++; } }); return {pct: tp.ex.length ? s/tp.ex.length : 0, done:d, n:tp.ex.length}; }
 
 /* =========================================================
    speech
    ========================================================= */
 const synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
-let frVoice = null, esVoice = null;
+let frVoice = null, esVoice = null, zhVoice = null;
 function pickVoice(){ try { const vs = synth.getVoices();
   frVoice = vs.find(v=>/^fr[-_]FR/i.test(v.lang) && /Thomas|Amélie|Audrey|Aurélie|Marie|Google/i.test(v.name)) || vs.find(v=>/^fr[-_]FR/i.test(v.lang)) || vs.find(v=>/^fr/i.test(v.lang)) || null;
-  esVoice = vs.find(v=>/^es[-_]ES/i.test(v.lang) && /Mónica|Monica|Jorge|Marisol|Google|Lucía|Lucia|Elvira|Álvaro|Alvaro/i.test(v.name)) || vs.find(v=>/^es[-_]ES/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null; } catch(e) {} }
+  esVoice = vs.find(v=>/^es[-_]ES/i.test(v.lang) && /Mónica|Monica|Jorge|Marisol|Google|Lucía|Lucia|Elvira|Álvaro|Alvaro/i.test(v.name)) || vs.find(v=>/^es[-_]ES/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null;
+  zhVoice = vs.find(v=>/^zh[-_]CN/i.test(v.lang) && /Tingting|Ting-Ting|Google|Xiaoxiao|Yaoyao|Huihui|Lili|Meijia/i.test(v.name)) || vs.find(v=>/^zh[-_](CN|Hans)/i.test(v.lang)) || vs.find(v=>/^(zh|cmn)/i.test(v.lang)) || null; } catch(e) {} }
 if (synth) { pickVoice(); try { synth.addEventListener("voiceschanged", pickVoice); } catch(e) {} }
 const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/\((?:m|f|fam|e|ne|s|es)\.?\)/g,"").replace(/[✗✓→=]/g," ").replace(/\s+\/\s+/g,", ").replace(/\s—\s/g,", ").replace(/\s+/g," ").trim();
 /* повторное прослушивание того же текста (в течение 15 с) — медленнее */
@@ -558,14 +571,18 @@ function speak(text, rate){
   if (k && k === SAY_LAST.k && now - SAY_LAST.at < 15000) SAY_LAST.n++; else SAY_LAST.n = 0;
   SAY_LAST.k = k; SAY_LAST.at = now;
   if (SAY_LAST.n > 0) rate = Math.min(rate || .88, SAY_LAST.n === 1 ? .62 : .5);
-  try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); const es = COURSE === "es"; u.lang = es ? "es-ES" : "fr-FR"; const vo = es ? esVoice : frVoice; if (vo) u.voice = vo; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
+  try { synth.cancel(); const u = new SpeechSynthesisUtterance(cleanSay(text)); const es = COURSE === "es", zh = COURSE === "zh"; u.lang = es ? "es-ES" : zh ? "zh-CN" : "fr-FR"; const vo = es ? esVoice : zh ? zhVoice : frVoice; if (vo) u.voice = vo; u.rate = rate || .88; synth.speak(u); return true; } catch(e) { return false; }
 }
 if (!synth) document.documentElement.classList.add("no-tts");
+/* китайский: озвучиваем только иероглифы, без пиньиня и подписей */
+const zhSayOf = el => { const c = el.cloneNode(true); c.querySelectorAll(".zp-py,.zc-py-l,small,.chat-tr,.zq-tr").forEach(x=>x.remove()); const s = c.textContent; return /[一-鿿]/.test(s) ? s.replace(/[A-Za-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü'’]+/g, " ") : s; };
 document.addEventListener("click", e=>{
   const el = e.target.closest(".fr");
-  if (!el || !synth || e.detail > 1) return;
+  if (!el || e.detail > 1) return;
   const sl = window.getSelection && window.getSelection(); if (sl && !sl.isCollapsed && sl.toString().trim()) return;
-  speak(el.dataset.say || el.textContent);
+  if (COURSE === "zh" && typeof hzClickText === "function" && hzClickText(e)) return;
+  if (!synth) return;
+  speak(el.dataset.say || (COURSE === "zh" ? zhSayOf(el) : el.textContent));
   el.classList.add("speaking"); setTimeout(()=>el.classList.remove("speaking"), 900);
 });
 
@@ -616,7 +633,8 @@ let trCache = {}; try { trCache = JSON.parse(ls.get(TRC) || "{}") || {}; } catch
 async function remoteTr(text, to, from = "fr"){
   const key = (from === "fr" ? "" : from + ">") + to + "|" + text.trim().toLowerCase().replace(/\s+/g, " ");
   if (trCache[key]) return trCache[key];
-  const url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text.trim()) + "&langpair=" + from + "|" + to;
+  const L2 = x => x === "zh" ? "zh-CN" : x;
+  const url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text.trim()) + "&langpair=" + L2(from) + "|" + L2(to);
   const ctl = ("AbortController" in window) ? new AbortController() : null;
   const tm = setTimeout(()=>{ if (ctl) ctl.abort(); }, 7000);
   try {
@@ -730,7 +748,7 @@ function spPaintFav(){
   b.setAttribute("aria-label", on ? t("spUnfav") : t("spFav")); b.title = b.getAttribute("aria-label");
   const s = $(".sp-say", SP.el); s.setAttribute("aria-label", t("qzSay")); s.title = t("qzSay");
   s.hidden = !synth;
-  const ready = !!(SP.entry && (esC ? SP.entry.es : SP.entry.fr)); b.disabled = !ready; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
+  const ready = !!(SP.entry && (esC ? SP.entry.es : SP.entry.fr)); b.disabled = !ready; b.hidden = COURSE === "zh"; s.disabled = !(SP.entry && (SP.entry.fr || SP.entry.say));
 }
 function spHide(){ if (SP.el && !SP.el.hidden) { SP.el.hidden = true; SP.el.classList.remove("in"); } SP.range = null; SP.entry = null; SP.req++; SP.manual = 0; if (typeof hlClear === "function") hlClear(); }
 function spPlace(){
@@ -811,6 +829,25 @@ function esPop(o){
   remote("es", to, false);
 }
 
+/* --- китайский курс: словарь курса → автоперевод --- */
+function zhPop(o){
+  const {txt, q, cyr, han, req, to, el, mEl, nEl, show} = o;
+  el.dataset.dir = han ? "fr" : "rev";
+  const put = (m, note, say, st) => { SP.entry = {sel:q, say:say || "", fr:"", ru:"", en:""}; mEl.textContent = m; nEl.textContent = note || ""; el.dataset.st = st || "ok"; };
+  const remote = (from, toL, sayOut) => {
+    put(t("spLoading"), "", "", "load"); show();
+    remoteTr(q, toL, from).then(out=>{ if (req !== SP.req) return; if (out) put(out, t("spAuto"), sayOut ? out : q, "ok"); else put(t("spNone"), navigator.onLine === false ? t("spOffline") : "", "", "none"); spPaintFav(); spPlace(); });
+  };
+  if (han) {
+    const D = zhDict(), clean = txt.replace(/[，。？！、：；“”‘’（）《》\s]/g, "");
+    const w = D.get(clean);
+    if (w) { put(LANG === "en" ? w.en : w.ru, w.py, clean, "ok"); return show(); }
+    if (clean.length === 1 && typeof ZH_CH !== "undefined" && ZH_CH[clean]) { const c = ZH_CH[clean]; put(c.d || "", c.p, clean, "ok"); return show(); }
+    return remote("zh-CN", to, false);
+  }
+  if (cyr) return remote("ru", "zh-CN", true);
+  remote("en", "zh-CN", true);
+}
 function spCheck(fake){
   const sel = fake || (window.getSelection ? window.getSelection() : null);
   if (!fake) SP.manual = 0;
@@ -819,10 +856,10 @@ function spCheck(fake){
   const txt = raw.replace(/^[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+|[\s«»"“”„.,;:!?¡¿()\[\]…—–-]+$/g, "");
   const q = raw.replace(/^[\s«»"“”„.,;:!?()\[\]…—–-]+/, "").replace(/[\s«»"“”„,;:()\[\]—–-]+$/, "").replace(/([^.])\.$/, "$1").trim();
   const tail = endPunct(q);
-  const cyr = /[А-Яа-яЁё]/.test(txt), lat = /[a-zà-ÿœæç]/i.test(txt);
+  const cyr = /[А-Яа-яЁё]/.test(txt), lat = /[a-zà-ÿœæçāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/i.test(txt), han = /[\u4e00-\u9fff]/.test(txt);
   /* длинное выделение: окошко с кнопкой «Перевести» → панель переводчика */
-  const long = txt.length > 80 || txt.split(" ").length > 8;
-  if (!txt || (!cyr && !lat) || (!long && cyr && lat) || !spAllowed(sel)) { spHide(); return; }
+  const long = txt.length > 80 || txt.split(" ").length > 8 || (han && txt.length > 24);
+  if (!txt || (!cyr && !lat && !han) || (!long && cyr && lat) || !spAllowed(sel)) { spHide(); return; }
   if (!SP.el) spBuild();
   const range = sel.getRangeAt(0).cloneRange();
   if (SP.entry && SP.entry.sel === q && !SP.el.hidden) { SP.range = range; spPlace(); return; }
@@ -840,6 +877,7 @@ function spCheck(fake){
     return show();
   }
   if (COURSE === "es") return esPop({txt, q, cyr, req, to, el, mEl, nEl, show});
+  if (COURSE === "zh") return zhPop({txt, q, cyr, han, req, to, el, mEl, nEl, show});
   const loading = () => { mEl.textContent = t("spLoading"); nEl.textContent = ""; el.dataset.st = "load"; };
   const fail = () => { mEl.textContent = t("spNone"); nEl.textContent = navigator.onLine === false ? t("spOffline") : ""; el.dataset.st = "none"; };
   /* --- французский → ru/en --- */
@@ -993,13 +1031,13 @@ document.addEventListener("click", e=>{
   inp.dispatchEvent(new Event("input", {bubbles:true}));
 });
 const ACC_ES = ["á","é","í","ó","ú","ñ","ü","¿","¡"];
-const accBar = () => `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
+const accBar = () => COURSE === "zh" ? "" : `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
 const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
 
 /* =========================================================
    exercise blocks (with saved answers)
    ========================================================= */
-function praise(r){ if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
+function praise(r){ if (COURSE === "zh") return r>=1 ? "太好了！" : r>=.8 ? "很好！" : r>=.6 ? "不错！" : "再练练…"; if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
 /* заголовок блока: «Упр. 1 · Grammaire — выбери артикль» → заголовок «Упр. 1 · Grammaire» + подзаголовок «Выбери артикль» */
 function exHead(ex, i){
   const h = String(ex.h || ""), m = h.match(/^(.*?)\s+—\s+([\s\S]+)$/);
@@ -1404,7 +1442,7 @@ function navGroup(key, head, links, opts){
 }
 const unitBadge = (u, hue) => `<span class="ng-n" data-hue="${hue}">${u}</span>`;
 function navTopics(units, unitW, uname){
-  const es = COURSE === "es";
+  const es = notFr();
   if (!es && FRMODE === "tutor" && !TUT.length) return `<p class="nav-empty">${t("tutorEmptyS")}</p>`;
   const tut = !es && FRMODE === "tutor", cah = (!es && FRMODE === "cahier") || tut, list = tut ? TUT : cah ? CAH : BOOK;
   const first = units.find(u=>list.some(x=>x.unit===u));
@@ -1423,8 +1461,7 @@ function navSearchHTML(){
   return `<label class="nsearch">${ICO.search}<input type="search" id="navQ" placeholder="${esc(t("navSearch"))}" autocomplete="off" spellcheck="false" aria-label="${esc(t("navSearch"))}"><kbd>/</kbd></label>`;
 }
 function navWhere(tp){
-  const es = COURSE === "es";
-  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
+  return tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${unitWord()} ${tp.unit}` : tp.sec === "gram" ? t("gram") : t("ref");
 }
 function pagesOf(tp){
   const src = String(tp.page || "").replace(/(Unidad|Unité)\s*\d+/g, ""), out = [];
@@ -1435,7 +1472,7 @@ function navSearchRun(q){
   const box = $("#navRes"), groups = $("#navGroups"); if (!box || !groups) return;
   const f = fold(q).trim();
   if (!f) { box.hidden = true; groups.hidden = false; box.innerHTML = ""; return; }
-  const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
+  const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : COURSE === "zh" ? ["hanzi", t("hanzi")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
   const tps = [...BOOK, ...CAH, ...TUT, ...GRAM, ...REF];
   const hit = s => fold(s).includes(f);
   /* число → темы с этой страницей учебника / тетради */
@@ -1477,14 +1514,14 @@ document.addEventListener("keydown", e=>{
   setTimeout(()=>{ const q2 = $("#navQ"); if (q2) q2.focus(); }, 30);
 });
 const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
-let VIEW_ZH = decodeURIComponent((location.hash||"").slice(1)) === "zh";
-const ddCur = () => VIEW_ZH ? "zh" : COURSE;
+const VIEW_ZH = false;   /* китайский теперь настоящий курс (было: заглушка #zh) */
+const ddCur = () => COURSE;
 const cName = c => t("courseNames")[c];
-const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${c === "zh" ? t("soon") : COURSES[c].book}</small></span>`;
+const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>`;
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
     <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}${cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
-    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}${c === "zh" ? ` <small class="cdd-soon">${t("soon")}</small>` : ""}</button>`).join("")}</div>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}</button>`).join("")}</div>
   </div>`;
 }
 function paintCourseDD(c){
@@ -1506,8 +1543,6 @@ function wireCourseDD(){
     o.addEventListener("click", ()=>{
       cddOpen(false); btn.focus({preventScroll:true});
       const c = o.dataset.course;
-      if (c === "zh") { location.hash = "zh"; return; }
-      if (VIEW_ZH && c === COURSE) { location.hash = "home"; return; }
       setCourse(c);
     });
     o.addEventListener("keydown", e=>{
@@ -1534,8 +1569,8 @@ function setFrMode(m, quiet){
 }
 document.addEventListener("click", e=>{ const b = e.target.closest("[data-frmode]"); if (b) setFrMode(b.dataset.frmode); });
 function buildNav(){
-  const es = COURSE === "es", unitW = es ? t("unitWes") : t("unitW");
-  const units = es ? ["1","2","3","4"] : ["0","1","2","3"], uname = u => es ? t("esUnits")[u] : t("units")[u];
+  const es = notFr(), zh = COURSE === "zh", unitW = unitWord();
+  const units = UNITS(), uname = unitName;
   nav.innerHTML = `
   <div class="nav-top">
     ${courseDDHTML()}
@@ -1547,7 +1582,7 @@ function buildNav(){
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
       <a class="nl big" href="#bank" data-id="bank">${ICO.bank}<span class="nl-t">${t("bank")}</span></a>
-      ${es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>`}
+      ${zh ? `<a class="nl big" href="#hanzi" data-id="hanzi">${f7("paintbrush")}<span class="nl-t">${t("hanzi")}</span></a>` : es ? `<a class="nl big" href="#lexico" data-id="lexico">${ICO.lex}<span class="nl-t">${t("lexico")}</span></a>` : `<a class="nl big" href="#quizlet" data-id="quizlet">${ICO.quiz}<span class="nl-t">${t("quizlet")}</span><span class="nl-badge" id="srsBadge" hidden></span></a>`}
       <a class="nl big" href="#shpargalka" data-id="shpargalka">${ICO.cheat}<span class="nl-t">${t("cheat")}</span></a>
     </div>
     ${es ? `<div class="nav-sec">${t("fromBook")}</div>` : frModeHTML("nav")}
@@ -1561,7 +1596,7 @@ function buildNav(){
   $$("[data-lang]", nav).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang)));
   wireCourseDD(); wireNavSearch();
   $$(".ng-h", nav).forEach(b=>b.addEventListener("click", ()=>{ const g = b.parentElement; navOpenGroup(g, !g.classList.contains("open"), true); }));
-  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = VIEW_ZH ? `<span class="cs-badge cs-zh">ZH</span><b>中文</b><span>${cName("zh")}</span>` : `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
+  const tb = $(".topbar .brand"); if (tb) tb.innerHTML = `<span class="cs-badge cs-${COURSE}">${COURSES[COURSE].code}</span><b>${COURSES[COURSE].name}</b><span>${COURSES[COURSE].book}</span>`;
   const mt = $("#meTop"); if (mt) mt.outerHTML = meTopHTML(); else { const mb = $("#menuBtn"); if (mb) mb.insertAdjacentHTML("beforebegin", meTopHTML()); }
   paintNavProgress(); paintAccount(); markActive();
 }
@@ -1698,28 +1733,29 @@ window.matchMedia("(max-width:979px)").addEventListener("change", ()=>closeNav()
 function totals(){ let ex = 0, done = 0, full = 0, sum = 0; TOP.forEach(tp=>{ const p = topicPct(tp); ex += p.n; done += p.done; sum += p.pct*p.n; if (p.pct >= .995) full++; }); return {ex, done, full, avg: ex ? sum/ex : 0}; }
 function card(tp){ const p = topicPct(tp), pc = Math.round(p.pct*100); return `<a class="tc${pc >= 100 ? " done" : ""}" href="#${tp.id}" data-hue="${HUE_OF(tp)}"><span class="tc-glow" aria-hidden="true"></span><span class="tc-top"><span class="tc-ic">${kindIco(tp)}</span><span class="tc-go">${pc >= 100 ? ICO.check : ""}${t("tcOpen")}</span></span><h3>${tp.title}</h3><p>${tp.ru}</p><span class="tc-f"><span class="bar"><i style="width:${pc}%"></i></span><span class="tc-m"><span class="k">${tp.kind}</span><span class="pc">${p.done}/${p.n}</span></span></span></a>`; }
 function testsOf(){ return S.tests.filter(x=>(x.c||"fr") === COURSE); }
-const scoreTxt = h => (h.c === "es") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
+const scoreTxt = h => (h.c === "es" || h.c === "zh") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
 function saveNudge(){
   if (Cloud.kind !== "supabase" || ME || Cloud.state === "loading") return "";
   return `<a class="nudge" href="#account"><span class="nudge-i">${ICO.cloud}</span><span>${t("saveNudge")}</span><b>${t("saveNudgeBtn")}${ARR}</b></a>`;
 }
 let HOME_U = "all";
 function renderHome(){
-  const es = COURSE === "es", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
+  const es = notFr(), zh = COURSE === "zh", tt = totals(), tests = testsOf(), last = tests[tests.length-1];
   const nEx = TOP.reduce((s,x)=>s+x.ex.length,0);
-  const unitW = es ? t("unitWes") : t("unitW"), units = es ? ["1","2","3","4"] : ["0","1","2","3"];
+  const unitW = unitWord(), units = UNITS();
   const seq = !es && FRMODE === "cahier" ? CAH : !es && FRMODE === "tutor" ? TUT : ORDER;
   const cont = tt.done ? seq.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
-  const uname = u => es ? t("esUnits")[u] : t("units")[u] + (u==="0" && FRMODE === "livre" ? t("unit0note") : "");
+  const uname = u => es ? unitName(u) : t("units")[u] + (u==="0" && FRMODE === "livre" ? t("unit0note") : "");
   const uHead = u => `<h3 class="unit-h"><span class="ng-n u-pill" data-hue="${u}">${unitW} ${u}</span><small>${uname(u)}</small></h3>`;
-  if (!es || !["all","ref",...units].includes(HOME_U)) HOME_U = "all";
-  const showU = k => !es || HOME_U === "all" || HOME_U === k;
-  const tabs = es ? `<div class="seg ph-tabs" role="tablist">${["all",...units,"ref"].map(k=>`<button type="button" role="tab" data-hu="${k}" class="${HOME_U===k?"on":""}" aria-selected="${HOME_U===k}">${k === "all" ? t("homeAll") : k === "ref" ? t("navMore") : "Unidad " + k}</button>`).join("")}</div>` : frModeHTML("home");
+  const ZG = {"a":["1","2","3","4","5"], "b":["6","7","8","9","10"], "c":["11","12","13","14","15"]};
+  if (!es || !["all","ref",...(zh ? Object.keys(ZG) : units)].includes(HOME_U)) HOME_U = "all";
+  const showU = k => !es || HOME_U === "all" || HOME_U === k || (zh && ZG[HOME_U] && ZG[HOME_U].includes(k));
+  const tabs = zh ? `<div class="seg ph-tabs" role="tablist">${["all","a","b","c"].map(k=>`<button type="button" role="tab" data-hu="${k}" class="${HOME_U===k?"on":""}" aria-selected="${HOME_U===k}">${k === "all" ? t("homeAll") : t("unitWzh") + " " + ZG[k][0] + "–" + ZG[k][4]}</button>`).join("")}</div>` : es ? `<div class="seg ph-tabs" role="tablist">${["all",...units,"ref"].map(k=>`<button type="button" role="tab" data-hu="${k}" class="${HOME_U===k?"on":""}" aria-selected="${HOME_U===k}">${k === "all" ? t("homeAll") : k === "ref" ? t("navMore") : "Unidad " + k}</button>`).join("")}</div>` : frModeHTML("home");
   const cta = cont ? `<a class="btn sec" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span>${ARR}</a>` : `<a class="btn sec" href="#${seq[0] ? seq[0].id : "test"}">${t("homeStart")}${ARR}</a>`;
   main.innerHTML = `<div class="col">
   <header class="ph">
-    <h1>${es ? `El español <em>paso a paso</em>` : `Le français <em>pas à pas</em>`}</h1>
-    <p class="ph-sub">${es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
+    <h1>${zh ? `<span lang="zh-CN">汉语</span> <em lang="zh-CN">一步一步</em>` : es ? `El español <em>paso a paso</em>` : `Le français <em>pas à pas</em>`}</h1>
+    <p class="ph-sub">${zh ? t("zhHeroLead", nEx) : es ? t("esHeroLead", nEx) : t("heroLead", nEx)}</p>
     <div class="stats"><span><b>${tt.done}</b>${t("solved").replace("{n}", tt.ex)}</span>${last ? `<span><b>${scoreTxt(last)}</b>${t("lastTest")}</span>` : ""}</div>
   </header>
   <div class="ph-bar">${tabs}<span class="ph-div" aria-hidden="true"></span><div class="ph-act">${cta}</div></div>
@@ -1730,14 +1766,14 @@ function renderHome(){
   ${units.map(u=>{ const g = CAH.filter(x=>x.unit===u); return g.length ? `${uHead(u)}<div class="cards">${g.map(card).join("")}</div>` : ""; }).join("")}` : `
   ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2></div>`}
   ${units.filter(showU).map(u=>`<section class="hu">${uHead(u)}<div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div></section>`).join("")}
-  ${showU("ref") ? `${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
+  ${showU("ref") && !zh ? `${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
   <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>` : ""}`}
   </div>`;
   $$("[data-hu]", main).forEach(b=>b.addEventListener("click", ()=>{ HOME_U = b.dataset.hu; renderHome(); }));
 }
 function renderTopic(tp){
   const seq = seqOf(tp), idx = seq.indexOf(tp), prev = seq[idx-1], next = seq[idx+1], es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${unitWord()} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
@@ -1745,17 +1781,18 @@ function renderTopic(tp){
     <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button></div>
   </header>
   <section class="theory">${tp.theory}</section>
-  <section class="practice" id="practice"><h2>${es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
+  <section class="practice" id="practice"><h2>${COURSE === "zh" ? "练习 · " + t("practiceZh") : es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
   <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${ARL}${t("back")}</small>${prev.title}</a>` : ""}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}${ARR}</small>${next.title}</a>` : `<a class="next" href="#test"><small>${t("next")}${ARR}</small>${t("test")}</a>`}</nav>
   </article></div>`;
   const exs = $(".exs", main);
   tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
   $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
   wireDeck(tp);
+  if (COURSE === "zh" && typeof hzFillSteps === "function") hzFillSteps(main);
 }
 function renderCheat(){
   const es = COURSE === "es";
-  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${es ? t("esCheatEyebrow") : t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
+  main.innerHTML = `<div class="col" style="max-width:1100px"><header class="t-head seyes"><p class="eyebrow">${COURSE === "zh" ? t("zhCheatEyebrow") : es ? t("esCheatEyebrow") : t("cheatEyebrow")}</p><h1>${t("cheat")}</h1><p class="t-ru">${t("cheatSub")}</p></header>${CHEATX}</div>`;
 }
 
 /* ---------- léxico (испанский) ---------- */
@@ -1823,8 +1860,8 @@ function genTest(n){
   return pick.map(k=>{ const q = POOLX[k]; return q.o ? {...q, k, oo: shuffle(q.o.map((o,j)=>({o,j})))} : {...q, k}; });
 }
 function renderTest(){
-  const hist = testsOf().slice(-5).reverse(), es = COURSE === "es";
-  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${es ? t("esTestEyebrow") : t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${es ? t("esTestSub", POOLX.length) : t("testSub", POOLX.length)}</p>
+  const hist = testsOf().slice(-5).reverse(), es = notFr();
+  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${COURSE === "zh" ? t("zhTestEyebrow") : es ? t("esTestEyebrow") : t("testEyebrow")}</p><h1>${t("test")}</h1><p class="t-ru">${es ? t("esTestSub", POOLX.length) : t("testSub", POOLX.length)}</p>
   <div class="tset">
     <div class="bank-opt"><span class="bank-l">${t("tCheckL")}</span><div class="seg big" role="group" aria-label="${esc(t("modeGroup"))}"><button type="button" data-m="now" class="${TMODE==="now"?"on":""}">${t("modeNow")}</button><button type="button" data-m="end" class="${TMODE==="end"?"on":""}">${t("modeEnd")}</button></div></div>
     <div class="bank-opt"><span class="bank-l">${t("tLenL")}</span><div class="seg big">${[20,30,45].map(n=>`<button type="button" data-n="${n}" class="${TLEN===n?"on":""}">${n}</button>`).join("")}</div></div>
@@ -1838,7 +1875,7 @@ function renderTest(){
 function startTest(n){
   TEST = genTest(n);
   const now = TMODE === "now", res = TEST.map(()=>null);
-  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${COURSE === "es" ? t("testRunEyebrow", TEST.length, now).replace("Contrôle blanc", "Prueba") : t("testRunEyebrow", TEST.length, now)}</p><h1>${t("test")}</h1><p class="t-ru">${t("testRunSub", now)}</p></header>
+  main.innerHTML = `<div class="col"><header class="t-head seyes"><p class="eyebrow">${COURSE === "es" ? t("testRunEyebrow", TEST.length, now).replace("Contrôle blanc", "Prueba") : COURSE === "zh" ? t("testRunEyebrow", TEST.length, now).replace("Contrôle blanc", "自测") : t("testRunEyebrow", TEST.length, now)}</p><h1>${t("test")}</h1><p class="t-ru">${t("testRunSub", now)}</p></header>
   <section class="exb"><div class="exb-b">${accBar()}<div id="tq"></div></div><footer class="exb-f"><span class="exb-score" id="tstat"></span><div class="exb-btns"><button type="button" class="btn pri" id="submit">${now ? t("getGrade") : t("submit")}</button></div></footer></section></div>`;
   const box = $("#tq");
   function stat(){
@@ -1893,7 +1930,7 @@ function gradeTest(box, now, res){
     if (ok) got++;
     const p = per[q.tp] || (per[q.tp] = {g:0, n:0}); p.n++; if (ok) p.g++;
   });
-  const n20 = Math.round(got / TEST.length * 20 * 2) / 2, es = COURSE === "es", pct = Math.round(got / TEST.length * 100);
+  const n20 = Math.round(got / TEST.length * 20 * 2) / 2, es = notFr(), pct = Math.round(got / TEST.length * 100);
   const V = es ? t("esVerdicts") : t("verdicts"), verdict = n20 >= 16 ? V[0] : n20 >= 12 ? V[1] : n20 >= 10 ? V[2] : V[3];
   const d = new Date();
   S.tests.push({d: d.toLocaleDateString(LANG==="en"?"en-GB":"ru-RU") + " " + d.toLocaleTimeString(LANG==="en"?"en-GB":"ru-RU",{hour:"2-digit",minute:"2-digit"}), at: d.getTime(), got, total: TEST.length, n20, c: COURSE});
@@ -1924,7 +1961,7 @@ function renderZh(){
 }
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = /^quizlet\//.test(h) ? "quizlet" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
+  const id = /^quizlet\//.test(h) ? "quizlet" : /^hanzi(\/|$)/.test(h) ? "hanzi" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
   const cur = $(`#navGroups a.nl[data-id="${id}"]`); if (cur) { const g = cur.closest(".ng"); if (g && !g.classList.contains("open")) navOpenGroup(g, true, false); }
 }
@@ -1941,8 +1978,8 @@ function route(keepScroll){
   let want = null;
   if (/^quizlet(\/|$)/.test(h) || FR_IDS.has(h)) want = "fr";
   else if (h === "lexico" || /^es[0-9a-z]*-/.test(h)) want = "es";
+  else if (h === "zh" || /^hanzi(\/|$)/.test(h) || /^zh\d+-/.test(h)) want = "zh";
   if (want && want !== COURSE) setCourse(want, true);
-  if ((h === "zh") !== VIEW_ZH) { VIEW_ZH = h === "zh"; const keep = nav.classList.contains("open"); buildNav(); if (keep) nav.classList.add("open"); }
   const y = window.scrollY;
   if (COURSE === "fr" && byId[h]) { const m = byId[h].sec === "cahier" ? "cahier" : byId[h].sec === "tutor" ? "tutor" : "livre"; if (FRMODE !== m) setFrMode(m, true); }
   if (byId[h]) renderTopic(byId[h]);
@@ -1952,7 +1989,7 @@ function route(keepScroll){
   else if (h === "lexico") renderLexico();
   else if (h === "account") renderAccount();
   else if (h === "bank") renderBank();
-  else if (h === "zh") renderZh();
+  else if (/^hanzi(\/|$)/.test(h)) renderHanzi(h.slice(6));
   else renderHome();
   markActive(); closeNav(); updSrsBadge();
   if (!keepScroll && !(inQz && fromQz)) { main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); }

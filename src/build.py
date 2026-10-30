@@ -2,7 +2,7 @@
 import os, shutil
 HERE=os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 OUT=os.path.dirname(HERE)  # корень репозитория = то, что публикует GitHub Pages
-files=['visuals.js','img-credits.js','data-book.js','data-ref.js','data-test.js','vocab.js','gloss.js','es-book.js','es-book-2.js','es-book-3.js','es-book-4.js','es-gram.js','es-lexico.js','es-lexico-4.js','es-test.js','es-cheat.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','bank-extra.js','why.js','why2.js','fr-u3.js','fr-cahier.js','fr-plus.js','es-plus.js','fr-phrase.js','es-frase.js','fr-test-u1.js','fr-test-u2.js','fr-test-u12.js','fr-tutor.js','why2-fr.js','why2-cahier.js','why2-es.js','why2-pool.js','engine2.js']
+files=['visuals.js','img-credits.js','data-book.js','data-ref.js','data-test.js','vocab.js','gloss.js','es-book.js','es-book-2.js','es-book-3.js','es-book-4.js','es-gram.js','es-lexico.js','es-lexico-4.js','es-test.js','es-cheat.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','bank-extra.js','why.js','why2.js','fr-u3.js','fr-cahier.js','fr-plus.js','es-plus.js','fr-phrase.js','es-frase.js','fr-test-u1.js','fr-test-u2.js','fr-test-u12.js','fr-tutor.js','why2-fr.js','why2-cahier.js','why2-es.js','why2-pool.js','zh-core.js','zh-chars.js','zh-hsk2-a.js','zh-hsk2-b.js','zh-hsk2-c.js','zh-extra.js','engine2.js']
 js=''.join(open(f).read()+'\n' for f in files)
 # иконки: только Framework7 Icons (src/f7-icons.json, собирается src/f7gen.py)
 import json, re
@@ -13,7 +13,7 @@ f7js=('const F7 = '+json.dumps(F7I, ensure_ascii=False)+';\n'
  '/* пара иконок «выкл / вкл» — видна та, что соответствует классу .on у родителя */\n'
  'const f7on = (off, on, c) => f7(off, "f7-off" + (c ? " " + c : "")) + f7(on, "f7-on" + (c ? " " + c : ""));\n')
 # модули платформы встраиваются внутрь движка (общая область видимости)
-mods=''.join(open(f).read()+'\n' for f in ['game.js','platform.js','study.js','tools.js','quizlet.js'])
+mods=''.join(open(f).read()+'\n' for f in ['game.js','platform.js','study.js','tools.js','quizlet.js','hanzi.js'])
 assert js.count('/*@@MODULES@@*/')==1
 js=js.replace('/*@@MODULES@@*/', mods)
 shell=open('shell.html').read()
@@ -34,7 +34,7 @@ head=head.replace('<meta name="claude:viewport-fit-sides" content="cover">\n',''
 fav="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%233446d0'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3E%C3%A9%3C/text%3E%3C/svg%3E"
 page=('<!doctype html>\n<html lang="ru">\n<head>\n<meta charset="utf-8">\n'
  '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
- '<meta name="description" content="Учи языки с нуля шаг за шагом: французский и испанский (скоро — китайский). Понятная теория, упражнения с мгновенной проверкой и объяснениями, лексика, карточки и тесты для самопроверки.">\n'
+ '<meta name="description" content="Учи языки с нуля шаг за шагом: французский, испанский и китайский (HSK 2, с тренажёром иероглифов). Понятная теория, упражнения с мгновенной проверкой и объяснениями, лексика, карточки и тесты для самопроверки.">\n'
  '<meta name="theme-color" content="#f3f4fa" media="(prefers-color-scheme: light)">\n'
  '<meta name="theme-color" content="#0f1127" media="(prefers-color-scheme: dark)">\n'
  f'<link rel="icon" href="{fav}">\n'
@@ -49,6 +49,9 @@ for f in ['supabase.js','schema.sql','README.md','.nojekyll']:
 # картинки (фон экрана входа и т.п.)
 if os.path.isdir('static/img'):
     shutil.copytree('static/img', os.path.join(OUT,'img'), dirs_exist_ok=True)
+# китайский: данные черт иероглифов и библиотека Hanzi Writer (грузятся по требованию)
+if os.path.isdir('static/zh'):
+    shutil.copytree('static/zh', os.path.join(OUT,'zh'), dirs_exist_ok=True)
 if not os.path.exists(os.path.join(OUT,'config.js')):
     shutil.copy('static/config.js',os.path.join(OUT,'config.js'))
 print('index.html', len(page))

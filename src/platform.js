@@ -189,7 +189,7 @@ function wireOnboard(){
 }
 
 /* ---------- после первого входа: язык → уровень → тест → стартовый юнит ---------- */
-const PL_UNITS = {fr:{first:"0", test:["1","2","3"]}, es:{first:"1", test:["1","2","3","4"]}};
+const PL_UNITS = {fr:{first:"0", test:["1","2","3"]}, es:{first:"1", test:["1","2","3","4"]}, zh:{first:"1", test:["1","3","5","7","9","11","13"]}};
 const PL_PER = 4, PL_PASS = 3;
 const plShuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const PL_CH = f7("chevron_right", "pl-ch");
@@ -234,8 +234,7 @@ function plPaint(){
   let h = "";
   if (PL.step === "lang") {
     h = `${PL.on ? back(t("plCancel"), "cancel") : ""}<h2 class="g-title">${t("plLangH")}</h2><p class="auth-sub">${t("plLangSub")}</p>
-    <div class="pl-list">${["fr","es"].map(c=>`<button type="button" class="pl-opt" data-plc="${c}">${CFLAG[c]}<span class="pl-tx"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>${PL_CH}</button>`).join("")}
-    <button type="button" class="pl-opt" disabled>${CFLAG.zh}<span class="pl-tx"><b>${cName("zh")}</b></span><span class="pl-soon">${t("soon")}</span></button></div>`;
+    <div class="pl-list">${["fr","es","zh"].map(c=>`<button type="button" class="pl-opt" data-plc="${c}">${CFLAG[c]}<span class="pl-tx"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>${PL_CH}</button>`).join("")}</div>`;
   } else if (PL.step === "lvl") {
     h = `${back(t("plBack"), "lang")}<h2 class="g-title">${t("plLvlH", PL.c)}</h2><p class="auth-sub">${t("plLvlSub")}</p>
     <div class="pl-list">
@@ -345,10 +344,10 @@ function panelSet(p){
   let armed = "";
   p.innerHTML = `<div class="panel-grid">
     <div class="pcard"><h3>${t("langH")}</h3><div class="seg big">${[["ru","Русский"],["en","English"]].map(([k,n])=>`<button type="button" data-lang2="${k}" class="${LANG===k?"on":""}">${n}</button>`).join("")}</div></div>
-    <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("courseH")}</h3><div class="seg big">${["fr","es","zh"].map(c=>`<button type="button" data-course2="${c}" class="${COURSE===c?"on":""}">${COURSES[c].name}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("newWordsH")}</h3><div class="seg big">${[5,10,15,20,30].map(n=>`<button type="button" data-nw="${n}" class="${(QZ.perDay||15)===n?"on":""}">${n}</button>`).join("")}</div></div>
     <div class="pcard"><h3>${t("plSetH")}</h3><p class="muted" style="margin:0;font-size:14px">${t("plSetP")}</p><div class="cb-btns"><button type="button" class="btn sm sec" id="plRetake">${t("plSetBtn")}</button></div></div>
-    <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
+    <div class="pcard"><h3>${t("resetH")}</h3><div class="cb-btns">${["fr","es","zh"].map(c=>`<button type="button" class="btn sm sec danger" data-reset="${c}">${t("resetCourse", COURSES[c].name)}</button>`).join("")}</div></div>
   </div>`;
   $$("[data-lang2]", p).forEach(b=>b.addEventListener("click", ()=>setLang(b.dataset.lang2)));
   $$("[data-course2]", p).forEach(b=>b.addEventListener("click", ()=>{ setCourse(b.dataset.course2, true); renderAccount(); }));
@@ -361,7 +360,8 @@ function panelSet(p){
   }));
 }
 function resetCourse(c){
-  const ids = c === "es" ? ES_BUILD(LANG).map(x=>x.id) : TOPICS.map(x=>x.id);
+  const ids = c === "es" ? ES_BUILD(LANG).map(x=>x.id) : c === "zh" ? ZH_BUILD(LANG).map(x=>x.id) : TOPICS.map(x=>x.id);
+  if (c === "zh") { S.quiz.hz = {}; touch("quiz"); }
   ids.forEach(id=>{ delete S.p[id]; if (S.ans[id]) { delete S.ans[id]; touch("ans-" + id); } });
   S.tests = S.tests.filter(x=>(x.c||"fr") !== c);
   if (c === "fr") { S.quiz = {c:{}, best:{}, fav:S.quiz.fav||[], sd:{}}; touch("quiz"); }
@@ -369,14 +369,14 @@ function resetCourse(c){
   touch("progress"); paintNavProgress();
 }
 function panelProg(p){
-  const c = PROG_C || COURSE, top = c === COURSE ? TOP : (c === "es" ? ES_BUILD(LANG) : (LANG === "en" ? TOPICS_EN : TOPICS));
+  const c = PROG_C || COURSE, top = c === COURSE ? TOP : (c === "es" ? ES_BUILD(LANG) : c === "zh" ? ZH_BUILD(LANG) : (LANG === "en" ? TOPICS_EN : TOPICS));
   const tests = S.tests.filter(x=>(x.c||"fr") === c);
   let ex = 0, done = 0, sum = 0, full = 0; top.forEach(tp=>{ const q = topicPct(tp); ex += q.n; done += q.done; sum += q.pct*q.n; if (q.pct >= .995) full++; });
   const best = tests.reduce((m,x)=>Math.max(m, x.got/(x.total||1)), 0);
   const today = gDay(), cells = [];
   const start = dayShift(today, -55 - ((new Date().getDay() + 6) % 7));
   for (let i = 0; i < 56 + ((new Date().getDay() + 6) % 7) + 1 && cells.length < 63; i++) { const k = dayShift(start, i); if (k > today) break; cells.push([k, S.game.hist[k] || 0]); }
-  p.innerHTML = `<div class="seg big prog-sw">${["fr","es"].map(x=>`<button type="button" data-pc="${x}" class="${c===x?"on":""}">${COURSES[x].name}</button>`).join("")}</div>
+  p.innerHTML = `<div class="seg big prog-sw">${["fr","es","zh"].map(x=>`<button type="button" data-pc="${x}" class="${c===x?"on":""}">${COURSES[x].name}</button>`).join("")}</div>
   <div class="kpis">
     <div class="kpi"><b>${done}<small>/${ex}</small></b><span>${t("stSolved")}</span></div>
     <div class="kpi"><b>${full}<small>/${top.length}</small></b><span>${t("stTopics")}</span></div>

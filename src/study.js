@@ -8,7 +8,7 @@ Object.assign(I18N.ru, {
   bankDoneH:(g,n)=>`${g} из ${n} верно`, bankRetry:n=>`Повторить ошибки (${n})`, bankNew:"Новый набор", bankBack:"К настройкам", bankFrom:"Из темы",
   deckOn:"Режим карточек", deckOff:"Обычный режим", deckGo:"К заданиям", deckOf:(i,n)=>`${i} / ${n}`, deckKeys:"← → или свайп — листать · Esc — обычный режим",
   deckPlan:(a,b)=>`${a} ${plural(a,["карточка","карточки","карточек"])} теории и ${b} ${plural(b,["задание","задания","заданий"])}`, deckPracticeH:"Теперь — практика", deckPracticeP:n=>`${n} ${plural(n,["задание","задания","заданий"])} по теме. Ответ проверяется по Enter, после ответа можно открыть «?».`, deckStart:"Начать", deckExOf:(i,n)=>`Задание ${i} / ${n}`, deckFinLeft:n=>`Осталось ${n} ${plural(n,["задание","задания","заданий"])}`, deckNext:"Дальше", deckFinRead:"Теория прочитана.", deckToTodo:"К нерешённому",
-  lexCal:"Календарь", tfEs:["Verdadero — верно","Falso — неверно"], tfLbl:"Verdadero o falso",
+  lexCal:"Календарь", tfEs:["Verdadero — верно","Falso — неверно"], tfZh:["对 — верно","不对 — неверно"], tfLbl:"Verdadero o falso",
   practiceSub:"Практика по теме. Впиши или выбери ответ — проверка по Enter. После ответа можно открыть «?» с объяснением.",
   qzSub:"Карточки со словами из юнитов 0–3.",
   listenHint:"Пиши цифры и нажми Enter",
@@ -28,7 +28,7 @@ Object.assign(I18N.en, {
   bankDoneH:(g,n)=>`${g} of ${n} correct`, bankRetry:n=>`Retry mistakes (${n})`, bankNew:"New set", bankBack:"Back to settings", bankFrom:"Topic",
   deckOn:"Card mode", deckOff:"Normal mode", deckGo:"Go to exercises", deckOf:(i,n)=>`${i} / ${n}`, deckKeys:"← → or swipe to browse · Esc — normal mode",
   deckPlan:(a,b)=>`${a} theory ${a===1?"card":"cards"} and ${b} ${b===1?"exercise":"exercises"}`, deckPracticeH:"Now — practice", deckPracticeP:n=>`${n} ${n===1?"exercise":"exercises"} on this topic. Press Enter to check; after answering you can open “?”.`, deckStart:"Start", deckExOf:(i,n)=>`Exercise ${i} / ${n}`, deckFinLeft:n=>`${n} ${n===1?"exercise":"exercises"} left`, deckNext:"Next", deckFinRead:"Theory done.", deckToTodo:"To unsolved",
-  lexCal:"Calendar", tfEs:["Verdadero — true","Falso — false"], tfLbl:"Verdadero o falso",
+  lexCal:"Calendar", tfEs:["Verdadero — true","Falso — false"], tfZh:["对 — true","不对 — false"], tfLbl:"Verdadero o falso",
   practiceSub:"Practice for this topic. Type or pick an answer — press Enter to check. After answering you can open “?” for an explanation.",
   qzSub:"Flashcards with the words from units 0–3.",
   listenHint:"Type the digits and press Enter",
@@ -41,7 +41,7 @@ Object.assign(I18N.en, {
   tCheckL:"Checking", tLenL:"Questions", modeNow:"Instantly", modeEnd:"At the end", tGo:"Start",
   lexicoSub:"Word — translation — example. Click a Spanish word to hear it."
 });
-function tfOpts(){ return COURSE === "es" ? t("tfEs") : [t("vrai"), t("faux")]; }
+function tfOpts(){ return COURSE === "es" ? t("tfEs") : COURSE === "zh" ? t("tfZh") : [t("vrai"), t("faux")]; }
 function exLabel(ex){ return ex.t === "tf" && COURSE === "es" ? t("tfLbl") : t("label")[ex.t]; }
 
 /* правило для вопроса из банка пробной: берём «почему» первого похожего задания темы */
@@ -79,10 +79,9 @@ function renderBank(){
   /* новые темы (например, добавленный юнит) включаем по умолчанию */
   if (!cfg.seen) cfg.seen = cfg.sel.slice();
   tops.forEach(x=>{ if (!cfg.seen.includes(x.id)) { cfg.seen.push(x.id); if (!cfg.sel.includes(x.id)) cfg.sel.push(x.id); } });
-  const es = COURSE === "es";
   const groups = [];
-  const units = es ? ["1","2","3","4"] : ["0","1","2","3"];
-  units.forEach(u=>{ const g = tops.filter(x=>x.sec === "book" && x.unit === u); if (g.length) groups.push([`${es ? t("unitWes") : t("unitW")} ${u}`, g]); });
+  const units = UNITS();
+  units.forEach(u=>{ const g = tops.filter(x=>x.sec === "book" && x.unit === u); if (g.length) groups.push([`${unitWord()} ${u}`, g]); });
   const gr = tops.filter(x=>x.sec === "gram"); if (gr.length) groups.push([t("gram"), gr]);
   const rf = tops.filter(x=>x.sec === "ref"); if (rf.length) groups.push([t("ref"), rf]);
   units.forEach(u=>{ const g = tops.filter(x=>x.sec === "cahier" && x.unit === u); if (g.length) groups.push([`Cahier · ${t("unitW")} ${u}`, g]); });
@@ -205,7 +204,7 @@ function openDeck(tp, start){
   if (CLOSING) { const c = CLOSING; CLOSING = null; deckRestore(c); c.el.remove(); }
   DECK_TP = tp;
   const parts = deckCards(tp), es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${es ? t("unitWes") : t("unitW")} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${unitWord()} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   /* настоящие блоки заданий переезжают из страницы в карточки и возвращаются при закрытии */
   const exEls = $$(".exs > .exb", main), moved = exEls.map(el=>{ const ph = document.createComment("dk"); el.before(ph); return {el, ph}; });
   const nT = 1 + parts.length, hasEx = moved.length > 0;

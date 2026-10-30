@@ -5,7 +5,7 @@
 Object.assign(I18N.ru, {
   trTitle:"Переводчик", trBtn:"Перевести", trSrcPh:"Введи или вставь текст", trCopy:"Копировать", trCopied:"Скопировано", trClear:"Очистить",
   trSwap:"Поменять языки", trListen:"Слушать", trClose:"Закрыть", trFrom:"С языка", trTo:"На язык", trFail:"Не получилось перевести. Проверь интернет и попробуй ещё раз.",
-  trEmpty:"Здесь появится перевод", trAuto:"машинный перевод", trLangs:{fr:"Французский", es:"Испанский", ru:"Русский", en:"Английский"},
+  trEmpty:"Здесь появится перевод", trAuto:"машинный перевод", trLangs:{fr:"Французский", es:"Испанский", zh:"Китайский", ru:"Русский", en:"Английский"},
   plyPlay:"Слушать", plyPause:"Пауза", plyBack:"Назад на 5 секунд", plyFwd:"Вперёд на 5 секунд", plySpeed:"Скорость", plyWords:"Показывать слова", plyWords2:"Слова и перевод", plyWords0:"Скрыть слова", plyClose:"Закрыть плеер",
   plyDlg:"Слушать диалог",
   cntOk:"Верно", cntKnow:"Знаю", cntRead:"Прочитано", cntPairs:"Пары", cntPlaced:"Разложено", hintFirst:"Засчитывается первая попытка.", mcHint5:"Выбери вариант: ответ сразу проверится. Засчитывается первая попытка.", almostS:"Почти, проверь акценты:", gapN:n=>`Пропуск в предложении ${n}`, answerPh:"Ответ"
@@ -13,7 +13,7 @@ Object.assign(I18N.ru, {
 Object.assign(I18N.en, {
   trTitle:"Translator", trBtn:"Translate", trSrcPh:"Type or paste text", trCopy:"Copy", trCopied:"Copied", trClear:"Clear",
   trSwap:"Swap languages", trListen:"Listen", trClose:"Close", trFrom:"From", trTo:"To", trFail:"Couldn’t translate. Check your connection and try again.",
-  trEmpty:"The translation will appear here", trAuto:"machine translation", trLangs:{fr:"French", es:"Spanish", ru:"Russian", en:"English"},
+  trEmpty:"The translation will appear here", trAuto:"machine translation", trLangs:{fr:"French", es:"Spanish", zh:"Chinese", ru:"Russian", en:"English"},
   plyPlay:"Play", plyPause:"Pause", plyBack:"Back 5 seconds", plyFwd:"Forward 5 seconds", plySpeed:"Speed", plyWords:"Show the words", plyWords2:"Words and translation", plyWords0:"Hide the words", plyClose:"Close the player",
   plyDlg:"Play the dialogue",
   cntOk:"Correct", cntKnow:"Known", cntRead:"Read", cntPairs:"Pairs", cntPlaced:"Sorted", hintFirst:"Your first attempt counts.", mcHint5:"Pick an option: it’s checked right away. Your first attempt counts.", almostS:"Almost, check the accents:", gapN:n=>`Gap in sentence ${n}`, answerPh:"Answer"
@@ -21,11 +21,11 @@ Object.assign(I18N.en, {
 const ICO_X = f7("xmark");
 const ICO_COPY = f7("doc_on_doc");
 const ICO_SWAP = f7("arrow_right_arrow_left");
-const VOICE_LANG = {fr:"fr-FR", es:"es-ES", ru:"ru-RU", en:"en-US"};
+const VOICE_LANG = {fr:"fr-FR", es:"es-ES", zh:"zh-CN", ru:"ru-RU", en:"en-US"};
 /* озвучка на любом из четырёх языков */
 function sayIn(text, lang){
   if (!synth || !text) return;
-  if (lang === (COURSE === "es" ? "es" : "fr")) return speak(text);
+  if (lang === trCourse()) return speak(text);
   try { synth.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = VOICE_LANG[lang] || lang; u.rate = .95; synth.speak(u); } catch(e) {}
 }
 function copyText(s){
@@ -36,11 +36,13 @@ function copyText(s){
 
 /* ---------- переводчик ---------- */
 const TR = {el:null, from:"fr", to:"ru", req:0, timer:null};
-const trCourse = () => COURSE === "es" ? "es" : "fr";
+const trCourse = () => COURSE;
 function trDetect(s){
   const cyr = (s.match(/[А-Яа-яЁё]/g) || []).length, lat = (s.match(/[A-Za-zÀ-ÿœæçñ]/g) || []).length;
   if (cyr > lat) return "ru";
   const c = trCourse();
+  if (/[\u4e00-\u9fff]/.test(s)) return "zh";
+  if (c === "zh") return /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/.test(s) ? "zh" : "en";
   if (c === "fr" && FR_MARK.test(s)) return "fr";
   if (c === "es" && ES_MARK.test(s)) return "es";
   if (EN_FN.test(s) && !(c === "fr" ? FR_FN : ES_FN).test(s)) return "en";
@@ -154,7 +156,7 @@ function plyPrep(d){
 function plyVoices(lang){
   if (!synth) return [];
   const vs = synth.getVoices().filter(v=>v.lang && v.lang.toLowerCase().startsWith(lang));
-  const pref = lang === "fr" ? frVoice : esVoice;
+  const pref = lang === "fr" ? frVoice : lang === "zh" ? zhVoice : esVoice;
   const out = pref ? [pref] : []; vs.forEach(v=>{ if (!out.includes(v)) out.push(v); });
   return out;
 }
