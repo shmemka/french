@@ -2590,6 +2590,63 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
 /* варианты ответа: протянуть мышью по словам — перевод (подсветка ::highlight), долгое нажатие — перевод варианта (30.10.2026) */
 ::highlight(ans-sel){background-color:rgba(64,110,255,.26);color:inherit}
 @media (pointer:coarse){ #main .opt,#main .chip,#main .tok{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} }
+
+/* ============ конспект v2 (30.10.2026): Главное, картинки, проверь себя, диалог ============ */
+.ks{margin:4px 0 26px;padding:18px 20px 16px;border:1px solid var(--x-line);border-left:4px solid var(--encre);border-radius:12px;background:var(--sheet)}
+.ks-t{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--encre);margin-bottom:10px}
+.ks-l{margin:0;padding:0;list-style:none;counter-reset:ks;display:flex;flex-direction:column;gap:9px}
+.ks-l li{counter-increment:ks;position:relative;padding-left:34px;font-size:15.5px;line-height:1.55;color:var(--ink)}
+.ks-l li::before{content:counter(ks);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--encre) 10%,var(--sheet));color:var(--encre);font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.pics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:14px 0 22px}
+.pic{margin:0;border:1px solid var(--x-line);border-radius:12px;overflow:hidden;background:var(--sheet);cursor:pointer;color:var(--ink)!important;text-decoration:none!important;border-bottom-width:1px!important;transition:border-color .15s,box-shadow .15s,transform .15s}
+.pic:hover{border-color:var(--x-in);box-shadow:0 4px 14px rgba(20,24,50,.08);transform:translateY(-1px)}
+.pic.speaking{border-color:var(--encre)}
+.pic-i{display:block;aspect-ratio:4/3;background:var(--x-soft);overflow:hidden}
+.pic-i img{display:block;width:100%;height:100%;object-fit:cover}
+.pic figcaption{display:flex;flex-direction:column;gap:1px;padding:8px 10px 10px}
+.pic figcaption b{font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink)}
+.pic figcaption small{font-size:13px;color:var(--ink-3);line-height:1.3}
+.pic-g{font-style:normal;font-weight:500;font-size:11.5px;color:var(--ink-3);margin-left:5px}
+.qc{margin:22px 0;padding:16px 18px;border:1px dashed var(--x-in);border-radius:12px;background:var(--x-soft)}
+.qc-t{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.qc-i{border-top:1px solid var(--x-line2)}
+.qc-i:first-of-type{border-top:0}
+.qc-i summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;cursor:pointer;font-size:15px;color:var(--ink)}
+.qc-i summary::-webkit-details-marker{display:none}
+.qc-s{flex:none;font-size:12.5px;font-weight:600;color:var(--encre);padding:3px 9px;border-radius:7px;background:var(--sheet);border:1px solid var(--x-line)}
+.qc-i[open] .qc-s{opacity:.5}
+.qc-a{padding:0 0 12px;font-size:15px;color:var(--x-ok-t);font-weight:600;animation:qq-up .25s both}
+.qc-a .fr{color:inherit}
+.chat{margin:16px 0 24px;border:1px solid var(--x-line);border-radius:12px;background:var(--sheet);padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px}
+.chat-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.chat-h b{font-size:15px}
+.chat-b{display:flex;align-items:center;gap:8px}
+.chat-b .btn{gap:6px}.chat-b .btn svg{width:13px;height:13px}
+.chat-tg{background:var(--fill)}
+.chat-r{display:flex;flex-direction:column;gap:3px;max-width:82%}
+.chat-r.l{align-self:flex-start}
+.chat-r.r{align-self:flex-end;align-items:flex-end;text-align:right}
+.chat-w{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);padding:0 4px}
+.chat-m{padding:9px 13px;border-radius:14px;background:var(--x-soft);border:1px solid var(--x-line2)}
+.chat-r.l .chat-m{border-top-left-radius:4px}
+.chat-r.r .chat-m{border-top-right-radius:4px;background:color-mix(in srgb,var(--encre) 8%,var(--sheet));border-color:color-mix(in srgb,var(--encre) 16%,transparent)}
+.chat-m p{margin:0}
+.chat-m .fr{font-size:15.5px;line-height:1.45}
+.chat-tr{font-size:13.5px;color:var(--ink-3);margin-top:2px!important}
+.chat.no-tr .chat-tr{display:none}
+.photo-cr{margin:28px 0 0;font-size:12.5px;color:var(--ink-3)}
+.photo-cr summary{cursor:pointer;width:max-content}
+.photo-cr p{margin:6px 0 0;line-height:1.5}
+.photo-cr a{color:inherit}
+@media (max-width:640px){
+  .ks{padding:14px 14px 12px}.ks-l li{font-size:15px}
+  .pics{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .pic{border-radius:10px}
+  .pic figcaption{padding:6px 7px 8px}
+  .pic figcaption b{font-size:13px}
+  .pic figcaption small{font-size:11.5px}
+  .chat{padding:12px}.chat-r{max-width:92%}
+}
 /* ============ окошко перевода по выделению v2 (29.10.2026) ============ */
 .selpop.selpop{flex-direction:column;align-items:stretch;gap:2px;min-width:200px;max-width:min(320px,calc(100vw - 16px));padding:10px 10px 12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--x-line);border-radius:12px;box-shadow:0 12px 32px rgba(20,24,50,.14),0 2px 6px rgba(20,24,50,.06);font-size:14px}
 .selpop.selpop::after{width:12px;height:12px;left:calc(var(--ax,50%) - 6px);bottom:-7px;background:var(--sheet);border:1px solid var(--x-line);border-top:0;border-left:0;border-radius:0 0 3px 0;z-index:auto}
@@ -2710,6 +2767,432 @@ const TC = (col, row, cap, nodes, dn) => `<div class="tr-c${dn?" dn":""}" style=
 const S3 = cards => `<div class="s3">${cards.map(c=>`<div class="s3-c s3-${c.k}"><div class="s3-h"><span class="s3-k">${c.sym}</span><span>${c.h}</span></div><div class="s3-f">${c.f.map(p=>p[0]==="!" ? `<span class="s3-p hi fr">${p.slice(1)}</span>` : `<span class="s3-p">${p}</span>`).join("")}</div><ul class="s3-ex">${c.ex.map(([a,b])=>`<li><span class="fr">${a}</span>${b?`<small>${b}</small>`:""}</li>`).join("")}</ul></div>`).join("")}</div>`;
 /* заголовок столбца таблицы с кружком + / − / ? */
 const S3TH = (k, sym, txt) => `<span class="s3-th s3-${k}"><span class="s3-k">${sym}</span>${txt}</span>`;
+
+/* =========================================================
+   КОНСПЕКТ v2 (30.10.2026): блоки для теории. Правила — docs/konspekt.md.
+   ========================================================= */
+/* артикль цветом рода: le/un — м. р., la/une — ж. р., les/des — мн. ч.; g — род для l’ («m» / «f») */
+const GART = (fr, g) => String(fr).split(" / ").map(p=>{
+  const m = p.match(/^(le|un|la|une|les|des)(?=\s)/i);
+  if (m) return `<span class="${/^(le|un)$/i.test(m[1]) ? "g-m" : /^(la|une)$/i.test(m[1]) ? "g-f" : "g-pl"}">${m[1]}</span>${p.slice(m[1].length)}`;
+  const e = p.match(/^(l[’'])/i);
+  if (e && g) return `<span class="${g === "f" ? "g-f" : "g-m"}">${e[1]}</span>${p.slice(e[1].length)}`;
+  return p;
+}).join(" / ");
+/* «Главное»: 2–4 пункта, с которых начинается тема */
+const KEY = items => `<div class="ks"><div class="ks-t">${HT("Главное", "Key points")}</div><ol class="ks-l">${items.map(x=>`<li>${x}</li>`).join("")}</ol></div>`;
+/* картинки к словам: [[файл в img/w, слово с артиклем, перевод, род для l’]]; нажатие — озвучка */
+const PICS = list => `<div class="pics">${list.filter(x=>typeof IMG_CREDITS === "undefined" || IMG_CREDITS[x[0]]).map(([img, fr, tr, g])=>`<figure class="pic fr" data-say="${fr.replace(/"/g, "&quot;")}"><span class="pic-i"><img src="img/w/${img}.webp" alt="${tr}" loading="lazy" decoding="async" width="400" height="300"></span><figcaption><b>${GART(fr, g)}${g ? `<i class="pic-g">${g === "f" ? HT("ж.", "f.") : HT("м.", "m.")}</i>` : ""}</b><small>${tr}</small></figcaption></figure>`).join("")}</div>`;
+/* «Проверь себя»: [[вопрос, ответ]] — ответ открывается по нажатию */
+const QC = list => `<div class="qc"><div class="qc-t">${HT("Проверь себя", "Check yourself")}</div>${list.map(([q, a])=>`<details class="qc-i"><summary><span class="qc-q">${q}</span><span class="qc-s">${HT("Ответ", "Answer")}</span></summary><div class="qc-a">${a}</div></details>`).join("")}</div>`;
+/* частые ошибки: [[как нельзя, как надо, почему]] */
+const ERRS = rows => `<div class="mist"><div class="mist-t">${HT("Частые ошибки", "Common mistakes")}</div>${rows.map(([bad, good, why])=>`<div class="mist-r"><span class="mist-bad">✗ <s>${bad}</s></span><span class="mist-good">✓ <span class="fr">${good}</span></span>${why ? `<span class="mist-why">${why}</span>` : ""}</div>`).join("")}</div>`;
+/* диалог с озвучкой в мини-плеере: lines [[кто, фраза, перевод ru, перевод en]] */
+const CHAT = (id, title, lines) => {
+  DLG[id] = {lang:"fr", title, lines:lines.map(l=>[l[0], l[1], l[2] || "", l[3] || ""])};
+  const first = lines[0][0];
+  return `<div class="chat"><div class="chat-h"><b>${title}</b><span class="chat-b"><button type="button" class="chip-t chat-tg" aria-pressed="false">${HT("Скрыть перевод", "Hide translation")}</button><button type="button" class="btn sm sec dlg-btn" data-dlg="${id}">${f7("play_fill")}${HT("Слушать", "Listen")}</button></span></div>
+  ${lines.map(([who, fr, ru, en])=>`<div class="chat-r ${who === first ? "l" : "r"}"><span class="chat-w">${who}</span><div class="chat-m"><p class="fr">${fr}</p><p class="chat-tr">${HT(ru, en || ru)}</p></div></div>`).join("")}</div>`;
+};
+document.addEventListener("click", e=>{ const b = e.target.closest && e.target.closest(".chat-tg"); if (!b) return; const c = b.closest(".chat"), on = !c.classList.contains("no-tr"); c.classList.toggle("no-tr", on); b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? HT("Показать перевод", "Show translation") : HT("Скрыть перевод", "Hide translation"); });
+/* источники фото: список файлов из img/w (подписи берутся из IMG_CREDITS) */
+const PHOTOS = files => typeof IMG_CREDITS === "undefined" ? "" : `<details class="photo-cr"><summary>${HT("Фото", "Photos")}: Wikimedia Commons</summary><p>${files.filter(f=>IMG_CREDITS[f]).map(f=>{ const c = IMG_CREDITS[f]; return `<a href="${c.page}" target="_blank" rel="noopener">${c.w}</a> — ${c.author || HT("автор не указан", "unknown author")}, <a href="${c.lurl || c.page}" target="_blank" rel="noopener">${c.license}</a>`; }).join("; ")}.</p></details>`;
+
+/* Фото к словам (Wikimedia Commons): автор и лицензия. Генерируется tools/wcredits.py */
+const IMG_CREDITS = {
+"fraise": {
+"w": "la fraise",
+"page": "https://commons.wikimedia.org/wiki/File:Owoce_Truskawka.jpg",
+"author": "Agnieszka Kwiecień, Nova",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"peche": {
+"w": "la pêche",
+"page": "https://commons.wikimedia.org/wiki/File:Flameprince_peaches.jpg",
+"author": "",
+"license": "Public domain",
+"lurl": ""
+},
+"tomate": {
+"w": "la tomate",
+"page": "https://commons.wikimedia.org/wiki/File:Tomato_je.jpg",
+"author": "Softeis",
+"license": "CC BY-SA 3.0",
+"lurl": "http://creativecommons.org/licenses/by-sa/3.0/"
+},
+"courgette": {
+"w": "la courgette",
+"page": "https://commons.wikimedia.org/wiki/File:Courgette_Cucurbita_pepo_2.jpg",
+"author": "Meanos",
+"license": "Public domain",
+"lurl": ""
+},
+"poivron": {
+"w": "le poivron",
+"page": "https://commons.wikimedia.org/wiki/File:Capsicum_annuum_fruits_IMGP0049.jpg",
+"author": "Nikodem Nijaki",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"salade": {
+"w": "la salade",
+"page": "https://commons.wikimedia.org/wiki/File:Kropsla_herfst.jpg",
+"author": "Rasbak",
+"license": "CC BY-SA 3.0",
+"lurl": "http://creativecommons.org/licenses/by-sa/3.0/"
+},
+"beurre": {
+"w": "le beurre",
+"page": "https://commons.wikimedia.org/wiki/File:%C5%A0v%C3%A9dsk%C3%BD_kol%C3%A1%C4%8D_naruby_904_%28cropped%29.JPG",
+"author": "Matěj Baťha",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"chevre": {
+"w": "le fromage de chèvre",
+"page": "https://commons.wikimedia.org/wiki/File:Ch%C3%A8vre_affin%C3%A9_cr%C3%A9meux.jpg",
+"author": "Véronique PAGNIER",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"yaourt": {
+"w": "le yaourt",
+"page": "https://commons.wikimedia.org/wiki/File:Joghurt.jpg",
+"author": "No machine-readable author provided. Rainer Zenz assumed (based on copyright claims).",
+"license": "CC BY-SA 3.0",
+"lurl": "http://creativecommons.org/licenses/by-sa/3.0/"
+},
+"farine": {
+"w": "la farine",
+"page": "https://commons.wikimedia.org/wiki/File:Flours.jpg",
+"author": "Mudd1",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"pates": {
+"w": "les pâtes",
+"page": "https://commons.wikimedia.org/wiki/File:Detalle_de_penne_con_salsa_de_carne_y_tomate_en_primer_plano.jpg",
+"author": "Horacio Cambeiro",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"riz": {
+"w": "le riz",
+"page": "https://commons.wikimedia.org/wiki/File:Brun_ris.jpg",
+"author": "Ranveig assumed (based on copyright claims).",
+"license": "Public domain",
+"lurl": ""
+},
+"baguette": {
+"w": "la baguette",
+"page": "https://commons.wikimedia.org/wiki/File:Baguettes_-_stonesoup.jpg",
+"author": "jules / stonesoup",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"croissant": {
+"w": "le croissant",
+"page": "https://commons.wikimedia.org/wiki/File:Croissant-newspaper-and-tea.jpg",
+"author": "Petr Kratochvil",
+"license": "CC0",
+"lurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+},
+"poisson": {
+"w": "le poisson",
+"page": "https://commons.wikimedia.org/wiki/File:BakedFish.jpg",
+"author": "Len Rizzi (photographer)",
+"license": "Public domain",
+"lurl": ""
+},
+"oeuf": {
+"w": "l’œuf",
+"page": "https://commons.wikimedia.org/wiki/File:Raw_egg.jpg",
+"author": "by jefras a.k.a Joăo Estęvăo A. de Freitas. \"There are no usage restrictions for this photo.\"",
+"license": "Public domain",
+"lurl": ""
+},
+"boulangerie": {
+"w": "la boulangerie",
+"page": "https://commons.wikimedia.org/wiki/File:BOULANGERIE_P%C3%82TISSERIE_AU_BON_PAIN_DU_PRE.jpg",
+"author": "Dehdeh1",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"epicerie": {
+"w": "l’épicerie",
+"page": "https://commons.wikimedia.org/wiki/File:%C3%89picerie_Izrael_en_2012.jpg",
+"author": "Piero d'Houin dit Inocybe",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"marche": {
+"w": "le marché",
+"page": "https://commons.wikimedia.org/wiki/File:Wroc%C5%82aw_Market_Hall_interior.jpg",
+"author": "Pkc mckinsey",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"bouteille": {
+"w": "une bouteille d’huile",
+"page": "https://commons.wikimedia.org/wiki/File:Bouteille.jpg",
+"author": "Aurélien Mole",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"abricot": {
+"w": "l’abricot",
+"page": "https://commons.wikimedia.org/wiki/File:Apricot_and_cross_section.jpg",
+"author": "Fir0002",
+"license": "GFDL 1.2",
+"lurl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html"
+},
+"cerise": {
+"w": "la cerise",
+"page": "https://commons.wikimedia.org/wiki/File:Bing_Cherries_(USDA_ARS).jpg",
+"author": "Peggy Greb, USDA ARS",
+"license": "Public domain",
+"lurl": ""
+},
+"pomme": {
+"w": "la pomme",
+"page": "https://commons.wikimedia.org/wiki/File:Owoce_Jab%C5%82ko.jpg",
+"author": "Agnieszka Kwiecień, Nova",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"haricots": {
+"w": "les haricots verts",
+"page": "https://commons.wikimedia.org/wiki/File:Haricots_verts01.jpg",
+"author": "Spedona",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"pdt": {
+"w": "la pomme de terre",
+"page": "https://commons.wikimedia.org/wiki/File:Plants_certifi%C3%A9s_Bintje.png",
+"author": "Spedona",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"creme": {
+"w": "la crème",
+"page": "https://commons.wikimedia.org/wiki/File:Cr%C3%A8me_d%27Isigny_2.JPG",
+"author": "Patafisik",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"lait": {
+"w": "le lait",
+"page": "https://commons.wikimedia.org/wiki/File:Milk_glass.jpg",
+"author": "Stefan Kühn  (1975–)",
+"license": "CC BY-SA 3.0",
+"lurl": "http://creativecommons.org/licenses/by-sa/3.0/"
+},
+"viande": {
+"w": "la viande",
+"page": "https://commons.wikimedia.org/wiki/File:FoodMeat.jpg",
+"author": "Unknown photographer",
+"license": "PDM",
+"lurl": "https://creativecommons.org/publicdomain/mark/1.0/"
+},
+"poulet": {
+"w": "le poulet",
+"page": "https://commons.wikimedia.org/wiki/File:Max%27s_Roasted_Chicken_-_Evan_Swigart.jpg",
+"author": "Evan Swigart from Chicago, USA",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"huile": {
+"w": "l’huile d’olive",
+"page": "https://commons.wikimedia.org/wiki/File:Huile_d%27olive_04.jpg",
+"author": "Arnaud 25",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"supermarche": {
+"w": "le supermarché",
+"page": "https://commons.wikimedia.org/wiki/File:Supermarket_beer_and_wine_aisle.jpg",
+"author": "Huguenau (English Wikipedia)",
+"license": "CC BY-SA 3.0",
+"lurl": "http://creativecommons.org/licenses/by-sa/3.0/"
+},
+"boite": {
+"w": "une boîte de thon",
+"page": "https://commons.wikimedia.org/wiki/File:Tin_cans_%28Port_Lockroy%2C_Antarctica%29.jpg",
+"author": "Butterfly voyages - Serge Ouachée",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"panier": {
+"w": "un panier de légumes",
+"page": "https://commons.wikimedia.org/wiki/File:Cistell_002.jpg",
+"author": "Jordi coll costa assumed (based on copyright claims).",
+"license": "CC BY-SA 2.5",
+"lurl": "https://creativecommons.org/licenses/by-sa/2.5"
+},
+"nicoise": {
+"w": "la salade niçoise",
+"page": "https://commons.wikimedia.org/wiki/File:Salade_ni%C3%A7oise_001.jpg",
+"author": "Arnaud 25",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"soupe": {
+"w": "la soupe",
+"page": "https://commons.wikimedia.org/wiki/File:Soupe_de_machoiron_%C3%A0_table.jpg",
+"author": "Cyriac Gbogou",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"blanquette": {
+"w": "la blanquette de veau",
+"page": "https://commons.wikimedia.org/wiki/File:Blanquette_de_veau_%C3%A0_l%27ancienne_04.jpg",
+"author": "Arnaud 25",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"steakfrites": {
+"w": "le steak-frites",
+"page": "https://commons.wikimedia.org/wiki/File:Steak_frites.jpg",
+"author": "LWY",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"magret": {
+"w": "le magret de canard",
+"page": "https://commons.wikimedia.org/wiki/File:Magret_de_pato_-_listo_para_ser_cortado.jpg",
+"author": "Boca Dorada",
+"license": "CC BY-SA 2.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/2.0"
+},
+"croque": {
+"w": "le croque-monsieur",
+"page": "https://commons.wikimedia.org/wiki/File:Sandwich-Mixto.jpg",
+"author": "User:Tamorlan",
+"license": "Public domain",
+"lurl": ""
+},
+"tarte": {
+"w": "la tarte aux pommes",
+"page": "https://commons.wikimedia.org/wiki/File:Tarte_aux_pommes_002.JPG",
+"author": "MyName ( Adri08 ( talk ))",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"carafe": {
+"w": "la carafe",
+"page": "https://commons.wikimedia.org/wiki/File:Service_de_carafes.JPG",
+"author": "Nerijp",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"couteau": {
+"w": "le couteau",
+"page": "https://commons.wikimedia.org/wiki/File:Messerbank_2_%28fcm%29.jpg",
+"author": "Frank C. Müller",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"fourchette": {
+"w": "la fourchette",
+"page": "https://commons.wikimedia.org/wiki/File:Assorted_forks.jpg",
+"author": "Mark A. Taff",
+"license": "CC BY-SA 3.0 us",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0/us/deed.en"
+},
+"cuillere": {
+"w": "la cuillère",
+"page": "https://commons.wikimedia.org/wiki/File:SpoonCollection.jpg",
+"author": "THOR",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"poissonnerie": {
+"w": "la poissonnerie",
+"page": "https://commons.wikimedia.org/wiki/File:PikePlaceMarket2006.jpg",
+"author": "Epukas",
+"license": "CC BY-SA 3.0",
+"lurl": "http://creativecommons.org/licenses/by-sa/3.0/"
+},
+"cafecreme": {
+"w": "le café crème",
+"page": "https://commons.wikimedia.org/wiki/File:Caf%C3%A9_au_lait.jpg",
+"author": "Tim Boyd from Brooklyn",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"omelette": {
+"w": "l’omelette",
+"page": "https://commons.wikimedia.org/wiki/File:FoodOmelete.jpg",
+"author": "Renee Comet (photographer)",
+"license": "PDM",
+"lurl": "https://creativecommons.org/publicdomain/mark/1.0/"
+},
+"quiche": {
+"w": "la quiche",
+"page": "https://commons.wikimedia.org/wiki/File:54._Quiche_lorraine.jpg",
+"author": "Claude Humbert",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"mousse": {
+"w": "la mousse au chocolat",
+"page": "https://commons.wikimedia.org/wiki/File:Lafare_-_Bistrot_de_Pays_6.jpg",
+"author": "Marianne Casamance",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"glace": {
+"w": "la glace",
+"page": "https://commons.wikimedia.org/wiki/File:Amorino_perso.jpg",
+"author": "Cdricstras",
+"license": "CC BY-SA 3.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/3.0"
+},
+"verre": {
+"w": "le verre",
+"page": "https://commons.wikimedia.org/wiki/File:Copo_brasielrio.jpg",
+"author": "Antonio Augusto R Ramos",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"pot": {
+"w": "un pot de yaourt",
+"page": "https://commons.wikimedia.org/wiki/File:Coloured_lids_%2841817300005%29.jpg",
+"author": "oatsy40 from London",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"boucherie": {
+"w": "la boucherie",
+"page": "https://commons.wikimedia.org/wiki/File:Boucherie.jpg",
+"author": "Palagret",
+"license": "CC BY-SA 2.5",
+"lurl": "https://creativecommons.org/licenses/by-sa/2.5"
+},
+"fromagerie": {
+"w": "la fromagerie",
+"page": "https://commons.wikimedia.org/wiki/File:La_Maison_du_Fromage_%285045058266%29.jpg",
+"author": "Spanish Coches",
+"license": "CC BY 2.0",
+"lurl": "https://creativecommons.org/licenses/by/2.0"
+},
+"rizaulait": {
+"w": "le riz au lait",
+"page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D1%83%D1%82%D0%BB%D0%B8%D1%98%D0%B0%D1%88_1.jpg",
+"author": "MadMona",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+},
+"assiette": {
+"w": "l’assiette",
+"page": "https://commons.wikimedia.org/wiki/File:Assiettes_creuse_Marion_Graux.jpg",
+"author": "Marion Graux",
+"license": "CC BY-SA 4.0",
+"lurl": "https://creativecommons.org/licenses/by-sa/4.0"
+}
+};
 
 /* ===== helpers for theory markup ===== */
 const EX = arr => `<ul class="exl">${arr.map(([a,b])=>`<li><span class="fr">${a}</span>${b?`<span class="tr">${b}</span>`:''}</li>`).join('')}</ul>`;
@@ -8820,27 +9303,47 @@ function FR_U3_PARTS(){ return [
 id:"u3-courses", sec:"book", unit:"3", kind:"Communication",
 title:"Faire les courses", ru:TF("В магазине: попросить, спросить цену, заплатить", "In a shop: asking for things, asking the price, paying"), page:PG("46–47, 49"),
 theory:`
-<p>${TF("В магазине французы говорят вежливо и коротко. Почти весь диалог — это пять-шесть готовых фраз.", "In shops the French are polite and brief. Almost the whole conversation is five or six set phrases.")}</p>
-${TBL([TF("Кто говорит","Who says it"), "Français", TF("Значение","Meaning")],[
-[TF("продавец","shopkeeper"), F("Bonjour ! C’est à qui ?"), TF("Здравствуйте! Чья очередь?","Hello! Who’s next?")],
-[TF("покупатель","customer"), F("C’est à moi. Je voudrais un pain, s’il vous plaît."), TF("Моя. Я бы хотел(а) хлеб, пожалуйста.","Me. I’d like a loaf of bread, please.")],
-[TF("продавец","shopkeeper"), F("Et avec ça ? / Ce sera tout ?"), TF("Что-нибудь ещё? / Это всё?","Anything else? / Will that be all?")],
-[TF("покупатель","customer"), F("Oui, c’est tout. Ça coûte combien ?"), TF("Да, всё. Сколько это стоит?","Yes, that’s all. How much is it?")],
-[TF("продавец","shopkeeper"), F("Ça fait 3,40 €. Vous payez comment ?"), TF("С вас 3,40 €. Как будете платить?","That’s €3.40. How are you paying?")],
-[TF("покупатель","customer"), F("Par carte. / En espèces."), TF("Картой. / Наличными.","By card. / In cash.")]
+${KEY([
+TF(`Сначала поздоровайся: ${F("Bonjour !")} Без этого начинать разговор невежливо.`, `Greet first: ${F("Bonjour !")} Starting without it is impolite.`),
+TF(`Просишь — ${F("Je voudrais…, s’il vous plaît.")} («Я бы хотел(а)…»). ${F("Je veux")} звучит грубо.`, `To ask for something — ${F("Je voudrais…, s’il vous plaît.")} ${F("Je veux")} sounds rude.`),
+TF(`Цена: ${F("Ça coûte combien ?")} — ответ ${F("Ça fait 3,40 €.")}`, `The price: ${F("Ça coûte combien ?")} — the answer: ${F("Ça fait 3,40 €.")}`),
+TF(`Платишь ${F("par carte")} (картой) или ${F("en espèces")} (наличными).`, `You pay ${F("par carte")} (by card) or ${F("en espèces")} (in cash).`)
 ])}
-${RULE(TF("Je voudrais — главная фраза покупателя","Je voudrais — the customer’s key phrase"), `<p>${TF(`${F("Je voudrais…")} — «я бы хотел(а)», вежливая форма от ${F("vouloir")}. ${F("Je veux")} («я хочу») в магазине звучит грубо.`, `${F("Je voudrais…")} means «I would like…», the polite form of ${F("vouloir")}. ${F("Je veux")} («I want») sounds rude in a shop.`)}</p>`)}
-<h3>${TF("Спросить и назвать цену","Asking and giving the price")}</h3>
-${FXS(FX([TF("~вопрос","~question"),"!Combien coûte","la baguette ?"]), FX(["!Ça coûte combien ?","/","!Combien ça coûte ?"],TF("разговорные варианты","everyday variants")), FX(["Elle","!coûte","1,20 €."], TF("ответ: il / elle coûte…, ça coûte…, ça fait…","answer: il / elle coûte…, ça coûte…, ça fait…")))}
-${WARN(TF(`В ценах — <b>запятая</b>, а знак € пишется <b>после</b> числа: ${F("16,90 €")} = ${F("seize euros quatre-vingt-dix")}. Слово «центы» обычно не говорят.`, `Prices use a <b>comma</b>, and € goes <b>after</b> the number: ${F("16,90 €")} = ${F("seize euros quatre-vingt-dix")}. People usually don’t say «cents».`))}
-<h3>${TF("Два глагола из магазина","Two verbs you need in a shop")}</h3>
+<h3>${TF("Как проходит покупка","How a purchase goes")}</h3>
+<p>${TF("Почти весь разговор в магазине — шесть готовых фраз. Послушай диалог, потом закрой перевод и попробуй понять всё сам.", "Almost the whole conversation in a shop is six set phrases. Listen to the dialogue, then hide the translation and try to follow it on your own.")}</p>
+${CHAT("fr-u3-boulangerie", TF("В булочной","At the bakery"), [
+["Vendeuse", "Bonjour ! C’est à qui ?", "Здравствуйте! Чья очередь?", "Hello! Who’s next?"],
+["Client", "C’est à moi. Bonjour ! Je voudrais une baguette, s’il vous plaît.", "Моя. Здравствуйте! Я бы хотел багет, пожалуйста.", "Me. Hello! I’d like a baguette, please."],
+["Vendeuse", "Voilà. Et avec ça ?", "Вот. Что-нибудь ещё?", "Here you are. Anything else?"],
+["Client", "Deux croissants. Ça coûte combien ?", "Два круассана. Сколько это стоит?", "Two croissants. How much is it?"],
+["Vendeuse", "Ça fait 3,40 €. Vous payez comment ?", "С вас 3,40 €. Как будете платить?", "That’s €3.40. How are you paying?"],
+["Client", "Par carte. Merci, au revoir !", "Картой. Спасибо, до свидания!", "By card. Thank you, goodbye!"]
+])}
+${TBL([TF("Тебе говорят","You hear"), TF("Значит","It means"), TF("Ты отвечаешь","You answer")],[
+[F("C’est à qui ?"), TF("Чья очередь?","Who’s next?"), F("C’est à moi.")],
+[F("Et avec ça ?"), TF("Что-нибудь ещё?","Anything else?"), F("Deux croissants. / C’est tout.")],
+[F("Ce sera tout ?"), TF("Это всё?","Will that be all?"), F("Oui, c’est tout.")],
+[F("Vous payez comment ?"), TF("Как платите?","How are you paying?"), F("Par carte. / En espèces.")]
+])}
+<h3>${TF("Как спросить и назвать цену?","How to ask and give the price")}</h3>
+${FXS(FX(["!Combien coûte","la baguette ?"], TF("сколько стоит + товар","how much is + item")), FX(["!Ça coûte combien ?"], TF("разговорный вариант","everyday variant")), FX(["Elle","!coûte","1,20 €."], TF("ответ: il / elle coûte…, ça fait…","answer: il / elle coûte…, ça fait…")))}
+<p>${TF(`В цене — <b>запятая</b>, знак € — <b>после</b> числа. Читают так: ${F("3,40 €")} = ${F("trois euros quarante")} — слово «центы» не говорят.`, `Prices use a <b>comma</b> and € goes <b>after</b> the number. Read it like this: ${F("3,40 €")} = ${F("trois euros quarante")} — nobody says «cents».`)}</p>
+<h3>${TF("acheter и payer: где меняется основа?","acheter and payer: where does the stem change?")}</h3>
 ${CJS(
 CJ("acheter", TF("покупать","to buy"), ["j’ach<b>è</b>te","tu ach<b>è</b>tes","il / elle / on ach<b>è</b>te","nous achetons","vous achetez","ils / elles ach<b>è</b>tent"]),
-CJ("payer", TF("платить","to pay"), ["je pa<b>i</b>e / paye","tu pa<b>i</b>es / payes","il / elle / on pa<b>i</b>e / paye","nous payons","vous payez","ils / elles pa<b>i</b>ent / payent"])
+CJ("payer", TF("платить","to pay"), ["je pa<b>i</b>e","tu pa<b>i</b>es","il / elle / on pa<b>i</b>e","nous payons","vous payez","ils / elles pa<b>i</b>ent"])
 )}
-${RULE(TF("Логика «ботинка»","The «boot» pattern"), `<p>${TF(`Окончания — как у обычных глаголов на -er. Меняется только основа в формах je, tu, il, ils (там окончание не читается): ${F("achet- → achèt-")}, ${F("pay- → pai-")}. У ${F("nous")} и ${F("vous")} основа обычная: ${F("nous achetons, vous payez")}.`, `The endings are those of ordinary -er verbs. Only the stem changes in the je, tu, il, ils forms (where the ending is silent): ${F("achet- → achèt-")}, ${F("pay- → pai-")}. With ${F("nous")} and ${F("vous")} the stem is regular: ${F("nous achetons, vous payez")}.`)}</p>`)}
-${CMP2(`«Я бы хотел» = ${F("je voudrais")}; «картой / наличными» = ${F("par carte / en espèces")} — запомни предлоги целиком, дословно они не переводятся.`, ``, `${F("Je voudrais")} = <i>I would like</i>; ${F("Combien ça coûte ?")} = <i>How much is it?</i>; ${F("par carte / en espèces")} = <i>by card / in cash</i> — learn the prepositions as part of the phrase.`)}
-${NOTE(TF(`Во Франции в маленьких магазинах сначала здороваются: ${F("Bonjour !")} — и только потом просят товар. Без «bonjour» начинать невежливо.`, `In small French shops you greet first: ${F("Bonjour !")} — and only then ask for something. Starting without «bonjour» is impolite.`))}
+<p>${TF(`Окончания обычные, как у всех глаголов на -er. Меняется основа там, где окончание <b>не слышно</b>: je, tu, il, ils. У ${F("nous")} и ${F("vous")} основа как в инфинитиве. У ${F("payer")} можно и без изменения: ${F("je paye")}.`, `The endings are the usual -er ones. The stem changes where the ending is <b>silent</b>: je, tu, il, ils. With ${F("nous")} and ${F("vous")} the stem is as in the infinitive. ${F("payer")} may also keep its stem: ${F("je paye")}.`)}</p>
+${QC([
+[TF("Как вежливо попросить два круассана?","How do you politely ask for two croissants?"), F("Je voudrais deux croissants, s’il vous plaît.")],
+[TF("Продавец говорит «Et avec ça ?». Что он спрашивает?","The shopkeeper says «Et avec ça ?». What is he asking?"), TF("«Что-нибудь ещё?»","«Anything else?»")],
+[TF("Как прочитать 4,50 € ?","How do you read 4,50 €?"), F("quatre euros cinquante")]
+])}
+${ERRS([
+["Je veux un pain.", "Je voudrais un pain, s’il vous plaît.", TF("Je veux звучит как требование.","Je veux sounds like a demand.")],
+["Je paie avec carte.", "Je paie par carte.", TF("Картой — par carte, наличными — en espèces.","By card — par carte, in cash — en espèces.")],
+["nous achètons", "nous achetons", TF("У nous и vous нет è: окончание слышно.","No è with nous and vous: the ending is heard.")]
+])}
 `,
 ex:[
 {t:"mc", h:TF("Что сказать в этой ситуации?","What do you say in this situation?"), w:[
@@ -8896,20 +9399,35 @@ ex:[
 id:"u3-pluriel", sec:"book", unit:"3", kind:"Grammaire",
 title:"Le singulier et le pluriel des noms", ru:TF("Множественное число существительных","Plural of nouns"), page:PG("47, 50"),
 theory:`
-${RULE(TF("Основное правило","The basic rule"), `<p>${TF(`Во множественном числе к существительному обычно добавляют <b>-s</b>: ${F("un panier → des paniers")}, ${F("une bouteille → des bouteilles")}.`, `In the plural you usually add <b>-s</b> to the noun: ${F("un panier → des paniers")}, ${F("une bouteille → des bouteilles")}.`)}</p>`)}
-${GRID(["", TF("ед. ч.","singular"), TF("мн. ч.","plural")],[[TF("м. р.","masc."),"m:un panier","p:des paniers"],[TF("ж. р.","fem."),"f:une bouteille","p:des bouteilles"]])}
-${WARN(TF(`Это <b>-s не читается</b>! ${F("panier")} и ${F("paniers")} звучат одинаково. Число на слух слышно только по артиклю: ${F("le / la")} [lə / la] ↔ ${F("les")} [le], ${F("un / une")} ↔ ${F("des")} [de].`, `This <b>-s is silent</b>! ${F("panier")} and ${F("paniers")} sound the same. You only hear the number through the article: ${F("le / la")} [lə / la] ↔ ${F("les")} [le], ${F("un / une")} ↔ ${F("des")} [de].`))}
+${KEY([
+TF(`Множественное число — обычно <b>+ -s</b>: ${F("un panier → des paniers")}.`, `The plural is usually <b>+ -s</b>: ${F("un panier → des paniers")}.`),
+TF(`Это -s <b>не читается</b>: на слух число слышно только по артиклю ${F("le / les")}, ${F("un / des")}.`, `This -s is <b>silent</b>: you only hear the number in the article ${F("le / les")}, ${F("un / des")}.`),
+TF(`Особые случаи: ${F("-eau → -eaux")}, ${F("-al → -aux")}, а слова на ${F("-s, -x, -z")} не меняются.`, `Special cases: ${F("-eau → -eaux")}, ${F("-al → -aux")}, and words in ${F("-s, -x, -z")} don’t change.`)
+])}
+<h3>${TF("Что меняется во множественном числе?","What changes in the plural?")}</h3>
+${GRID(["", TF("один","one"), TF("много","many")],[[TF("м. р.","masc."),"m:un panier","p:des panier<b>s</b>"],[TF("ж. р.","fem."),"f:une bouteille","p:des bouteille<b>s</b>"]])}
+<p>${TF("Меняются два места: артикль и окончание слова. Слышно только первое.", "Two things change: the article and the end of the word. Only the first one is heard.")}</p>
 ${SAME(["le panier","les paniers"], "[panje]", [["le","[lə]"],["les","[le]"]])}
 <h3>${TF("Особые случаи","Special cases")}</h3>
-${TBL([TF("Слово кончается на…","Word ends in…"), TF("Мн. ч.","Plural"), TF("Пример","Example")],[
-["-s, -x, -z", TF("не меняется","no change"), F("un jus → des jus, le prix → les prix")],
-["-eau", "-eaux", F("un gâteau → des gâteaux")],
-["-al", "-aux", F("un journal → des journaux")]
+${TBL([TF("Слово кончается на…","The word ends in…"), TF("Мн. ч.","Plural"), TF("Пример","Example")],[
+["-s, -x, -z", TF("не меняется","no change"), F("un jus → des jus · le prix → les prix")],
+["-eau", "-eau<b>x</b>", F("un gâteau → des gâteau<b>x</b>")],
+["-al", "-<b>aux</b>", F("un journal → des journ<b>aux</b>")]
 ])}
-${NOTE(TF(`${F("un œuf")} [œf] → ${F("des œufs")} [ø]: во множественном числе f и s <b>не читаются</b>.`, `${F("un œuf")} [œf] → ${F("des œufs")} [ø]: in the plural both f and s are <b>silent</b>.`))}
-<h3>${TF("После числа и количества","After a number or a quantity")}</h3>
-${EX([["J’achète trois croissants.", TF("после числа — мн. ч.","after a number — plural")],["un kilo de pommes", TF("считаемое — мн. ч.: яблок много","countable — plural: many apples")],["une bouteille de jus", TF("несчитаемое — ед. ч.","uncountable — singular")],["deux paquets de riz", TF("мн. ч. получает упаковка, а не рис","the packet goes plural, not the rice")]])}
+${NOTE(TF(`${F("un œuf")} [œf] → ${F("des œufs")} [ø]: во множественном числе f и s молчат.`, `${F("un œuf")} [œf] → ${F("des œufs")} [ø]: in the plural both f and s are silent.`))}
+<h3>${TF("Число и количество","Numbers and quantities")}</h3>
+${EX([["J’achète trois croissant<b>s</b>.", TF("после числа больше одного — мн. ч.","after a number above one — plural")],["un kilo de pomme<b>s</b>", TF("яблок много — мн. ч.","many apples — plural")],["une bouteille de jus", TF("сок не считают — ед. ч.","juice isn’t counted — singular")],["deux paquet<b>s</b> de riz", TF("во мн. ч. — упаковка, а не рис","the packet goes plural, not the rice")]])}
 ${CMP2(`Как в русском: «два пакета риса», «килограмм яблок». Только по-французски окончание пишется, но не слышно.`, ``, `Like English <i>two packets of rice, a kilo of apples</i> — but the French -s is written and not pronounced.`)}
+${QC([
+[TF("Как на слух отличить «le panier» от «les paniers»?","How do you hear the difference between «le panier» and «les paniers»?"), TF(`Только по артиклю: ${F("le")} [lə] — ${F("les")} [le].`, `Only by the article: ${F("le")} [lə] vs ${F("les")} [le].`)],
+[TF("un gâteau → des …?","un gâteau → des …?"), F("des gâteaux")],
+[TF("un jus → deux …?","un jus → deux …?"), TF(`${F("deux jus")} — слово на -s не меняется.`, `${F("deux jus")} — a word in -s doesn’t change.`)]
+])}
+${ERRS([
+["des gâteaus", "des gâteaux", TF("-eau → -eaux.","-eau → -eaux.")],
+["deux juss", "deux jus", TF("На -s, -x, -z — без изменений.","Words in -s, -x, -z don’t change.")],
+["deux paquets de riz<b>s</b>", "deux paquets de riz", TF("Во мн. ч. — только упаковка.","Only the packet goes plural.")]
+])}
 `,
 ex:[
 {t:"sort", h:TF("Единственное или множественное?","Singular or plural?"), cats:[TF("единственное","singular"),TF("множественное","plural")], w:[
@@ -8956,25 +9474,43 @@ ex:[
 id:"u3-commerces", sec:"book", unit:"3", kind:TF("Grammaire + vocabulaire","Grammaire + vocabulaire"),
 title:"Les commerces : à la boulangerie, chez le boulanger", ru:TF("Магазины, предлоги места à / chez и глагол aller","Shops, the place prepositions à / chez and the verb aller"), page:PG("48–50"),
 theory:`
-<h3>${TF("Магазин и продавец","The shop and the shopkeeper")}</h3>
-${TBL([TF("Магазин (место)","Shop (place)"), TF("Продавец (человек)","Shopkeeper (person)"), TF("Что там купить","What you buy there")],[
-[F("la boulangerie"), F("le boulanger / la boulangère"), F("le pain, la baguette, les croissants")],
+${KEY([
+TF(`Магазин (место) — ${F("à")} + артикль: ${F("Je vais à la boulangerie.")}`, `A shop (place) — ${F("à")} + article: ${F("Je vais à la boulangerie.")}`),
+TF(`Продавец (человек) — ${F("chez")}: ${F("Je vais chez le boulanger.")}`, `A shopkeeper (person) — ${F("chez")}: ${F("Je vais chez le boulanger.")}`),
+TF(`${F("à + le = au")}, ${F("à + les = aux")}; ${F("à la")} и ${F("à l’")} не сливаются.`, `${F("à + le = au")}, ${F("à + les = aux")}; ${F("à la")} and ${F("à l’")} stay as they are.`),
+TF(`${F("aller")}: je vais, tu vas, il va, nous allons, vous allez, ils vont.`, `${F("aller")}: je vais, tu vas, il va, nous allons, vous allez, ils vont.`)
+])}
+<h3>${TF("Магазины","Shops")}</h3>
+${PICS([
+["boulangerie","la boulangerie",TF("булочная","bakery")],["boucherie","la boucherie",TF("мясная лавка","butcher’s")],["poissonnerie","la poissonnerie",TF("рыбный магазин","fishmonger’s")],["fromagerie","la fromagerie",TF("сырная лавка","cheese shop")],["epicerie","l’épicerie",TF("бакалея","grocer’s"),"f"],["marche","le marché",TF("рынок","market")],["supermarche","le supermarché",TF("супермаркет","supermarket")]
+])}
+<h3>${TF("Магазин → продавец","Shop → shopkeeper")}</h3>
+${FX(["boulang|"+TF("основа","stem"),"+","!-erie|"+TF("магазин","shop"),"→","!-er / -ère|"+TF("продавец","shopkeeper")], TF("по названию магазина легко угадать продавца","the shop name gives you the shopkeeper"))}
+${TBL([TF("Магазин","Shop"), TF("Продавец","Shopkeeper"), TF("Что там купить","What you buy there")],[
+[F("la boulangerie"), F("le boulanger / la boulangère"), F("le pain, les croissants")],
 [F("la boucherie"), F("le boucher / la bouchère"), F("la viande, le poulet")],
 [F("la poissonnerie"), F("le poissonnier / la poissonnière"), F("le poisson")],
 [F("la fromagerie"), F("le fromager / la fromagère"), F("le fromage")],
-[F("l’épicerie"), F("l’épicier / l’épicière"), F("le riz, les pâtes, l’huile")],
-[F("le marché"), "—", F("les fruits, les légumes")],
-[F("le supermarché"), "—", TF("всё","everything")]
+[F("l’épicerie"), F("l’épicier / l’épicière"), F("le riz, les pâtes, l’huile")]
 ])}
-${RULE(TF("Место → à, человек → chez","Place → à, person → chez"), `<p>${TF(`Про <b>место</b> говорят ${F("à")} (+ артикль): ${F("Je vais à la boulangerie.")}<br>Про <b>человека</b> — ${F("chez")}: ${F("Je vais chez le boulanger.")} Смысл тот же — «в булочную».`, `For a <b>place</b> use ${F("à")} (+ article): ${F("Je vais à la boulangerie.")}<br>For a <b>person</b> use ${F("chez")}: ${F("Je vais chez le boulanger.")} Same meaning — «to the bakery».`)}</p>`)}
-${FLOW([[TF("После предлога — <b>место</b> (boulangerie, marché, épicerie)?","Is it followed by a <b>place</b> (boulangerie, marché, épicerie)?"), "à + le / la / l’ / les", "à la boucherie, au marché"]], [TF("После предлога — <b>человек</b> (boucher, fromagère, mes parents)","Followed by a <b>person</b> (boucher, fromagère, mes parents)"), "chez", "chez le boucher, chez moi"])}
-<h3>${TF("à + артикль: слияния","à + article: contractions")}</h3>
-${FXS(FX(["à","+","le","=","!au"],TF("au marché, au supermarché","au marché, au supermarché")), FX(["à","+","les","=","!aux"],TF("aux caisses","aux caisses")), FX(["à","+","la","=","à la"],TF("не сливаются","no contraction")), FX(["à","+","l’","=","à l’"],TF("перед гласной","before a vowel")))}
-${WARN(TF(`✗ ${F("à le marché")}, ✗ ${F("à les caisses")} — так нельзя, только ${F("au")} и ${F("aux")}. А ${F("chez")} с артиклем <b>не сливается</b>: ${F("chez le boucher")}.`, `✗ ${F("à le marché")}, ✗ ${F("à les caisses")} — impossible, only ${F("au")} and ${F("aux")}. But ${F("chez")} <b>never contracts</b>: ${F("chez le boucher")}.`))}
-<h3>${TF("Глагол aller — идти, ехать","The verb aller — to go")}</h3>
-${CJS(CJ("aller", TF("идти, ехать","to go"), ["je vais","tu vas","il / elle / on va","nous allons","vous allez","ils / elles vont"]))}
-${NOTE(TF(`${F("aller")} — неправильный глагол, хотя кончается на -er. Его формы просто учат: ${F("vais, vas, va, allons, allez, vont")}.`, `${F("aller")} is irregular even though it ends in -er. Just learn the forms: ${F("vais, vas, va, allons, allez, vont")}.`))}
-${CMP2(`${F("chez")} = «у кого-то / к кому-то»: ${F("chez le boucher")} — «к мяснику», ${F("chez moi")} — «у меня дома».`, ``, `${F("chez le boulanger")} = <i>at the baker’s</i>, ${F("chez moi")} = <i>at my place</i> — chez is always about a person.`)}
+<h3>${TF("à или chez?","à or chez?")}</h3>
+${FLOW([[TF("Дальше <b>место</b>: boulangerie, marché, épicerie?","Is it followed by a <b>place</b>: boulangerie, marché, épicerie?"), "à + le / la / l’ / les", "à la boucherie, au marché"]], [TF("Дальше <b>человек</b>: boucher, fromagère, mes parents","Followed by a <b>person</b>: boucher, fromagère, mes parents"), "chez", "chez le boucher, chez moi"])}
+${FXS(FX(["à","+","le","=","!au"],"au marché"), FX(["à","+","les","=","!aux"],"aux caisses"), FX(["à","+","la","=","à la"],TF("без слияния","no contraction")), FX(["à","+","l’","=","à l’"],TF("перед гласной","before a vowel")))}
+<p>${TF(`${F("chez")} с артиклем никогда не сливается: ${F("chez le boucher")}.`, `${F("chez")} never contracts with the article: ${F("chez le boucher")}.`)}</p>
+<h3>${TF("aller — идти, ехать","aller — to go")}</h3>
+${CJS(CJ("aller", TF("идти, ехать","to go"), ["je <b>vais</b>","tu <b>vas</b>","il / elle / on <b>va</b>","nous allons","vous allez","ils / elles <b>vont</b>"]))}
+<p>${TF(`Кончается на -er, но спрягается неправильно: формы ${F("vais, vas, va, vont")} просто запоминают.`, `It ends in -er but is irregular: just learn ${F("vais, vas, va, vont")}.`)}</p>
+${QC([
+[TF("Ты идёшь к мяснику. Как сказать?","You’re going to the butcher’s. How do you say it?"), TF(`${F("Je vais chez le boucher.")} или ${F("Je vais à la boucherie.")}`, `${F("Je vais chez le boucher.")} or ${F("Je vais à la boucherie.")}`)],
+[TF("à + le marché = ?","à + le marché = ?"), F("au marché")],
+[TF("«Они идут» — как будет?","«They go» — how do you say it?"), F("ils vont")]
+])}
+${ERRS([
+["Je vais à le marché.", "Je vais au marché.", TF("à + le = au.","à + le = au.")],
+["Je vais chez la boulangerie.", "Je vais à la boulangerie.", TF("chez — только перед человеком.","chez only goes before a person.")],
+["ils allent", "ils vont", TF("aller — неправильный глагол.","aller is irregular.")]
+])}
+${PHOTOS(["boulangerie","boucherie","poissonnerie","fromagerie","epicerie","marche","supermarche"])}
 `,
 ex:[
 {t:"mc", h:TF("à или chez?","à or chez?"), w:[
@@ -9025,26 +9561,46 @@ ex:[
 id:"u3-aliments", sec:"book", unit:"3", kind:"Vocabulaire",
 title:"Les aliments et les quantités", ru:TF("Продукты, упаковки и способы оплаты","Food, packaging and ways to pay"), page:PG("46, 49"),
 theory:`
-<h3>${TF("Продукты по группам","Food by group")}</h3>
-${TBL([TF("Группа","Group"), TF("Слова","Words")],[
-[F("les fruits"), F("l’abricot (m.), la cerise, la fraise, la pêche, la pomme, la tomate")],
-[F("les légumes"), F("la courgette, les haricots verts, le poivron, la pomme de terre, la salade")],
-[F("les produits laitiers"), F("le beurre, la crème, le fromage (de chèvre), le lait, le yaourt")],
-[F("les céréales"), F("la farine, les pâtes, le riz")],
-[F("le pain, les viennoiseries"), F("la baguette, le croissant")],
-[TF("белок","protein"), F("la viande, le poulet, le poisson, l’œuf (m.)")],
-[TF("ещё","also"), F("l’huile d’olive (f.), le jus de pomme, le sel, le poivre, le sucre")]
+${KEY([
+TF(`Учи слово <b>вместе с артиклем</b>: по нему видно род (${F("le poivron")}, ${F("la courgette")}).`, `Learn each word <b>with its article</b>: it shows the gender (${F("le poivron")}, ${F("la courgette")}).`),
+TF(`Количество + ${F("de")} + продукт без артикля: ${F("un kilo de pommes")}.`, `Quantity + ${F("de")} + food with no article: ${F("un kilo de pommes")}.`),
+TF(`Перед гласной ${F("de → d’")}: ${F("une bouteille d’eau")}.`, `Before a vowel ${F("de → d’")}: ${F("une bouteille d’eau")}.`)
 ])}
-${NOTE(TF(`${F("la tomate")} во французской классификации — фрукт, но в салате её все называют овощем. ${F("une pomme")} — яблоко, ${F("une pomme de terre")} — «земляное яблоко», картофель.`, `In French classification ${F("la tomate")} is a fruit, though everyone calls it a vegetable in a salad. ${F("une pomme")} is an apple, ${F("une pomme de terre")} — an «earth apple», a potato.`))}
-<h3>${TF("Количество и упаковка","Quantities and packaging")}</h3>
-${TBL([TF("Упаковка","Packaging"), TF("Пример","Example")],[
-[F("une boîte de…"), F("une boîte de thon")],[F("une bouteille de…"), F("une bouteille d’huile, de jus")],[F("un kilo de…"), F("un kilo de pommes")],[F("un paquet de…"), F("un paquet de riz, de pâtes")],[F("un pot de…"), F("un pot de crème, de yaourt")],[F("un panier de…"), F("un panier de légumes")]
+<p>${TF("Нажми на карточку, чтобы услышать слово. Цвет артикля — род: синий — мужской, розовый — женский.", "Tap a card to hear the word. The article colour shows the gender: blue — masculine, pink — feminine.")}</p>
+<h3>${TF("Фрукты и овощи","Fruit and vegetables")}</h3>
+${PICS([
+["pomme","la pomme",TF("яблоко","apple")],["fraise","la fraise",TF("клубника","strawberry")],["cerise","la cerise",TF("вишня, черешня","cherry")],["peche","la pêche",TF("персик","peach")],["abricot","l’abricot",TF("абрикос","apricot"),"m"],["tomate","la tomate",TF("помидор","tomato")],
+["courgette","la courgette",TF("кабачок","courgette")],["poivron","le poivron",TF("сладкий перец","pepper")],["haricots","les haricots verts",TF("стручковая фасоль","green beans")],["pdt","la pomme de terre",TF("картофель","potato")],["salade","la salade",TF("салат","lettuce")]
 ])}
-${RULE(TF("После количества — только de","After a quantity — just de"), `<p>${TF(`После слова-количества идёт <b>de</b> (d’ перед гласной) <b>без артикля</b>: ${F("un kilo de pommes")}, ${F("une bouteille d’eau")}. ✗ ${F("un kilo des pommes")}.`, `After a quantity word comes <b>de</b> (d’ before a vowel) <b>with no article</b>: ${F("un kilo de pommes")}, ${F("une bouteille d’eau")}. ✗ ${F("un kilo des pommes")}.`)}</p>`)}
-${FX(["un paquet","+","!de","+","riz"], TF("без артикля после de","no article after de"))}
-<h3>${TF("Как платить","How to pay")}</h3>
-${EX([["par carte (bancaire / bleue)", TF("картой","by card")],["en espèces", TF("наличными","in cash")]])}
+${NOTE(TF(`${F("une pomme")} — яблоко, а ${F("une pomme de terre")} — дословно «земляное яблоко», то есть картофель.`, `${F("une pomme")} is an apple, and ${F("une pomme de terre")} is literally an «earth apple» — a potato.`))}
+<h3>${TF("Молочные продукты","Dairy")}</h3>
+${PICS([["lait","le lait",TF("молоко","milk")],["beurre","le beurre",TF("сливочное масло","butter")],["creme","la crème",TF("сливки","cream")],["yaourt","le yaourt",TF("йогурт","yoghurt")],["chevre","le fromage de chèvre",TF("козий сыр","goat’s cheese")]])}
+<h3>${TF("Хлеб, мука, крупы","Bread, flour, grains")}</h3>
+${PICS([["baguette","la baguette",TF("багет","baguette")],["croissant","le croissant",TF("круассан","croissant")],["farine","la farine",TF("мука","flour")],["pates","les pâtes",TF("макароны","pasta")],["riz","le riz",TF("рис","rice")]])}
+<h3>${TF("Мясо, рыба, яйца, масло","Meat, fish, eggs, oil")}</h3>
+${PICS([["viande","la viande",TF("мясо","meat")],["poulet","le poulet",TF("курица","chicken")],["poisson","le poisson",TF("рыба","fish")],["oeuf","l’œuf",TF("яйцо","egg"),"m"],["huile","l’huile d’olive",TF("оливковое масло","olive oil"),"f"]])}
+<h3>${TF("Как сказать, сколько?","How do you say how much?")}</h3>
+${FX(["un paquet","+","!de","+","riz"], TF("после количества — de, без артикля","after a quantity — de, with no article"))}
+${PICS([["boite","une boîte de thon",TF("банка тунца","a tin of tuna")],["bouteille","une bouteille d’huile",TF("бутылка масла","a bottle of oil")],["pot","un pot de yaourt",TF("баночка йогурта","a pot of yoghurt")],["panier","un panier de légumes",TF("корзина овощей","a basket of vegetables")]])}
+${TBL([TF("Упаковка","Packaging"), TF("Для чего","Used for"), TF("Пример","Example")],[
+[F("une boîte de"), TF("консервы","tins"), F("une boîte de thon")],
+[F("une bouteille de"), TF("жидкое","liquids"), F("une bouteille d’eau, de jus")],
+[F("un paquet de"), TF("сухое","dry goods"), F("un paquet de riz, de pâtes")],
+[F("un pot de"), TF("густое","thick things"), F("un pot de crème")],
+[F("un kilo de"), TF("на вес","by weight"), F("un kilo de pommes")]
+])}
 ${CMP2(`Как в русском родительный падеж: «пачка риса», «бутылка масла» — по-французски всё это делает одно слово ${F("de")}.`, ``, `Like English <i>a packet of rice, a bottle of oil</i>: ${F("de")} = <i>of</i>, with no article after it.`)}
+${QC([
+[TF("Какой род у слова «pomme de terre»?","What gender is «pomme de terre»?"), TF(`Женский: ${F("la pomme de terre")}.`, `Feminine: ${F("la pomme de terre")}.`)],
+[TF("«Бутылка воды» по-французски?","«A bottle of water» in French?"), F("une bouteille d’eau")],
+[TF("В чём продают йогурт и сливки?","What do yoghurt and cream come in?"), F("un pot de yaourt, un pot de crème")]
+])}
+${ERRS([
+["un kilo des pommes", "un kilo de pommes", TF("После количества — de без артикля.","After a quantity — de with no article.")],
+["une bouteille de eau", "une bouteille d’eau", TF("Перед гласной de → d’.","Before a vowel de → d’.")],
+["le pomme", "la pomme", TF("Род учи вместе со словом.","Learn the gender with the word.")]
+])}
+${PHOTOS(["pomme","fraise","cerise","peche","abricot","tomate","courgette","poivron","haricots","pdt","salade","lait","beurre","creme","yaourt","chevre","baguette","croissant","farine","pates","riz","viande","poulet","poisson","oeuf","huile","boite","bouteille","pot","panier"])}
 `,
 ex:[
 {t:"sort", h:TF("Фрукты, овощи или молочное?","Fruit, vegetables or dairy?"), cats:[TF("фрукты","fruit"),TF("овощи","vegetables"),TF("молочное","dairy")], w:[
@@ -9087,24 +9643,43 @@ ex:[
 id:"u3-partitifs", sec:"book", unit:"3", kind:"Grammaire",
 title:"La quantité non définie : du, de la, des", ru:TF("Частичные артикли, beaucoup de / un peu de, pas de и глагол faire","Partitive articles, beaucoup de / un peu de, pas de and the verb faire"), page:PG("53, 56"),
 theory:`
-<p>${TF(`Когда нельзя сосчитать (сколько «рыбы», «муки», «масла»?) или количество неизвестно, ставят <b>частичный артикль</b> — «немного, какое-то количество».`, `When you can’t count something (how much «fish», «flour», «oil»?) or the amount is unknown, use a <b>partitive article</b> — «some, a certain amount».`)}</p>
+${KEY([
+TF(`«Немного, какое-то количество» — ${F("du / de la / de l’ / des")}: ${F("Je mange du poisson.")}`, `«Some, a certain amount» — ${F("du / de la / de l’ / des")}: ${F("Je mange du poisson.")}`),
+TF(`Вкусы (aimer, adorer, détester) — ${F("le / la / les")}: ${F("J’aime le poisson.")}`, `Tastes (aimer, adorer, détester) — ${F("le / la / les")}: ${F("J’aime le poisson.")}`),
+TF(`После ${F("beaucoup, un peu, pas")} — только ${F("de")}: ${F("pas de viande")}.`, `After ${F("beaucoup, un peu, pas")} — just ${F("de")}: ${F("pas de viande")}.`),
+TF(`${F("faire")}: je fais, nous faisons, vous <b>faites</b>, ils <b>font</b>.`, `${F("faire")}: je fais, nous faisons, vous <b>faites</b>, ils <b>font</b>.`)
+])}
+<h3>${TF("Какой артикль выбрать?","Which article do you choose?")}</h3>
+${FLOW([
+[TF("Говоришь о <b>вкусах</b>: aimer, adorer, détester, préférer?","Talking about <b>tastes</b>: aimer, adorer, détester, préférer?"), "le / la / les", "J’aime le chocolat."],
+[TF("Перед словом <b>количество</b>: beaucoup, un peu, un kilo… или <b>отрицание</b> pas?","Is there a <b>quantity</b> before it: beaucoup, un peu, un kilo… or a <b>negative</b> pas?"), "de / d’", "Je ne mange pas de viande."]
+], [TF("Ешь, покупаешь, берёшь <b>какое-то количество</b>: manger, acheter, prendre, il y a, je voudrais","Eating, buying, taking <b>some</b>: manger, acheter, prendre, il y a, je voudrais"), "du / de la / de l’ / des", "Je mange du pain."])}
+<h3>${TF("Формы частичного артикля","Forms of the partitive article")}</h3>
 ${GRID(["", TF("форма","form"), TF("пример","example")],[
 [TF("м. р.","masc."),"m:du  (de + le)","m:du poisson"],
 [TF("ж. р.","fem."),"f:de la","f:de la farine"],
-[TF("перед гласной","before a vowel"),"de l’","de l’huile, de l’eau"],
+[TF("перед гласной","before a vowel"),"de l’","de l’eau, de l’huile"],
 [TF("мн. ч.","plural"),"p:des  (de + les)","p:des pâtes"]
 ])}
-${RULE(TF("aimer или manger?","aimer or manger?"), `<p>${TF(`Говорим о вкусах (${F("aimer, adorer, détester, préférer")}) — <b>le / la / les</b>, «вообще»: ${F("J’aime le poisson.")}<br>Говорим, что едим, покупаем, берём (${F("manger, acheter, prendre, il y a, je voudrais")}) — <b>du / de la / des</b>, «немного»: ${F("Je mange du poisson.")}`, `Talking about tastes (${F("aimer, adorer, détester, préférer")}) — <b>le / la / les</b>, «in general»: ${F("J’aime le poisson.")}<br>Talking about eating, buying, taking (${F("manger, acheter, prendre, il y a, je voudrais")}) — <b>du / de la / des</b>, «some»: ${F("Je mange du poisson.")}`)}</p>`)}
-${VS({h:"le / la / les", big:F("J’adore le chocolat."), sub:TF("вообще, как вид","in general")},{h:"du / de la / des", big:F("Je mange du chocolat."), sub:TF("какое-то количество","some")})}
-<h3>${TF("Сколько? — beaucoup de, un peu de, pas de","How much? — beaucoup de, un peu de, pas de")}</h3>
+${VS({h:TF("вкус: le / la / les","taste: le / la / les"), big:F("J’adore le chocolat."), sub:TF("шоколад вообще","chocolate in general")},{h:TF("количество: du / de la / des","amount: du / de la / des"), big:F("Je mange du chocolat."), sub:TF("какое-то количество","some")})}
+<h3>${TF("Сколько? beaucoup de, un peu de, pas de","How much? beaucoup de, un peu de, pas de")}</h3>
 ${FXS(FX(["beaucoup","+","!de","+","légumes"]), FX(["un peu","+","!de","+","sel"]), FX(["ne … pas","+","!de","+","viande"], TF("в отрицании du / de la / des → de","in the negative du / de la / des → de")))}
-${EX([["Ils mangent un peu de légumes.", TF("немного овощей","a few vegetables")],["Une quiche avec beaucoup de poivre.", TF("много перца","lots of pepper")],["On n’a pas de tomates.", TF("des → de","des → de")],["Il n’y a pas d’huile d’olive.", TF("de l’ → d’","de l’ → d’")]])}
-${WARN(TF(`После ${F("beaucoup, un peu, pas")} — только ${F("de / d’")}: ✗ ${F("beaucoup des légumes")}, ✗ ${F("pas du sel")}. Но с ${F("être")} артикль остаётся: ${F("Ce n’est pas du poisson, c’est du poulet.")}`, `After ${F("beaucoup, un peu, pas")} — only ${F("de / d’")}: ✗ ${F("beaucoup des légumes")}, ✗ ${F("pas du sel")}. With ${F("être")} the article stays: ${F("Ce n’est pas du poisson, c’est du poulet.")}`))}
-<h3>${TF("Глагол faire и вопросы на кухне","The verb faire and kitchen questions")}</h3>
-${CJS(CJ("faire", TF("делать","to do, to make"), ["je fais","tu fais","il / elle / on fait","nous faisons","vous faites","ils / elles font"]))}
-${EX([["Qu’est-ce qu’on mange ? / On mange quoi ?", TF("Что едим? — открытый вопрос","What are we eating? — open question")],["Est-ce qu’on a des tomates ? – Oui. / Non.", TF("закрытый вопрос: ответ да / нет","closed question: yes / no answer")],["On fait les courses ? On fait la cuisine ?", TF("faire les courses — ходить за покупками, faire la cuisine — готовить","faire les courses — do the shopping, faire la cuisine — cook")]])}
-${NOTE(TF(`${F("nous faisons")} читается [fəzɔ̃] — как «фёзон», а ${F("vous faites")} без -ez: это одно из трёх исключений (${F("vous êtes, vous faites, vous dites")}).`, `${F("nous faisons")} is pronounced [fəzɔ̃], and ${F("vous faites")} has no -ez: it’s one of three exceptions (${F("vous êtes, vous faites, vous dites")}).`))}
+${EX([["Il mange beaucoup <b>de</b> légumes.", TF("много овощей","lots of vegetables")],["Un peu <b>de</b> sel, s’il vous plaît.", TF("немного соли","a little salt")],["On n’a pas <b>de</b> tomates.", TF("des → de","des → de")],["Il n’y a pas <b>d’</b>huile.", TF("de l’ → d’","de l’ → d’")]])}
+${NOTE(TF(`С ${F("être")} артикль остаётся и в отрицании: ${F("Ce n’est pas du poisson, c’est du poulet.")}`, `With ${F("être")} the article stays even in the negative: ${F("Ce n’est pas du poisson, c’est du poulet.")}`))}
+<h3>${TF("faire — делать, готовить","faire — to do, to make")}</h3>
+${CJS(CJ("faire", TF("делать","to do, to make"), ["je fais","tu fais","il / elle / on fait","nous faisons","vous <b>faites</b>","ils / elles <b>font</b>"]))}
+${EX([["On fait les courses ?", TF("Сходим за покупками?","Shall we do the shopping?")],["Je fais la cuisine.", TF("Я готовлю.","I’m cooking.")],["Qu’est-ce qu’on mange ?", TF("Что будем есть?","What are we eating?")]])}
 ${CMP2(`Подставь мысленно «немного» — если подходит, нужен du / de la: «я ем рыбу» → ${F("je mange du poisson")}, но «я люблю рыбу» → ${F("j’aime le poisson")}.`, `Как <i>some</i>: <i>I eat (some) fish</i> → ${F("je mange du poisson")}, только во французском его нельзя опустить.`, `Close to <i>some</i>: <i>I eat (some) fish</i> → ${F("je mange du poisson")}. But in French you can’t leave it out, and <i>I like fish</i> → ${F("j’aime le poisson")}.`)}
+${QC([
+[TF("«Я ем хлеб» или «Я люблю хлеб» — где du?","«I eat bread» or «I love bread» — which one takes du?"), TF(`${F("Je mange du pain.")} А вкус — ${F("J’aime le pain.")}`, `${F("Je mange du pain.")} For a taste — ${F("J’aime le pain.")}`)],
+[TF("Сделай отрицание: «Je mange de la viande.»","Make it negative: «Je mange de la viande.»"), F("Je ne mange pas de viande.")],
+[TF("«Вы делаете» — как будет?","«You do» (vous) — how do you say it?"), F("vous faites")]
+])}
+${ERRS([
+["J’aime du chocolat.", "J’aime le chocolat.", TF("Вкусы — le / la / les.","Tastes take le / la / les.")],
+["beaucoup des légumes", "beaucoup de légumes", TF("После beaucoup — только de.","After beaucoup — only de.")],
+["Je ne mange pas de la viande.", "Je ne mange pas de viande.", TF("В отрицании — de.","In the negative — de.")]
+])}
 `,
 ex:[
 {t:"mc", h:TF("du, de la, de l’ или des?","du, de la, de l’ or des?"), w:[
@@ -9167,24 +9742,50 @@ ex:[
 id:"u3-restaurant", sec:"book", unit:"3", kind:TF("Communication + vocabulaire","Communication + vocabulaire"),
 title:"Au restaurant", ru:TF("Меню, заказ, оценка блюд и посуда","The menu, ordering, giving your opinion and tableware"), page:PG("52, 54–55"),
 theory:`
-<h3>${TF("Что есть в меню","What’s on the menu")}</h3>
-${TBL([TF("Часть","Part"), TF("Примеры","Examples")],[
-[F("l’entrée (f.)"), F("la salade niçoise, la soupe de légumes, les œufs cocotte")],
-[F("le plat"), F("la blanquette de veau, le steak-frites, l’omelette, le magret de canard, la quiche")],
-[F("le dessert"), F("la glace, la mousse au chocolat, le riz au lait, la tarte aux pommes")],
-[F("les boissons"), F("l’eau, le jus de fruits, le soda, le café, le café crème, le thé")]
+${KEY([
+TF(`Меню идёт по порядку: ${F("l’entrée")} (закуска) → ${F("le plat")} → ${F("le dessert")}.`, `The menu goes in order: ${F("l’entrée")} (starter) → ${F("le plat")} → ${F("le dessert")}.`),
+TF(`Заказать: ${F("Je voudrais…")} / ${F("Pour moi, …")}`, `To order: ${F("Je voudrais…")} / ${F("Pour moi, …")}`),
+TF(`Попросить счёт: ${F("L’addition, s’il vous plaît !")}`, `To ask for the bill: ${F("L’addition, s’il vous plaît !")}`),
+TF(`Оценить: ${F("délicieux")} > ${F("bon")} > ${F("pas mal")} > ${F("pas bon")} > ${F("mauvais")}.`, `To rate: ${F("délicieux")} > ${F("bon")} > ${F("pas mal")} > ${F("pas bon")} > ${F("mauvais")}.`)
 ])}
-${NOTE(TF(`${F("l’entrée")} — <b>закуска</b>, а не основное блюдо. ${F("le plat du jour")} — блюдо дня, ${F("la formule")} — комплекс (например, entrée + plat). Графин воды ${F("une carafe d’eau")} во Франции бесплатный.`, `${F("l’entrée")} is the <b>starter</b>, not the main course. ${F("le plat du jour")} is the dish of the day, ${F("la formule")} is a set menu (e.g. entrée + plat). A ${F("carafe d’eau")} is free in France.`))}
-<h3>${TF("Заказать","Ordering")}</h3>
-${EX([["Je voudrais de la blanquette de veau.", TF("Я бы хотел бланкет из телятины.","I’d like the veal blanquette.")],["Pour moi, un croque-monsieur végétarien.", TF("Мне — вегетарианский крок-месье.","For me, a vegetarian croque-monsieur.")],["Une carafe d’eau, s’il vous plaît !", TF("Графин воды, пожалуйста!","A jug of water, please!")],["L’addition, s’il vous plaît !", TF("Счёт, пожалуйста!","The bill, please!")]])}
-<h3>${TF("Оценить блюдо","Giving your opinion")}</h3>
+<h3>${TF("Как заказать?","How do you order?")}</h3>
+${CHAT("fr-u3-restaurant", TF("В ресторане","At the restaurant"), [
+["Serveur", "Bonjour, madame. Vous désirez ?", "Здравствуйте. Что желаете?", "Hello, madam. What would you like?"],
+["Cliente", "En entrée, la soupe de légumes, s’il vous plaît.", "На закуску — овощной суп, пожалуйста.", "The vegetable soup to start, please."],
+["Serveur", "Et comme plat ?", "А из основных блюд?", "And for your main course?"],
+["Cliente", "Pour moi, le plat du jour. Et une carafe d’eau.", "Мне — блюдо дня. И графин воды.", "The dish of the day for me. And a jug of water."],
+["Serveur", "Très bien. … C’est bon ?", "Хорошо. … Вкусно?", "Very good. … Is it good?"],
+["Cliente", "C’est délicieux ! L’addition, s’il vous plaît.", "Очень вкусно! Счёт, пожалуйста.", "It’s delicious! The bill, please."]
+])}
+<h3>${TF("Что есть в меню?","What’s on the menu?")}</h3>
+<p><b>${F("l’entrée")}</b> — ${TF("закуска","starter")}</p>
+${PICS([["nicoise","la salade niçoise",TF("салат нисуаз","salade niçoise")],["soupe","la soupe",TF("суп","soup")]])}
+<p><b>${F("le plat")}</b> — ${TF("основное блюдо","main course")}</p>
+${PICS([["steakfrites","le steak-frites",TF("стейк с картошкой фри","steak and chips")],["blanquette","la blanquette de veau",TF("рагу из телятины в сливочном соусе","veal in a creamy sauce")],["omelette","l’omelette",TF("омлет","omelette"),"f"],["quiche","la quiche",TF("киш, открытый пирог","quiche")],["magret","le magret de canard",TF("утиная грудка","duck breast")],["croque","le croque-monsieur",TF("горячий бутерброд с ветчиной и сыром","toasted ham and cheese sandwich")]])}
+<p><b>${F("le dessert")}</b> — ${TF("десерт","dessert")}</p>
+${PICS([["mousse","la mousse au chocolat",TF("шоколадный мусс","chocolate mousse")],["tarte","la tarte aux pommes",TF("яблочный пирог","apple tart")],["rizaulait","le riz au lait",TF("рисовый пудинг","rice pudding")],["glace","la glace",TF("мороженое","ice cream")]])}
+<p><b>${F("la boisson")}</b> — ${TF("напиток","drink")}</p>
+${PICS([["cafecreme","le café crème",TF("кофе со сливками","white coffee")]])}
+${NOTE(TF(`${F("le plat du jour")} — блюдо дня, ${F("la formule")} — комплекс (например, entrée + plat), а графин воды ${F("une carafe d’eau")} во Франции приносят бесплатно.`, `${F("le plat du jour")} is the dish of the day, ${F("la formule")} is a set menu (e.g. entrée + plat), and a ${F("carafe d’eau")} is free in France.`))}
+<h3>${TF("Как оценить блюдо?","How do you rate a dish?")}</h3>
 ${SCALE([["C’est délicieux !", TF("очень вкусно","delicious")],["C’est bon.", TF("вкусно","good")],["C’est pas mal.", TF("неплохо","not bad")],["Ce n’est pas bon.", TF("невкусно","not good")],["C’est mauvais. / Ça n’a pas de goût.", TF("плохо / безвкусно","bad / tasteless")]], [TF("лучше","better"), TF("хуже","worse")])}
-${WARN(TF(`${F("C’est pas mal")} — разговорная форма без ${F("ne")}, и это <b>похвала</b>: «неплохо, вполне хорошо».`, `${F("C’est pas mal")} is the spoken form without ${F("ne")}, and it’s <b>praise</b>: «not bad, pretty good».`))}
-<h3>${TF("Посуда","Tableware")}</h3>
-${TBL(["Français", TF("Значение","Meaning")],[[F("l’assiette (f.)"), TF("тарелка","plate")],[F("le verre"), TF("стакан, бокал","glass")],[F("la carafe"), TF("графин","jug, carafe")],[F("le couteau"), TF("нож","knife")],[F("la fourchette"), TF("вилка","fork")],[F("la cuillère"), TF("ложка","spoon")]])}
-<h3>${TF("manger","manger")}</h3>
+<p>${TF(`${F("C’est pas mal")} — разговорная форма без ${F("ne")}, и это <b>похвала</b>.`, `${F("C’est pas mal")} is the spoken form without ${F("ne")}, and it’s <b>praise</b>.`)}</p>
+<h3>${TF("Что на столе?","What’s on the table?")}</h3>
+${PICS([["assiette","l’assiette",TF("тарелка","plate"),"f"],["verre","le verre",TF("стакан, бокал","glass")],["carafe","la carafe",TF("графин","jug")],["couteau","le couteau",TF("нож","knife")],["fourchette","la fourchette",TF("вилка","fork")],["cuillere","la cuillère",TF("ложка","spoon")]])}
+<h3>${TF("manger — есть","manger — to eat")}</h3>
 ${CJS(CJ("manger", TF("есть, кушать","to eat"), ["je mange","tu manges","il / elle / on mange","nous mang<b>e</b>ons","vous mangez","ils / elles mangent"]))}
-${CMP2(`${F("nous mangeons")}: e нужна, чтобы g читалось мягко [ʒ], как в ${F("manger")}. Без неё было бы [g].`, ``, `${F("nous mangeons")}: the e keeps the g soft [ʒ]; without it you’d read a hard [g].`)}
+<p>${TF(`${F("nous mangeons")}: буква e сохраняет мягкое [ʒ], как в ${F("manger")}.`, `${F("nous mangeons")}: the e keeps the soft [ʒ] of ${F("manger")}.`)}</p>
+${QC([
+[TF("Что такое «l’entrée» в меню?","What is «l’entrée» on a menu?"), TF("Закуска — то, что едят перед основным блюдом.","The starter — what you eat before the main course.")],
+[TF("Как попросить счёт?","How do you ask for the bill?"), F("L’addition, s’il vous plaît !")],
+[TF("«C’est pas mal» — это похвала или критика?","«C’est pas mal» — praise or criticism?"), TF("Похвала: «неплохо, вполне хорошо».","Praise: «not bad, pretty good».")]
+])}
+${ERRS([
+["Le menu, s’il vous plaît.", "La carte, s’il vous plaît.", TF("Список блюд — la carte; le menu — комплексное меню.","The list of dishes is la carte; le menu is a set menu.")],
+["nous mangons", "nous mangeons", TF("e сохраняет мягкое g.","The e keeps the g soft.")],
+["Je veux l’addition.", "L’addition, s’il vous plaît.", TF("Просьба — вежливой формулой.","Ask with the polite formula.")]
+])}
+${PHOTOS(["nicoise","soupe","steakfrites","blanquette","omelette","quiche","magret","croque","mousse","tarte","rizaulait","glace","cafecreme","assiette","verre","carafe","couteau","fourchette","cuillere"])}
 `,
 ex:[
 {t:"sort", h:TF("Закуска, блюдо, десерт или напиток?","Starter, main, dessert or drink?"), cats:[F("entrée"),F("plat"),F("dessert"),F("boisson")], w:[
@@ -9231,16 +9832,33 @@ ex:[
 id:"u3-verbes-ir", sec:"book", unit:"3", kind:"Grammaire",
 title:"Les verbes en -ir (2e groupe) : choisir, finir", ru:TF("Глаголы второй группы в настоящем времени","Second-group verbs in the present"), page:PG("54, 56"),
 theory:`
-<p>${TF(`Вторая группа — глаголы на <b>-ir</b>, у которых во множественном числе появляется <b>-iss-</b>. Главные в юните: ${F("choisir")} (выбирать) и ${F("finir")} (заканчивать).`, `The second group is <b>-ir</b> verbs that add <b>-iss-</b> in the plural. The key ones in this unit: ${F("choisir")} (to choose) and ${F("finir")} (to finish).`)}</p>
+${KEY([
+TF(`Вторая группа — глаголы на <b>-ir</b> с <b>-iss-</b> во множественном числе: ${F("choisir, finir")}.`, `The second group is <b>-ir</b> verbs with <b>-iss-</b> in the plural: ${F("choisir, finir")}.`),
+TF(`Окончания: <b>-is, -is, -it, -issons, -issez, -issent</b>.`, `Endings: <b>-is, -is, -it, -issons, -issez, -issent</b>.`),
+TF(`На слух je, tu, il звучат одинаково [ʃwazi]; во мн. ч. появляется [s].`, `By ear je, tu, il sound the same [ʃwazi]; the plural adds [s].`)
+])}
+<h3>${TF("Как спрягать?","How do you conjugate them?")}</h3>
 ${FX(["chois|"+TF("основа","stem"),"+","!is · is · it|"+TF("ед. ч.","sing."),"·","!issons · issez · issent|"+TF("мн. ч.","pl.")], TF("отбрасываем -ir, добавляем окончания","drop -ir, add the endings"))}
 ${CJS(
 CJ("choisir", TF("выбирать","to choose"), ["je chois<b>is</b>","tu chois<b>is</b>","il / elle / on chois<b>it</b>","nous chois<b>issons</b>","vous chois<b>issez</b>","ils / elles chois<b>issent</b>"]),
 CJ("finir", TF("заканчивать","to finish"), ["je fin<b>is</b>","tu fin<b>is</b>","il / elle / on fin<b>it</b>","nous fin<b>issons</b>","vous fin<b>issez</b>","ils / elles fin<b>issent</b>"])
 )}
+<h3>${TF("Что слышно?","What do you hear?")}</h3>
 ${SAME(["je choisis","tu choisis","il choisit"], "[ʃwazi]", [["nous choisissons","[ʃwazisɔ̃]"],["ils choisissent","[ʃwazis]"]])}
-${RULE(TF("Как не перепутать с -er","How not to mix them up with -er"), `<p>${TF(`У je и tu здесь одинаковое окончание <b>-is</b> (у глаголов на -er — ${F("je parle / tu parles")}). Ловушка — ${F("il choisit")} с <b>-t</b> на конце, его не слышно.`, `Here je and tu share the ending <b>-is</b> (with -er verbs it’s ${F("je parle / tu parles")}). The trap is ${F("il choisit")} with a silent <b>-t</b>.`)}</p>`)}
-${EX([["Je choisis le plat du jour.", TF("Я выбираю блюдо дня.","I’m choosing the dish of the day.")],["Vous choisissez quel dessert ?", TF("Какой десерт вы выбираете?","Which dessert are you choosing?")],["Tu ne finis pas ton assiette ?", TF("Ты не доедаешь?","Aren’t you finishing your plate?")],["Ils finissent leur jus et ils arrivent.", TF("Они допивают сок и идут.","They finish their juice and they’re coming.")]])}
-${CMP2(`Звук [s] во множественном числе помогает на слух: ${F("il finit")} [fini] ↔ ${F("ils finissent")} [finis].`, ``, `Listen for the [s]: ${F("il finit")} [fini] ↔ ${F("ils finissent")} [finis] — the plural is one syllable longer.`)}
+<p>${TF(`На письме у je и tu одинаково <b>-is</b>, у il — <b>-it</b>. Буква -t не читается, но писать её нужно.`, `In writing je and tu both take <b>-is</b>, and il takes <b>-it</b>. The -t is silent but must be written.`)}</p>
+<h3>${TF("В ресторане","At the restaurant")}</h3>
+${EX([["Je choisis le plat du jour.", TF("Я выбираю блюдо дня.","I’m choosing the dish of the day.")],["Vous choisissez quel dessert ?", TF("Какой десерт вы выбираете?","Which dessert are you choosing?")],["Tu ne finis pas ton assiette ?", TF("Ты не доедаешь?","Aren’t you finishing your plate?")],["Ils finissent leur jus.", TF("Они допивают сок.","They’re finishing their juice.")]])}
+${WARN(TF(`Не все глаголы на -ir такие: ${F("partir, sortir, dormir")} спрягаются иначе (их учат позже).`, `Not all -ir verbs work like this: ${F("partir, sortir, dormir")} are conjugated differently (you’ll learn them later).`))}
+${QC([
+[TF("«Мы выбираем» — как будет?","«We choose» — how do you say it?"), F("nous choisissons")],
+[TF("Какая буква на конце у «il finit»?","What letter ends «il finit»?"), TF("-t (не читается).","-t (silent).")],
+[TF("«Они заканчивают» — как будет?","«They finish» — how do you say it?"), F("ils finissent")]
+])}
+${ERRS([
+["il choisis", "il choisit", TF("У il — окончание -it.","il takes -it.")],
+["nous choisons", "nous choisissons", TF("Во мн. ч. нужно -iss-.","The plural needs -iss-.")],
+["ils finisent", "ils finissent", TF("Две s: -issent.","Double s: -issent.")]
+])}
 `,
 ex:[
 {t:"conj", h:TF("Проспрягай choisir и finir","Conjugate choisir and finir"), w:[
@@ -9293,14 +9911,29 @@ ex:[
 id:"u3-phonetique", sec:"book", unit:"3", kind:"Phonie-graphie",
 title:"Les voyelles [i], [y], [u] et l’intonation", ru:TF("Три «узких» гласных и интонация вопроса","Three «close» vowels and question intonation"), page:PG("50, 56"),
 theory:`
+${KEY([
+TF(`[i] — губы в улыбке, [y] и [u] — губы трубочкой.`, `[i] — spread lips, [y] and [u] — rounded lips.`),
+TF(`Буква ${F("u")} читается [y], сочетание ${F("ou")} — [u].`, `The letter ${F("u")} is read [y], the pair ${F("ou")} — [u].`),
+TF(`Голос вверх ↗ — вопрос, вниз ↘ — утверждение.`, `Voice up ↗ — a question, down ↘ — a statement.`)
+])}
 <h3>${TF("Три гласных — три положения губ","Three vowels — three lip positions")}</h3>
 ${BIGC([["[i]", TF("губы растянуты, как в улыбке","lips spread, as in a smile"), "dix, midi, la liste", "m"],["[y]", TF("губы трубочкой, язык — как для [i]","lips rounded, tongue as for [i]"), "tu, du, légumes", "f"],["[u]", TF("губы трубочкой, язык назад","lips rounded, tongue pulled back"), "vous, douze, courses", "p"]])}
-${TBL([TF("Звук","Sound"), TF("Пишется","Spelt"), TF("Примеры","Examples")],[["[i]", "i, y, î", F("lundi, midi, liste, stylo")],["[y]", "u, û", F("tu, du, lundi, légumes, menu")],["[u]", "ou, où, oû", F("vous, douze, beaucoup, courses, soupe")]])}
-${WARN(TF(`Самая важная пара — [y] и [u]: ${F("du")} [dy] ≠ ${F("doux")} [du], ${F("tu")} [ty] ≠ ${F("tout")} [tu], ${F("vu")} ≠ ${F("vous")}. Буква <b>u</b> — это всегда [y], а «у» по-французски пишется <b>ou</b>.`, `The key pair is [y] vs [u]: ${F("du")} [dy] ≠ ${F("doux")} [du], ${F("tu")} [ty] ≠ ${F("tout")} [tu], ${F("vu")} ≠ ${F("vous")}. The letter <b>u</b> is always [y]; the sound [u] is spelt <b>ou</b>.`))}
 ${CMP2(`[y] — как «ю» без «й» в начале: скажи «и» и, не двигая языком, вытяни губы трубочкой.`, ``, `Say «ee» and round your lips as for «oo» without moving your tongue.`)}
-<h3>${TF("Интонация: вопрос или утверждение","Intonation: question or statement")}</h3>
-${TBL([TF("Голос","Voice"), TF("Значит","Means"), TF("Пишем","We write")],[[TF("поднимается ↗","rises ↗"), TF("вопрос","question"), "?"],[TF("опускается ↘","falls ↘"), TF("утверждение","statement"), "."]])}
-${EX([["Tu es d’accord ? ↗", TF("вопрос без слов-маркеров — только интонация","a question with no question word — intonation only")],["On mange. ↘", TF("утверждение","statement")],["De la viande ↗ ou du poisson ? ↘", TF("в выборе «или» голос сначала идёт вверх, потом вниз","in an «or» choice the voice goes up, then down")]])}
+${TBL([TF("Звук","Sound"), TF("Пишется","Spelt"), TF("Примеры","Examples")],[["[i]", "i, y, î", F("lundi, midi, liste, stylo")],["[y]", "u, û", F("tu, du, légumes, menu")],["[u]", "ou, où, oû", F("vous, douze, beaucoup, soupe")]])}
+<h3>${TF("Послушай пары: [y] или [u]?","Listen to the pairs: [y] or [u]?")}</h3>
+<p>${TF("Нажми на слово, чтобы услышать. В каждой паре слова различаются только этим звуком.", "Tap a word to hear it. The words in each pair differ only in this sound.")}</p>
+${TBL(["[y] · u", "[u] · ou", TF("Значение","Meaning")],[[F("du"), F("doux"), TF("немного · мягкий","some · soft")],[F("tu"), F("tout"), TF("ты · всё","you · all")],[F("vu"), F("vous"), TF("увиденный · вы","seen · you")],[F("lu"), F("loup"), TF("прочитанный · волк","read · wolf")]])}
+<h3>${TF("Вопрос или утверждение?","Question or statement?")}</h3>
+${EX([["Tu es d’accord ? ↗", TF("вопрос без вопросительного слова — только интонация","a question with no question word — intonation only")],["On mange. ↘", TF("утверждение","statement")],["De la viande ↗ ou du poisson ? ↘", TF("в выборе «или» голос сначала вверх, потом вниз","in an «or» choice the voice goes up, then down")]])}
+${QC([
+[TF("Как пишется звук [u]?","How is the sound [u] spelt?"), TF(`Сочетанием ${F("ou")}: ${F("vous, douze")}.`, `With ${F("ou")}: ${F("vous, douze")}.`)],
+[TF("Какой звук в слове «menu»?","Which sound is in «menu»?"), TF("[y]: буква u.","[y]: the letter u.")],
+[TF("«On mange ?» с голосом вверх — это…","«On mange ?» with a rising voice is…"), TF("вопрос","a question")]
+])}
+${ERRS([
+["tu [tu]", "tu [ty]", TF("Буква u — всегда [y].","The letter u is always [y].")],
+["vous [vy]", "vous [vu]", TF("ou — это [u].","ou is [u].")]
+])}
 `,
 ex:[
 {t:"sort", h:TF("Какой звук: [i], [y] или [u]?","Which sound: [i], [y] or [u]?"), cats:["[i]","[y]","[u]"], w:[

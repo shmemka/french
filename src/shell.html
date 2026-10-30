@@ -2582,6 +2582,63 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
 /* варианты ответа: протянуть мышью по словам — перевод (подсветка ::highlight), долгое нажатие — перевод варианта (30.10.2026) */
 ::highlight(ans-sel){background-color:rgba(64,110,255,.26);color:inherit}
 @media (pointer:coarse){ #main .opt,#main .chip,#main .tok{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} }
+
+/* ============ конспект v2 (30.10.2026): Главное, картинки, проверь себя, диалог ============ */
+.ks{margin:4px 0 26px;padding:18px 20px 16px;border:1px solid var(--x-line);border-left:4px solid var(--encre);border-radius:12px;background:var(--sheet)}
+.ks-t{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--encre);margin-bottom:10px}
+.ks-l{margin:0;padding:0;list-style:none;counter-reset:ks;display:flex;flex-direction:column;gap:9px}
+.ks-l li{counter-increment:ks;position:relative;padding-left:34px;font-size:15.5px;line-height:1.55;color:var(--ink)}
+.ks-l li::before{content:counter(ks);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--encre) 10%,var(--sheet));color:var(--encre);font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.pics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:14px 0 22px}
+.pic{margin:0;border:1px solid var(--x-line);border-radius:12px;overflow:hidden;background:var(--sheet);cursor:pointer;color:var(--ink)!important;text-decoration:none!important;border-bottom-width:1px!important;transition:border-color .15s,box-shadow .15s,transform .15s}
+.pic:hover{border-color:var(--x-in);box-shadow:0 4px 14px rgba(20,24,50,.08);transform:translateY(-1px)}
+.pic.speaking{border-color:var(--encre)}
+.pic-i{display:block;aspect-ratio:4/3;background:var(--x-soft);overflow:hidden}
+.pic-i img{display:block;width:100%;height:100%;object-fit:cover}
+.pic figcaption{display:flex;flex-direction:column;gap:1px;padding:8px 10px 10px}
+.pic figcaption b{font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink)}
+.pic figcaption small{font-size:13px;color:var(--ink-3);line-height:1.3}
+.pic-g{font-style:normal;font-weight:500;font-size:11.5px;color:var(--ink-3);margin-left:5px}
+.qc{margin:22px 0;padding:16px 18px;border:1px dashed var(--x-in);border-radius:12px;background:var(--x-soft)}
+.qc-t{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.qc-i{border-top:1px solid var(--x-line2)}
+.qc-i:first-of-type{border-top:0}
+.qc-i summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;cursor:pointer;font-size:15px;color:var(--ink)}
+.qc-i summary::-webkit-details-marker{display:none}
+.qc-s{flex:none;font-size:12.5px;font-weight:600;color:var(--encre);padding:3px 9px;border-radius:7px;background:var(--sheet);border:1px solid var(--x-line)}
+.qc-i[open] .qc-s{opacity:.5}
+.qc-a{padding:0 0 12px;font-size:15px;color:var(--x-ok-t);font-weight:600;animation:qq-up .25s both}
+.qc-a .fr{color:inherit}
+.chat{margin:16px 0 24px;border:1px solid var(--x-line);border-radius:12px;background:var(--sheet);padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px}
+.chat-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.chat-h b{font-size:15px}
+.chat-b{display:flex;align-items:center;gap:8px}
+.chat-b .btn{gap:6px}.chat-b .btn svg{width:13px;height:13px}
+.chat-tg{background:var(--fill)}
+.chat-r{display:flex;flex-direction:column;gap:3px;max-width:82%}
+.chat-r.l{align-self:flex-start}
+.chat-r.r{align-self:flex-end;align-items:flex-end;text-align:right}
+.chat-w{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);padding:0 4px}
+.chat-m{padding:9px 13px;border-radius:14px;background:var(--x-soft);border:1px solid var(--x-line2)}
+.chat-r.l .chat-m{border-top-left-radius:4px}
+.chat-r.r .chat-m{border-top-right-radius:4px;background:color-mix(in srgb,var(--encre) 8%,var(--sheet));border-color:color-mix(in srgb,var(--encre) 16%,transparent)}
+.chat-m p{margin:0}
+.chat-m .fr{font-size:15.5px;line-height:1.45}
+.chat-tr{font-size:13.5px;color:var(--ink-3);margin-top:2px!important}
+.chat.no-tr .chat-tr{display:none}
+.photo-cr{margin:28px 0 0;font-size:12.5px;color:var(--ink-3)}
+.photo-cr summary{cursor:pointer;width:max-content}
+.photo-cr p{margin:6px 0 0;line-height:1.5}
+.photo-cr a{color:inherit}
+@media (max-width:640px){
+  .ks{padding:14px 14px 12px}.ks-l li{font-size:15px}
+  .pics{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .pic{border-radius:10px}
+  .pic figcaption{padding:6px 7px 8px}
+  .pic figcaption b{font-size:13px}
+  .pic figcaption small{font-size:11.5px}
+  .chat{padding:12px}.chat-r{max-width:92%}
+}
 /* ============ окошко перевода по выделению v2 (29.10.2026) ============ */
 .selpop.selpop{flex-direction:column;align-items:stretch;gap:2px;min-width:200px;max-width:min(320px,calc(100vw - 16px));padding:10px 10px 12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--x-line);border-radius:12px;box-shadow:0 12px 32px rgba(20,24,50,.14),0 2px 6px rgba(20,24,50,.06);font-size:14px}
 .selpop.selpop::after{width:12px;height:12px;left:calc(var(--ax,50%) - 6px);bottom:-7px;background:var(--sheet);border:1px solid var(--x-line);border-top:0;border-left:0;border-radius:0 0 3px 0;z-index:auto}

@@ -62,3 +62,33 @@ const TC = (col, row, cap, nodes, dn) => `<div class="tr-c${dn?" dn":""}" style=
 const S3 = cards => `<div class="s3">${cards.map(c=>`<div class="s3-c s3-${c.k}"><div class="s3-h"><span class="s3-k">${c.sym}</span><span>${c.h}</span></div><div class="s3-f">${c.f.map(p=>p[0]==="!" ? `<span class="s3-p hi fr">${p.slice(1)}</span>` : `<span class="s3-p">${p}</span>`).join("")}</div><ul class="s3-ex">${c.ex.map(([a,b])=>`<li><span class="fr">${a}</span>${b?`<small>${b}</small>`:""}</li>`).join("")}</ul></div>`).join("")}</div>`;
 /* заголовок столбца таблицы с кружком + / − / ? */
 const S3TH = (k, sym, txt) => `<span class="s3-th s3-${k}"><span class="s3-k">${sym}</span>${txt}</span>`;
+
+/* =========================================================
+   КОНСПЕКТ v2 (30.10.2026): блоки для теории. Правила — docs/konspekt.md.
+   ========================================================= */
+/* артикль цветом рода: le/un — м. р., la/une — ж. р., les/des — мн. ч.; g — род для l’ («m» / «f») */
+const GART = (fr, g) => String(fr).split(" / ").map(p=>{
+  const m = p.match(/^(le|un|la|une|les|des)(?=\s)/i);
+  if (m) return `<span class="${/^(le|un)$/i.test(m[1]) ? "g-m" : /^(la|une)$/i.test(m[1]) ? "g-f" : "g-pl"}">${m[1]}</span>${p.slice(m[1].length)}`;
+  const e = p.match(/^(l[’'])/i);
+  if (e && g) return `<span class="${g === "f" ? "g-f" : "g-m"}">${e[1]}</span>${p.slice(e[1].length)}`;
+  return p;
+}).join(" / ");
+/* «Главное»: 2–4 пункта, с которых начинается тема */
+const KEY = items => `<div class="ks"><div class="ks-t">${HT("Главное", "Key points")}</div><ol class="ks-l">${items.map(x=>`<li>${x}</li>`).join("")}</ol></div>`;
+/* картинки к словам: [[файл в img/w, слово с артиклем, перевод, род для l’]]; нажатие — озвучка */
+const PICS = list => `<div class="pics">${list.filter(x=>typeof IMG_CREDITS === "undefined" || IMG_CREDITS[x[0]]).map(([img, fr, tr, g])=>`<figure class="pic fr" data-say="${fr.replace(/"/g, "&quot;")}"><span class="pic-i"><img src="img/w/${img}.webp" alt="${tr}" loading="lazy" decoding="async" width="400" height="300"></span><figcaption><b>${GART(fr, g)}${g ? `<i class="pic-g">${g === "f" ? HT("ж.", "f.") : HT("м.", "m.")}</i>` : ""}</b><small>${tr}</small></figcaption></figure>`).join("")}</div>`;
+/* «Проверь себя»: [[вопрос, ответ]] — ответ открывается по нажатию */
+const QC = list => `<div class="qc"><div class="qc-t">${HT("Проверь себя", "Check yourself")}</div>${list.map(([q, a])=>`<details class="qc-i"><summary><span class="qc-q">${q}</span><span class="qc-s">${HT("Ответ", "Answer")}</span></summary><div class="qc-a">${a}</div></details>`).join("")}</div>`;
+/* частые ошибки: [[как нельзя, как надо, почему]] */
+const ERRS = rows => `<div class="mist"><div class="mist-t">${HT("Частые ошибки", "Common mistakes")}</div>${rows.map(([bad, good, why])=>`<div class="mist-r"><span class="mist-bad">✗ <s>${bad}</s></span><span class="mist-good">✓ <span class="fr">${good}</span></span>${why ? `<span class="mist-why">${why}</span>` : ""}</div>`).join("")}</div>`;
+/* диалог с озвучкой в мини-плеере: lines [[кто, фраза, перевод ru, перевод en]] */
+const CHAT = (id, title, lines) => {
+  DLG[id] = {lang:"fr", title, lines:lines.map(l=>[l[0], l[1], l[2] || "", l[3] || ""])};
+  const first = lines[0][0];
+  return `<div class="chat"><div class="chat-h"><b>${title}</b><span class="chat-b"><button type="button" class="chip-t chat-tg" aria-pressed="false">${HT("Скрыть перевод", "Hide translation")}</button><button type="button" class="btn sm sec dlg-btn" data-dlg="${id}">${f7("play_fill")}${HT("Слушать", "Listen")}</button></span></div>
+  ${lines.map(([who, fr, ru, en])=>`<div class="chat-r ${who === first ? "l" : "r"}"><span class="chat-w">${who}</span><div class="chat-m"><p class="fr">${fr}</p><p class="chat-tr">${HT(ru, en || ru)}</p></div></div>`).join("")}</div>`;
+};
+document.addEventListener("click", e=>{ const b = e.target.closest && e.target.closest(".chat-tg"); if (!b) return; const c = b.closest(".chat"), on = !c.classList.contains("no-tr"); c.classList.toggle("no-tr", on); b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? HT("Показать перевод", "Show translation") : HT("Скрыть перевод", "Hide translation"); });
+/* источники фото: список файлов из img/w (подписи берутся из IMG_CREDITS) */
+const PHOTOS = files => typeof IMG_CREDITS === "undefined" ? "" : `<details class="photo-cr"><summary>${HT("Фото", "Photos")}: Wikimedia Commons</summary><p>${files.filter(f=>IMG_CREDITS[f]).map(f=>{ const c = IMG_CREDITS[f]; return `<a href="${c.page}" target="_blank" rel="noopener">${c.w}</a> — ${c.author || HT("автор не указан", "unknown author")}, <a href="${c.lurl || c.page}" target="_blank" rel="noopener">${c.license}</a>`; }).join("; ")}.</p></details>`;

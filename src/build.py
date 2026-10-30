@@ -2,7 +2,7 @@
 import os, shutil
 HERE=os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 OUT=os.path.dirname(HERE)  # корень репозитория = то, что публикует GitHub Pages
-files=['visuals.js','data-book.js','data-ref.js','data-test.js','vocab.js','gloss.js','es-book.js','es-book-2.js','es-book-3.js','es-book-4.js','es-gram.js','es-lexico.js','es-lexico-4.js','es-test.js','es-cheat.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','bank-extra.js','why.js','why2.js','fr-u3.js','fr-cahier.js','fr-plus.js','es-plus.js','fr-phrase.js','es-frase.js','fr-test-u1.js','fr-test-u2.js','fr-test-u12.js','fr-tutor.js','why2-fr.js','why2-cahier.js','why2-es.js','why2-pool.js','engine2.js']
+files=['visuals.js','img-credits.js','data-book.js','data-ref.js','data-test.js','vocab.js','gloss.js','es-book.js','es-book-2.js','es-book-3.js','es-book-4.js','es-gram.js','es-lexico.js','es-lexico-4.js','es-test.js','es-cheat.js','en-book-1.js','en-book-2.js','en-ref.js','en-test.js','bank-extra.js','why.js','why2.js','fr-u3.js','fr-cahier.js','fr-plus.js','es-plus.js','fr-phrase.js','es-frase.js','fr-test-u1.js','fr-test-u2.js','fr-test-u12.js','fr-tutor.js','why2-fr.js','why2-cahier.js','why2-es.js','why2-pool.js','engine2.js']
 js=''.join(open(f).read()+'\n' for f in files)
 # иконки: только Framework7 Icons (src/f7-icons.json, собирается src/f7gen.py)
 import json, re
