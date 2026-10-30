@@ -116,13 +116,9 @@ const knTok = p => /^[+=→·]$/.test(p) ? `<span class="kn-op">${p}</span>` : p
 const MERGE = items => `<div class="kn-m">${items.map(it=>`<div class="kn-mc${it.hl ? " hl" : ""}"><div class="kn-me">${it.f.map(knTok).join("")}${it.r ? `<span class="kn-pill${it.r[0] === "~" ? "" : " fr"}">${it.r.replace(/^~/, "")}</span>` : ""}</div>${it.ex ? `<span class="kn-mx">${it.ex}</span>` : ""}</div>`).join("")}</div>`;
 /* заметка-ловушка (k = "info" — просто факт) */
 const ASIDE = (html, k) => `<aside class="kn-as">${k === "info" ? f7("info_circle", "kn-as-i") : f7("exclamationmark_circle", "kn-as-i")}<p>${html}</p></aside>`;
-/* спряжение 2 × 3 (ед. ч. | мн. ч.): forms — 6 форм с местоимением, hi — номера форм, которые подсветить */
-const KN_PR = /^(je |j’|tu |il \/ elle \/ on |il |nous |vous |ils \/ elles |ils )/;
-const CONJ = (v, tr, forms, hi = [], note) => {
-  const cell = i => { const f = forms[i], m = f.match(KN_PR); return `<span class="kn-cj-c fr${hi.includes(i) ? " hi" : ""}" data-say="${f.replace(/<[^>]+>/g, "")}">${m ? `<i>${m[1].trim()}</i>${/’$/.test(m[1]) ? "" : " "}` : ""}${m ? f.slice(m[1].length) : f}</span>`; };
-  return `<div class="kn-cj"><div class="kn-cj-h"><span class="fr kn-cj-v">${v}</span><span class="kn-cj-t">${tr}</span></div><div class="kn-cj-g"><span class="kn-cj-th">${HT("ед. ч.", "singular")}</span><span class="kn-cj-th">${HT("мн. ч.", "plural")}</span>${[0, 3, 1, 4, 2, 5].map(cell).join("")}</div>${note ? `<p class="kn-cj-n">${note}</p>` : ""}</div>`;
-};
-const CONJS = (...cards) => `<div class="kn-cjs">${cards.join("")}</div>`;
+/* спряжение — обычные карточки CJ (как в юнитах 0–2): в формах <b> — окончание или то, что меняется; note — строка под карточкой */
+const CONJ = (v, tr, forms, hi, note) => note ? CJS(CJ(v, tr, forms)) + KCAP(note) : CJ(v, tr, forms);
+const CONJS = (...cards) => CJS(...cards);
 /* шкала оценок: [[фраза, значение]] от лучшего к худшему */
 const RATE = rows => `<div class="kn-t kn-rate" style="--cols:minmax(0,1.3fr) minmax(0,1fr)">${rows.map(([fr, tr], i)=>`<div class="kn-tr"><span><span class="fr">${fr}</span></span><span><i class="kn-mt" aria-hidden="true">${[0, 1, 2, 3, 4].map(k=>`<i${k < rows.length - i ? ' class="on"' : ""}></i>`).join("")}</i>${tr}</span></div>`).join("")}</div>`;
 /* «Не путай»: [[как нельзя, как надо, почему]] */
