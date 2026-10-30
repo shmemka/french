@@ -358,7 +358,7 @@ const IMG_CREDITS = {
 "lurl": "https://creativecommons.org/licenses/by-sa/4.0"
 },
 "pot": {
-"w": "un pot de yaourt",
+"w": "un pot de confiture",
 "page": "https://commons.wikimedia.org/wiki/File:Coloured_lids_%2841817300005%29.jpg",
 "author": "oatsy40 from London",
 "license": "CC BY 2.0",

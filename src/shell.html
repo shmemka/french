@@ -2639,6 +2639,116 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
   .pic figcaption small{font-size:11.5px}
   .chat{padding:12px}.chat-r{max-width:92%}
 }
+/* ============ конспект v3 (30.10.2026, референс «à или chez?») ============ */
+.theory .kn-lead{margin:0 0 4px;max-width:70ch;font-size:16px;line-height:1.55;color:var(--ink-2)}
+.theory h3.kn-h{margin:36px 0 14px;font-size:13px;font-weight:700;line-height:1.4;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.theory h3.kn-h:first-child{margin-top:0}
+.theory .kn-sub{margin:20px 0 10px;font-size:15px;font-weight:600;color:var(--ink)}
+.theory .kn-sub .kn-sub-n{font-weight:400;color:var(--ink-3)}
+.theory .kn-sub .kn-sub-n::before{content:" — "}
+.theory .kn-sub .fr{color:var(--ink);text-decoration:none}
+.theory .kn-cap{margin:-4px 0 16px;max-width:70ch;font-size:14.5px;line-height:1.5;color:var(--ink-3)}
+.kn-a{font-weight:700;color:var(--encre)}
+.kn-x{color:var(--marge);text-decoration:line-through;text-decoration-color:var(--marge)}
+.kn-x .fr{color:inherit}
+.kn-ch,.kn-t,.kn-m,.kn-cj,.kn-cjs,.kn-as,.kn-q{margin:0 0 16px}
+.kn-ch .fr,.kn-t .fr,.kn-m .fr,.kn-cj .fr,.kn-as .fr,.kn-q .fr,.kn-lead .fr,.kn-cap .fr{color:inherit;text-decoration:none}
+.kn-lead .fr,.kn-cap .fr,.kn-as .fr{font-weight:600;color:var(--ink)}
+/* выбор */
+.kn-ch{display:grid;grid-template-columns:repeat(min(var(--n),3),minmax(0,1fr));gap:16px}
+.kn-c{display:flex;flex-direction:column;gap:16px;padding:20px;border:1px solid var(--x-line);border-radius:10px;background:var(--sheet);min-width:0}
+.kn-c-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.kn-c-l{font-size:14px;font-weight:600;line-height:1.35;color:var(--ink-2)}
+.kn-c-n{font-size:12px;line-height:1.35;color:var(--ink-3);text-align:right}
+.kn-c-k{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px}
+.kn-c-big{font-size:32px;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--ink)}
+.kn-c.kn-acc .kn-c-big{color:var(--encre)}
+.kn-c-add{font-size:16px;font-weight:600;color:var(--ink-3)}
+.kn-c-x{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:16px;line-height:1.4;color:var(--ink)}
+.kn-c-x li{margin:0;padding:0}
+.kn-c-x li::before{content:none}
+.kn-c-x small{display:block;font-size:13px;color:var(--ink-3)}
+.kn-c b,.kn-t b,.kn-m b{font-weight:700;color:var(--ink)}
+.kn-c.kn-acc b{color:var(--encre)}
+.kn-c b.kn-a,.kn-t b.kn-a,.kn-m b.kn-a{color:var(--encre)}
+/* таблица */
+.kn-t{border:1px solid var(--x-line);border-radius:10px;overflow:hidden;background:var(--sheet)}
+.kn-tr{display:grid;grid-template-columns:var(--cols);gap:16px;padding:12px 20px;border-bottom:1px solid var(--x-line2);font-size:16px;line-height:1.45;color:var(--ink)}
+.kn-tr:last-child{border-bottom:0}
+.kn-tr>span{min-width:0}
+.kn-tr small{display:block;font-size:13.5px;line-height:1.4;color:var(--ink-3)}
+.kn-th{padding:10px 20px;background:var(--x-soft);font-size:13px;font-weight:600;color:var(--ink-3)}
+.kn-mt{display:inline-flex;gap:3px;margin-right:10px;vertical-align:1px}
+.kn-mt i{width:6px;height:12px;border-radius:2px;background:var(--x-line)}
+.kn-mt i.on{background:var(--encre)}
+/* формулы */
+.kn-m{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kn-mc{display:flex;flex-direction:column;gap:12px;padding:18px 20px;border:1px solid var(--x-line);border-radius:10px;background:var(--sheet);min-width:0}
+.kn-mc.hl{border-color:color-mix(in srgb,var(--encre) 18%,var(--sheet));background:color-mix(in srgb,var(--encre) 5%,var(--sheet))}
+.kn-me{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;font-size:20px;font-weight:600;line-height:1.3;color:var(--ink-2)}
+.kn-op{color:color-mix(in srgb,var(--ink-3) 65%,var(--sheet))}
+.kn-pill{padding:4px 12px;border-radius:6px;border:1px solid var(--x-line);font-weight:700;color:var(--ink);background:var(--sheet)}
+.kn-mc.hl .kn-pill{border-color:var(--encre);background:var(--encre);color:var(--on-encre)}
+.kn-mx{font-size:15px;line-height:1.45;color:var(--ink-3)}
+.kn-mx b{color:var(--ink)}
+/* спряжение */
+.kn-cjs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.kn-cjs>.kn-cj{margin:0}
+.kn-cj{border:1px solid var(--x-line);border-radius:10px;background:var(--sheet);overflow:hidden}
+.kn-cj-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 20px 12px}
+.kn-cj-v{font-size:20px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.kn-cj-t{font-size:13px;color:var(--ink-3)}
+.kn-cj-g{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--x-line2)}
+.kn-cj-th{padding:8px 20px;background:var(--x-soft);font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3)}
+.kn-cj-c{padding:10px 20px;border-top:1px solid var(--x-line2);font-size:16px;color:var(--ink)}
+.kn-cj-c:nth-child(odd){border-right:1px solid var(--x-line2)}
+.kn-cj-c i{font-style:normal;color:var(--ink-3)}
+.kn-cj-c b{font-weight:700;color:var(--encre)}
+.kn-cj-c.hi{background:color-mix(in srgb,var(--encre) 6%,var(--sheet))}
+.kn-cj-n .fr{font-weight:600;color:var(--ink)}
+.kn-cj-n{margin:0;padding:10px 20px 12px;border-top:1px solid var(--x-line2);font-size:14px;line-height:1.5;color:var(--ink-3)}
+/* заметка */
+.kn-as{display:flex;align-items:flex-start;gap:12px;padding:16px 20px;border-radius:10px;background:var(--x-soft)}
+.kn-as .kn-as-i{flex:none;width:20px;height:20px;margin-top:2px;color:var(--ink-3)}
+.theory .kn-as p{margin:0;max-width:none;font-size:15px;line-height:1.5;color:var(--ink-2)}
+.kn-as b{color:var(--ink)}
+/* проверь себя */
+.kn-q{border:1px solid var(--x-line);border-radius:10px;overflow:hidden}
+.kn-qi{border-bottom:1px solid var(--x-line2)}
+.kn-qi:last-child{border-bottom:0}
+.kn-qi summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;cursor:pointer;list-style:none;font-size:16px;line-height:1.45;color:var(--ink)}
+.kn-qi summary::-webkit-details-marker{display:none}
+.kn-qs{flex:none;padding:4px 10px;border:1px solid var(--x-line);border-radius:6px;font-size:13px;font-weight:600;color:var(--ink-3)}
+.kn-qi[open] .kn-qs{opacity:0}
+.kn-qa{padding:0 20px 14px;font-size:16px;font-weight:600;color:var(--encre);animation:qq-up .2s ease}
+.kn-qa .fr{color:inherit}
+.theory .kn-cj-n{margin:0}
+.kn-ch[style*="--n:3"] .kn-c-h{flex-direction:column;align-items:flex-start;gap:2px}
+.kn-ch[style*="--n:3"] .kn-c-n{text-align:left}
+/* диалог в стиле v3 */
+.theory .chat{margin:0 0 16px;border-radius:10px;padding:0;gap:0;overflow:hidden}
+.theory .chat-h{margin:0;padding:12px 20px;background:var(--x-soft);border-bottom:1px solid var(--x-line2)}
+.theory .chat-h b{font-size:13px;font-weight:600;color:var(--ink-3)}
+.theory .chat-r{padding:0 20px;margin-top:14px}
+.theory .chat-r:last-child{margin-bottom:18px}
+.theory .chat-m{border-radius:10px}
+.theory .chat-m .fr{color:var(--ink);text-decoration:none;font-size:16px}
+@media (max-width:640px){.theory .chat-h{padding:10px 14px}.theory .chat-r{padding:0 14px}}
+@media (max-width:640px){
+  .theory h3.kn-h{margin-top:30px}
+  .kn-ch{grid-template-columns:1fr;gap:12px}
+  .kn-c{padding:16px;gap:12px}
+  .kn-c-big{font-size:28px}
+  .kn-m{grid-template-columns:1fr;gap:10px}
+  .kn-mc{padding:14px 16px}
+  .kn-me{font-size:18px}
+  .kn-tr{gap:12px;padding:10px 14px;font-size:15px}
+  .kn-th{padding:8px 14px;font-size:12px}
+  .kn-cj-h,.kn-cj-th,.kn-cj-c,.kn-cj-n{padding-left:14px;padding-right:14px}
+  .kn-qi summary{padding:12px 14px;font-size:15px}
+  .kn-qa{padding:0 14px 12px}
+  .kn-as{padding:14px 16px}
+}
 /* ============ окошко перевода по выделению v2 (29.10.2026) ============ */
 .selpop.selpop{flex-direction:column;align-items:stretch;gap:2px;min-width:200px;max-width:min(320px,calc(100vw - 16px));padding:10px 10px 12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--x-line);border-radius:12px;box-shadow:0 12px 32px rgba(20,24,50,.14),0 2px 6px rgba(20,24,50,.06);font-size:14px}
 .selpop.selpop::after{width:12px;height:12px;left:calc(var(--ax,50%) - 6px);bottom:-7px;background:var(--sheet);border:1px solid var(--x-line);border-top:0;border-left:0;border-radius:0 0 3px 0;z-index:auto}

@@ -92,3 +92,40 @@ const CHAT = (id, title, lines) => {
 document.addEventListener("click", e=>{ const b = e.target.closest && e.target.closest(".chat-tg"); if (!b) return; const c = b.closest(".chat"), on = !c.classList.contains("no-tr"); c.classList.toggle("no-tr", on); b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? HT("Показать перевод", "Show translation") : HT("Скрыть перевод", "Hide translation"); });
 /* источники фото: список файлов из img/w (подписи берутся из IMG_CREDITS) */
 const PHOTOS = files => typeof IMG_CREDITS === "undefined" ? "" : `<details class="photo-cr"><summary>${HT("Фото", "Photos")}: Wikimedia Commons</summary><p>${files.filter(f=>IMG_CREDITS[f]).map(f=>{ const c = IMG_CREDITS[f]; return `<a href="${c.page}" target="_blank" rel="noopener">${c.w}</a> — ${c.author || HT("автор не указан", "unknown author")}, <a href="${c.lurl || c.page}" target="_blank" rel="noopener">${c.license}</a>`; }).join("; ")}.</p></details>`;
+
+/* =========================================================
+   КОНСПЕКТ v3 (30.10.2026, по референсу Влада «à или chez?»). Правила — docs/konspekt.md.
+   Тема = вводная фраза (LEAD) + нумерованные шаги (SEC) из блоков:
+   выбор (CHOOSE) → контраст (PAIRS) → формула (MERGE) → спряжение (CONJ) → ловушка (ASIDE)
+   → «Не путай» (TRAPS) → «Проверь себя» (QUIZ). Всё французское — с классом fr (озвучка по нажатию).
+   ========================================================= */
+let KN_N = 0;
+const KA = s => `<b class="kn-a">${s}</b>`;            /* важная часть — цветом курса */
+const KX = s => `<s class="kn-x">${s}</s>`;            /* так нельзя */
+const LEAD = html => { KN_N = 0; return `<p class="kn-lead">${html}</p>`; };
+const SEC = title => `<h3 class="kn-h">${++KN_N} · ${title}</h3>`;
+const KSUB = (label, note) => `<p class="kn-sub">${label}${note ? `<span class="kn-sub-n">${note}</span>` : ""}</p>`;
+const KCAP = html => `<p class="kn-cap">${html}</p>`;
+const knLi = x => Array.isArray(x) ? `<li><span class="fr">${x[0]}</span><small>${x[1]}</small></li>` : `<li><span class="fr">${x}</span></li>`;
+/* карточки выбора: [{lab, hint, key, add, ex:[фраза | [фраза, перевод]], acc, plain}] — plain: ключ не озвучивается */
+const CHOOSE = cards => `<div class="kn-ch" style="--n:${cards.length}">${cards.map(c=>`<div class="kn-c${c.acc ? " kn-acc" : ""}"><div class="kn-c-h"><span class="kn-c-l">${c.lab}</span>${c.hint ? `<span class="kn-c-n">${c.hint}</span>` : ""}</div><div class="kn-c-k"><span class="kn-c-big${c.plain ? "" : " fr"}">${c.key}</span>${c.add ? `<span class="kn-c-add">${c.add}</span>` : ""}</div>${c.ex && c.ex.length ? `<ul class="kn-c-x">${c.ex.map(knLi).join("")}</ul>` : ""}</div>`).join("")}</div>`;
+/* таблица-контраст: заголовки, строки; o.fr — номера французских столбцов, o.cols — ширины (grid-template-columns) */
+const PAIRS = (heads, rows, o = {}) => `<div class="kn-t" style="--cols:${o.cols || `repeat(${heads.length},minmax(0,1fr))`}">${heads.some(Boolean) ? `<div class="kn-tr kn-th">${heads.map(h=>`<span>${h}</span>`).join("")}</div>` : ""}${rows.map(r=>`<div class="kn-tr">${r.map((c, i)=>`<span>${(o.fr || []).includes(i) ? `<span class="fr">${c}</span>` : c}</span>`).join("")}</div>`).join("")}</div>`;
+/* формулы: [{f:["à","+","le","="], r:"au", ex:"au marché", hl:true}]; «~текст» — не французский */
+const knTok = p => /^[+=→·]$/.test(p) ? `<span class="kn-op">${p}</span>` : p[0] === "~" ? `<span>${p.slice(1)}</span>` : `<span class="fr">${p}</span>`;
+const MERGE = items => `<div class="kn-m">${items.map(it=>`<div class="kn-mc${it.hl ? " hl" : ""}"><div class="kn-me">${it.f.map(knTok).join("")}${it.r ? `<span class="kn-pill${it.r[0] === "~" ? "" : " fr"}">${it.r.replace(/^~/, "")}</span>` : ""}</div>${it.ex ? `<span class="kn-mx">${it.ex}</span>` : ""}</div>`).join("")}</div>`;
+/* заметка-ловушка (k = "info" — просто факт) */
+const ASIDE = (html, k) => `<aside class="kn-as">${k === "info" ? f7("info_circle", "kn-as-i") : f7("exclamationmark_circle", "kn-as-i")}<p>${html}</p></aside>`;
+/* спряжение 2 × 3 (ед. ч. | мн. ч.): forms — 6 форм с местоимением, hi — номера форм, которые подсветить */
+const KN_PR = /^(je |j’|tu |il \/ elle \/ on |il |nous |vous |ils \/ elles |ils )/;
+const CONJ = (v, tr, forms, hi = [], note) => {
+  const cell = i => { const f = forms[i], m = f.match(KN_PR); return `<span class="kn-cj-c fr${hi.includes(i) ? " hi" : ""}" data-say="${f.replace(/<[^>]+>/g, "")}">${m ? `<i>${m[1].trim()}</i>${/’$/.test(m[1]) ? "" : " "}` : ""}${m ? f.slice(m[1].length) : f}</span>`; };
+  return `<div class="kn-cj"><div class="kn-cj-h"><span class="fr kn-cj-v">${v}</span><span class="kn-cj-t">${tr}</span></div><div class="kn-cj-g"><span class="kn-cj-th">${HT("ед. ч.", "singular")}</span><span class="kn-cj-th">${HT("мн. ч.", "plural")}</span>${[0, 3, 1, 4, 2, 5].map(cell).join("")}</div>${note ? `<p class="kn-cj-n">${note}</p>` : ""}</div>`;
+};
+const CONJS = (...cards) => `<div class="kn-cjs">${cards.join("")}</div>`;
+/* шкала оценок: [[фраза, значение]] от лучшего к худшему */
+const RATE = rows => `<div class="kn-t kn-rate" style="--cols:minmax(0,1.3fr) minmax(0,1fr)">${rows.map(([fr, tr], i)=>`<div class="kn-tr"><span><span class="fr">${fr}</span></span><span><i class="kn-mt" aria-hidden="true">${[0, 1, 2, 3, 4].map(k=>`<i${k < rows.length - i ? ' class="on"' : ""}></i>`).join("")}</i>${tr}</span></div>`).join("")}</div>`;
+/* «Не путай»: [[как нельзя, как надо, почему]] */
+const TRAPS = rows => PAIRS([HT("Не так", "Not this"), HT("Так", "This"), HT("Почему", "Why")], rows.map(([b, g, w])=>[KX(b), `<b>${g}</b>`, `<small>${w}</small>`]), {fr:[1], cols:"minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr)"});
+/* «Проверь себя»: [[вопрос, ответ]] — ответ по нажатию */
+const QUIZ = list => `<div class="kn-q">${list.map(([q, a])=>`<details class="kn-qi"><summary><span class="kn-qq">${q}</span><span class="kn-qs">${HT("Ответ", "Answer")}</span></summary><div class="kn-qa">${a}</div></details>`).join("")}</div>`;
