@@ -2591,6 +2591,49 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
 ::highlight(ans-sel){background-color:rgba(64,110,255,.26);color:inherit}
 @media (pointer:coarse){ #main .opt,#main .chip,#main .tok{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} }
 
+/* ============ окно «Поделиться» v2 (макет Влада 30.10.2026) ============ */
+.qq-modal:has(.qsh) .qq-mbg{background:rgba(28,29,33,.32)}
+.qq-mbox.qsh{width:min(460px,100%);padding:24px;border:0;border-radius:12px;box-shadow:0 16px 48px rgba(28,29,33,.16);display:flex;flex-direction:column;gap:20px;transform:translateY(8px) scale(.98);transition:opacity .3s cubic-bezier(.2,.8,.2,1),transform .3s cubic-bezier(.2,.8,.2,1)}
+[data-theme="dark"] .qq-mbox.qsh{border:1px solid var(--x-line)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .qq-mbox.qsh{border:1px solid var(--x-line)}}
+.qsh-h{display:flex;align-items:center;gap:14px}
+.qsh-ic{width:44px;height:44px;flex:none;box-sizing:border-box;border:1px dashed color-mix(in srgb,var(--ink) 18%,transparent);border-radius:50%;color:var(--ink-3);display:flex;align-items:center;justify-content:center}
+.qsh-ic svg{width:20px;height:20px}
+.qsh-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.qsh-t h3{margin:0;font-size:18px;line-height:1.3;font-weight:700;color:var(--ink)}
+.qsh-t p{margin:0;font-size:14px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qsh .qq-mx{width:36px;height:36px;border-radius:8px;flex:none}
+.qsh .qq-mx svg{width:18px;height:18px}
+.qsh-sep{height:0;border-top:1px dashed color-mix(in srgb,var(--ink) 12%,transparent)}
+.qsh-box{padding:16px;border-radius:10px;background:color-mix(in srgb,var(--ink) 4%,var(--sheet));display:flex;flex-direction:column;gap:14px}
+.qsh-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qsh-l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.qsh-lab{font-size:15px;font-weight:600;color:var(--ink)}
+.qsh-d{font-size:13px;line-height:1.4;color:var(--ink-3)}
+.qsh-sel{position:relative;flex:none}
+.qsh-sel select{appearance:none;-webkit-appearance:none;height:36px;padding:0 34px 0 12px;border:0;border-radius:8px;background:var(--sheet);box-shadow:0 0 0 1px var(--x-line);font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.qsh-sel select:disabled{cursor:progress;opacity:.7}
+.qsh-sel svg{position:absolute;right:12px;top:11px;width:14px;height:14px;color:var(--ink-3);pointer-events:none}
+.qsh-sh:empty,.qsh-send-w:empty{display:none}
+.qsh-link{display:flex;gap:8px;padding-top:14px;border-top:1px solid var(--x-line);animation:qsh-in .22s ease-out both}
+.qsh .qq-linkin{flex:1;min-width:0;height:40px;box-sizing:border-box;padding:0 12px;border:0;border-radius:8px;background:var(--sheet);font:inherit;font-size:13px;color:var(--ink-3);text-overflow:ellipsis}
+.qsh-copy{height:40px;min-width:124px;padding:0 14px;border:0;border-radius:8px;background:var(--sheet);font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;flex:none}
+.qsh-copy svg{width:16px;height:16px}
+.qsh-copy .qsh-ck,.qsh-copy.ok .qsh-ci{display:none}
+.qsh-copy.ok .qsh-ck{display:inline-flex}.qsh-copy .qsh-ci{display:inline-flex}
+.qsh-copy.ok{color:var(--x-ok-t)}
+.qsh-send{align-self:flex-start;height:36px;margin:-4px 0 -6px -8px;padding:0 8px;border:0;border-radius:8px;background:transparent;font:inherit;font-size:14px;font-weight:600;color:var(--ink-2);cursor:pointer;display:flex;align-items:center;gap:8px;animation:qsh-in .22s ease-out both}
+.qsh-send:hover,.qsh .qq-mx:hover{color:var(--ink);background:var(--fill)}
+.qsh-send svg{width:16px;height:16px}
+.qsh .qq-mst:empty{display:none}
+.qsh button:focus-visible,.qsh select:focus-visible,.qsh input:focus-visible{outline:2px solid var(--encre);outline-offset:2px}
+@keyframes qsh-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (max-width:640px){
+  .qq-mbox.qsh{width:100%;border-radius:16px 16px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));gap:16px;transform:translateY(24px)}
+  .qsh .qsh-link{flex-direction:row}
+  .qsh-copy{min-width:0}
+}
+@media (prefers-reduced-motion:reduce){.qq-mbox.qsh,.qsh-link,.qsh-send{animation:none;transition:none}}
 /* ============ конспект v2 (30.10.2026): Главное, картинки, проверь себя, диалог ============ */
 .ks{margin:4px 0 26px;padding:18px 20px 16px;border:1px solid var(--x-line);border-left:4px solid var(--encre);border-radius:12px;background:var(--sheet)}
 .ks-t{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--encre);margin-bottom:10px}
@@ -19887,8 +19930,8 @@ Object.assign(I18N.ru, {
   qqOpenMine:"Открыть в моих сетах", qqSaveSet:"Сохранить себе", qqLearnMy:"Учить этот сет", qqShare:"Поделиться", qqEdit:"Изменить",
   qqSavedT:"Сет сохранён в «Мои сеты»",
   qqShareH:"Поделиться сетом", qqShareLibP:t=>`Отправь ссылку на сет «${t}»: открыв её, человек сможет посмотреть слова и сохранить сет себе.`,
-  qqWhoSees:"Кто видит сет", qqLinkA:"Ссылка на сет", qqCopy:"Скопировать", qqCopied:"Скопировано", qqSendVia:"Отправить через…", qqShareText:t=>`Учи со мной французские слова: «${t}»`,
-  qqVis:{private:["Только я", "Сет видишь только ты"], link:["По ссылке", "Открыть сет сможет любой, у кого есть ссылка"], public:["В библиотеке", "Сет можно найти в поиске, автор подписан твоим именем"]},
+  qqWhoSees:"Кто видит сет", qqAccess:"Доступ", qqLinkH:"Ссылка", qqLinkD:"Откроют слова и смогут сохранить сет себе", qqLinkA:"Ссылка на сет", qqCopy:"Копировать", qqCopied:"Готово", qqSendVia:"Отправить через…", qqShareText:t=>`Учи со мной французские слова: «${t}»`,
+  qqVis:{private:["Только я", "Сет видишь только ты"], link:["По ссылке", "Откроет любой, у кого есть ссылка"], public:["В библиотеке", "Сет найдут в поиске библиотеки"]},
   qqPublishing:"Сохраняем…", qqVisDone:{private:"Готово: сет снова видишь только ты.", link:"Готово: сет доступен по ссылке.", public:"Готово: сет опубликован в библиотеке."},
   qqNoName:"В библиотеке автор будет подписан «без имени». Имя можно указать в личном кабинете.",
   qqNewH:"Новый сет", qqEditH:"Изменить сет", qqEdLead:"Слово по-французски и перевод. Если перевод оставить пустым, сайт подскажет его сам.",
@@ -19925,8 +19968,8 @@ Object.assign(I18N.en, {
   qqOpenMine:"Open in my sets", qqSaveSet:"Save to my sets", qqLearnMy:"Learn this set", qqShare:"Share", qqEdit:"Edit",
   qqSavedT:"The set is saved to “My sets”",
   qqShareH:"Share the set", qqShareLibP:t=>`Send a link to “${t}”: whoever opens it can see the words and save the set.`,
-  qqWhoSees:"Who can see the set", qqLinkA:"Link to the set", qqCopy:"Copy", qqCopied:"Copied", qqSendVia:"Send via…", qqShareText:t=>`Learn French words with me: “${t}”`,
-  qqVis:{private:["Only me", "Only you can see the set"], link:["Anyone with the link", "Anyone who has the link can open the set"], public:["In the library", "Anyone can find the set; it’s signed with your name"]},
+  qqWhoSees:"Who can see the set", qqAccess:"Access", qqLinkH:"Link", qqLinkD:"People can see the words and save the set", qqLinkA:"Link to the set", qqCopy:"Copy", qqCopied:"Done", qqSendVia:"Send via…", qqShareText:t=>`Learn French words with me: “${t}”`,
+  qqVis:{private:["Only me", "Only you can see the set"], link:["Via link", "Anyone with the link can open it"], public:["In the library", "People can find it in library search"]},
   qqPublishing:"Saving…", qqVisDone:{private:"Done: only you can see the set now.", link:"Done: the set is available via link.", public:"Done: the set is published in the library."},
   qqNoName:"In the library the author will show as “anonymous”. You can set your name in your account.",
   qqNewH:"New set", qqEditH:"Edit set", qqEdLead:"A French word and its translation. Leave the translation empty and the site will suggest one.",
@@ -20372,10 +20415,10 @@ async function qzSaveCopy(pub){
 /* ---------- окно (поделиться) ---------- */
 function qzModalClose(){ const m = $(".qq-modal"); if (m) { m.remove(); document.removeEventListener("keydown", qzModalKey, true); } }
 function qzModalKey(e){ if (e.key === "Escape") { e.stopPropagation(); e.preventDefault(); qzModalClose(); } }
-function qzModal(html){
+function qzModal(html, cls){
   qzModalClose();
   const el = document.createElement("div"); el.className = "qq-modal";
-  el.innerHTML = `<div class="qq-mbg" data-x></div><div class="qq-mbox" role="dialog" aria-modal="true" aria-labelledby="qqMh">${html}</div>`;
+  el.innerHTML = `<div class="qq-mbg" data-x></div><div class="qq-mbox${cls ? " " + cls : ""}" role="dialog" aria-modal="true" aria-labelledby="qqMh">${html}</div>`;
   document.body.appendChild(el);
   el.addEventListener("click", e=>{ if (e.target.closest("[data-x]")) qzModalClose(); });
   document.addEventListener("keydown", qzModalKey, true);
@@ -20383,47 +20426,54 @@ function qzModal(html){
   return el;
 }
 window.addEventListener("hashchange", ()=>qzModalClose());
-const qzShareRow = id => `<div class="qq-linkrow"><input class="qq-linkin" readonly value="${esc(qzLink(id))}" aria-label="${esc(t("qqLinkA"))}"><button type="button" class="btn pri" data-copy>${f7("doc_on_doc")}<span>${t("qqCopy")}</span></button></div>${navigator.share ? `<button type="button" class="btn sec qq-native" data-native>${f7("square_arrow_up")}${t("qqSendVia")}</button>` : ""}`;
+/* окно «Поделиться» v2 (макет Влада 30.10.2026): шапка с иконкой, серый блок «Доступ» (выпадающий список) + ссылка, «Отправить через…» */
+const qzShHead = (sub) => `<div class="qsh-h"><span class="qsh-ic">${f7("link")}</span><div class="qsh-t"><h3 id="qqMh">${t("qqShareH")}</h3><p>${sub}</p></div><button type="button" class="qq-mx" data-x aria-label="${esc(t("trClose"))}">${f7("xmark")}</button></div><div class="qsh-sep"></div>`;
+const qzShareRow = id => `<div class="qsh-link"><input class="qq-linkin" readonly value="${esc(qzLink(id))}" aria-label="${esc(t("qqLinkA"))}"><button type="button" class="qsh-copy" data-copy><span class="qsh-ci">${f7("doc_on_doc")}</span><span class="qsh-ck">${f7("checkmark_alt")}</span><span class="qsh-cl" aria-live="polite">${t("qqCopy")}</span></button></div>`;
+const qzShareSend = () => navigator.share ? `<button type="button" class="qsh-send" data-native>${f7("square_arrow_up")}${t("qqSendVia")}</button>` : "";
 function qzBindShareRow(el, id, title){
   const c = $("[data-copy]", el), n = $("[data-native]", el), inp = $(".qq-linkin", el);
   if (inp) inp.addEventListener("focus", ()=>inp.select());
   if (c) c.addEventListener("click", async ()=>{
     let ok = false; try { await navigator.clipboard.writeText(qzLink(id)); ok = true; } catch(e) { try { inp.select(); ok = document.execCommand("copy"); } catch(_) {} }
-    $("span", c).textContent = ok ? t("qqCopied") : t("qqCopy"); if (ok) setTimeout(()=>{ if (document.body.contains(c)) $("span", c).textContent = t("qqCopy"); }, 1800);
+    if (!ok) return;
+    c.classList.add("ok"); $(".qsh-cl", c).textContent = t("qqCopied");
+    clearTimeout(c._t); c._t = setTimeout(()=>{ if (document.body.contains(c)) { c.classList.remove("ok"); $(".qsh-cl", c).textContent = t("qqCopy"); } }, 2000);
   });
   if (n) n.addEventListener("click", ()=>{ navigator.share({title, text:t("qqShareText", title), url:qzLink(id)}).catch(()=>{}); });
 }
 function qzShareLink(id, title){
-  const el = qzModal(`<div class="qq-mh"><h3 id="qqMh">${t("qqShareH")}</h3><button type="button" class="qq-mx" data-x aria-label="${esc(t("trClose"))}">${f7("xmark")}</button></div>
-    <p class="qq-mlead">${t("qqShareLibP", esc(title))}</p>${qzShareRow(id)}`);
+  const el = qzModal(`${qzShHead(`«${esc(title)}»`)}
+    <section class="qsh-box"><div class="qsh-row"><div class="qsh-l"><span class="qsh-lab">${t("qqLinkH")}</span><span class="qsh-d">${t("qqLinkD")}</span></div></div><div class="qsh-sh">${qzShareRow(id)}</div></section>${qzShareSend()}`, "qsh");
   qzBindShareRow(el, id, title);
 }
 function qzShare(set){
   const vis = ["private", "link", "public"];
-  const el = qzModal(`<div class="qq-mh"><h3 id="qqMh">${t("qqShareH")}</h3><button type="button" class="qq-mx" data-x aria-label="${esc(t("trClose"))}">${f7("xmark")}</button></div>
-    <p class="qq-mlead">«${esc(set.t)}» · ${t("qqNWords", qzUniq(set.w).length)}</p>
-    <p class="qq-mlab">${t("qqWhoSees")}</p>
-    <div class="qq-visopts" role="radiogroup">${vis.map(v=>`<button type="button" role="radio" class="qq-visopt" data-vis="${v}"><span class="qq-vico">${(v === "private" ? f7("lock") : v === "link" ? f7("link") : f7("globe"))}</span><span><b>${t("qqVis")[v][0]}</b><small>${t("qqVis")[v][1]}</small></span></button>`).join("")}</div>
-    <div class="qq-sharebox"></div>
+  const el = qzModal(`${qzShHead(`«${esc(set.t)}» · ${t("qqNWords", qzUniq(set.w).length)}`)}
+    <section class="qsh-box"><div class="qsh-row"><div class="qsh-l"><label class="qsh-lab" for="qshVis">${t("qqAccess")}</label><span class="qsh-d"></span></div>
+      <div class="qsh-sel"><select id="qshVis">${vis.map(v=>`<option value="${v}">${t("qqVis")[v][0]}</option>`).join("")}</select>${f7("chevron_down")}</div></div>
+      <div class="qsh-sh"></div></section>
+    <div class="qsh-send-w"></div>
     <p class="qq-mst" aria-live="polite"></p>
-    ${S.prof.name ? "" : `<p class="qq-mnote">${t("qqNoName")}</p>`}`);
-  const box = $(".qq-sharebox", el), st = $(".qq-mst", el);
+    ${S.prof.name ? "" : `<p class="qq-mnote">${t("qqNoName")}</p>`}`, "qsh");
+  const sel = $("#qshVis", el), box = $(".qsh-sh", el), sendW = $(".qsh-send-w", el), st = $(".qq-mst", el), desc = $(".qsh-d", el);
+  let shown = null;
   const paint = () => {
     const v = set.vis || "private";
-    $$("[data-vis]", el).forEach(b=>{ const on = b.dataset.vis === v; b.classList.toggle("on", on); b.setAttribute("aria-checked", on ? "true" : "false"); });
-    box.innerHTML = v === "private" ? "" : qzShareRow(set.id);
-    if (v !== "private") qzBindShareRow(box, set.id, set.t);
+    sel.value = v; desc.textContent = t("qqVis")[v][1];
+    const on = v !== "private";
+    if (on && shown !== set.id) { box.innerHTML = qzShareRow(set.id); sendW.innerHTML = qzShareSend(); qzBindShareRow(el, set.id, set.t); shown = set.id; }
+    if (!on) { box.innerHTML = ""; sendW.innerHTML = ""; shown = null; }
   };
   const apply = async v => {
-    if ((set.vis || "private") === v) return;
-    $$("[data-vis]", el).forEach(b=>b.disabled = true); st.className = "qq-mst"; st.textContent = t("qqPublishing");
+    if ((set.vis || "private") === v) return paint();
+    sel.disabled = true; desc.textContent = t("qqVis")[v][1]; st.className = "qq-mst"; st.textContent = t("qqPublishing");
     const r = await qzPublish(set, v);
     if (!document.body.contains(el)) return;
-    $$("[data-vis]", el).forEach(b=>b.disabled = false);
-    if (r.ok) { st.textContent = t("qqVisDone")[v]; paint(); const b = $(".qq-eye .qq-vis", main), eye = $(".qq-eye", main); if (eye) { if (b) b.remove(); eye.insertAdjacentHTML("beforeend", qzVisBadge(set)); } }
-    else { st.className = "qq-mst bad"; st.textContent = t("qqLibErr")[r.err] ? t("qqLibErr")[r.err][0] + ". " + t("qqLibErr")[r.err][1] : t("qqLibErr").err[0]; }
+    sel.disabled = false;
+    if (r.ok) { st.textContent = ""; paint(); const b = $(".qq-eye .qq-vis", main), eye = $(".qq-eye", main); if (eye) { if (b) b.remove(); eye.insertAdjacentHTML("beforeend", qzVisBadge(set)); } }
+    else { paint(); st.className = "qq-mst bad"; st.textContent = t("qqLibErr")[r.err] ? t("qqLibErr")[r.err][0] + ". " + t("qqLibErr")[r.err][1] : t("qqLibErr").err[0]; }
   };
-  $$("[data-vis]", el).forEach(b=>b.addEventListener("click", ()=>apply(b.dataset.vis)));
+  sel.addEventListener("change", ()=>apply(sel.value));
   paint();
   /* нажали «Поделиться» у личного сета — сразу открываем доступ по ссылке */
   if ((set.vis || "private") === "private") apply("link");
