@@ -3008,6 +3008,92 @@ textarea.qq-in2{height:auto;padding:10px 12px;line-height:1.45;resize:vertical}
 .hzm-modes button.on{background:var(--sheet);color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--line-2)}
 .hzm-loop{display:inline-flex;align-items:center;gap:6px}
 .hz-cred{font-size:12.5px;color:var(--ink-3);margin-top:18px}
+
+/* ===================== китайский: слова, ключи, без пиньиня (01.11.2026) ===================== */
+:root[data-course="zh"]{--hz-rad:#2f6fd6}
+@media (prefers-color-scheme: dark){:root[data-course="zh"]:not([data-theme="light"]){--hz-rad:#7fb0ff}}
+:root[data-course="zh"][data-theme="dark"]{--hz-rad:#7fb0ff}
+/* без пиньиня */
+html.zh-nopy[data-course="zh"] .zp-py,html.zh-nopy[data-course="zh"] .zchat:not(.py-on) .zc-py-l{display:none}
+html.zh-nopy[data-course="zh"] .pyh{filter:blur(5px);cursor:pointer;user-select:none;transition:filter .2s}
+html.zh-nopy[data-course="zh"] .pyh.rv{filter:none;user-select:auto}
+@media (hover:hover){html.zh-nopy[data-course="zh"] .pyh:not(.rv):hover{filter:blur(3px)}}
+.t-jump{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.zpy-tg{display:inline-flex;align-items:center;gap:6px}
+.zpy-tg .ico,.zpy-tg svg{width:16px;height:16px}
+.zpy-tg[aria-pressed="false"]{background:var(--encre-soft);color:var(--encre)}
+/* доска: слово целиком */
+.hz-wb{display:flex;flex-wrap:nowrap;gap:10px;justify-content:center;border:0;background:none;border-radius:0}
+.hz-wb .hz-wc{position:relative;border-radius:12px;border:1px solid var(--x-line);background:var(--sheet);line-height:0;transition:border-color .2s,opacity .2s}
+.hz-wb .hz-wc.act{border-color:var(--encre);box-shadow:0 0 0 3px var(--encre-soft)}
+.hz-wb .hz-wc.wait{opacity:.55;pointer-events:none}
+.hz-wb .hz-wc.done{pointer-events:none}
+.hz-wb .hz-wc>svg:not(.hz-bggrid){position:relative;display:block}
+.hzm-main.wide{grid-template-columns:1fr}
+.hzm-main.wide .hzm-side{grid-template-columns:auto 1fr;align-items:start;column-gap:22px}
+.hzm-main.wide .hzm-facts{grid-column:1 / -1}
+@media (max-width:760px){.hzm-main.wide .hzm-side{grid-template-columns:1fr}}
+.hzm-ctl{flex-wrap:wrap}
+.hzm-tabw{width:auto!important;padding:0 12px;font-size:28px!important}
+.hzm-w{flex-wrap:wrap}
+.hzm-cr dt{min-width:44px!important}
+.hzm-crc{width:38px;height:38px;border-radius:8px;border:1px solid var(--x-line);background:var(--x-soft);font:500 22px/1 var(--zh-font);color:var(--ink);cursor:pointer}
+.hzm-crc:hover{border-color:var(--encre)}
+.hzm-cr dd small{color:var(--ink-3);font-size:12.5px}
+button.hzm-rad{border:1px solid color-mix(in srgb,var(--hz-rad) 40%,var(--x-line));background:color-mix(in srgb,var(--hz-rad) 8%,var(--sheet));color:var(--hz-rad);border-radius:6px;padding:1px 8px;cursor:pointer;font:500 20px/1.3 var(--zh-font)}
+button.hzm-rad.sm{font-size:15px;padding:0 6px}
+button.hzm-rad:hover{border-color:var(--hz-rad)}
+.hzm-kn{font-size:13.5px;color:var(--ink-2)}
+.hzm-hl{display:flex;align-items:center;gap:6px;margin-top:4px;color:var(--ink-3);font-size:12px}
+.hzm-hl i{width:10px;height:10px;border-radius:3px;background:var(--hz-rad)}
+.hzm-stw{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.hzm-stw+.hzm-stw{margin-top:6px}
+.hzm-stc{font:500 22px/1 var(--zh-font);color:var(--ink-2);padding-top:22px}
+.hzm-key{color:var(--hz-rad)!important}
+.hzm-kno{font-size:12.5px;color:var(--ink-3);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.hz-noglyph{display:grid;place-items:center;width:200px;height:200px;font:400 120px/1 var(--zh-font);color:var(--ink)}
+.hzk-forms{display:flex;flex-wrap:wrap;gap:6px}
+.hzm-part.on{border-color:var(--encre);color:var(--encre);background:var(--encre-soft)}
+.hz-cgrid.sm .hz-chip{font-size:20px;min-width:40px;padding:4px 6px}
+/* задание: слово целиком */
+.hz-exc.wide{grid-column:span 2}
+@media (max-width:560px){.hz-exc.wide{grid-column:1 / -1}}
+.hz-excv.hz-wb{gap:6px}
+/* раздел: единица, шапка */
+.hz-hrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.hz-hrow .hz-tabs{margin-top:0}
+.hz-unit{display:inline-flex}
+.hz-unit button{padding:6px 12px;border-radius:8px;font-size:14px;color:var(--ink-2)}
+.hz-unit button.on,.hzk-modes button.on,.hzk-show button.on{background:var(--sheet);color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--line-2)}
+.hz-allh{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:16px}
+.hz-allh .hz-leg{margin:0}
+.hz-prev.words .hz-chip,.hz-cgrid.words .hz-chip{font-size:20px;padding:6px 10px}
+.hz-qk{font-size:13.5px;color:var(--ink-3);margin-top:4px}
+/* ключи */
+.hzk-sub{margin:0;font-size:14px}
+.hzk-modes,.hzk-show{display:inline-flex;flex-wrap:wrap}
+.hzk-modes button,.hzk-show button{padding:7px 12px;border-radius:8px;font-size:14px;color:var(--ink-2)}
+.hzk-listh{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:26px 0 14px}
+.hzk-listh h2{font-size:22px}
+.hzk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.hzk-c{position:relative;display:grid;justify-items:center;gap:2px;padding:12px 8px 10px;border:1px solid var(--x-line);border-radius:10px;background:var(--sheet);color:var(--ink);cursor:pointer;text-align:center;transition:border-color .15s}
+.hzk-c:hover{border-color:var(--encre)}
+.hzk-c.st-learn{border-color:color-mix(in srgb,var(--x-acc) 55%,var(--x-line));background:var(--x-acc-bg)}
+.hzk-c.st-know{border-color:color-mix(in srgb,var(--x-ok) 55%,var(--x-line));background:var(--x-ok-bg)}
+.hzk-n{position:absolute;top:6px;left:8px;font-size:11px;color:var(--ink-3)}
+.hzk-f{font:500 34px/1.15 var(--zh-font);color:var(--hz-rad)}
+.hzk-v{font:400 14px/1.2 var(--zh-font);color:var(--ink-3)}
+.hzk-py{font-size:12.5px;color:var(--encre);font-weight:600}
+.hzk-m{font-size:12.5px;color:var(--ink-2);line-height:1.3}
+.hzk-cnt{font-size:11px;color:var(--ink-3)}
+.hzk-qh{margin:4px 0 0;text-align:center;color:var(--ink-2);font-size:15px}
+.hzk-q{text-align:center;font-size:20px;font-weight:600;color:var(--ink)}
+.hzk-q.han{font:500 72px/1.2 var(--zh-font)}
+.hzk-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:520px;margin:0 auto;width:100%}
+.hzk-opts.han .opt{font:500 30px/1.2 var(--zh-font);padding:10px}
+.hzk-fb{max-width:520px;margin:0 auto;text-align:center}
+.hzk-fb .chip-t{margin-left:6px}
+.hzk-res{font-size:18px;font-weight:600;margin:0}
 </style>
 
 <header class="topbar">

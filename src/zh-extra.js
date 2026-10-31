@@ -83,3 +83,38 @@ ${SEC(TZ("Ключи учебника", "Radicals from the textbook"))}
 <div class="kn-t zrad" style="--cols:56px minmax(0,1fr) minmax(0,1fr)">${rads.map(([r, ex])=>{ const m = ZH_RADM[r]; return `<div class="kn-tr"><span class="zrad-r" lang="zh-CN">${r}</span><span>${m ? TZ(m[0], m[1]) : ""}</span><span class="zstk-ex">${[...ex].map(c=>`<button type="button" class="zstk-c" data-hz="${c}" lang="zh-CN">${c}</button>`).join("")}</span></div>`; }).join("")}</div>
 <p class="hz-cred">${TZ("Анимация и проверка черт — <a href=\"https://hanziwriter.org\" target=\"_blank\" rel=\"noopener\">Hanzi Writer</a> (MIT). Данные черт и разложения — <a href=\"https://github.com/skishore/makemeahanzi\" target=\"_blank\" rel=\"noopener\">Make Me a Hanzi</a> (Arphic Public License). Тексты и задания — по учебнику «HSK 标准教程 2».", "Stroke animation and checking — <a href=\"https://hanziwriter.org\" target=\"_blank\" rel=\"noopener\">Hanzi Writer</a> (MIT). Stroke data and decompositions — <a href=\"https://github.com/skishore/makemeahanzi\" target=\"_blank\" rel=\"noopener\">Make Me a Hanzi</a> (Arphic Public License). Texts and exercises follow “HSK Standard Course 2”.")}</p>`;
 });
+
+/* ---------- ключи (214 ключей Канси, src/zh-keys.js) ---------- */
+/* составные части, которые Make Me a Hanzi называет ключом, но в таблице Канси они под другим номером */
+const ZH_KEY_ALIAS = {"丷":12, "乛":5, "兀":10, "⺊":25, "母":80, "民":83, "王":96, "黄":201, "斗":68, "龶":174};
+let ZH_KEYMAP = null, ZH_KEYCH = null;
+function zhKeyMap(){
+  if (!ZH_KEYMAP) { ZH_KEYMAP = {}; ZH_KEYS.forEach(k=>[...k[3]].forEach(f=>{ if (!(f in ZH_KEYMAP)) ZH_KEYMAP[f] = k[0]; })); }
+  return ZH_KEYMAP;
+}
+/* ключ иероглифа: {k:[номер, черт, пиньинь, формы, ru, en], form: как ключ выглядит в этом иероглифе} */
+function zhKeyOf(c){
+  const ci = typeof ZH_CH !== "undefined" ? ZH_CH[c] : null;
+  let r = ci && ci.r ? ci.r : null, n;
+  if (!r) { n = zhKeyMap()[c]; return n ? {k:ZH_KEYS[n - 1], form:c} : null; }
+  if (r === "阝") n = ci.dc && ci.dc[0] === "⿰" && [...ci.dc][1] === "阝" ? 170 : 163;
+  else n = ZH_KEY_ALIAS[r] || zhKeyMap()[r];
+  return n ? {k:ZH_KEYS[n - 1], form:r} : null;
+}
+/* иероглифы курса по ключам: номер → [иероглифы]; и как ключ чаще всего выглядит в курсе */
+function zhKeyChars(){
+  if (ZH_KEYCH) return ZH_KEYCH;
+  ZH_KEYCH = {by:{}, form:{}};
+  const seen = new Set();
+  zhLessonChars().forEach(l=>l.chars.forEach(c=>{ if (seen.has(c)) return; seen.add(c); const o = zhKeyOf(c); if (!o) return; const n = o.k[0];
+    (ZH_KEYCH.by[n] = ZH_KEYCH.by[n] || []).push(c); const f = ZH_KEYCH.form[n] = ZH_KEYCH.form[n] || {}; f[o.form] = (f[o.form] || 0) + 1; }));
+  return ZH_KEYCH;
+}
+/* форма ключа для показа: та, что чаще встречается в курсе, иначе упрощённая (последняя китайская) или основная */
+function zhKeyForm(n){
+  const f = zhKeyChars().form[n];
+  if (f) return Object.keys(f).sort((a, b)=>f[b] - f[a])[0];
+  const k = ZH_KEYS[n - 1], forms = [...k[3]];
+  const simp = {149:"讠", 120:"纟", 147:"见", 154:"贝", 159:"车", 167:"钅", 168:"长", 169:"门", 178:"韦", 181:"页", 182:"风", 183:"飞", 184:"饣", 187:"马", 195:"鱼", 196:"鸟", 197:"卤", 199:"麦", 205:"黾", 210:"齐", 211:"齿", 212:"龙", 213:"龟", 162:"辶", 140:"艹", 85:"氵", 64:"扌", 61:"忄", 86:"灬", 94:"犭", 113:"礻", 145:"衤", 118:"⺮", 130:"月", 163:"阝", 170:"阝", 18:"刂", 9:"亻", 66:"攵", 93:"牛", 96:"王"}[n];
+  return simp || forms[0];
+}

@@ -16,7 +16,7 @@ HAN = re.compile(r'[一-鿾]')
 
 chars = set()
 for f in glob.glob(os.path.join(ROOT, 'src', 'zh-*.js')):
-    if f.endswith('zh-chars.js'):
+    if f.endswith('zh-chars.js') or f.endswith('zh-keys.js'):
         continue
     chars |= set(HAN.findall(open(f, encoding='utf-8').read()))
 
@@ -62,6 +62,17 @@ zd = os.path.join(ROOT, 'src', 'static', 'zh')
 os.makedirs(zd, exist_ok=True)
 with open(os.path.join(zd, 'hz.json'), 'w', encoding='utf-8') as f:
     json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
+# ключи (все формы из таблицы 214 ключей) — отдельным файлом, грузится только в разделе ключей
+keyforms = set(re.findall(r'[\u2e80-\u2fdf\u3400-\u9fff]', ''.join(re.findall(r'"([^"]*)", "[^"]*", "[^"]*"\]', open(os.path.join(ROOT, 'src', 'zh-keys.js'), encoding='utf-8').read()))))
+kout = {}
+for c in sorted(keyforms):
+    p = os.path.join(DATA, c + '.json')
+    if c not in out and os.path.exists(p):
+        d = json.load(open(p, encoding='utf-8'))
+        kout[c] = {'strokes': d['strokes'], 'medians': d['medians'], 'radStrokes': d.get('radStrokes', [])}
+with open(os.path.join(zd, 'hzk.json'), 'w', encoding='utf-8') as f:
+    json.dump(kout, f, ensure_ascii=False, separators=(',', ':'))
+print(f'ключи: {len(keyforms)} форм, в hzk.json {len(kout)}, нет данных: {"".join(sorted(c for c in keyforms if c not in out and c not in kout))}')
 shutil.copy(os.path.join(LIB, 'dist', 'hanzi-writer.min.js'), zd)
 shutil.copy(os.path.join(DATA, 'ARPHICPL.TXT'), zd)
 print(f'{len(chars)} иероглифов в текстах, {len(allc)} с частями; ZH_CH: {len(ch)}, hz.json: {len(out)} ({os.path.getsize(os.path.join(zd, "hz.json")) // 1024} КБ)')

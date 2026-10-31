@@ -1778,7 +1778,7 @@ function renderTopic(tp){
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
     ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
-    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button></div>
+    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button>${COURSE === "zh" && typeof zpyBtn === "function" ? zpyBtn() : ""}</div>
   </header>
   <section class="theory">${tp.theory}</section>
   <section class="practice" id="practice"><h2>${COURSE === "zh" ? "练习 · " + t("practiceZh") : es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
@@ -1788,7 +1788,7 @@ function renderTopic(tp){
   tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
   $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
   wireDeck(tp);
-  if (COURSE === "zh" && typeof hzFillSteps === "function") hzFillSteps(main);
+  if (COURSE === "zh" && typeof hzFillSteps === "function") { hzFillSteps(main); zpyApply(); }
 }
 function renderCheat(){
   const es = COURSE === "es";
