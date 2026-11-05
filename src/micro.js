@@ -144,7 +144,7 @@ function miTestCard(it, k, st){
   const x = typeof MI_TX !== "undefined" ? MI_TX[k + 1] : null, tp = x && MI_BY[x.tp];
   const fig = it.fig && MI_FIG[it.fig] ? `<div class="mi-figw">${MI_FIG[it.fig]}</div>` : "";
   const ansOf = () => it.t === "fill" ? it.a[0] : it.t === "match" ? it.pairs.map(p=>`${p[0]} → ${p[1]}`).join("; ") : it.t === "tf" ? (it.a ? "True" : "False") : it.o[it.a];
-  card.innerHTML = `<header class="exb-h mt-h"><div class="exb-ht"><h4 class="exb-title">${miEn() ? "Question" : "Вопрос"} ${k + 1}</h4><p class="exb-sub">${MI_TKIND[it.t]}${tp ? ` · ${tp.title}` : ""}</p></div><span class="mt-st" aria-live="polite"></span></header>
+  card.innerHTML = `<header class="exb-h mt-h"><div class="exb-ht"><h4 class="exb-title">${miEn() ? "Question" : "Вопрос"} ${k + 1}</h4></div><span class="mt-st" aria-live="polite"></span></header>
   ${fig}<div class="mt-body"></div><p class="mt-res" aria-live="polite"></p>
   <details class="mt-x" hidden><summary>${f7("lightbulb")}<span>${miEn() ? "Detailed explanation" : "Подробный разбор"}</span></summary><div class="mt-x-in"></div></details>`;
   const body = $(".mt-body", card), res = $(".mt-res", card), stx = $(".mt-st", card), ex = $(".mt-x", card);
