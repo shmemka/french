@@ -6,7 +6,7 @@
    ========================================================= */
 /* ---------- формулы: дроби, индексы, степени ---------- */
 /* одиночные латинские буквы вне тегов — курсивом (переменные), сокращения MC, ATC — прямо */
-const FM = s => `<span class="fm">${String(s).split(/(<[^>]+>)/).map(p=>p[0] === "<" ? p : p.replace(/(^|[^A-Za-z&;#])([a-z][A-Z]|d[a-z]|[A-Za-z])(?![A-Za-z])/g, (m, a, v)=>a + [...v].map(c=>`<i>${c}</i>`).join(""))).join("")}</span>`;
+const FM = s => `<span class="fm">${String(s).split(/(<[^>]+>)/).map(p=>p[0] === "<" ? p : p.replace(/(^|[^A-Za-z&;#])([a-z][A-Z]|d[a-z]|[A-Za-z][\u0300-\u036f]?)(?![A-Za-z\u0300-\u036f])/g, (m, a, v)=>a + v.match(/[A-Za-z][\u0300-\u036f]?/g).map(c=>`<i>${c}</i>`).join(""))).join("")}</span>`;
 const FQ = (n, d) => `<span class="fq"><span>${n}</span><span>${d}</span></span>`;   /* дробь */
 const FD = (n, d) => FQ(n, d);
 const FSQ = x => `<span class="fsq"><span class="fsq-r">√</span><span class="fsq-o">${x}</span></span>`;   /* корень с чертой */

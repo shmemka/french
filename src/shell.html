@@ -3160,6 +3160,46 @@ button.hzm-rad:hover{border-color:var(--hz-rad)}
 .mt-end{text-align:center;display:grid;justify-items:center;gap:6px;margin:22px 0;padding:26px;border:1px solid var(--x-line);border-radius:12px;background:var(--sheet)}
 .mt-end h2{margin:0}
 @media (max-width:760px){.mt-box{padding:8px}}
+
+/* ===================== микроэкономика: тест карточками + подробные разборы (05.11.2026) ===================== */
+.mt-list{display:grid;gap:16px}
+.mt-q{scroll-margin-top:72px;gap:16px!important}
+.mt-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mt-st{flex:none;font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:99px}
+.mt-st.ok{background:var(--x-ok-bg);color:var(--x-ok-t)}
+.mt-st.bad{background:var(--x-bad-bg);color:var(--x-bad-t)}
+.mt-q.mt-ok{border-color:color-mix(in srgb,var(--x-ok) 45%,var(--x-line))}
+.mt-q.mt-bad{border-color:color-mix(in srgb,var(--x-bad) 45%,var(--x-line))}
+.mt-qt{margin:0 0 12px;font-size:16.5px;line-height:1.5;color:var(--ink)}
+.mt-opts{display:grid;gap:8px;grid-template-columns:1fr}
+.mt-opts.tf{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px}
+.mt-opts .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;justify-content:flex-start}
+.mt-l{flex:none;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--x-fill);color:var(--ink-2)}
+.mt-in .ans{width:220px;max-width:100%}
+.mt-res{margin:0;font-size:14px;min-height:0}
+.mt-res:empty{display:none}
+.mt-res.ok{color:var(--x-ok-t);font-weight:600}
+.mt-res.bad{color:var(--x-bad-t)}
+.mt-x{border:1px solid var(--x-line);border-radius:10px;background:var(--x-soft)}
+.mt-x summary{display:flex;align-items:center;gap:8px;padding:12px 16px;cursor:pointer;font-weight:600;font-size:14.5px;list-style:none}
+.mt-x summary::-webkit-details-marker{display:none}
+.mt-x summary .ico,.mt-x summary svg{width:18px;height:18px;color:var(--encre)}
+.mt-x[open] summary{border-bottom:1px solid var(--x-line2)}
+.mt-x-b{padding:14px 18px 18px;font-size:15px;line-height:1.6;color:var(--ink-2)}
+.mt-x-b h5{margin:16px 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.mt-x-b p{margin:0}
+.mt-x-a{padding:8px 12px;border-radius:8px;background:var(--sheet);border:1px solid var(--x-line2);color:var(--ink)}
+.mt-steps{margin:0;padding-left:22px;display:grid;gap:8px}
+.mt-steps li::marker{color:var(--encre);font-weight:700}
+.mt-why{margin:0;padding-left:20px;display:grid;gap:6px}
+.mt-memo{display:flex;gap:10px;margin-top:16px;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--encre) 7%,var(--sheet));border:1px solid color-mix(in srgb,var(--encre) 20%,var(--x-line))}
+.mt-memo .ico,.mt-memo svg{flex:none;width:18px;height:18px;color:var(--encre);margin-top:2px}
+.mt-memo b{display:block;color:var(--ink);font-size:13.5px}
+.mt-tp{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:14px;font-weight:600;color:var(--encre);text-decoration:none}
+.mt-tp:hover{text-decoration:underline}
+.mt-end a{color:var(--encre)}
+@media (max-width:979px){.mt-bar{position:fixed;left:12px;right:12px;bottom:12px;top:auto;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.12)}.mt-end{margin-bottom:84px}}
+@media (max-width:760px){.mt-x-b{padding:12px 12px 14px}.mt-opts.tf{grid-template-columns:1fr 1fr}}
 </style>
 
 <header class="topbar">

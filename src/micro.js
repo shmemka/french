@@ -106,14 +106,14 @@ function miTestPage(){
   const st = miTestState();
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes"><p class="eyebrow">Microeconomics · ${miEn() ? "Final test" : "Итоговый тест"}</p><h1>Mid-Term Test (Weeks 1–8)</h1>
-  <p class="t-ru">51 вопрос в том порядке, как в тесте. Ответ проверяется сразу (в поле — по Enter), засчитывается первая попытка. После ответа «?» покажет объяснение.</p>
+  <p class="t-ru">51 вопрос в том порядке, как в тесте. Ответ проверяется сразу (в поле — по Enter), засчитывается первая попытка. После ответа открывается подробный разбор: решение по шагам, почему не подходят другие варианты и что запомнить.</p>
   <div class="t-jump"><a class="btn sm sec" href="#mi-cheat">${ICO.cheat}<span>${miEn() ? "Formulas" : "Шпаргалка"}</span></a></div></header>
   <div class="mt-bar"><span class="mt-sc" id="mtSc"></span><button type="button" class="btn sm sec" id="mtReset">${miEn() ? "Start over" : "Начать заново"}</button></div>
-  <section class="exb exb5 mt-box"><ol class="its mt-list"></ol></section>
+  <div class="mt-list"></div>
   <div class="mt-end" id="mtEnd" hidden></div>
   </article></div>`;
   const list = $(".mt-list", main);
-  MI_TEST.forEach((it, k)=>list.appendChild(miTestRow(it, k, st)));
+  MI_TEST.forEach((it, k)=>list.appendChild(miTestCard(it, k, st)));
   $("#mtReset").addEventListener("click", ()=>{ st.r = {}; delete (S.p["mi-test"] || {})[0]; touch("progress"); miTestSave(); miTestPage(); window.scrollTo(0, 0); });
   miTestScore();
 }
@@ -121,51 +121,72 @@ function miTestScore(){
   const st = miTestState(), n = MI_TEST.length, done = Object.keys(st.r).length, ok = Object.values(st.r).filter(x=>x.ok).length;
   const sc = $("#mtSc"); if (sc) sc.innerHTML = `${miEn() ? "Answered" : "Отвечено"} <b>${done}</b> / ${n} · ${miEn() ? "correct" : "верно"} <b>${ok}</b>`;
   const end = $("#mtEnd");
-  if (end) { end.hidden = done < n; if (done === n) end.innerHTML = `<div class="dk-end-i">${f7("checkmark_alt")}</div><h2>${ok} / ${n} · ${Math.round(ok / n * 100)}%</h2><p class="muted">${praise(ok / n)} ${miEn() ? "Review the questions marked red — tap «?» for the explanation." : "Посмотри вопросы, отмеченные красным: «?» покажет объяснение. Формулы — в шпаргалке."}</p>`; }
+  if (end) { end.hidden = done < n; if (done === n) { const bad = MI_TEST.map((_, k)=>k).filter(k=>st.r[k] && !st.r[k].ok); end.innerHTML = `<div class="dk-end-i">${f7("checkmark_alt")}</div><h2>${ok} / ${n} · ${Math.round(ok / n * 100)}%</h2><p class="muted">${praise(ok / n)}${bad.length ? ` ${miEn() ? "Review:" : "Стоит разобрать ещё раз:"} ${bad.map(k=>`<a href="#mtq-${k + 1}" data-mtgo="${k + 1}">№ ${k + 1}</a>`).join(", ")}.` : ""}</p>`; $$("[data-mtgo]", end).forEach(a=>a.addEventListener("click", e=>{ e.preventDefault(); const q = $("#mtq-" + a.dataset.mtgo); if (q) q.scrollIntoView({behavior:"smooth", block:"start"}); })); } }
   if (done === n && !st.saved) { st.saved = 1; setScore("mi-test", 0, ok, n); miTestSave(); }
 }
-function miTestRow(it, k, st){
+const MI_TKIND = {mc:"Выбери ответ", tf:"Верно или неверно", fill:"Впиши ответ и нажми Enter", match:"Сопоставь: нажми слева, потом справа"};
+/* подробный разбор */
+function miTestExpl(k, it, ansTxt){
+  const x = typeof MI_TX !== "undefined" ? MI_TX[k + 1] : null, tp = x && MI_BY[x.tp];
+  if (!x) return `<div class="mt-x-b"><p>${it.e || ""}</p></div>`;
+  return `<div class="mt-x-b">
+    <p class="mt-x-a"><b>${miEn() ? "Answer" : "Ответ"}:</b> ${ansTxt}</p>
+    <h5>${miEn() ? "What is asked" : "Что спрашивают"}</h5><p>${x.ask}</p>
+    <h5>${miEn() ? "Solution" : "Решение"}</h5><ol class="mt-steps">${x.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+    ${x.why && x.why.length ? `<h5>${miEn() ? "Why not the other options" : "Почему не другие варианты"}</h5><ul class="mt-why">${x.why.map(s=>`<li>${s}</li>`).join("")}</ul>` : ""}
+    <div class="mt-memo">${f7("lightbulb")}<div><b>${miEn() ? "Remember" : "Запомни"}</b><p>${x.memo}</p></div></div>
+    ${tp ? `<a class="mt-tp" href="#${tp.id}">${miEn() ? "Topic" : "Тема"}: ${tp.title}${ARR}</a>` : ""}
+  </div>`;
+}
+function miTestCard(it, k, st){
+  const card = document.createElement("section");
+  card.className = "exb exb5 mt-q"; card.id = "mtq-" + (k + 1);
+  const x = typeof MI_TX !== "undefined" ? MI_TX[k + 1] : null, tp = x && MI_BY[x.tp];
   const fig = it.fig && MI_FIG[it.fig] ? `<div class="mi-figw">${MI_FIG[it.fig]}</div>` : "";
-  let row;
-  const finish = (ok, val, ansTxt, restoring) => {
-    rowNote(row, ok ? "ok" : "bad", ok ? OKW() : `${t("answerIs")} ${ansTxt}`);
-    rowWhy(row, ansTxt, it.e, "");
-    row.classList.add(ok ? "mt-ok" : "mt-bad");
-    if (!restoring) { st.r[k] = {v:val, ok}; st.saved = 0; miTestSave(); gameAnswer("mi-test|" + k, 0, ok ? "ok" : "bad"); miTestScore(); }
+  const ansOf = () => it.t === "fill" ? it.a[0] : it.t === "match" ? it.pairs.map(p=>`${p[0]} → ${p[1]}`).join("; ") : it.t === "tf" ? (it.a ? "True" : "False") : it.o[it.a];
+  card.innerHTML = `<header class="exb-h mt-h"><div class="exb-ht"><h4 class="exb-title">${miEn() ? "Question" : "Вопрос"} ${k + 1}</h4><p class="exb-sub">${MI_TKIND[it.t]}${tp ? ` · ${tp.title}` : ""}</p></div><span class="mt-st" aria-live="polite"></span></header>
+  ${fig}<div class="mt-body"></div><p class="mt-res" aria-live="polite"></p>
+  <details class="mt-x" hidden><summary>${f7("lightbulb")}<span>${miEn() ? "Detailed explanation" : "Подробный разбор"}</span></summary><div class="mt-x-in"></div></details>`;
+  const body = $(".mt-body", card), res = $(".mt-res", card), stx = $(".mt-st", card), ex = $(".mt-x", card);
+  let answered = false;
+  const finish = (ok, val, restoring) => {
+    answered = true;
+    card.classList.add(ok ? "mt-ok" : "mt-bad");
+    stx.className = "mt-st " + (ok ? "ok" : "bad"); stx.textContent = ok ? (miEn() ? "Correct" : "Верно") : (miEn() ? "Wrong" : "Неверно");
+    res.className = "mt-res " + (ok ? "ok" : "bad");
+    res.innerHTML = ok ? OKW() : `${miEn() ? "Correct answer" : "Правильный ответ"}: <b>${ansOf()}</b>`;
+    $(".mt-x-in", ex).innerHTML = miTestExpl(k, it, ansOf()); ex.hidden = false;
+    if (!restoring) { ex.open = true; st.r[k] = {v:val, ok}; st.saved = 0; miTestSave(); gameAnswer("mi-test|" + k, 0, ok ? "ok" : "bad"); miTestScore(); }
   };
   if (it.t === "mc" || it.t === "tf") {
-    const opts = it.t === "tf" ? [["True", true], ["False", false]].map(([l, v], j)=>({l, j, ok:v === it.a})) : miSeedShuffle(it.o.map((l, j)=>({l, j, ok:j === it.a})), k + 3);
-    row = itemRow(k, `${fig}<p class="q">${it.q}</p><div class="opts">${opts.map(o=>`<button type="button" class="opt" data-j="${o.j}">${o.l}</button>`).join("")}</div>`);
-    const right = opts.find(o=>o.ok);
-    const pick = (j, restoring) => { $$(".opt", row).forEach(b=>{ b.disabled = true; const o = opts.find(x=>x.j === +b.dataset.j); if (o.ok) b.classList.add("is-ok"); else if (o.j === j) b.classList.add("is-bad"); }); finish(opts.find(o=>o.j === j).ok, j, right.l, restoring); };
-    $$(".opt", row).forEach(b=>b.addEventListener("click", ()=>{ if (!row.classList.contains("mt-ok") && !row.classList.contains("mt-bad")) pick(+b.dataset.j, false); }));
+    const opts = it.t === "tf" ? [["True — верно", true], ["False — неверно", false]].map(([l, v], j)=>({l, j, ok:v === it.a})) : miSeedShuffle(it.o.map((l, j)=>({l, j, ok:j === it.a})), k + 3);
+    body.innerHTML = `<p class="mt-qt">${it.q}</p><div class="opts mt-opts${it.t === "tf" ? " tf" : ""}">${opts.map((o, i)=>`<button type="button" class="opt" data-j="${o.j}">${it.t === "mc" ? `<span class="mt-l">${"abcd"[i]}</span>` : ""}<span>${o.l}</span></button>`).join("")}</div>`;
+    const pick = (j, restoring) => { $$(".opt", body).forEach(b=>{ b.disabled = true; const o = opts.find(z=>z.j === +b.dataset.j); if (o.ok) b.classList.add("is-ok"); else if (o.j === j) b.classList.add("is-bad"); }); finish(opts.find(o=>o.j === j).ok, j, restoring); };
+    $$(".opt", body).forEach(b=>b.addEventListener("click", ()=>{ if (!answered) pick(+b.dataset.j, false); }));
     if (st.r[k]) pick(st.r[k].v, true);
   } else if (it.t === "fill") {
-    row = itemRow(k, `${fig}<label class="it-q">${it.q}</label><input class="ans" ${inputAttrs} placeholder="${esc(t("answerPh"))}">`, true);
-    const inp = $(".ans", row);
-    const check = (v, restoring) => { const j = judge(v, it.a); if (j === "empty") return; const ok = j === "ok" || j === "acc"; inp.value = v; inp.disabled = true; inp.classList.add(ok ? "r-ok" : "r-bad"); if (!restoring) animIn(inp, ok ? "a-ok" : "a-bad"); finish(ok, v, it.a[0], restoring); };
+    body.innerHTML = `<p class="mt-qt">${it.q}</p><div class="mt-in"><input class="ans" ${inputAttrs} placeholder="${esc(miEn() ? "Answer, then Enter" : "Ответ, затем Enter")}"></div>`;
+    const inp = $(".ans", body);
+    const check = (v, restoring) => { const j = judge(v, it.a); if (j === "empty") return; const ok = j === "ok" || j === "acc"; inp.value = v; inp.disabled = true; inp.classList.add(ok ? "r-ok" : "r-bad"); if (!restoring) animIn(inp, ok ? "a-ok" : "a-bad"); finish(ok, v, restoring); };
     inp.addEventListener("keydown", e=>{ if (e.key === "Enter") { e.preventDefault(); check(inp.value, false); } });
     if (st.r[k]) check(st.r[k].v, true);
   } else {
     const L = it.pairs.map((p, j)=>({t:p[0], j})), R = miSeedShuffle(it.pairs.map((p, j)=>({t:p[1], j})), k + 7);
-    row = itemRow(k, `${fig}<p class="q">${miEn() ? "Match each item on the left with the right one." : "Сопоставь: нажми слева, потом справа."}</p><div class="match mt-match"><div class="colm">${L.map(x=>`<button type="button" class="opt" data-side="L" data-k="${x.j}">${x.t}</button>`).join("")}</div><div class="colm">${R.map(x=>`<button type="button" class="opt" data-side="R" data-k="${x.j}">${x.t}</button>`).join("")}</div></div>`);
+    body.innerHTML = `<div class="match mt-match"><div class="colm">${L.map(z=>`<button type="button" class="opt" data-side="L" data-k="${z.j}">${z.t}</button>`).join("")}</div><div class="colm">${R.map(z=>`<button type="button" class="opt" data-side="R" data-k="${z.j}">${z.t}</button>`).join("")}</div></div>`;
     let selL = null, selR = null, mis = 0, got = 0;
-    const lock = j => $$(`.opt[data-k="${j}"]`, row).forEach(x=>{ x.classList.remove("sel"); x.classList.add("is-ok"); x.disabled = true; });
-    const ansTxt = it.pairs.map(p=>`${p[0]} → ${p[1]}`).join("; ");
-    $$(".opt", row).forEach(b=>b.addEventListener("click", ()=>{
-      if (b.disabled) return;
-      $$(`.opt[data-side="${b.dataset.side}"]`, row).forEach(x=>x.classList.remove("sel")); b.classList.add("sel");
+    const lock = j => $$(`.opt[data-k="${j}"]`, body).forEach(z=>{ z.classList.remove("sel"); z.classList.add("is-ok"); z.disabled = true; });
+    $$(".opt", body).forEach(b=>b.addEventListener("click", ()=>{
+      if (b.disabled || answered) return;
+      $$(`.opt[data-side="${b.dataset.side}"]`, body).forEach(z=>z.classList.remove("sel")); b.classList.add("sel");
       if (b.dataset.side === "L") selL = b; else selR = b;
       if (!selL || !selR) return;
-      if (selL.dataset.k !== selR.dataset.k && it.pairs[+selL.dataset.k][1] === it.pairs[+selR.dataset.k][1]) { const tw = $(`.opt[data-side="R"][data-k="${selL.dataset.k}"]`, row); if (tw && !tw.disabled) { tw.dataset.k = selR.dataset.k; selR.dataset.k = selL.dataset.k; } }
+      if (selL.dataset.k !== selR.dataset.k && it.pairs[+selL.dataset.k][1] === it.pairs[+selR.dataset.k][1]) { const tw = $(`.opt[data-side="R"][data-k="${selL.dataset.k}"]`, body); if (tw && !tw.disabled) { tw.dataset.k = selR.dataset.k; selR.dataset.k = selL.dataset.k; } }
       if (selL.dataset.k === selR.dataset.k) { lock(selL.dataset.k); got++; }
-      else { mis++; const r = selR; r.classList.add("is-bad", "flash"); setTimeout(()=>r.classList.remove("is-bad", "flash", "sel"), 450); selL.classList.remove("sel"); }
+      else { mis++; const r = selR; r.classList.add("is-bad", "flash"); setTimeout(()=>r.classList.remove("is-bad", "flash", "sel"), 450); selL.classList.remove("sel"); res.className = "mt-res bad"; res.textContent = miEn() ? `Mistakes: ${mis}` : `Ошибок: ${mis}`; }
       selL = selR = null;
-      if (got === it.pairs.length) finish(mis === 0, mis, ansTxt, false);
+      if (got === it.pairs.length) finish(mis === 0, mis, false);
     }));
-    if (st.r[k]) { it.pairs.forEach((_, j)=>lock(j)); finish(st.r[k].ok, st.r[k].v, ansTxt, true); }
+    if (st.r[k]) { it.pairs.forEach((_, j)=>lock(j)); finish(st.r[k].ok, st.r[k].v, true); }
   }
-  rowWhy(row, "", "", "");
-  if (st.r[k]) { const ans = it.t === "fill" ? it.a[0] : it.t === "match" ? it.pairs.map(p=>`${p[0]} → ${p[1]}`).join("; ") : it.t === "tf" ? (it.a ? "True" : "False") : it.o[it.a]; rowWhy(row, ans, it.e, ""); }
-  return row;
+  return card;
 }
