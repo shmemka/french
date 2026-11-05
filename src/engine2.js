@@ -197,7 +197,7 @@ en:{
 
 /* --- второй курс (испанский) + упрощённый кабинет --- */
 Object.assign(I18N.ru, {
-  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", navSearch:"Тема или страница", navNone:"Ничего не нашлось", navNonePage:n=>`Нет тем на странице ${n}`, navMore:"Справка", tcOpen:"Открыть", homeAll:"Все", homeTip:"Подсказка", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
+  stLex:"слов в лексике", courseLabel:"Язык курса", courseNames:{fr:"Французский", es:"Испанский", zh:"Китайский"}, soon:"скоро", zhNav:"Курс китайского скоро появится. Пока можно заниматься французским или испанским.", zhEyebrow:"中文 · Китайский", zhH:"Скоро здесь будет китайский", zhP:"Курс китайского языка готовится. Как только появятся первые темы, они будут здесь.", zhBackFr:"К французскому", zhBackEs:"К испанскому", microName:"Микроэкономика", microSmall:"скоро", microNav:"Раздел по микроэкономике готовится. Первым появится midterm-тест.", microEyebrow:"Microeconomics · Микроэкономика", microH:"Скоро здесь будет микроэкономика", microP:"Раздел готовится. Первым появится midterm-тест: задания с проверкой и разбором ответов.", microBack:"Вернуться к языкам", navSearch:"Тема или страница", navNone:"Ничего не нашлось", navNonePage:n=>`Нет тем на странице ${n}`, navMore:"Справка", tcOpen:"Открыть", homeAll:"Все", homeTip:"Подсказка", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Спряжение", gramSub:"Все три группы глаголов и главные неправильные", lexico:"Лексика", lexicoSub:"Все слова юнитов 1–3: слово — перевод на английский — пример. Нажми на испанское, чтобы послушать.",
   lexSearch:"Найти слово…", lexVerbs:"Глаголы", lexFav:"Избранное", lexFavSub:"слова, отмеченные сердечком", lexFavEmpty:"Здесь пока пусто. Выдели любое испанское слово на сайте и нажми на сердечко в подсказке — оно появится здесь.", lexAll:"Все", lexHide:"Скрыть перевод", lexShow:"Показать перевод", lexN:n=>`${n} ${plural(n,["слово","слова","слов"])}`, lexNone:"Ничего не найдено.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`Грамматика и лексика первых трёх юнитов: понятные объяснения со схемами и таблицами, ${n} упражнений с мгновенной проверкой, вся лексика с примерами и тест для самопроверки.`,
@@ -218,7 +218,7 @@ Object.assign(I18N.ru, {
   saveNudge:"Войди, чтобы прогресс сохранялся на всех устройствах", saveNudgeBtn:"Войти"
 });
 Object.assign(I18N.en, {
-  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", navSearch:"Topic or page", navNone:"Nothing found", navNonePage:n=>`No topics on page ${n}`, navMore:"Reference", tcOpen:"Open", homeAll:"All", homeTip:"Tip", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
+  stLex:"words in the vocabulary", courseLabel:"Course language", courseNames:{fr:"French", es:"Spanish", zh:"Chinese"}, soon:"soon", zhNav:"The Chinese course is coming soon. Meanwhile you can study French or Spanish.", zhEyebrow:"中文 · Chinese", zhH:"Chinese is coming soon", zhP:"The Chinese course is in the works. As soon as the first topics are ready, they’ll appear here.", zhBackFr:"Go to French", zhBackEs:"Go to Spanish", microName:"Microeconomics", microSmall:"soon", microNav:"The microeconomics section is in the works. The midterm test comes first.", microEyebrow:"Microeconomics", microH:"Microeconomics is coming soon", microP:"This section is in the works. The midterm test comes first: questions with checking and explained answers.", microBack:"Back to languages", navSearch:"Topic or page", navNone:"Nothing found", navNonePage:n=>`No topics on page ${n}`, navMore:"Reference", tcOpen:"Open", homeAll:"All", homeTip:"Tip", esUnits:{"1":"Nosotros y nosotras","2":"Quiero aprender español","3":"¿Dónde está Santiago?","4":"¿Cuál prefieres?"},
   gram:"Conjugation", gramSub:"All three verb groups and the key irregular verbs", lexico:"Vocabulary", lexicoSub:"Every word from units 1–3: word — English — example. Click the Spanish to hear it.",
   lexSearch:"Find a word…", lexVerbs:"Verbs", lexFav:"Favourites", lexFavSub:"words you’ve marked with a heart", lexFavEmpty:"Nothing here yet. Select any Spanish word on the site and tap the heart in the pop-up — it will appear here.", lexAll:"All", lexHide:"Hide translation", lexShow:"Show translation", lexN:n=>`${n} ${n===1?"word":"words"}`, lexNone:"Nothing found.",
   esHeroEyebrow:"Aula internacional Plus 1 · unidades 1–4", esHeroLead:n=>`The grammar and vocabulary of the first three units: clear explanations with diagrams and tables, ${n} exercises with instant checking, every word with examples, and a self-check test.`,
@@ -1515,13 +1515,16 @@ document.addEventListener("keydown", e=>{
 });
 const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
 const VIEW_ZH = false;   /* китайский теперь настоящий курс (было: заглушка #zh) */
+/* микроэкономика (#micro): отдельный предмет в том же списке, пока заглушка; курс языка и прогресс не трогает */
+let MICRO = false;
+const MICRO_FLAG = `<span class="cflag cf-micro" aria-hidden="true">${f7("chart_bar_fill")}</span>`;
 const ddCur = () => COURSE;
 const cName = c => t("courseNames")[c];
 const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>`;
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${CFLAG[ddCur()]}${cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
-    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur()?" on":""}" data-course="${c}" aria-selected="${c===ddCur()}">${cName(c)}</button>`).join("")}</div>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${MICRO ? MICRO_FLAG + `<span class="cdd-v"><b>${t("microName")}</b><small>${t("microSmall")}</small></span>` : CFLAG[ddCur()] + cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur() && !MICRO?" on":""}" data-course="${c}" aria-selected="${c===ddCur() && !MICRO}">${cName(c)}</button>`).join("")}<div class="cdd-sep" role="separator"></div><button type="button" role="option" class="cdd-opt cdd-subj${MICRO ? " on" : ""}" data-subj="micro" aria-selected="${MICRO}">${t("microName")}<span class="cdd-soon">${t("microSmall")}</span></button></div>
   </div>`;
 }
 function paintCourseDD(c){
@@ -1542,7 +1545,9 @@ function wireCourseDD(){
   opts().forEach(o=>{
     o.addEventListener("click", ()=>{
       cddOpen(false); btn.focus({preventScroll:true});
+      if (o.dataset.subj) { location.hash = "micro"; return; }
       const c = o.dataset.course;
+      if (MICRO && c === COURSE) { location.hash = "home"; return; }
       setCourse(c);
     });
     o.addEventListener("keydown", e=>{
@@ -1576,8 +1581,8 @@ function buildNav(){
     ${courseDDHTML()}
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x">${f7("xmark")}</span></button>
   </div>
-  ${VIEW_ZH ? "" : navSearchHTML()}
-  <div class="nav-scroll">${VIEW_ZH ? `<div class="nav-zh"><span class="nav-zh-h">中文</span><p>${t("zhNav")}</p></div>` : `
+  ${MICRO ? "" : navSearchHTML()}
+  <div class="nav-scroll">${MICRO ? `<div class="nav-zh nav-micro"><span class="nav-zh-h">${f7("chart_bar_fill")}</span><b>${t("microName")}</b><p>${t("microNav")}</p></div>` : `
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
@@ -1959,6 +1964,13 @@ function renderZh(){
   </div></div>`;
   $$("[data-zhback]", main).forEach(a=>a.addEventListener("click", e=>{ const c = a.dataset.zhback; if (c !== COURSE) { e.preventDefault(); setCourse(c, true); location.hash = "home"; } }));
 }
+function renderMicro(){
+  main.innerHTML = `<div class="col"><div class="zh-soon micro-soon seyes">
+    <div class="zh-big micro-big" aria-hidden="true">${f7("chart_bar_fill")}</div>
+    <p class="eyebrow">${t("microEyebrow")}</p><h1>${t("microH")}</h1><p class="t-ru">${t("microP")}</p>
+    <div class="btns"><a class="btn pri" href="#home">${t("microBack")}</a></div>
+  </div></div>`;
+}
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const id = /^quizlet\//.test(h) ? "quizlet" : /^hanzi(\/|$)/.test(h) ? "hanzi" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
@@ -1969,6 +1981,10 @@ let ROUTE_PREV = "";
 function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const inQz = /^quizlet(\/|$)/.test(h), fromQz = /^quizlet(\/|$)/.test(ROUTE_PREV); ROUTE_PREV = h;
+  /* микроэкономика — свой сайдбар и страница-заглушка */
+  const mic = h === "micro";
+  if (mic !== MICRO) { MICRO = mic; const keepNav = nav.classList.contains("open"); buildNav(); if (keepNav && !mic) nav.classList.add("open"); }
+  if (mic) { if (synth) try { synth.cancel(); } catch(e) {} closeDeck(true); renderMicro(); markActive(); closeNav(); window.scrollTo(0, 0); main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); return; }
   /* вкладки Quizlet переключаются на месте, без перерисовки страницы */
   if (inQz && fromQz && COURSE === "fr" && !VIEW_ZH && qzSoft(h.slice(8))) { markActive(); return; }
   if (synth) try { synth.cancel(); } catch(e) {}
