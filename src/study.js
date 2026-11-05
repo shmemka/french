@@ -41,7 +41,7 @@ Object.assign(I18N.en, {
   tCheckL:"Checking", tLenL:"Questions", modeNow:"Instantly", modeEnd:"At the end", tGo:"Start",
   lexicoSub:"Word — translation — example. Click a Spanish word to hear it."
 });
-function tfOpts(){ return COURSE === "es" ? t("tfEs") : COURSE === "zh" ? t("tfZh") : [t("vrai"), t("faux")]; }
+function tfOpts(){ return MICRO ? ["True — верно", "False — неверно"] : COURSE === "es" ? t("tfEs") : COURSE === "zh" ? t("tfZh") : [t("vrai"), t("faux")]; }
 function exLabel(ex){ return ex.t === "tf" && COURSE === "es" ? t("tfLbl") : t("label")[ex.t]; }
 
 /* правило для вопроса из банка пробной: берём «почему» первого похожего задания темы */

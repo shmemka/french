@@ -240,6 +240,7 @@ Object.assign(I18N.en, {
 });
 
 let LANG = ls.get("edito-lang") === "en" ? "en" : "ru";
+let MICRO = false;   /* открыт раздел «Микроэкономика» (#micro, #mi-…) */
 let COURSE = ["es","zh"].includes(ls.get("edito-course")) ? ls.get("edito-course") : "fr";
 const COURSES = {fr:{code:"FR", name:"Français", book:"Édito A1"}, es:{code:"ES", name:"Español", book:"Aula 1"}, zh:{code:"ZH", name:"中文", book:"HSK 2"}};
 const ZH_CACHE = {};
@@ -251,7 +252,7 @@ const unitName = u => COURSE === "es" ? t("esUnits")[u] : COURSE === "zh" ? zhUn
 const zhUnitName = u => { const d = ZH_LS.find(x=>String(x.n) === String(u)); return d ? `<span lang="zh-CN">${d.zh}</span>` : ""; };
 const FR_IDS = new Set(TOPICS.map(x=>x.id));
 const ES_CACHE = {};
-const OKW = () => COURSE === "es" ? "¡Correcto!" : COURSE === "zh" ? "对了！" : "Juste !";
+const OKW = () => MICRO ? "Верно!" : COURSE === "es" ? "¡Correcto!" : COURSE === "zh" ? "对了！" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
 let TOP, BOOK, GRAM, REF, CAH, TUT, ORDER, byId, POOLX, CHEATX;
@@ -566,6 +567,7 @@ const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/
 /* повторное прослушивание того же текста (в течение 15 с) — медленнее */
 const SAY_LAST = {k:"", at:0, n:0};
 function speak(text, rate){
+  if (MICRO) return false;
   if (!synth) return false;
   const k = cleanSay(text).trim().toLowerCase(), now = Date.now();
   if (k && k === SAY_LAST.k && now - SAY_LAST.at < 15000) SAY_LAST.n++; else SAY_LAST.n = 0;
@@ -849,6 +851,7 @@ function zhPop(o){
   remote("en", "zh-CN", true);
 }
 function spCheck(fake){
+  if (MICRO) { spHide(); return; }
   const sel = fake || (window.getSelection ? window.getSelection() : null);
   if (!fake) SP.manual = 0;
   if (!sel || sel.isCollapsed || !sel.rangeCount) { spHide(); return; }
@@ -1012,6 +1015,7 @@ const strip = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/œ/g,"oe")
 function judge(input, answers){
   const n = norm(input); if (!n) return "empty";
   if (answers.some(a=>norm(a)===n)) return "ok";
+  if (MICRO && typeof microJudge === "function") { const m = microJudge(input, answers); if (m) return m; }
   if (answers.some(a=>strip(norm(a))===strip(n))) return "acc";
   return "bad";
 }
@@ -1031,13 +1035,13 @@ document.addEventListener("click", e=>{
   inp.dispatchEvent(new Event("input", {bubbles:true}));
 });
 const ACC_ES = ["á","é","í","ó","ú","ñ","ü","¿","¡"];
-const accBar = () => COURSE === "zh" ? "" : `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
+const accBar = () => COURSE === "zh" || MICRO ? "" : `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
 const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
 
 /* =========================================================
    exercise blocks (with saved answers)
    ========================================================= */
-function praise(r){ if (COURSE === "zh") return r>=1 ? "太好了！" : r>=.8 ? "很好！" : r>=.6 ? "不错！" : "再练练…"; if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
+function praise(r){ if (MICRO) return r>=1 ? "Отлично!" : r>=.8 ? "Хорошо!" : r>=.6 ? "Неплохо" : "Стоит повторить"; if (COURSE === "zh") return r>=1 ? "太好了！" : r>=.8 ? "很好！" : r>=.6 ? "不错！" : "再练练…"; if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
 /* заголовок блока: «Упр. 1 · Grammaire — выбери артикль» → заголовок «Упр. 1 · Grammaire» + подзаголовок «Выбери артикль» */
 function exHead(ex, i){
   const h = String(ex.h || ""), m = h.match(/^(.*?)\s+—\s+([\s\S]+)$/);
@@ -1274,8 +1278,10 @@ INIT.match = (api, ex) => {
       $$(`.opt[data-side="${side}"]`, api.body).forEach(x=>x.classList.remove("sel"));
       b.classList.add("sel");
       if (side === "L") selL = b; else selR = b;
-      if (side === "L" && synth) speak(b.textContent);
+      if (side === "L" && synth && !MICRO) speak(b.textContent);
       if (selL && selR) {
+        /* одинаковые ответы справа (например, «Supply shifts right» дважды) — засчитываем любой из них */
+        if (selL.dataset.k !== selR.dataset.k && String(ex.pairs[+selL.dataset.k][1]).trim() === String(ex.pairs[+selR.dataset.k][1]).trim()) { const twin = $(`.opt[data-side="R"][data-k="${selL.dataset.k}"]`, api.body); if (twin && !twin.disabled) { twin.dataset.k = selR.dataset.k; selR.dataset.k = selL.dataset.k; } }
         if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); api.ans(+selL.dataset.k, "ok"); }
         else { mistakes++; api.ans(null, "bad"); const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
         selL = null; selR = null;
@@ -1516,15 +1522,14 @@ document.addEventListener("keydown", e=>{
 const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
 const VIEW_ZH = false;   /* китайский теперь настоящий курс (было: заглушка #zh) */
 /* микроэкономика (#micro): отдельный предмет в том же списке, пока заглушка; курс языка и прогресс не трогает */
-let MICRO = false;
 const MICRO_FLAG = `<span class="cflag cf-micro" aria-hidden="true">${f7("chart_bar_fill")}</span>`;
 const ddCur = () => COURSE;
 const cName = c => t("courseNames")[c];
 const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>`;
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${MICRO ? MICRO_FLAG + `<span class="cdd-v"><b>${t("microName")}</b><small>${t("microSmall")}</small></span>` : CFLAG[ddCur()] + cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
-    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur() && !MICRO?" on":""}" data-course="${c}" aria-selected="${c===ddCur() && !MICRO}">${cName(c)}</button>`).join("")}<div class="cdd-sep" role="separator"></div><button type="button" role="option" class="cdd-opt cdd-subj${MICRO ? " on" : ""}" data-subj="micro" aria-selected="${MICRO}">${t("microName")}<span class="cdd-soon">${t("microSmall")}</span></button></div>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${MICRO ? MICRO_FLAG + `<span class="cdd-v"><b>${t("microName")}</b><small>Mid-Term · Weeks 1–8</small></span>` : CFLAG[ddCur()] + cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur() && !MICRO?" on":""}" data-course="${c}" aria-selected="${c===ddCur() && !MICRO}">${cName(c)}</button>`).join("")}<div class="cdd-sep" role="separator"></div><button type="button" role="option" class="cdd-opt cdd-subj${MICRO ? " on" : ""}" data-subj="micro" aria-selected="${MICRO}">${t("microName")}</button></div>
   </div>`;
 }
 function paintCourseDD(c){
@@ -1582,7 +1587,7 @@ function buildNav(){
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x">${f7("xmark")}</span></button>
   </div>
   ${MICRO ? "" : navSearchHTML()}
-  <div class="nav-scroll">${MICRO ? `<div class="nav-zh nav-micro"><span class="nav-zh-h">${f7("chart_bar_fill")}</span><b>${t("microName")}</b><p>${t("microNav")}</p></div>` : `
+  <div class="nav-scroll">${MICRO ? miNavHTML() : `
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
@@ -1964,16 +1969,9 @@ function renderZh(){
   </div></div>`;
   $$("[data-zhback]", main).forEach(a=>a.addEventListener("click", e=>{ const c = a.dataset.zhback; if (c !== COURSE) { e.preventDefault(); setCourse(c, true); location.hash = "home"; } }));
 }
-function renderMicro(){
-  main.innerHTML = `<div class="col"><div class="zh-soon micro-soon seyes">
-    <div class="zh-big micro-big" aria-hidden="true">${f7("chart_bar_fill")}</div>
-    <p class="eyebrow">${t("microEyebrow")}</p><h1>${t("microH")}</h1><p class="t-ru">${t("microP")}</p>
-    <div class="btns"><a class="btn pri" href="#home">${t("microBack")}</a></div>
-  </div></div>`;
-}
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = /^quizlet\//.test(h) ? "quizlet" : /^hanzi(\/|$)/.test(h) ? "hanzi" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
+  const id = /^mi-/.test(h) || h === "micro" ? h : /^quizlet\//.test(h) ? "quizlet" : /^hanzi(\/|$)/.test(h) ? "hanzi" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
   const cur = $(`#navGroups a.nl[data-id="${id}"]`); if (cur) { const g = cur.closest(".ng"); if (g && !g.classList.contains("open")) navOpenGroup(g, true, false); }
 }
@@ -1982,9 +1980,9 @@ function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const inQz = /^quizlet(\/|$)/.test(h), fromQz = /^quizlet(\/|$)/.test(ROUTE_PREV); ROUTE_PREV = h;
   /* микроэкономика — свой сайдбар и страница-заглушка */
-  const mic = h === "micro";
+  const mic = h === "micro" || /^mi-/.test(h);
   if (mic !== MICRO) { MICRO = mic; const keepNav = nav.classList.contains("open"); buildNav(); if (keepNav && !mic) nav.classList.add("open"); }
-  if (mic) { if (synth) try { synth.cancel(); } catch(e) {} closeDeck(true); renderMicro(); markActive(); closeNav(); window.scrollTo(0, 0); main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); return; }
+  if (mic) { if (synth) try { synth.cancel(); } catch(e) {} closeDeck(true); renderMicro(h); markActive(); closeNav(); window.scrollTo(0, 0); main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); return; }
   /* вкладки Quizlet переключаются на месте, без перерисовки страницы */
   if (inQz && fromQz && COURSE === "fr" && !VIEW_ZH && qzSoft(h.slice(8))) { markActive(); return; }
   if (synth) try { synth.cancel(); } catch(e) {}

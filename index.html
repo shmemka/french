@@ -3112,6 +3112,27 @@ button.hzm-rad:hover{border-color:var(--hz-rad)}
 .nav-micro b{display:block;font-size:15px;margin-bottom:4px}
 .micro-big{color:var(--encre)!important}
 .micro-big svg,.micro-big .ico{width:72px;height:72px}
+
+/* ===================== микроэкономика: midterm (05.11.2026) ===================== */
+.mi-f{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--x-fill);border-radius:5px;padding:1px 6px}
+.mi-theory .kn-me span{font-family:inherit}
+.mi-figw{display:flex;justify-content:center;margin:-4px 0 0}
+.mfig{margin:0;width:100%;max-width:460px}
+.mfig svg{display:block;width:100%;height:auto;font-family:var(--font-b)}
+.mf-ax{fill:none;stroke:var(--ink);stroke-width:1.6}
+.mf-c{fill:none;stroke:var(--ink-2);stroke-width:1.7}
+.mf-d{stroke:var(--ink-3);stroke-width:1;stroke-dasharray:4 3}
+.mf-l,.mf-al,.mf-tk{font-size:11px;fill:var(--ink-2)}
+.mf-tk{font-weight:600}
+.mf-n{font-size:15px;font-weight:700;fill:var(--encre)}
+.mf-loss{fill:color-mix(in srgb,#E5484D 35%,var(--sheet))}
+.mf-r1{fill:color-mix(in srgb,var(--encre) 12%,var(--sheet));stroke:var(--encre)}
+.mf-r2{fill:color-mix(in srgb,#3BA55C 14%,var(--sheet));stroke:#3BA55C}
+.mf-r3{fill:color-mix(in srgb,#F2A93B 16%,var(--sheet));stroke:#D9911A}
+.nav a.mi-nl{gap:8px}
+.mi-nl .ng-n{flex:none}
+.mi-nl.done .ng-n{background:var(--x-ok-bg);color:var(--x-ok-t)}
+.mi-nl .nl-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <script src="config.js"></script>
@@ -18967,6 +18988,305 @@ function zhKeyForm(n){
   return simp || forms[0];
 }
 
+/* графики к вопросам midterm (нарисованы заново, SVG) */
+const MI_FIG = {"A": "<figure class=\"mfig\"><svg viewBox=\"0 0 420 316\" role=\"img\" aria-label=\"Monopoly: price below average cost\"><path class=\"mf-ax\" d=\"M50 30 V290 H400\"/><text class=\"mf-al\" x=\"400\" y=\"306\" text-anchor=\"end\">Quantity</text><text class=\"mf-al\" x=\"44\" y=\"26\" text-anchor=\"start\">Price / cost</text><rect class=\"mf-loss\" x=\"50.0\" y=\"93.7\" width=\"85.0\" height=\"27.3\"/><path class=\"mf-c\" d=\"M50.0 56.0 L57.5 61.7 L65.0 67.4 L72.4 73.2 L79.9 78.9 L87.4 84.6 L94.9 90.3 L102.4 96.0 L109.8 101.8 L117.3 107.5 L124.8 113.2 L132.3 118.9 L139.8 124.6 L147.2 130.4 L154.7 136.1 L162.2 141.8 L169.7 147.5 L177.2 153.2 L184.6 159.0 L192.1 164.7 L199.6 170.4 L207.1 176.1 L214.6 181.8 L222.0 187.6 L229.5 193.3 L237.0 199.0 L244.5 204.7 L252.0 210.4 L259.4 216.2 L266.9 221.9 L274.4 227.6 L281.9 233.3 L289.4 239.0 L296.8 244.8 L304.3 250.5 L311.8 256.2 L319.3 261.9 L326.8 267.6 L334.2 273.4 L341.7 279.1 L349.2 284.8\"/><path class=\"mf-c\" d=\"M50.0 56.0 L53.7 61.7 L57.5 67.4 L61.2 73.2 L65.0 78.9 L68.7 84.6 L72.4 90.3 L76.2 96.0 L79.9 101.8 L83.7 107.5 L87.4 113.2 L91.1 118.9 L94.9 124.6 L98.6 130.4 L102.4 136.1 L106.1 141.8 L109.8 147.5 L113.6 153.2 L117.3 159.0 L121.1 164.7 L124.8 170.4 L128.5 176.1 L132.3 181.8 L136.0 187.6 L139.8 193.3 L143.5 199.0 L147.2 204.7 L151.0 210.4 L154.7 216.2 L158.5 221.9 L162.2 227.6 L165.9 233.3 L169.7 239.0 L173.4 244.8 L177.2 250.5 L180.9 256.2 L184.6 261.9 L188.4 267.6 L192.1 273.4 L195.9 279.1 L199.6 284.8\"/><path class=\"mf-c\" d=\"M63.6 179.8 L66.6 185.3 L69.6 190.4 L72.7 195.0 L75.7 199.1 L78.7 202.8 L81.7 206.0 L84.7 208.7 L87.7 211.0 L90.8 212.8 L93.8 214.1 L96.8 215.0 L99.8 215.4 L102.8 215.4 L105.8 214.9 L108.9 213.9 L111.9 212.4 L114.9 210.5 L117.9 208.2 L120.9 205.3 L124.0 202.0 L127.0 198.3 L130.0 194.0 L133.0 189.4 L136.0 184.2 L139.0 178.6 L142.1 172.5 L145.1 166.0 L148.1 159.0 L151.1 151.5 L154.1 143.5 L157.1 135.1 L160.2 126.3 L163.2 116.9 L166.2 107.1 L169.2 96.9 L172.2 86.2 L175.2 75.0 L178.3 63.3 L181.3 51.2 L184.3 38.6\"/><path class=\"mf-c\" d=\"M56.8 55.1 L62.4 59.3 L68.0 63.2 L73.6 66.9 L79.2 70.4 L84.8 73.7 L90.5 76.8 L96.1 79.7 L101.7 82.3 L107.3 84.8 L112.9 87.0 L118.5 89.0 L124.1 90.8 L129.7 92.4 L135.3 93.8 L140.9 94.9 L146.6 95.9 L152.2 96.6 L157.8 97.2 L163.4 97.5 L169.0 97.6 L174.6 97.5 L180.2 97.2 L185.8 96.6 L191.4 95.9 L197.0 94.9 L202.7 93.8 L208.3 92.4 L213.9 90.8 L219.5 89.0 L225.1 87.0 L230.7 84.8 L236.3 82.3 L241.9 79.7 L247.5 76.8 L253.2 73.7 L258.8 70.4 L264.4 66.9 L270.0 63.2 L275.6 59.3 L281.2 55.1\"/><path class=\"mf-d\" d=\"M50.0 93.7 L135.0 93.7\"/><path class=\"mf-d\" d=\"M50.0 121.0 L135.0 121.0\"/><path class=\"mf-d\" d=\"M135.0 93.7 L135.0 290.0\"/><text class=\"mf-l\" x=\"288.0\" y=\"230.2\" text-anchor=\"start\">D = AR</text><text class=\"mf-l\" x=\"189.4\" y=\"266.6\" text-anchor=\"start\">MR</text><text class=\"mf-l\" x=\"186.0\" y=\"32.6\" text-anchor=\"start\">MC</text><text class=\"mf-l\" x=\"267.6\" y=\"48.2\" text-anchor=\"start\">AC</text><text class=\"mf-tk\" x=\"44\" y=\"97.7\" text-anchor=\"end\">AC</text><text class=\"mf-tk\" x=\"44\" y=\"125.0\" text-anchor=\"end\">P<tspan dy=\"3\" font-size=\"9\">m</tspan></text><text class=\"mf-tk\" x=\"135.0\" y=\"304\" text-anchor=\"middle\">Q<tspan dy=\"3\" font-size=\"9\">m</tspan></text></svg></figure>", "B": "<figure class=\"mfig\"><svg viewBox=\"0 0 420 316\" role=\"img\" aria-label=\"Monopoly versus perfect competition, numbered areas\"><path class=\"mf-ax\" d=\"M50 30 V290 H400\"/><text class=\"mf-al\" x=\"400\" y=\"306\" text-anchor=\"end\">Quantity</text><text class=\"mf-al\" x=\"44\" y=\"26\" text-anchor=\"start\">Price</text><path class=\"mf-c\" d=\"M50.0 56.0 L57.6 61.8 L65.3 67.7 L73.0 73.5 L80.6 79.4 L88.2 85.2 L95.9 91.1 L103.5 96.9 L111.2 102.8 L118.8 108.7 L126.5 114.5 L134.1 120.3 L141.8 126.2 L149.4 132.0 L157.1 137.9 L164.8 143.8 L172.4 149.6 L180.0 155.4 L187.7 161.3 L195.3 167.1 L203.0 173.0 L210.7 178.8 L218.3 184.7 L225.9 190.6 L233.6 196.4 L241.2 202.2 L248.9 208.1 L256.5 213.9 L264.2 219.8 L271.9 225.6 L279.5 231.5 L287.1 237.3 L294.8 243.2 L302.4 249.1 L310.1 254.9 L317.8 260.8 L325.4 266.6 L333.1 272.4 L340.7 278.3 L348.3 284.1 L356.0 290.0\"/><path class=\"mf-c\" d=\"M50.0 56.0 L53.8 61.8 L57.6 67.7 L61.5 73.5 L65.3 79.4 L69.1 85.2 L73.0 91.1 L76.8 96.9 L80.6 102.8 L84.4 108.7 L88.2 114.5 L92.1 120.3 L95.9 126.2 L99.7 132.0 L103.5 137.9 L107.4 143.8 L111.2 149.6 L115.0 155.4 L118.8 161.3 L122.7 167.1 L126.5 173.0 L130.3 178.8 L134.1 184.7 L138.0 190.6 L141.8 196.4 L145.6 202.2 L149.4 208.1 L153.3 213.9 L157.1 219.8 L160.9 225.6 L164.8 231.5 L168.6 237.3 L172.4 243.2 L176.2 249.1 L180.0 254.9 L183.9 260.8 L187.7 266.6 L191.5 272.4 L195.3 278.3 L199.2 284.1 L203.0 290.0\"/><path class=\"mf-c\" d=\"M50.0 264.0 L56.1 259.3 L62.2 254.6 L68.4 250.0 L74.5 245.3 L80.6 240.6 L86.7 235.9 L92.8 231.2 L99.0 226.6 L105.1 221.9 L111.2 217.2 L117.3 212.5 L123.4 207.8 L129.6 203.2 L135.7 198.5 L141.8 193.8 L147.9 189.1 L154.0 184.4 L160.2 179.8 L166.3 175.1 L172.4 170.4 L178.5 165.7 L184.6 161.0 L190.8 156.4 L196.9 151.7 L203.0 147.0 L209.1 142.3 L215.2 137.6 L221.4 133.0 L227.5 128.3 L233.6 123.6 L239.7 118.9 L245.8 114.2 L252.0 109.6 L258.1 104.9 L264.2 100.2 L270.3 95.5 L276.4 90.8 L282.6 86.2 L288.7 81.5 L294.8 76.8\"/><path class=\"mf-d\" d=\"M50.0 125.3 L140.7 125.3\"/><path class=\"mf-d\" d=\"M50.0 160.0 L186.0 160.0\"/><path class=\"mf-d\" d=\"M50.0 194.7 L140.7 194.7\"/><path class=\"mf-d\" d=\"M140.7 125.3 L140.7 290.0\"/><path class=\"mf-d\" d=\"M186.0 160.0 L186.0 290.0\"/><text class=\"mf-l\" x=\"298.2\" y=\"238.0\" text-anchor=\"start\">Demand</text><text class=\"mf-l\" x=\"199.6\" y=\"274.4\" text-anchor=\"start\">MR</text><text class=\"mf-l\" x=\"274.4\" y=\"82.0\" text-anchor=\"start\">Supply = MC</text><text class=\"mf-tk\" x=\"44\" y=\"129.3\" text-anchor=\"end\">P<tspan dy=\"3\" font-size=\"9\">M</tspan></text><text class=\"mf-tk\" x=\"44\" y=\"164.0\" text-anchor=\"end\">P<tspan dy=\"3\" font-size=\"9\">PC</tspan></text><text class=\"mf-tk\" x=\"140.7\" y=\"304\" text-anchor=\"middle\">Q<tspan dy=\"3\" font-size=\"9\">M</tspan></text><text class=\"mf-tk\" x=\"186.0\" y=\"304\" text-anchor=\"middle\">Q<tspan dy=\"3\" font-size=\"9\">PC</tspan></text><text class=\"mf-n\" x=\"60.2\" y=\"113.2\" text-anchor=\"middle\">9</text><text class=\"mf-n\" x=\"114.6\" y=\"113.2\" text-anchor=\"middle\">8</text><text class=\"mf-n\" x=\"73.8\" y=\"145.7\" text-anchor=\"middle\">5</text><text class=\"mf-n\" x=\"126.5\" y=\"145.7\" text-anchor=\"middle\">4</text><text class=\"mf-n\" x=\"152.0\" y=\"150.9\" text-anchor=\"middle\">1</text><text class=\"mf-n\" x=\"80.6\" y=\"180.8\" text-anchor=\"middle\">6</text><text class=\"mf-n\" x=\"134.0\" y=\"173.0\" text-anchor=\"middle\">3</text><text class=\"mf-n\" x=\"152.0\" y=\"170.4\" text-anchor=\"middle\">2</text><text class=\"mf-n\" x=\"84.0\" y=\"217.2\" text-anchor=\"middle\">7</text></svg></figure>", "C": "<figure class=\"mfig\"><svg viewBox=\"0 0 420 316\" role=\"img\" aria-label=\"Monopoly: revenue split into three rectangles\"><path class=\"mf-ax\" d=\"M50 30 V290 H400\"/><text class=\"mf-al\" x=\"400\" y=\"306\" text-anchor=\"end\">Quantity</text><text class=\"mf-al\" x=\"44\" y=\"26\" text-anchor=\"start\">Price / cost</text><rect class=\"mf-r1\" x=\"50.0\" y=\"134.0\" width=\"102.0\" height=\"39.0\"/><text class=\"mf-n\" x=\"101.0\" y=\"161.3\" text-anchor=\"middle\">1</text><rect class=\"mf-r2\" x=\"50.0\" y=\"173.0\" width=\"102.0\" height=\"39.0\"/><text class=\"mf-n\" x=\"101.0\" y=\"200.3\" text-anchor=\"middle\">2</text><rect class=\"mf-r3\" x=\"50.0\" y=\"212.0\" width=\"102.0\" height=\"78.0\"/><text class=\"mf-n\" x=\"101.0\" y=\"258.8\" text-anchor=\"middle\">3</text><path class=\"mf-c\" d=\"M50.0 56.0 L57.6 61.8 L65.3 67.7 L73.0 73.5 L80.6 79.4 L88.2 85.2 L95.9 91.1 L103.5 96.9 L111.2 102.8 L118.8 108.7 L126.5 114.5 L134.1 120.3 L141.8 126.2 L149.4 132.0 L157.1 137.9 L164.8 143.8 L172.4 149.6 L180.0 155.4 L187.7 161.3 L195.3 167.1 L203.0 173.0 L210.7 178.8 L218.3 184.7 L225.9 190.6 L233.6 196.4 L241.2 202.2 L248.9 208.1 L256.5 213.9 L264.2 219.8 L271.9 225.6 L279.5 231.5 L287.1 237.3 L294.8 243.2 L302.4 249.1 L310.1 254.9 L317.8 260.8 L325.4 266.6 L333.1 272.4 L340.7 278.3 L348.3 284.1 L356.0 290.0\"/><path class=\"mf-c\" d=\"M50.0 56.0 L53.8 61.8 L57.6 67.7 L61.5 73.5 L65.3 79.4 L69.1 85.2 L73.0 91.1 L76.8 96.9 L80.6 102.8 L84.4 108.7 L88.2 114.5 L92.1 120.3 L95.9 126.2 L99.7 132.0 L103.5 137.9 L107.4 143.8 L111.2 149.6 L115.0 155.4 L118.8 161.3 L122.7 167.1 L126.5 173.0 L130.3 178.8 L134.1 184.7 L138.0 190.6 L141.8 196.4 L145.6 202.2 L149.4 208.1 L153.3 213.9 L157.1 219.8 L160.9 225.6 L164.8 231.5 L168.6 237.3 L172.4 243.2 L176.2 249.1 L180.0 254.9 L183.9 260.8 L187.7 266.6 L191.5 272.4 L195.3 278.3 L199.2 284.1 L203.0 290.0\"/><path class=\"mf-c\" d=\"M97.6 227.0 L100.2 229.0 L102.9 230.8 L105.5 232.2 L108.1 233.4 L110.8 234.3 L113.4 235.0 L116.0 235.3 L118.7 235.4 L121.3 235.2 L124.0 234.7 L126.6 233.9 L129.2 232.9 L131.9 231.5 L134.5 229.9 L137.1 228.0 L139.8 225.8 L142.4 223.4 L145.0 220.6 L147.7 217.6 L150.3 214.3 L152.9 210.7 L155.6 206.8 L158.2 202.7 L160.8 198.3 L163.5 193.5 L166.1 188.5 L168.7 183.3 L171.4 177.7 L174.0 171.9 L176.6 165.8 L179.3 159.4 L181.9 152.7 L184.6 145.7 L187.2 138.5 L189.8 131.0 L192.5 123.2 L195.1 115.1 L197.7 106.7 L200.4 98.1 L203.0 89.2\"/><path class=\"mf-c\" d=\"M90.8 89.2 L95.9 104.1 L101.0 116.4 L106.1 126.9 L111.2 135.8 L116.3 143.4 L121.4 150.0 L126.5 155.6 L131.6 160.4 L136.7 164.5 L141.8 168.0 L146.9 170.8 L152.0 173.0 L157.1 174.7 L162.2 175.8 L167.3 176.5 L172.4 176.7 L177.5 176.4 L182.6 175.7 L187.7 174.5 L192.8 172.9 L197.9 170.9 L203.0 168.4 L208.1 165.6 L213.2 162.4 L218.3 158.7 L223.4 154.7 L228.5 150.2 L233.6 145.4 L238.7 140.2 L243.8 134.6 L248.9 128.6 L254.0 122.3 L259.1 115.6 L264.2 108.5 L269.3 101.0 L274.4 93.2 L279.5 85.0 L284.6 76.4 L289.7 67.5 L294.8 58.2\"/><path class=\"mf-c\" d=\"M77.2 174.2 L82.0 178.9 L86.7 183.2 L91.5 187.3 L96.2 191.0 L101.0 194.4 L105.8 197.6 L110.5 200.4 L115.3 202.9 L120.0 205.1 L124.8 207.0 L129.6 208.6 L134.3 209.9 L139.1 210.9 L143.8 211.6 L148.6 211.9 L153.4 212.0 L158.1 211.7 L162.9 211.2 L167.6 210.3 L172.4 209.2 L177.2 207.7 L181.9 206.0 L186.7 203.9 L191.4 201.5 L196.2 198.8 L201.0 195.8 L205.7 192.5 L210.5 188.9 L215.2 185.0 L220.0 180.8 L224.8 176.3 L229.5 171.5 L234.3 166.3 L239.0 160.9 L243.8 155.1 L248.6 149.1 L253.3 142.7 L258.1 136.1 L262.8 129.1 L267.6 121.8\"/><text class=\"mf-l\" x=\"308.4\" y=\"243.2\" text-anchor=\"start\">Demand = AR</text><text class=\"mf-l\" x=\"199.6\" y=\"274.4\" text-anchor=\"start\">MR</text><text class=\"mf-l\" x=\"203.0\" y=\"82.0\" text-anchor=\"start\">MC</text><text class=\"mf-l\" x=\"298.2\" y=\"118.4\" text-anchor=\"start\">ATC</text><text class=\"mf-l\" x=\"271.0\" y=\"157.4\" text-anchor=\"start\">AVC</text><text class=\"mf-tk\" x=\"44\" y=\"138.0\" text-anchor=\"end\">P<tspan dy=\"3\" font-size=\"9\">E</tspan></text><text class=\"mf-tk\" x=\"44\" y=\"177.0\" text-anchor=\"end\">M</text><text class=\"mf-tk\" x=\"44\" y=\"216.0\" text-anchor=\"end\">N</text><text class=\"mf-tk\" x=\"152.0\" y=\"304\" text-anchor=\"middle\">Q<tspan dy=\"3\" font-size=\"9\">E</tspan></text></svg></figure>"};
+
+/* =========================================================
+   Микроэкономика — Mid-Term Test (Weeks 1–8), 51 вопрос.
+   Вопросы — как в тесте (по-английски), разложены по 10 темам в 4 частях.
+   У каждого вопроса — объяснение (e), у задания — общее правило (w), у сопоставлений — разбор (tt).
+   Числовые ответы проверяются с допуском (microJudge в micro.js).
+   ========================================================= */
+const MI_PARTS = [
+  {n:"1", t:"Основы", en:"Foundations"},
+  {n:"2", t:"Рынок: спрос, предложение, благосостояние", en:"Markets"},
+  {n:"3", t:"Фирма: производство и издержки", en:"The firm"},
+  {n:"4", t:"Рыночные структуры", en:"Market structures"}
+];
+const MIF = (s, cls) => `<span class="mi-f${cls ? " " + cls : ""}">${s}</span>`;   /* формула */
+
+const MI_TOPICS = [
+/* ---------------------------------------------------------------- 1 */
+{id:"mi-basics", unit:"1", kind:"Basics", title:"Что изучает экономика", ru:"Ограниченность, альтернативная стоимость, факторы производства, рынок и государство",
+theory:`
+${LEAD("Экономика начинается с <b>ограниченности</b> (scarcity): ресурсов меньше, чем желаний. Поэтому любой выбор чего-то стоит — это и есть <b>альтернативная стоимость</b> (opportunity cost).")}
+${SEC("Главные понятия")}
+${PAIRS(["Термин", "Что значит"], [
+  ["<b>Scarcity</b> — ограниченность", "ресурсы ограничены относительно потребностей → приходится выбирать"],
+  ["<b>Opportunity cost</b> — альтернативная стоимость", "ценность <i>лучшей</i> из отвергнутых альтернатив"],
+  ["<b>Microeconomics</b>", "отдельные рынки, потребители и фирмы"],
+  ["<b>Positive</b> economics", "что есть или что будет — можно проверить фактами"],
+  ["<b>Normative</b> economics", "что <i>должно</i> быть — оценки, «следует», «справедливо»"]])}
+${SEC("Факторы производства")}
+${PAIRS(["Фактор", "Пример"], [["Land — земля, природные ресурсы", "участок, нефть, вода"], ["Labor — труд", "время и усилия работников"], ["<b>Capital</b> — капитал", "созданные человеком средства производства: станки, здания, оборудование"], ["Entrepreneurship", "организация производства и риск"]])}
+${ASIDE("Деньги в экономической теории — не «капитал», а средство обмена. Капитал — это то, <b>чем</b> производят (станок), а не то, на что покупают.")}
+${SEC("Кто координирует экономику")}
+${CHOOSE([
+  {lab:"Рынок", key:"цены", plain:true, acc:true, ex:["цены сигнализируют, что нужно", "прибыль привлекает ресурсы", "доходы от факторов решают, «для кого»"]},
+  {lab:"Государство вмешивается, когда", key:"провалы рынка", plain:true, ex:["общественные блага (оборона)", "внешние эффекты (загрязнение)", "рыночная власть (монополия)", "справедливость (перераспределение)"]}])}`,
+ex:[
+{t:"match", h:"Основные понятия — сопоставь термин и описание", w:["Положительная экономика описывает и предсказывает (можно проверить), нормативная — оценивает, «как должно быть». Альтернативная стоимость — лучшая из упущенных возможностей, а не все сразу.", ""],
+ tt:["<b>Opportunity cost</b> — ценность лучшей отвергнутой альтернативы. <b>Microeconomics</b> — отдельные рынки, потребители, фирмы (макро — экономика в целом). <b>Normative</b> — оценочные суждения: «налоги <i>следует</i> снизить». <b>Positive</b> — утверждения о фактах: «если налог вырастет, продажи упадут» — это можно проверить.", ""],
+ pairs:[["Opportunity cost", "Value of the best alternative forgone"], ["Microeconomics", "Study of individual markets, consumers, and firms"], ["Normative economics", "Analysis involving value judgments about what ought to be"], ["Positive economics", "Analysis of what is or what will happen"]]},
+{t:"mc", h:"Ограниченность, капитал, координация", w:["Ограниченность есть всегда и везде; капитал — созданные средства производства; в рыночной экономике выбор координируют цены.", ""], items:[
+ {q:"Which statement best captures the economic meaning of scarcity?", o:["Scarcity means that resources are limited relative to human wants, so choices have opportunity costs.", "Scarcity means that all goods are rare in nature.", "Scarcity disappears when markets are perfectly competitive.", "Scarcity exists only in low-income economies."], a:0,
+  e:"Ограниченность — это соотношение: ресурсов меньше, чем желаний. Поэтому у каждого выбора есть альтернативная стоимость. Она есть и в богатых странах, и на конкурентных рынках; «редкость в природе» — другое (вода не редкая, но тоже ограничена)."},
+ {q:"Which item is an example of capital in the economic sense?", o:["A machine used to manufacture components", "A consumer's preference for coffee", "A worker's leisure time", "A firm's current selling price"], a:0,
+  e:"Капитал — созданные человеком средства, которые используются для производства других благ: станок, здание, оборудование. Предпочтения — это спрос, свободное время — не фактор производства, цена — рыночный сигнал."},
+ {q:"In a modern market economy, which mechanism primarily coordinates what is produced, how it is produced, and for whom it is produced?", o:["Prices, profits, factor incomes, and decentralized exchange", "A single national production plan", "Equal physical quantities for all consumers", "Random allocation of resources"], a:0,
+  e:"Три главных вопроса (что, как, для кого) рынок решает через цены: высокая цена сигнализирует о дефиците, прибыль притягивает ресурсы в эту отрасль, а доходы от факторов (зарплата, рента, процент) определяют, кто сколько может купить. Единый план — это командная экономика."}]},
+{t:"tf", h:"Деньги и специализация", w:["Деньги — средство обмена: они убирают необходимость искать партнёра для бартера.", ""], items:[
+ {q:"Money facilitates specialization because it reduces the need for direct barter between people who want what the other person offers.", a:true,
+  e:"При бартере нужно «двойное совпадение желаний»: найти того, у кого есть то, что тебе нужно, и кому нужно то, что есть у тебя. С деньгами каждый продаёт свой товар за деньги и покупает что угодно — поэтому выгодно специализироваться."}]},
+{t:"match", h:"Зачем вмешивается государство — сопоставь проблему и причину", w:["Провалы рынка: общественные блага, внешние эффекты, рыночная власть. Плюс цель справедливости — она нормативная, не про эффективность.", ""],
+ tt:["<b>National defense → Public good</b>: оборону нельзя «продать» отдельно — неплательщика не исключишь (non-excludable), и одному она не мешает защищать другого (non-rival). Рынок её недопроизведёт из-за «безбилетников». <b>Pollution → Externality</b>: часть издержек несут третьи лица, а в цене они не учтены. <b>Redistribution → Equity</b>: перераспределение — про справедливость, это нормативная цель. <b>Dominant seller → Imperfect competition</b>: монополист ставит цену выше MC и выпускает меньше эффективного.", ""],
+ pairs:[["National defense", "Public good"], ["Pollution from a factory", "Externality"], ["Redistribution toward low-income households", "Equity objective"], ["A single dominant seller with market power", "Imperfect competition"]]}]},
+
+/* ---------------------------------------------------------------- 2 */
+{id:"mi-ppf", unit:"1", kind:"PPF", title:"Кривая производственных возможностей", ru:"Точки на кривой, внутри и снаружи; сдвиги; наклон как альтернативная стоимость",
+theory:`
+${LEAD("КПВ (production-possibility frontier) показывает все <b>максимальные</b> комбинации двух благ при данных ресурсах и технологии.")}
+${SEC("Где точка")}
+${CHOOSE([
+  {lab:"На кривой", key:"эффективно", plain:true, acc:true, ex:["больше одного — только за счёт другого"]},
+  {lab:"Внутри", key:"неэффективно", plain:true, ex:["безработица, простаивающие ресурсы", "можно больше обоих"]},
+  {lab:"Снаружи", key:"недостижимо", plain:true, ex:["пока не вырастут ресурсы или технологии"]}])}
+${SEC("Движение и сдвиг")}
+${PAIRS(["Что происходит", "Как это на графике"], [["переход от безработицы к полной занятости", "движение <b>к</b> кривой изнутри"], ["производим больше X и меньше Y", "движение <b>вдоль</b> кривой"], ["новые технологии, больше ресурсов", "сдвиг кривой <b>наружу</b>"]])}
+${SEC("Наклон = альтернативная стоимость")}
+${KCAP(`Наклон ${MIF("dY/dX")} показывает, сколько Y приходится отдать за ещё одну единицу X. Кривая выпуклая наружу → альтернативная стоимость растёт: ресурсы не одинаково хороши для обоих благ.`)}`,
+ex:[
+{t:"tf", h:"Точка внутри границы", w:["Внутри КПВ ресурсы используются не полностью или неэффективно.", ""], items:[
+ {q:"With given resources and technology, a production point strictly inside the production-possibility frontier indicates productive inefficiency or unemployed resources.", a:true,
+  e:"Изнутри можно увеличить выпуск одного блага, не уменьшая другого — значит, какие-то ресурсы простаивают (безработица) или используются неэффективно. На самой кривой так уже нельзя."}]},
+{t:"mc", h:"Что сдвигает КПВ", w:["Наружу кривую сдвигает только рост ресурсов или технологий.", ""], items:[
+ {q:"Which change is most likely to shift an economy's production-possibility frontier outward?", o:["A technological improvement that raises productivity", "A temporary recession that leaves resources unemployed", "A movement from an inefficient point to a point on the existing frontier", "A reallocation of production from one good to another along the existing frontier"], a:0,
+  e:"Технологии позволяют произвести больше из тех же ресурсов — граница возможностей расширяется. Рецессия — точка уходит внутрь, кривая на месте. Переход к кривой и перераспределение вдоль неё — это движения, а не сдвиг."}]},
+{t:"fill", h:"Наклон КПВ", w:["Наклон КПВ — производная dY/dX. Её модуль — альтернативная стоимость единицы X.", ""], items:[
+ {q:"A smooth production-possibility frontier is Y = 100 - 0.5X^2. Calculate dY/dX at X = 6.", a:["-6"],
+  e:"dY/dX = −0,5·2X = −X. При X = 6: <b>−6</b>. Смысл: ещё одна единица X обходится примерно в 6 единиц Y. Чем больше X, тем круче наклон — альтернативная стоимость растёт."}]}]},
+
+/* ---------------------------------------------------------------- 3 */
+{id:"mi-sd", unit:"2", kind:"Supply & demand", title:"Спрос и предложение", ru:"Движение и сдвиг кривых, факторы спроса и предложения, равновесие, дефицит и излишек",
+theory:`
+${LEAD("Главный вопрос: изменилась <b>цена самого товара</b> (движение вдоль кривой) или <b>что-то другое</b> (сдвиг всей кривой)?")}
+${SEC("Движение или сдвиг")}
+${CHOOSE([
+  {lab:"Изменилась цена этого товара", key:"движение вдоль", plain:true, acc:true, ex:["change in quantity demanded / supplied"]},
+  {lab:"Изменилось что-то ещё", key:"сдвиг кривой", plain:true, ex:["change in demand / supply"]}])}
+${SEC("Что сдвигает спрос")}
+${PAIRS(["Фактор", "Куда сдвигается спрос"], [
+  ["доход растёт, <b>normal good</b>", "вправо"], ["доход растёт, <b>inferior good</b>", "влево"],
+  ["цена <b>substitute</b> (заменителя) падает", "влево — покупатели уходят к заменителю"], ["цена <b>complement</b> (дополнения) падает", "вправо"],
+  ["вкусы, ожидания, число покупателей", "по смыслу"]])}
+${SEC("Что сдвигает предложение")}
+${PAIRS(["Фактор", "Куда сдвигается предложение"], [["ресурсы (inputs) дешевеют", "вправо"], ["технологии улучшаются", "вправо"], ["больше продавцов", "вправо"], ["налог на производителей", "влево"]])}
+${SEC("Равновесие")}
+${MERGE([{f:["~Qd", "=", "~Qs"], r:"~равновесие P*, Q*", hl:true, ex:"решаем систему уравнений"}, {f:["~Qd", "−", "~Qs", "> 0"], r:"~дефицит (shortage)", ex:"цена ниже равновесной"}, {f:["~Qs", "−", "~Qd", "> 0"], r:"~излишек (surplus)", ex:"цена выше равновесной"}])}
+${ASIDE("Потолок цены (price ceiling) ниже равновесия → <b>дефицит</b>. Пол цены (price floor) выше равновесия → <b>излишек</b>. Кривые при этом не сдвигаются.")}`,
+ex:[
+{t:"tf", h:"Движение или сдвиг", w:["Своя цена — движение вдоль кривой; всё остальное — сдвиг.", ""], items:[
+ {q:"A change in a good's own price, with other demand determinants unchanged, causes a movement along the demand curve rather than a shift of the demand curve.", a:true,
+  e:"Цена товара стоит на оси графика, поэтому её изменение — это переход в другую точку той же кривой (меняется величина спроса). Кривая сдвигается, только когда меняются другие факторы: доход, цены других товаров, вкусы, ожидания."}]},
+{t:"match", h:"Связи между товарами и доходом — сопоставь", w:["Заменители: дороже один → больше спрос на другой. Дополнения: дороже один → меньше спрос на другой. Нормальный товар — спрос растёт с доходом, низший — падает.", ""],
+ tt:["<b>Complements</b> (кофе и сахар): кофе подорожал → кофе пьют меньше → и сахара нужно меньше. <b>Substitutes</b> (чай и кофе): кофе подорожал → переходят на чай. <b>Normal good</b> — с ростом дохода покупают больше. <b>Inferior good</b> (дешёвая лапша) — с ростом дохода заменяют на лучшее.", ""],
+ pairs:[["Complements", "A higher price of one tends to reduce demand for the other"], ["Normal good", "Demand tends to rise when income rises"], ["Inferior good", "Demand tends to fall when income rises"], ["Substitutes", "A higher price of one tends to increase demand for the other"]]},
+{t:"match", h:"Какую кривую сдвигает — сопоставь", w:["Факторы со стороны покупателей двигают спрос, со стороны производства — предложение.", ""],
+ tt:["<b>Дешевле ресурс</b> → производить дешевле → при каждой цене предлагают больше: предложение вправо. <b>Заменитель подешевел</b> → часть покупателей уходит к нему: спрос влево. <b>Доход вырос (normal good)</b> → спрос вправо. <b>Технологии лучше</b> → ниже издержки: предложение вправо.", ""],
+ pairs:[["Lower price of a major production input", "Supply shifts right"], ["Fall in the price of a substitute good", "Demand shifts left"], ["Higher consumer income for a normal good", "Demand shifts right"], ["Improved production technology", "Supply shifts right"]]},
+{t:"mc", h:"Сдвиг спроса и регулирование цен", w:["Спрос вправо → цена и количество растут. Потолок цены ниже равновесия → дефицит.", ""], items:[
+ {q:"Holding supply constant, a rightward shift of the demand curve normally causes:", o:["A higher equilibrium price and higher equilibrium quantity", "No change in market equilibrium", "A lower equilibrium price and lower equilibrium quantity", "A higher equilibrium price and lower equilibrium quantity"], a:0,
+  e:"При старой цене покупатели хотят больше, чем продают, — возникает дефицит, и цена растёт. Продавцы двигаются вверх по кривой предложения и продают больше. Итог: выше и цена, и количество."},
+ {q:"A binding price ceiling set below the competitive equilibrium price will create:", o:["A shortage", "A surplus", "An outward shift of demand", "An outward shift of supply"], a:0,
+  e:"При цене ниже равновесной покупатели хотят больше (Qd растёт), а продавцы предлагают меньше (Qs падает): Qd > Qs — дефицит. Кривые не сдвигаются, меняется только точка на них. Излишек создаёт пол цены выше равновесия."}]},
+{t:"fill", h:"Равновесие на числах", w:["Равновесие: приравняй Qd и Qs. Дефицит = Qd − Qs при заданной цене.", ""], items:[
+ {q:"Market demand is Qd = 120 - 2P and market supply is Qs = 20 + 3P. Find the equilibrium price P.", a:["20"],
+  e:"120 − 2P = 20 + 3P → 100 = 5P → <b>P = 20</b>. Количество: Q = 120 − 40 = 80."},
+ {q:"For Qd = 120 - 2P and Qs = 20 + 3P, calculate the shortage (Qd - Qs) when P = 15.", a:["25"],
+  e:"Qd = 120 − 30 = 90, Qs = 20 + 45 = 65. Дефицит = 90 − 65 = <b>25</b>. Цена 15 ниже равновесной (20), поэтому спрос больше предложения."},
+ {q:"What is the standard market term for a situation in which quantity supplied exceeds quantity demanded at the current price?", a:["surplus", "a surplus", "excess supply", "market surplus", "излишек"],
+  e:"Qs > Qd — <b>surplus</b> (excess supply, излишек): продавцы не могут продать всё, и цена снижается к равновесию. Обратная ситуация, Qd > Qs, — shortage (дефицит)."}]}]},
+
+/* ---------------------------------------------------------------- 4 */
+{id:"mi-elast", unit:"2", kind:"Elasticity", title:"Эластичность", ru:"Эластичность спроса и предложения, формула средней точки, выручка",
+theory:`
+${LEAD("Эластичность — на сколько <b>процентов</b> меняется количество, когда цена меняется на 1 %.")}
+${SEC("Формулы")}
+${MERGE([{f:["~E", "="], r:"~%ΔQ / %ΔP", hl:true, ex:"простая формула"}, {f:["~midpoint:"], r:"~(ΔQ / Q̄) / (ΔP / P̄)", ex:"Q̄ и P̄ — средние между старым и новым значением"}])}
+${SEC("Классификация")}
+${PAIRS(["|E|", "Название", "Что значит"], [["> 1", "relatively <b>elastic</b>", "количество реагирует сильнее цены"], ["= 1", "<b>unit</b>-elastic", "в той же пропорции"], ["< 1", "relatively <b>inelastic</b>", "количество реагирует слабо"], ["= 0", "perfectly inelastic", "не реагирует вообще — вертикальная кривая"]])}
+${SEC("Эластичность и выручка (TR = P·Q)")}
+${CHOOSE([{lab:"Спрос неэластичен", key:"P↑ → TR↑", plain:true, acc:true, ex:["количество падает меньше, чем растёт цена"]}, {lab:"Спрос эластичен", key:"P↑ → TR↓", plain:true, ex:["покупатели сильно сокращают покупки"]}, {lab:"Единичная", key:"TR макс.", plain:true, ex:["MR = 0"]}])}`,
+ex:[
+{t:"match", h:"Типы эластичности — сопоставь", w:["Сравнивай модуль эластичности с единицей.", ""],
+ tt:["|Ed| = 1 — <b>unit-elastic</b>: количество меняется в той же пропорции, что и цена. |Ed| < 1 — <b>inelastic</b>: реакция слабая (хлеб, лекарства). |Ed| > 1 — <b>elastic</b>: реакция сильная (товары с заменителями). Предложение, которое не реагирует на цену, — <b>perfectly inelastic</b> (вертикальная кривая, например билеты на конкретный концерт).", ""],
+ pairs:[["|Ed| = 1", "Unit-elastic demand"], ["|Ed| < 1", "Relatively inelastic demand"], ["Quantity supplied does not respond to price", "Perfectly inelastic supply"], ["|Ed| > 1", "Relatively elastic demand"]]},
+{t:"fill", h:"Считаем эластичность", w:["E = %ΔQ / %ΔP. По формуле средней точки проценты считают от средних значений.", ""], items:[
+ {q:"A product's price rises by 20 percent and quantity supplied rises by 30 percent. Calculate the price elasticity of supply.", a:["1.5"],
+  e:"Es = %ΔQs / %ΔP = 30 / 20 = <b>1,5</b>. Больше 1 — предложение эластично."},
+ {q:"Price rises from 10 to 12 while quantity demanded falls from 100 to 80. Using the midpoint formula, calculate the absolute value of the price elasticity of demand.", a:["1.2222"],
+  e:"%ΔQ = −20 / 90 = −22,2 % (90 — среднее между 100 и 80). %ΔP = 2 / 11 = 18,2 % (11 — среднее между 10 и 12). |Ed| = 22,2 / 18,2 = 11/9 ≈ <b>1,22</b>. Больше 1 — спрос эластичен."}]},
+{t:"mc", h:"Эластичность и выручка", w:["При неэластичном спросе рост цены увеличивает выручку, при эластичном — уменьшает.", ""], items:[
+ {q:"If demand is price inelastic over the relevant range, an increase in price will normally:", o:["Increase total revenue", "Decrease total revenue", "Make marginal revenue exactly zero", "Leave total revenue unchanged"], a:0,
+  e:"TR = P·Q. При |Ed| < 1 количество падает в процентах меньше, чем растёт цена, — выручка растёт. Пример: цена +10 %, количество −4 % → TR ≈ +6 %. MR = 0 и неизменная выручка — это единичная эластичность."}]}]},
+
+/* ---------------------------------------------------------------- 5 */
+{id:"mi-utility", unit:"2", kind:"Consumer choice", title:"Полезность и выбор потребителя", ru:"Общая и предельная полезность, убывающая предельная полезность, правило равной отдачи",
+theory:`
+${LEAD("Потребитель распределяет бюджет так, чтобы <b>последний рубль</b> на каждый товар приносил одинаковую полезность.")}
+${SEC("Общая и предельная полезность")}
+${PAIRS(["Понятие", "Что это"], [["TU — total utility", "вся полезность от количества x"], ["MU — marginal utility", "прибавка полезности от ещё одной единицы: MU = dU/dx"]])}
+${ASIDE("Убывающая MU не значит, что TU падает. Пока MU > 0, общая полезность <b>растёт</b>, просто всё медленнее. TU падает, только когда MU < 0.")}
+${SEC("Правило равной отдачи (equimarginal principle)")}
+${MERGE([{f:["~MUx / Px", "="], r:"~MUy / Py", hl:true, ex:"полезность на 1 рубль одинакова для всех благ"}])}
+${KCAP("Если MUx/Px > MUy/Py, выгодно перекладывать деньги в X: каждый рубль там приносит больше. По мере покупки X его MU падает, и отношения выравниваются.")}`,
+ex:[
+{t:"tf", h:"Убывающая предельная полезность", w:["Убывает предельная полезность, а общая растёт, пока MU > 0.", ""], items:[
+ {q:"The law of diminishing marginal utility means that total utility must fall whenever consumption of a good increases.", a:false,
+  e:"Неверно. Закон говорит, что каждая <i>следующая</i> единица приносит меньше дополнительной полезности: первый кусок пиццы — 10, второй — 7, третий — 4. Но общая полезность всё равно растёт (10 → 17 → 21). Она падает, только если MU становится отрицательной."}]},
+{t:"mc", h:"Равновесие потребителя", w:["Условие оптимума: MUx/Px = MUy/Py.", ""], items:[
+ {q:"For an interior utility-maximizing allocation across two goods X and Y, the equimarginal principle requires:", o:["MUx/Px = MUy/Py", "Px = Py", "MUx = MUy", "Total utility from X equals total utility from Y"], a:0,
+  e:"Важна полезность <i>на рубль</i>, а не сама полезность. Если X стоит вдвое дороже, его MU должна быть вдвое больше. Равенство MUx = MUy верно только при равных ценах."}]},
+{t:"fill", h:"Предельная полезность — производная", w:["MU = dU/dx.", ""], items:[
+ {q:"Utility from a good is U(x) = 10*sqrt(x). Calculate marginal utility dU/dx at x = 25.", a:["1"],
+  e:"U = 10·x^0,5 → dU/dx = 5·x^(−0,5) = 5 / √x. При x = 25: 5 / 5 = <b>1</b>. С ростом x MU падает — убывающая предельная полезность."}]}]},
+
+/* ---------------------------------------------------------------- 6 */
+{id:"mi-surplus", unit:"2", kind:"Welfare", title:"Излишки и потери благосостояния", ru:"Излишек потребителя и производителя, чистые потери (deadweight loss)",
+theory:`
+${LEAD("Излишек — выгода сверх цены. Потери (deadweight loss) — излишек, который исчезает, когда рынок производит меньше эффективного.")}
+${SEC("Где на графике")}
+${PAIRS(["Излишек", "Площадь", "Формула для прямых"], [["<b>Consumer surplus</b>", "под спросом, над ценой", "½ · Q · (P<sub>max</sub> − P)"], ["<b>Producer surplus</b>", "над предложением (MC), под ценой", "площадь трапеции/треугольника"], ["<b>Deadweight loss</b>", "треугольник между спросом и MC от Q<sub>монополии</sub> до Q<sub>конкуренции</sub>", "½ · ΔQ · (P<sub>m</sub> − MC)"]])}
+${ASIDE("Монополия поднимает цену: часть излишка потребителей переходит производителю, а часть (DWL) не достаётся никому.")}`,
+ex:[
+{t:"fill", h:"Считаем излишки", w:["CS — треугольник под спросом над ценой; DWL — треугольник между спросом и MC.", ""], items:[
+ {q:"A market has inverse demand P = 50 - Q. If the market price is 20, calculate consumer surplus.", a:["450"],
+  e:"При P = 20: Q = 50 − 20 = 30. Треугольник: высота 50 − 20 = 30 (от цены до точки пересечения спроса с осью), основание 30. CS = ½ · 30 · 30 = <b>450</b>."},
+ {q:"Demand is P = 100 - Q and marginal cost is constant at MC = 20. A single-price monopolist chooses Qm = 40 and Pm = 60, while the competitive benchmark is Qc = 80 and Pc = 20. Calculate the deadweight loss.", a:["800"],
+  e:"DWL — треугольник между спросом и MC от Q = 40 до Q = 80. Основание: 80 − 40 = 40. Высота: 60 − 20 = 40 (цена монополиста минус MC). DWL = ½ · 40 · 40 = <b>800</b>."}]},
+{t:"fill", h:"Излишек производителя на графике", fig:"B", w:["Под монополией цена P<sub>M</sub>, продают Q<sub>M</sub>. Излишек производителя — между ценой P<sub>M</sub> и кривой предложения, левее Q<sub>M</sub>.", ""], items:[
+ {q:"Identify producer's surplus under monopoly - answer by putting the numbers together from least to greatest - e.g. 10,11,12,14", a:["3,4,5,6,7"],
+  e:"При конкуренции: цена P<sub>PC</sub>, излишек потребителей — 9, 8, 5, 4, 1; производителей — 6, 3, 2, 7. Монополист выпускает Q<sub>M</sub> и ставит P<sub>M</sub>: площади 5 и 4 переходят от потребителей к нему, а 1 и 2 пропадают (это DWL). Итог: излишек производителя = <b>3, 4, 5, 6, 7</b>; потребителей — 8, 9."}]}]},
+
+/* ---------------------------------------------------------------- 7 */
+{id:"mi-prod", unit:"3", kind:"Production", title:"Производство", ru:"Краткий и долгий период, средний и предельный продукт, убывающая отдача, отдача от масштаба",
+theory:`
+${LEAD("Производственная функция Q(K, L) — сколько можно выпустить из данных ресурсов при данной технологии.")}
+${SEC("Периоды")}
+${CHOOSE([{lab:"Short run", key:"хотя бы 1 фактор фиксирован", plain:true, acc:true, ex:["обычно капитал K"]}, {lab:"Long run", key:"все факторы меняются", plain:true, ex:["можно построить новый завод"]}])}
+${SEC("Средний и предельный продукт")}
+${MERGE([{f:["~AP_L", "="], r:"~Q / L", ex:"выпуск на одного работника"}, {f:["~MP_L", "="], r:"~dQ / dL", hl:true, ex:"прибавка выпуска от ещё одного работника"}])}
+${SEC("Две разные «отдачи»")}
+${PAIRS(["", "Diminishing marginal returns", "Returns to scale"], [["период", "краткосрочный", "долгосрочный"], ["что растёт", "один фактор, другие фиксированы", "все факторы в одной пропорции"], ["что смотрим", "падает ли MP", "во сколько раз растёт Q"]])}
+${KCAP("Для Q = A·K^a·L^b: a + b = 1 — постоянная отдача (CRS), > 1 — возрастающая, < 1 — убывающая.")}
+${SEC("Инновации")}
+${PAIRS(["Вид", "Пример"], [["Product innovation", "новый или заметно улучшенный продукт"], ["Process innovation", "новый способ производить старый продукт"]])}`,
+ex:[
+{t:"match", h:"Понятия производства — сопоставь", w:["Короткий период — что-то зафиксировано; длинный — всё можно менять. Продуктовая инновация — новый товар, процессная — новый способ.", ""],
+ tt:["<b>Short run</b>: хотя бы один важный фактор (обычно здания и оборудование) нельзя быстро изменить. <b>Long run</b>: меняются все факторы. <b>Product innovation</b> — новый или улучшенный продукт (новый смартфон). <b>Process innovation</b> — новый метод производства того же продукта (конвейер).", ""],
+ pairs:[["Product innovation", "A new or substantially improved product"], ["Short run", "At least one important input is fixed"], ["Long run", "All inputs can be adjusted"], ["Process innovation", "A new method of producing an existing product"]]},
+{t:"tf", h:"Технологии и функция производства", w:["Технологический прогресс: больше выпуска из тех же ресурсов.", ""], items:[
+ {q:"If improved technology allows more output from the same quantities of inputs, the production function shifts upward.", a:true,
+  e:"При тех же K и L выпуск теперь больше — вся кривая Q(L) поднимается. Это та же причина, по которой КПВ сдвигается наружу."}]},
+{t:"mc", h:"Закон убывающей отдачи", w:["Краткосрочный закон: растёт один фактор при фиксированных остальных → MP со временем падает.", ""], items:[
+ {q:"The law of diminishing marginal returns refers to a situation in which:", o:["One variable input is increased while other relevant inputs are fixed, and its marginal product eventually falls", "Total product must immediately fall when labor increases", "All inputs are increased proportionally and output rises less than proportionally", "Technology deteriorates every period"], a:0,
+  e:"Пример: на кухню с одной плитой добавляют поваров. Второй помогает сильно, пятый — меньше, десятый мешает: MP падает. Общий выпуск при этом сначала продолжает расти. Вариант про пропорциональный рост всех факторов — это убывающая отдача <i>от масштаба</i>, долгосрочное понятие."}]},
+{t:"fill", h:"Средний и предельный продукт, отдача от масштаба", w:["AP = Q/L, MP = dQ/dL. Отдача от масштаба — что происходит с Q, если все факторы умножить на одно число.", ""], items:[
+ {q:"A firm uses 4 units of labor and produces total product of 120 units. Calculate average product of labor.", a:["30"],
+  e:"AP<sub>L</sub> = Q / L = 120 / 4 = <b>30</b> единиц на работника."},
+ {q:"A short-run production function is Q(L) = 20L + 3L^2 - 0.2L^3. Calculate the marginal product of labor dQ/dL at L = 5.", a:["35"],
+  e:"MP = dQ/dL = 20 + 6L − 0,6L². При L = 5: 20 + 30 − 0,6 · 25 = 20 + 30 − 15 = <b>35</b>."},
+ {q:"A production function is Q = K^0.5 * L^0.5. If both K and L are doubled, output doubles. What type of returns to scale does this represent?", a:["constant returns to scale", "constant returns", "constant", "CRS", "постоянная отдача от масштаба", "постоянная"],
+  e:"Q(2K, 2L) = (2K)^0,5 · (2L)^0,5 = 2 · K^0,5 · L^0,5 — выпуск растёт ровно вдвое: <b>constant returns to scale</b> (CRS). Быстрая проверка: 0,5 + 0,5 = 1."}]}]},
+
+/* ---------------------------------------------------------------- 8 */
+{id:"mi-cost", unit:"3", kind:"Costs", title:"Издержки и прибыль", ru:"Явные и неявные издержки, экономическая прибыль, средние и предельные издержки",
+theory:`
+${LEAD("Экономист считает <b>все</b> издержки, включая упущенные возможности. Поэтому экономическая прибыль меньше бухгалтерской.")}
+${SEC("Виды издержек")}
+${PAIRS(["Термин", "Что это", "Пример"], [["<b>Explicit cost</b>", "прямые денежные платежи", "зарплата, аренда, сырьё"], ["<b>Implicit cost</b>", "альтернативная стоимость своих ресурсов без платежа", "своё время, своё помещение"], ["<b>Depreciation</b>", "распределение стоимости актива по периодам", "станок за 1 млн на 10 лет"]])}
+${SEC("Прибыль")}
+${MERGE([{f:["~TR", "−", "~explicit"], r:"~бухгалтерская прибыль"}, {f:["~TR", "−", "~explicit", "−", "~implicit"], r:"~экономическая прибыль", hl:true}])}
+${SEC("Функции издержек")}
+${PAIRS(["Формула", "Смысл"], [["TC = FC + VC", "постоянные не зависят от Q"], ["AC = TC / Q", "издержки на единицу"], ["MC = dTC / dQ", "издержки ещё одной единицы"]])}
+${ASIDE("MC < AC → AC падает; MC > AC → AC растёт. Поэтому MC пересекает AC в его минимуме. Как средняя оценка: если новая оценка ниже средней, средняя падает.", "info")}`,
+ex:[
+{t:"match", h:"Виды издержек — сопоставь", w:["Явные — платёж; неявные — упущенная выгода от своих ресурсов; амортизация — распределение стоимости актива во времени.", ""],
+ tt:["<b>Depreciation</b> — стоимость станка «размазывается» по годам службы. <b>Implicit cost</b> — например, зарплата, которую владелец мог бы получать в найме, или аренда своего помещения: денег не платят, но выгоду теряют. <b>Explicit cost</b> — реальные платежи (зарплата, аренда). <b>Opportunity cost</b> — ценность лучшей отвергнутой альтернативы.", ""],
+ pairs:[["Depreciation", "Allocation of a capital asset's cost over accounting periods"], ["Implicit cost", "Opportunity cost of owner-supplied resources without a direct payment"], ["Explicit cost", "Direct monetary payment recorded by the firm"], ["Opportunity cost", "Value of the best alternative forgone"]]},
+{t:"fill", h:"Прибыль и издержки на числах", w:["Экономическая прибыль = TR − явные − неявные. AC = TC/Q, MC = dTC/dQ.", ""], items:[
+ {q:"A business has total revenue of 200000, explicit costs of 120000, and implicit opportunity costs of 50000. Calculate economic profit.", a:["30000"],
+  e:"Экономическая прибыль = 200 000 − 120 000 − 50 000 = <b>30 000</b>. Бухгалтерская была бы 80 000 — она не учитывает неявные издержки."},
+ {q:"For TC(Q) = 500 + 20Q + Q^2, calculate average cost at Q = 10.", a:["80"],
+  e:"TC(10) = 500 + 200 + 100 = 800. AC = 800 / 10 = <b>80</b>. Или по частям: AC = 500/Q + 20 + Q = 50 + 20 + 10."},
+ {q:"A firm's total cost is TC(Q) = 500 + 20Q + Q^2. Calculate marginal cost at Q = 10.", a:["40"],
+  e:"MC = dTC/dQ = 20 + 2Q. При Q = 10: 20 + 20 = <b>40</b>. Постоянные 500 в MC не входят — они не зависят от выпуска."}]},
+{t:"mc", h:"MC и AC", w:["Если предельная единица дешевле средней, средняя падает.", ""], items:[
+ {q:"If marginal cost is below average cost, then an increase in output will, at the margin:", o:["Lower average cost", "Raise average cost", "Leave average cost unchanged", "Make fixed cost rise"], a:0,
+  e:"Как со средней оценкой: если новая оценка ниже средней, средняя падает. Здесь MC = 40 < AC = 80 (из прошлого задания) — следующая единица снижает средние издержки. Постоянные издержки от выпуска не зависят."}]}]},
+
+/* ---------------------------------------------------------------- 9 */
+{id:"mi-comp", unit:"4", kind:"Perfect competition", title:"Совершенная конкуренция", ru:"P = MC, прибыль и убытки, точка закрытия, долгосрочное равновесие, рыночное предложение",
+theory:`
+${LEAD("Конкурентная фирма не влияет на цену (price taker): P = MR. Она выбирает только количество — там, где <b>P = MC</b>.")}
+${SEC("Сколько производить")}
+${MERGE([{f:["~P", "=", "~MC"], r:"~оптимальный выпуск q*", hl:true, ex:"на возрастающем участке MC"}])}
+${SEC("Что с прибылью при q*")}
+${PAIRS(["Цена", "Результат", "Что делать"], [["P > AC", "экономическая прибыль", "производить"], ["P = AC", "нулевая экономическая прибыль", "производить (это нормально)"], ["AVC < P < AC", "убыток, но меньше FC", "производить в краткосрочном периоде"], ["P < min AVC", "не покрывает даже переменные", "<b>закрыться</b> (q = 0), убыток = FC"]])}
+${SEC("Долгий период")}
+${KCAP("Прибыль → входят новые фирмы → предложение растёт → цена падает. Убытки → фирмы уходят. Итог: P = min AC, экономическая прибыль = 0.")}
+${SEC("Рыночное предложение")}
+${ASIDE("Рыночное предложение — сумма предложений всех фирм: если 100 одинаковых фирм и каждая предлагает q = P − 5, то Qs = 100(P − 5).")}`,
+ex:[
+{t:"match", h:"Цена и состояние фирмы — сопоставь", w:["Сравни цену с AC (прибыль или убыток) и с min AVC (работать или закрыться).", ""],
+ tt:["<b>P > AC</b> — каждая единица приносит больше, чем стоит: прибыль. <b>P = AC</b> — нулевая экономическая прибыль (все альтернативные издержки покрыты). <b>AVC < P < AC</b> — убыток, но выручка покрывает переменные издержки и часть постоянных, поэтому работать выгоднее, чем закрыться. <b>P < min AVC</b> — даже переменные не покрыты: лучше закрыться, потеряв только FC.", ""],
+ pairs:[["P > AC", "Positive economic profit"], ["P < min AVC", "Shut down in the short run"], ["AVC < P < AC", "Economic loss but continue producing"], ["P = AC", "Zero economic profit"]]},
+{t:"mc", h:"Правило выбора выпуска", w:["Для конкурентной фирмы MR = P, поэтому MR = MC превращается в P = MC.", ""], items:[
+ {q:"For a perfectly competitive firm that is operating, which condition identifies its profit-maximizing output?", o:["P = MC on the rising portion of MC", "P = AC", "P = AVC", "MR = 0"], a:0,
+  e:"Пока P > MC, каждая следующая единица добавляет прибыль; когда P < MC — отнимает. Значит, оптимум там, где P = MC. Берём возрастающий участок MC: на падающем пересечение — минимум прибыли, а не максимум."}]},
+{t:"fill", h:"Фирма на числах", w:["Выпуск: P = MC. Если P < min AVC — выпуск 0.", ""], items:[
+ {q:"A competitive firm's market price is 8 while its minimum average variable cost is 10. What output should it choose in the short run?", a:["0"],
+  e:"P = 8 < min AVC = 10: на каждой единице фирма теряет даже на переменных издержках. Лучше закрыться — выпуск <b>0</b>, убыток ограничится постоянными издержками."},
+ {q:"A competitive firm has TC(q) = 100 + 10q + q^2 and faces market price P = 30. Calculate the profit-maximizing positive output q.", a:["10"],
+  e:"MC = dTC/dq = 10 + 2q. P = MC: 30 = 10 + 2q → <b>q = 10</b>. Проверка: AC(10) = 100/10 + 10 + 10 = 30 = P — фирма в точке нулевой экономической прибыли (минимум AC)."}]},
+{t:"tf", h:"Долгосрочное равновесие", w:["Свободный вход и выход сводят экономическую прибыль к нулю.", ""], items:[
+ {q:"With free entry and exit and the standard identical-firm competitive assumptions, long-run equilibrium tends toward zero economic profit.", a:true,
+  e:"Положительная прибыль привлекает новые фирмы → предложение растёт → цена падает до минимума AC. При убытках фирмы уходят и цена растёт. В итоге P = min AC и экономическая прибыль = 0 (бухгалтерская может быть положительной)."}]},
+{t:"fill", h:"Рыночное равновесие из предложения фирм", w:["Сначала сложи предложение всех фирм, потом приравнивай к спросу.", ""], items:[
+ {q:"There are 100 identical competitive firms. Each supplies q = P - 5 for P >= 5. Market demand is Qd = 2000 - 100P. Calculate the market equilibrium price.", a:["12.5"],
+  e:"Ловушка — забыть, что фирм 100. Рыночное предложение: Qs = 100 · (P − 5) = 100P − 500. Равновесие: 100P − 500 = 2000 − 100P → 200P = 2500 → <b>P = 12,5</b>. Количество: Q = 2000 − 1250 = 750 (по 7,5 у каждой фирмы)."}]}]},
+
+/* ---------------------------------------------------------------- 10 */
+{id:"mi-monop", unit:"4", kind:"Monopoly", title:"Монополия и рыночные структуры", ru:"Типы рынков, MR = MC, предельная выручка, цена выше MC, прибыль и убыток на графике",
+theory:`
+${LEAD("Любая фирма максимизирует прибыль при <b>MR = MC</b>. У монополиста MR ниже цены, поэтому его цена выше MC.")}
+${SEC("Рыночные структуры")}
+${PAIRS(["Структура", "Фирм", "Товар", "Вход"], [["Perfect competition", "очень много", "одинаковый", "свободный"], ["Monopolistic competition", "много", "дифференцированный", "относительно свободный"], ["Oligopoly", "несколько крупных", "любой", "барьеры; фирмы следят друг за другом"], ["Monopoly", "один", "без близких заменителей", "сильные барьеры (патент, лицензия)"]])}
+${SEC("Монополист шаг за шагом")}
+${PAIRS(["Шаг", "Как"], [["1. MR", "для прямой P = a − bQ: MR = a − 2bQ (вдвое круче спроса)"], ["2. Количество", "MR = MC → Q<sub>m</sub>"], ["3. Цена", "подставь Q<sub>m</sub> в спрос: P<sub>m</sub>"], ["4. Прибыль", "(P<sub>m</sub> − AC) · Q<sub>m</sub>; если AC > P — убыток"]])}
+${ASIDE("Чтобы продать ещё единицу, монополист снижает цену на <b>все</b> единицы, поэтому MR < P. В оптимуме MR = MC, значит P > MC — и возникают чистые потери.")}`,
+ex:[
+{t:"match", h:"Рыночные структуры — сопоставь", w:["Различаются числом фирм, однородностью товара и барьерами входа.", ""],
+ tt:["<b>Monopolistic competition</b> — много фирм, товары немного разные (кафе, парикмахерские), войти легко. <b>Monopoly</b> — один продавец и сильные барьеры. <b>Patent</b> — законный барьер, который на время защищает изобретателя от конкурентов. <b>Oligopoly</b> — несколько крупных фирм, каждая учитывает реакцию остальных (операторы связи, авиакомпании).", ""],
+ pairs:[["Monopolistic competition", "Many firms selling differentiated products with relatively free entry"], ["Monopoly", "One dominant seller in the relevant market with strong barriers to entry"], ["Patent", "A legal barrier that can temporarily limit entry"], ["Oligopoly", "A few large firms with strategic interdependence"]]},
+{t:"mc", h:"Правило MR = MC", w:["MR = MC — общее правило для любой фирмы; у монополиста MR < P, поэтому P > MC.", ""], items:[
+ {q:"According to standard microeconomic theory, how does a profit-maximizing firm (ANY type of market competition) determine its optimal quantity of output?", o:["It produces the quantity at which MR=MC.", "It produces where price equals average cost.", "It produces where total revenue is highest.", "It produces where average cost is lowest."], a:0,
+  e:"Пока MR > MC, следующая единица добавляет к прибыли; когда MR < MC — уменьшает. Максимум прибыли — при MR = MC. Это верно для любой структуры рынка; у конкурентной фирмы просто MR = P."},
+ {q:"At an interior profit-maximizing output for a single-price monopolist with downward-sloping demand, why is price typically above marginal cost?", o:["Because the monopolist sets MR = MC and MR is below price", "Because MR = P for a monopolist", "Because fixed cost is always positive", "Because average cost must equal price"], a:0,
+  e:"Спрос убывает, и чтобы продать ещё единицу, приходится снижать цену на все — поэтому MR < P. Монополист выбирает MR = MC, а цену берёт со спроса, она выше MR, значит и выше MC. MR = P бывает только у конкурентной фирмы."}]},
+{t:"fill", h:"Монополист на числах", w:["Для P = a − bQ: MR = a − 2bQ. Оптимум: MR = MC.", ""], items:[
+ {q:"A monopolist faces inverse demand P = 120 - 0.5Q. Calculate marginal revenue MR at Q = 40.", a:["80"],
+  e:"TR = P·Q = 120Q − 0,5Q². MR = dTR/dQ = 120 − Q. При Q = 40: <b>80</b>. (Цена при этом 120 − 20 = 100 — выше MR.)"},
+ {q:"A monopolist faces inverse demand P = 100 - Q and total cost TC = 100 + 20Q. Calculate the profit-maximizing quantity.", a:["40"],
+  e:"MR = 100 − 2Q, MC = dTC/dQ = 20. 100 − 2Q = 20 → <b>Q = 40</b>. Цена: P = 100 − 40 = 60, прибыль: 60 · 40 − (100 + 800) = 1500."}]},
+{t:"fill", h:"Прибыль или убыток на графике", fig:"A", w:["Площадь прямоугольника между ценой и AC при Q<sub>m</sub>: если AC выше цены — убыток, ниже — прибыль.", ""], items:[
+ {q:"What is depicted by the red area?", a:["loss", "economic loss", "losses", "a loss", "negative economic profit", "убыток", "экономический убыток"],
+  e:"Монополист выпускает Q<sub>m</sub> (там, где MR = MC) и продаёт по цене P<sub>m</sub> со спроса. Но AC при Q<sub>m</sub> выше цены, поэтому на каждой единице он теряет AC − P<sub>m</sub>. Красный прямоугольник (AC − P<sub>m</sub>) · Q<sub>m</sub> — это <b>economic loss</b>."}]},
+{t:"match", h:"Площади на графике монополии — сопоставь номер и смысл", fig:"C", w:["Прямоугольник шириной Q<sub>E</sub>: высота до N — AVC, от N до M — AFC (= ATC − AVC), от M до P<sub>E</sub> — прибыль на единицу.", ""],
+ tt:["Вся площадь O–P<sub>E</sub> × Q<sub>E</sub> — выручка TR. <b>3</b> = AVC · Q = общие переменные издержки (TVC). <b>2</b> = (ATC − AVC) · Q = AFC · Q = общие постоянные издержки (TFC). <b>1</b> = (P − ATC) · Q = экономическая прибыль. TR = TVC + TFC + прибыль.", ""],
+ pairs:[["1", "economic profit"], ["2", "total fixed costs"], ["3", "total variable costs"]]}]}
+];
+
 (function(){
 "use strict";
 const $ = (s,r=document)=>r.querySelector(s), $$ = (s,r=document)=>[...r.querySelectorAll(s)];
@@ -19209,6 +19529,7 @@ Object.assign(I18N.en, {
 });
 
 let LANG = ls.get("edito-lang") === "en" ? "en" : "ru";
+let MICRO = false;   /* открыт раздел «Микроэкономика» (#micro, #mi-…) */
 let COURSE = ["es","zh"].includes(ls.get("edito-course")) ? ls.get("edito-course") : "fr";
 const COURSES = {fr:{code:"FR", name:"Français", book:"Édito A1"}, es:{code:"ES", name:"Español", book:"Aula 1"}, zh:{code:"ZH", name:"中文", book:"HSK 2"}};
 const ZH_CACHE = {};
@@ -19220,7 +19541,7 @@ const unitName = u => COURSE === "es" ? t("esUnits")[u] : COURSE === "zh" ? zhUn
 const zhUnitName = u => { const d = ZH_LS.find(x=>String(x.n) === String(u)); return d ? `<span lang="zh-CN">${d.zh}</span>` : ""; };
 const FR_IDS = new Set(TOPICS.map(x=>x.id));
 const ES_CACHE = {};
-const OKW = () => COURSE === "es" ? "¡Correcto!" : COURSE === "zh" ? "对了！" : "Juste !";
+const OKW = () => MICRO ? "Верно!" : COURSE === "es" ? "¡Correcto!" : COURSE === "zh" ? "对了！" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
 let TOP, BOOK, GRAM, REF, CAH, TUT, ORDER, byId, POOLX, CHEATX;
@@ -19535,6 +19856,7 @@ const cleanSay = s => s.replace(/‿/g," ").replace(/\[[^\]]*\]/g," ").replace(/
 /* повторное прослушивание того же текста (в течение 15 с) — медленнее */
 const SAY_LAST = {k:"", at:0, n:0};
 function speak(text, rate){
+  if (MICRO) return false;
   if (!synth) return false;
   const k = cleanSay(text).trim().toLowerCase(), now = Date.now();
   if (k && k === SAY_LAST.k && now - SAY_LAST.at < 15000) SAY_LAST.n++; else SAY_LAST.n = 0;
@@ -19818,6 +20140,7 @@ function zhPop(o){
   remote("en", "zh-CN", true);
 }
 function spCheck(fake){
+  if (MICRO) { spHide(); return; }
   const sel = fake || (window.getSelection ? window.getSelection() : null);
   if (!fake) SP.manual = 0;
   if (!sel || sel.isCollapsed || !sel.rangeCount) { spHide(); return; }
@@ -19981,6 +20304,7 @@ const strip = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/œ/g,"oe")
 function judge(input, answers){
   const n = norm(input); if (!n) return "empty";
   if (answers.some(a=>norm(a)===n)) return "ok";
+  if (MICRO && typeof microJudge === "function") { const m = microJudge(input, answers); if (m) return m; }
   if (answers.some(a=>strip(norm(a))===strip(n))) return "acc";
   return "bad";
 }
@@ -20000,13 +20324,13 @@ document.addEventListener("click", e=>{
   inp.dispatchEvent(new Event("input", {bubbles:true}));
 });
 const ACC_ES = ["á","é","í","ó","ú","ñ","ü","¿","¡"];
-const accBar = () => COURSE === "zh" ? "" : `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
+const accBar = () => COURSE === "zh" || MICRO ? "" : `<div class="accbar" data-label="${esc(t("insert"))}">${(COURSE === "es" ? ACC_ES : ACC).map(c=>`<button type="button" class="acc" data-c="${c}" aria-label="${esc(t("insertA", c))}">${c}</button>`).join("")}</div>`;
 const inputAttrs = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
 
 /* =========================================================
    exercise blocks (with saved answers)
    ========================================================= */
-function praise(r){ if (COURSE === "zh") return r>=1 ? "太好了！" : r>=.8 ? "很好！" : r>=.6 ? "不错！" : "再练练…"; if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
+function praise(r){ if (MICRO) return r>=1 ? "Отлично!" : r>=.8 ? "Хорошо!" : r>=.6 ? "Неплохо" : "Стоит повторить"; if (COURSE === "zh") return r>=1 ? "太好了！" : r>=.8 ? "很好！" : r>=.6 ? "不错！" : "再练练…"; if (COURSE === "es") return r>=1 ? "¡Perfecto!" : r>=.8 ? "¡Muy bien!" : r>=.6 ? "¡No está mal!" : "A repasar…"; return r>=1 ? "Parfait !" : r>=.8 ? "Très bien !" : r>=.6 ? "Pas mal !" : "À revoir…"; }
 /* заголовок блока: «Упр. 1 · Grammaire — выбери артикль» → заголовок «Упр. 1 · Grammaire» + подзаголовок «Выбери артикль» */
 function exHead(ex, i){
   const h = String(ex.h || ""), m = h.match(/^(.*?)\s+—\s+([\s\S]+)$/);
@@ -20243,8 +20567,10 @@ INIT.match = (api, ex) => {
       $$(`.opt[data-side="${side}"]`, api.body).forEach(x=>x.classList.remove("sel"));
       b.classList.add("sel");
       if (side === "L") selL = b; else selR = b;
-      if (side === "L" && synth) speak(b.textContent);
+      if (side === "L" && synth && !MICRO) speak(b.textContent);
       if (selL && selR) {
+        /* одинаковые ответы справа (например, «Supply shifts right» дважды) — засчитываем любой из них */
+        if (selL.dataset.k !== selR.dataset.k && String(ex.pairs[+selL.dataset.k][1]).trim() === String(ex.pairs[+selR.dataset.k][1]).trim()) { const twin = $(`.opt[data-side="R"][data-k="${selL.dataset.k}"]`, api.body); if (twin && !twin.disabled) { twin.dataset.k = selR.dataset.k; selR.dataset.k = selL.dataset.k; } }
         if (selL.dataset.k === selR.dataset.k) { lockPair(selL.dataset.k); matched++; done.push(+selL.dataset.k); api.ans(+selL.dataset.k, "ok"); }
         else { mistakes++; api.ans(null, "bad"); const r = selR; r.classList.add("is-bad","flash"); setTimeout(()=>r.classList.remove("is-bad","flash","sel"), 450); selL.classList.remove("sel"); }
         selL = null; selR = null;
@@ -20485,15 +20811,14 @@ document.addEventListener("keydown", e=>{
 const CFLAG = {fr:'<span class="cflag cf-fr" aria-hidden="true"><i></i><i></i><i></i></span>', es:'<span class="cflag cf-es" aria-hidden="true"><i></i><i></i><i></i></span>', zh:'<span class="cflag cf-zh" aria-hidden="true"><b>★</b></span>'};
 const VIEW_ZH = false;   /* китайский теперь настоящий курс (было: заглушка #zh) */
 /* микроэкономика (#micro): отдельный предмет в том же списке, пока заглушка; курс языка и прогресс не трогает */
-let MICRO = false;
 const MICRO_FLAG = `<span class="cflag cf-micro" aria-hidden="true">${f7("chart_bar_fill")}</span>`;
 const ddCur = () => COURSE;
 const cName = c => t("courseNames")[c];
 const cddVal = c => `<span class="cdd-v"><b>${cName(c)}</b><small>${COURSES[c].book}</small></span>`;
 function courseDDHTML(){
   return `<div class="cdd" id="cdd">
-    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${MICRO ? MICRO_FLAG + `<span class="cdd-v"><b>${t("microName")}</b><small>${t("microSmall")}</small></span>` : CFLAG[ddCur()] + cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
-    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur() && !MICRO?" on":""}" data-course="${c}" aria-selected="${c===ddCur() && !MICRO}">${cName(c)}</button>`).join("")}<div class="cdd-sep" role="separator"></div><button type="button" role="option" class="cdd-opt cdd-subj${MICRO ? " on" : ""}" data-subj="micro" aria-selected="${MICRO}">${t("microName")}<span class="cdd-soon">${t("microSmall")}</span></button></div>
+    <button type="button" class="cdd-btn" id="cddBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(t("courseLabel"))}">${MICRO ? MICRO_FLAG + `<span class="cdd-v"><b>${t("microName")}</b><small>Mid-Term · Weeks 1–8</small></span>` : CFLAG[ddCur()] + cddVal(ddCur())}${f7("chevron_down", "cdd-ch")}</button>
+    <div class="cdd-menu" role="listbox" aria-label="${esc(t("courseLabel"))}">${["fr","es","zh"].map(c=>`<button type="button" role="option" class="cdd-opt${c===ddCur() && !MICRO?" on":""}" data-course="${c}" aria-selected="${c===ddCur() && !MICRO}">${cName(c)}</button>`).join("")}<div class="cdd-sep" role="separator"></div><button type="button" role="option" class="cdd-opt cdd-subj${MICRO ? " on" : ""}" data-subj="micro" aria-selected="${MICRO}">${t("microName")}</button></div>
   </div>`;
 }
 function paintCourseDD(c){
@@ -20551,7 +20876,7 @@ function buildNav(){
     <button type="button" class="icon-btn" id="navHide" aria-label="${esc(t("hideNav"))}" title="${esc(t("hideNav"))}"><span class="ico-side">${ICO.side}</span><span class="ico-x">${f7("xmark")}</span></button>
   </div>
   ${MICRO ? "" : navSearchHTML()}
-  <div class="nav-scroll">${MICRO ? `<div class="nav-zh nav-micro"><span class="nav-zh-h">${f7("chart_bar_fill")}</span><b>${t("microName")}</b><p>${t("microNav")}</p></div>` : `
+  <div class="nav-scroll">${MICRO ? miNavHTML() : `
     <div class="nav-main">
       <a class="nl big" href="#home" data-id="home">${ICO.home}<span class="nl-t">${t("home")}</span></a>
       <a class="nl big" href="#test" data-id="test">${ICO.test}<span class="nl-t">${t("test")}</span></a>
@@ -21418,7 +21743,7 @@ Object.assign(I18N.en, {
   tCheckL:"Checking", tLenL:"Questions", modeNow:"Instantly", modeEnd:"At the end", tGo:"Start",
   lexicoSub:"Word — translation — example. Click a Spanish word to hear it."
 });
-function tfOpts(){ return COURSE === "es" ? t("tfEs") : COURSE === "zh" ? t("tfZh") : [t("vrai"), t("faux")]; }
+function tfOpts(){ return MICRO ? ["True — верно", "False — неверно"] : COURSE === "es" ? t("tfEs") : COURSE === "zh" ? t("tfZh") : [t("vrai"), t("faux")]; }
 function exLabel(ex){ return ex.t === "tf" && COURSE === "es" ? t("tfLbl") : t("label")[ex.t]; }
 
 /* правило для вопроса из банка пробной: берём «почему» первого похожего задания темы */
@@ -23775,6 +24100,83 @@ function hzKPaint(){
   $("#hzKNx").addEventListener("click", ()=>{ q.i++; hzKPaint(); });
 }
 
+/* =========================================================
+   МИКРОЭКОНОМИКА (#micro, #mi-<тема>): отдельный предмет, не курс языка.
+   Данные — src/micro-mid.js (MI_PARTS, MI_TOPICS), графики — src/micro-figs.js (MI_FIG).
+   Задания рисуются обычными блоками (makeBlock + INIT), ответы и прогресс — по id темы (mi-…).
+   Модуль встраивается внутрь движка (как quizlet.js).
+   ========================================================= */
+/* «почему так»: правило задания (w) и разбор сопоставлений (tt) */
+MI_TOPICS.forEach(tp=>{
+  WHY[tp.id] = tp.ex.map(e=>e.w || ["", ""]);
+  WHYT[tp.id] = tp.ex.map(e=>e.tt ? [e.tt[0], e.tt[1] || e.tt[0]] : null);
+  tp.ex.forEach(e=>{ if (e.w && !e.w[1]) e.w[1] = e.w[0]; });
+});
+const MI_BY = Object.fromEntries(MI_TOPICS.map(x=>[x.id, x]));
+const miN = tp => MI_TOPICS.indexOf(tp) + 1;
+
+/* проверка ответов: числа с допуском (1.22 = 1,2222 = 11/9), список номеров в любом порядке и с пробелами */
+function miNum(s){
+  s = String(s).trim().replace(/[\s  ]/g, "").replace(/[−–]/g, "-");
+  let m = s.match(/^(-?\d+)\/(\d+)$/); if (m) return +m[1] / +m[2];
+  if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) s = s.replace(/,/g, "");
+  else s = s.replace(",", ".");
+  return /^-?(\d+\.?\d*|\.\d+)$/.test(s) ? parseFloat(s) : NaN;
+}
+function microJudge(input, answers){
+  const x = miNum(input);
+  if (!isNaN(x)) for (const a of answers) { const v = miNum(a); if (!isNaN(v) && Math.abs(x - v) <= Math.max(0.006, Math.abs(v) * 0.0005)) return "ok"; }
+  const lst = s => String(s).split(/[^\d]+/).filter(Boolean).map(Number).sort((a, b)=>a - b).join(",");
+  for (const a of answers) if (/^\d+(\s*,\s*\d+)+$/.test(a) && /\d/.test(input) && lst(input) === lst(a)) return "ok";
+  return null;
+}
+
+/* сайдбар раздела */
+function miNavHTML(){
+  return `<div class="nav-main"><a class="nl big" href="#micro" data-id="micro">${ICO.home}<span class="nl-t">${LANG === "en" ? "Overview" : "Обзор"}</span></a></div>
+  ${MI_PARTS.map(p=>`<div class="nav-sec">${p.n} · ${LANG === "en" ? p.en : p.t}</div>${MI_TOPICS.filter(x=>x.unit === p.n).map(tp=>{ const pc = topicPct(tp); return `<a class="nl mi-nl${pc.done === pc.n && pc.n ? " done" : ""}" href="#${tp.id}" data-id="${tp.id}"><span class="ng-n" data-hue="${tp.unit}">${miN(tp)}</span><span class="nl-t">${tp.title}</span></a>`; }).join("")}`).join("")}`;
+}
+
+function renderMicro(h){
+  if (MI_BY[h]) return miTopic(MI_BY[h]);
+  const all = MI_TOPICS.reduce((s, x)=>s + x.ex.reduce((k, e)=>k + (e.items ? e.items.length : 1), 0), 0);
+  const done = MI_TOPICS.reduce((s, x)=>s + topicPct(x).done, 0), nEx = MI_TOPICS.reduce((s, x)=>s + x.ex.length, 0);
+  const cont = done ? MI_TOPICS.find(x=>{ const p = topicPct(x); return p.done < p.n; }) : null;
+  const cta = cont ? `<a class="btn sec" href="#${cont.id}"><span class="btn-l">${t("homeCont")}: ${cont.title}</span>${ARR}</a>` : `<a class="btn sec" href="#${MI_TOPICS[0].id}">${t("homeStart")}${ARR}</a>`;
+  main.innerHTML = `<div class="col">
+  <header class="ph">
+    <h1>Microeconomics <em>Mid-Term</em></h1>
+    <p class="ph-sub">Тест за недели 1–8: ${all} ${plural(all, ["вопрос", "вопроса", "вопросов"])}, разложенных по ${MI_TOPICS.length} темам в ${MI_PARTS.length} частях. В каждой теме — короткий конспект и задания; после ответа нажми «?», чтобы увидеть объяснение.</p>
+    <div class="stats"><span><b>${done}</b>${t("solved").replace("{n}", nEx)}</span></div>
+  </header>
+  <div class="ph-bar"><div class="ph-act">${cta}</div></div>
+  ${MI_PARTS.map(p=>`<section class="hu"><h3 class="unit-h"><span class="ng-n u-pill" data-hue="${p.n}">${LANG === "en" ? "Part" : "Часть"} ${p.n}</span><small>${LANG === "en" ? p.en : p.t}</small></h3><div class="cards">${MI_TOPICS.filter(x=>x.unit === p.n).map(card).join("")}</div></section>`).join("")}
+  </div>`;
+}
+
+function miTopic(tp){
+  const i = MI_TOPICS.indexOf(tp), prev = MI_TOPICS[i - 1], next = MI_TOPICS[i + 1], part = MI_PARTS.find(p=>p.n === tp.unit);
+  main.innerHTML = `<div class="col"><article>
+  <header class="t-head seyes">
+    <p class="eyebrow">Microeconomics · ${LANG === "en" ? "Part" : "Часть"} ${tp.unit} · ${tp.kind}</p>
+    <h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
+    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button></div>
+  </header>
+  <section class="theory mi-theory">${tp.theory}</section>
+  <section class="practice" id="practice"><h2>${LANG === "en" ? "Test questions" : "Вопросы теста"}</h2><p>${LANG === "en" ? "Answer, then tap «?» next to a question to see why." : "Ответь, потом нажми «?» у вопроса — там объяснение."}</p><div class="exs"></div></section>
+  <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${ARL}${t("back")}</small>${prev.title}</a>` : `<a href="#micro"><small>${ARL}${t("back")}</small>${LANG === "en" ? "Overview" : "Обзор"}</a>`}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}${ARR}</small>${next.title}</a>` : `<a class="next" href="#micro"><small>${t("next")}${ARR}</small>${LANG === "en" ? "Overview" : "Обзор"}</a>`}</nav>
+  </article></div>`;
+  const exs = $(".exs", main);
+  tp.ex.forEach((ex, k)=>{
+    const api = makeBlock(tp, ex, k); exs.appendChild(api.el);
+    if (ex.fig && MI_FIG[ex.fig]) api.body.insertAdjacentHTML("beforebegin", `<div class="mi-figw">${MI_FIG[ex.fig]}</div>`);
+    try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; }
+  });
+  $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
+}
+/* прогресс в сайдбаре обновляется после ответа */
+document.addEventListener("click", e=>{ if (!MICRO || !e.target.closest || !e.target.closest(".exb")) return; setTimeout(()=>{ MI_TOPICS.forEach(tp=>{ const a = $(`.mi-nl[data-id="${tp.id}"]`); if (a) { const p = topicPct(tp); a.classList.toggle("done", p.done === p.n && p.n > 0); } }); }, 50); });
+
 
 
 /* =========================================================
@@ -23788,16 +24190,9 @@ function renderZh(){
   </div></div>`;
   $$("[data-zhback]", main).forEach(a=>a.addEventListener("click", e=>{ const c = a.dataset.zhback; if (c !== COURSE) { e.preventDefault(); setCourse(c, true); location.hash = "home"; } }));
 }
-function renderMicro(){
-  main.innerHTML = `<div class="col"><div class="zh-soon micro-soon seyes">
-    <div class="zh-big micro-big" aria-hidden="true">${f7("chart_bar_fill")}</div>
-    <p class="eyebrow">${t("microEyebrow")}</p><h1>${t("microH")}</h1><p class="t-ru">${t("microP")}</p>
-    <div class="btns"><a class="btn pri" href="#home">${t("microBack")}</a></div>
-  </div></div>`;
-}
 function markActive(){
   const h = decodeURIComponent((location.hash||"").slice(1));
-  const id = /^quizlet\//.test(h) ? "quizlet" : /^hanzi(\/|$)/.test(h) ? "hanzi" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
+  const id = /^mi-/.test(h) || h === "micro" ? h : /^quizlet\//.test(h) ? "quizlet" : /^hanzi(\/|$)/.test(h) ? "hanzi" : byId[h] || ["test","shpargalka","quizlet","account","lexico","bank"].includes(h) ? h : "home";
   $$(".nav a.nl, .nav a.mew").forEach(a=>a.classList.toggle("on", a.dataset.id === id));
   const cur = $(`#navGroups a.nl[data-id="${id}"]`); if (cur) { const g = cur.closest(".ng"); if (g && !g.classList.contains("open")) navOpenGroup(g, true, false); }
 }
@@ -23806,9 +24201,9 @@ function route(keepScroll){
   const h = decodeURIComponent((location.hash||"").slice(1));
   const inQz = /^quizlet(\/|$)/.test(h), fromQz = /^quizlet(\/|$)/.test(ROUTE_PREV); ROUTE_PREV = h;
   /* микроэкономика — свой сайдбар и страница-заглушка */
-  const mic = h === "micro";
+  const mic = h === "micro" || /^mi-/.test(h);
   if (mic !== MICRO) { MICRO = mic; const keepNav = nav.classList.contains("open"); buildNav(); if (keepNav && !mic) nav.classList.add("open"); }
-  if (mic) { if (synth) try { synth.cancel(); } catch(e) {} closeDeck(true); renderMicro(); markActive(); closeNav(); window.scrollTo(0, 0); main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); return; }
+  if (mic) { if (synth) try { synth.cancel(); } catch(e) {} closeDeck(true); renderMicro(h); markActive(); closeNav(); window.scrollTo(0, 0); main.classList.remove("enter"); void main.offsetWidth; main.classList.add("enter"); return; }
   /* вкладки Quizlet переключаются на месте, без перерисовки страницы */
   if (inQz && fromQz && COURSE === "fr" && !VIEW_ZH && qzSoft(h.slice(8))) { markActive(); return; }
   if (synth) try { synth.cancel(); } catch(e) {}
