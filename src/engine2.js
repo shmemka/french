@@ -34,7 +34,7 @@ const KIND_ICO = {
 };
 function kindIco(tp){
   const k = String(tp.kind || "").toLowerCase();
-  const id = /^(communication|общение|communic)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
+  const id = /^(communication|общение|communic|диалог|dialogue)/.test(k) ? "chat" : /^(grammaire|грамматика|grammar)/.test(k) ? "doc" : /^(vocabulaire|лексика|vocab)/.test(k) ? "vocab"
     : /phon|произн|pronun/.test(k) ? "sound" : /спряж|conjug/.test(k) ? "conj" : /нуля|scratch/.test(k) ? "spark" : /полезно|good to know/.test(k) ? "bulb"
     : /delf|^test/.test(k) ? "medal" : /compréhension|чтение|reading/.test(k) ? "read" : tp.sec === "cahier" || tp.sec === "tutor" ? "pencil" : "doc";
   return KIND_ICO[id];
@@ -49,7 +49,7 @@ const I18N = {
 ru:{
   units:{"0":"Bienvenue ! (база)","1":"Je suis…","2":"Près de moi","3":"Qu’est-ce qu’on mange ?"},
   topics:"Темы", home:"Главная", test:"Самопроверка", quizlet:"Quizlet", cheat:"Памятка", account:"Личный кабинет",
-  fromBook:"Из учебника", ref:"Для справки", hideNav:"Скрыть меню", showNav:"Меню", lang:"Язык",
+  fromBook:"Из учебника", ref:"Для справки", misc:"Разное", miscSub:"Диалоги и тексты: нажми на реплику — она прозвучит.", hideNav:"Скрыть меню", showNav:"Меню", lang:"Язык",
   you:"Ты", guest:"Гость",
   cloud:{local:"Сохраняется только в этом браузере", loading:"Подключаюсь к облаку…", saved:"Сохранено в облаке", saving:"Сохраняю…", error:"Облако недоступно — сохраняю локально", readonly:"Облако только для чтения — сохраняю локально", signedout:"Без входа — только в этом браузере"},
   tipCloudS:"Ответы и прогресс сохраняются в облаке под твоим аккаунтом и видны с любого устройства, где ты вошёл на сайт.", tipSignIn:"Сейчас прогресс хранится только в этом браузере. Войди в личном кабинете, чтобы он сохранялся в облаке.",
@@ -124,7 +124,7 @@ ru:{
 en:{
   units:{"0":"Bienvenue ! (basics)","1":"Je suis…","2":"Près de moi","3":"Qu’est-ce qu’on mange ?"},
   topics:"Topics", home:"Home", test:"Self-check", quizlet:"Quizlet", cheat:"Quick reference", account:"My account",
-  fromBook:"From the textbook", ref:"Reference", hideNav:"Hide menu", showNav:"Menu", lang:"Language",
+  fromBook:"From the textbook", ref:"Reference", misc:"Miscellaneous", miscSub:"Dialogues and texts: tap a line to hear it.", hideNav:"Hide menu", showNav:"Menu", lang:"Language",
   you:"You", guest:"Guest",
   cloud:{local:"Saved in this browser only", loading:"Connecting to the cloud…", saved:"Saved to the cloud", saving:"Saving…", error:"Cloud unavailable — saving locally", readonly:"Cloud is read-only — saving locally", signedout:"Not signed in — this browser only"},
   tipCloudS:"Your answers and progress are saved in the cloud under your account and available on any device where you’re signed in.", tipSignIn:"Right now your progress is stored in this browser only. Sign in on the account page to save it to the cloud.",
@@ -255,7 +255,7 @@ const ES_CACHE = {};
 const OKW = () => MICRO ? "Верно!" : COURSE === "es" ? "¡Correcto!" : COURSE === "zh" ? "对了！" : "Juste !";
 const t = (k, ...a) => { const v = (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.ru[k]); return typeof v === "function" ? v(...a) : v; };
 
-let TOP, BOOK, GRAM, REF, CAH, TUT, ORDER, byId, POOLX, CHEATX;
+let TOP, BOOK, GRAM, REF, MISC, CAH, TUT, ORDER, byId, POOLX, CHEATX;
 function setData(){
   if (COURSE === "es") {
     const esPool = L => ES_POOL_BUILD(L).concat(ES_POOL_EXTRA(L), ES_POOL_U4(L));
@@ -269,7 +269,7 @@ function setData(){
     if (!c.cheat) c.cheat = ZH_CHEAT_BUILD(LANG);
     TOP = c.top; POOLX = c.pool; CHEATX = c.cheat;
   } else { TOP = LANG === "en" ? TOPICS_EN : TOPICS; POOLX = LANG === "en" ? POOL_EN : POOL; CHEATX = LANG === "en" ? CHEAT_EN : CHEAT; }
-  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); CAH = TOP.filter(x=>x.sec==="cahier"); TUT = TOP.filter(x=>x.sec==="tutor"); ORDER = [...BOOK, ...GRAM, ...REF];
+  BOOK = TOP.filter(x=>x.sec==="book"); GRAM = TOP.filter(x=>x.sec==="gram"); REF = TOP.filter(x=>x.sec==="ref"); MISC = TOP.filter(x=>x.sec==="misc"); CAH = TOP.filter(x=>x.sec==="cahier"); TUT = TOP.filter(x=>x.sec==="tutor"); ORDER = [...BOOK, ...GRAM, ...REF, ...MISC];
   byId = Object.fromEntries(TOP.map(x=>[x.id,x]));
   document.documentElement.lang = LANG;
   document.title = LANG === "en" ? "Learn languages step by step" : "Учим языки шаг за шагом";
@@ -1455,7 +1455,8 @@ function navTopics(units, unitW, uname){
   let h = units.map(u=>{ const g = list.filter(x=>x.unit===u); return g.length ? navGroup("u" + u, `${unitBadge(u, u)}<span class="ng-t"><b>${unitW} ${u}</b><i>${uname(u)}</i></span>`, g.map(navLink).join(""), {open: u === first}) : ""; }).join("");
   if (!cah) h += `<div class="nav-sec">${t("navMore")}</div>`
     + (GRAM.length ? navGroup("gram", `<span class="ng-n ng-i" data-hue="g">${ICO.gram}</span><span class="ng-t"><b>${t("gram")}</b></span>`, GRAM.map(navLink).join("")) : "")
-    + navGroup("ref", `<span class="ng-n ng-i" data-hue="r">${ICO.ref}</span><span class="ng-t"><b>${t("ref")}</b></span>`, REF.map(navLink).join(""));
+    + navGroup("ref", `<span class="ng-n ng-i" data-hue="r">${ICO.ref}</span><span class="ng-t"><b>${t("ref")}</b></span>`, REF.map(navLink).join(""))
+    + (MISC.length ? navGroup("misc", `<span class="ng-n ng-i" data-hue="r">${f7("chat_bubble_2", "ico")}</span><span class="ng-t"><b>${t("misc")}</b></span>`, MISC.map(navLink).join("")) : "");
   return h;
 }
 function navOpenGroup(el, open, save){
@@ -1479,7 +1480,7 @@ function navSearchRun(q){
   const f = fold(q).trim();
   if (!f) { box.hidden = true; groups.hidden = false; box.innerHTML = ""; return; }
   const pages = [["test", t("test")], ["bank", t("bank")], COURSE === "es" ? ["lexico", t("lexico")] : COURSE === "zh" ? ["hanzi", t("hanzi")] : ["quizlet", t("quizlet")], ["shpargalka", t("cheat")]];
-  const tps = [...BOOK, ...CAH, ...TUT, ...GRAM, ...REF];
+  const tps = [...BOOK, ...CAH, ...TUT, ...GRAM, ...REF, ...MISC];
   const hit = s => fold(s).includes(f);
   /* число → темы с этой страницей учебника / тетради */
   if (/^\d{1,3}$/.test(f)) {
@@ -1741,7 +1742,7 @@ window.matchMedia("(max-width:979px)").addEventListener("change", ()=>closeNav()
    views
    ========================================================= */
 function totals(){ let ex = 0, done = 0, full = 0, sum = 0; TOP.forEach(tp=>{ const p = topicPct(tp); ex += p.n; done += p.done; sum += p.pct*p.n; if (p.pct >= .995) full++; }); return {ex, done, full, avg: ex ? sum/ex : 0}; }
-function card(tp){ const p = topicPct(tp), pc = Math.round(p.pct*100); return `<a class="tc${pc >= 100 ? " done" : ""}" href="#${tp.id}" data-hue="${HUE_OF(tp)}"><span class="tc-glow" aria-hidden="true"></span><span class="tc-top"><span class="tc-ic">${kindIco(tp)}</span><span class="tc-go">${pc >= 100 ? ICO.check : ""}${t("tcOpen")}</span></span><h3>${tp.title}</h3><p>${tp.ru}</p><span class="tc-f"><span class="bar"><i style="width:${pc}%"></i></span><span class="tc-m"><span class="k">${tp.kind}</span><span class="pc">${p.done}/${p.n}</span></span></span></a>`; }
+function card(tp){ const p = topicPct(tp), pc = Math.round(p.pct*100); return `<a class="tc${pc >= 100 ? " done" : ""}" href="#${tp.id}" data-hue="${HUE_OF(tp)}"><span class="tc-glow" aria-hidden="true"></span><span class="tc-top"><span class="tc-ic">${kindIco(tp)}</span><span class="tc-go">${pc >= 100 ? ICO.check : ""}${t("tcOpen")}</span></span><h3>${tp.title}</h3><p>${tp.ru}</p><span class="tc-f">${p.n ? `<span class="bar"><i style="width:${pc}%"></i></span>` : ""}<span class="tc-m"><span class="k">${tp.kind}</span>${p.n ? `<span class="pc">${p.done}/${p.n}</span>` : ""}</span></span></a>`; }
 function testsOf(){ return S.tests.filter(x=>(x.c||"fr") === COURSE); }
 const scoreTxt = h => (h.c === "es" || h.c === "zh") ? `${Math.round((h.got / (h.total||1)) * 100)}%` : `${String(h.n20).replace(".",",")}/20`;
 function saveNudge(){
@@ -1777,26 +1778,27 @@ function renderHome(){
   ${es && HOME_U === "ref" ? "" : `<div class="sec-h"><h2>${t("fromBook")}</h2></div>`}
   ${units.filter(showU).map(u=>`<section class="hu">${uHead(u)}<div class="cards">${BOOK.filter(x=>x.unit===u).map(card).join("")}</div></section>`).join("")}
   ${showU("ref") && !zh ? `${GRAM.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("gram")}</h2><p>${t("gramSub")}</p></div><div class="cards">${GRAM.map(card).join("")}</div></div>` : ""}
-  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>` : ""}`}
+  <div class="ref-band"><div class="sec-h"><h2>${t("ref")}</h2><p>${t("refSub")}</p></div><div class="cards">${REF.map(card).join("")}</div></div>
+  ${MISC.length ? `<div class="ref-band"><div class="sec-h"><h2>${t("misc")}</h2><p>${t("miscSub")}</p></div><div class="cards">${MISC.map(card).join("")}</div></div>` : ""}` : ""}`}
   </div>`;
   $$("[data-hu]", main).forEach(b=>b.addEventListener("click", ()=>{ HOME_U = b.dataset.hu; renderHome(); }));
 }
 function renderTopic(tp){
   const seq = seqOf(tp), idx = seq.indexOf(tp), prev = seq[idx-1], next = seq[idx+1], es = COURSE === "es";
-  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${unitWord()} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
+  const eb = tp.sec === "cahier" ? `Cahier · ${t("unitW")} ${tp.unit}` : tp.sec === "tutor" ? `Tutor · ${t("unitW")} ${tp.unit}` : tp.sec === "book" ? `${unitWord()} ${tp.unit} · ${tp.kind}` : tp.sec === "gram" ? `${t("gram")} · ${tp.kind}` : tp.sec === "misc" ? `${t("misc")} · ${tp.kind}` : `${t("refEyebrow")} · ${tp.kind}`;
   main.innerHTML = `<div class="col"><article>
   <header class="t-head seyes">
     <p class="eyebrow">${eb}${tp.page ? ` · <span>${tp.sec === "book" ? tp.page.replace(/^(Unidad|Unité)\s*\d+,\s*/, "") : tp.page}</span>` : ""}</p>
     ${deckToggleHTML()}<h1>${tp.title}</h1><p class="t-ru">${tp.ru}</p>
-    <div class="t-jump"><button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button>${COURSE === "zh" && typeof zpyBtn === "function" ? zpyBtn() : ""}</div>
+    <div class="t-jump">${tp.ex.length ? `<button type="button" class="btn sm sec" data-jump="practice">${t("toPractice", tp.ex.length)}${ARD}</button>` : ""}${COURSE === "zh" && typeof zpyBtn === "function" ? zpyBtn() : ""}</div>
   </header>
   <section class="theory">${tp.theory}</section>
-  <section class="practice" id="practice"><h2>${COURSE === "zh" ? "练习 · " + t("practiceZh") : es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
+  <section class="practice" id="practice"${tp.ex.length ? "" : " hidden"}><h2>${COURSE === "zh" ? "练习 · " + t("practiceZh") : es ? t("practiceHes") : t("practiceH")}</h2><p>${t("practiceSub")}</p><div class="exs"></div></section>
   <nav class="pager">${prev ? `<a href="#${prev.id}"><small>${ARL}${t("back")}</small>${prev.title}</a>` : ""}${next ? `<a class="next" href="#${next.id}"><small>${t("next")}${ARR}</small>${next.title}</a>` : `<a class="next" href="#test"><small>${t("next")}${ARR}</small>${t("test")}</a>`}</nav>
   </article></div>`;
   const exs = $(".exs", main);
   tp.ex.forEach((ex,i)=>{ const api = makeBlock(tp, ex, i); exs.appendChild(api.el); try { INIT[ex.t](api, ex); } catch(err) { api.body.textContent = "Error: " + err.message; } });
-  $('[data-jump="practice"]', main).addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
+  const jp = $('[data-jump="practice"]', main); if (jp) jp.addEventListener("click", ()=>$("#practice").scrollIntoView({behavior:"smooth"}));
   wireDeck(tp);
   if (COURSE === "zh" && typeof hzFillSteps === "function") { hzFillSteps(main); zpyApply(); }
 }
