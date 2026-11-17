@@ -760,10 +760,9 @@ function spPlace(){
   if (!r || (!r.width && !r.height)) { spHide(); return; }
   const el = SP.el, vw = document.documentElement.clientWidth, vh = window.innerHeight;
   const w = el.offsetWidth, h = el.offsetHeight, gap = 10;
-  const touchUI = window.matchMedia("(pointer:coarse)").matches;
-  let top = touchUI ? last.bottom + gap + 4 : r.top - h - gap, below = touchUI;
-  if (!touchUI && top < 8) { top = last.bottom + gap; below = true; }
-  if (touchUI && top + h > vh - 8) { top = r.top - h - gap; below = false; }
+  /* окошко над выделением (на телефоне тоже — просьба Влада 17.11.2026); не влезает сверху — под ним */
+  let top = r.top - h - gap, below = false;
+  if (top < 8) { top = last.bottom + gap; below = true; }
   const cx = below ? last.left + last.width / 2 : r.left + r.width / 2;
   let left = Math.round(cx - w / 2); left = Math.max(8, Math.min(left, vw - w - 8));
   /* длинное выделение может не помещаться в экран: держим окошко внутри экрана, стрелку тогда прячем */
