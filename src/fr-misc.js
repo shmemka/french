@@ -34,6 +34,24 @@ ${CHAT("fr-misc-epicerie", "À l’épicerie bio", [
 ["Le client", "En espèces.", "Наличными.", "In cash."]
 ])}`,
 ex:[]
+},
+
+{
+id:"m-panier", sec:"misc", kind:TF("Диалог", "Dialogue"),
+title:"Tu as un panier ?", ru:TF("Диалог о покупках: где покупать продукты, корзина овощей и фруктов", "A shopping dialogue: where to buy food, a fruit and veg box"), page:TF("Unité 3, с. 50, L’essentiel · трек 51", "Unité 3, p. 50, L’essentiel · track 51"),
+theory:`
+<p>${TF("Нажми на любую реплику — она прозвучит. Кнопка «Слушать» включает весь диалог подряд.", "Tap any line to hear it. The Listen button plays the whole dialogue.")}</p>
+${CHAT("fr-misc-panier", "Tu as un panier ?", [
+["Sonia", "Ah, salut Arnaud, ça va ?", "О, привет, Арно, как дела?", "Oh, hi Arnaud, how are you?"],
+["Arnaud", "Salut Sonia ! Oui, ça va !", "Привет, Соня! Да, всё хорошо!", "Hi Sonia! Yes, I’m fine!"],
+["Sonia", "Ah, tu as un panier ?", "О, у тебя корзина?", "Oh, you’ve got a box?"],
+["Arnaud", "Oui, j’achète mes fruits et légumes en ligne et le vendredi je vais chercher mon panier chez le boucher.", "Да, я покупаю фрукты и овощи онлайн, а по пятницам забираю корзину у мясника.", "Yes, I buy my fruit and vegetables online, and on Fridays I pick up my box at the butcher’s."],
+["Sonia", "Et tu payes en ligne aussi ?", "И платишь тоже онлайн?", "And do you pay online too?"],
+["Arnaud", "Oui ! Et toi, tu vas où pour faire tes courses ?", "Да! А ты куда ходишь за покупками?", "Yes! And you, where do you go to do your shopping?"],
+["Sonia", "Pour les fruits, les légumes, la viande et le poisson, je vais au marché. Pour le fromage, je vais chez le fromager et pour le pain, je vais à la boulangerie. Mais pour les céréales, le lait, les paquets de biscuits, je vais au supermarché. Mais c’est bien les paniers ! Quels fruits et légumes tu as cette semaine ?", "За фруктами, овощами, мясом и рыбой я хожу на рынок. За сыром — к сыроделу, а за хлебом — в булочную. Но за хлопьями, молоком, пачками печенья я хожу в супермаркет. А корзины — это здорово! Какие фрукты и овощи у тебя на этой неделе?", "For fruit, vegetables, meat and fish, I go to the market. For cheese, I go to the cheese shop, and for bread, I go to the bakery. But for cereal, milk and packets of biscuits, I go to the supermarket. But boxes are a great idea! What fruit and vegetables have you got this week?"],
+["Arnaud", "Ce sont des fruits et des légumes de saison : 1 salade, des pêches, des tomates, des poivrons. Et j’ai aussi 6 œufs et 1 fromage de chèvre.", "Это сезонные фрукты и овощи: 1 салат, персики, помидоры, перцы. А ещё у меня 6 яиц и 1 козий сыр.", "They’re seasonal fruit and vegetables: 1 lettuce, peaches, tomatoes, peppers. And I’ve also got 6 eggs and 1 goat’s cheese."]
+])}`,
+ex:[]
 }
 
   ]; } finally { HL = keepHL; }
